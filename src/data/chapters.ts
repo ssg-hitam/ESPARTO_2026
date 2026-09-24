@@ -7,7 +7,7 @@ export interface TechnicalChapter {
   id: string;
   name: string;
   shortName: string;
-  category: "Technical Chapter" | "Student Society" | "Developer Community";
+  category: "Technical Chapter" | "Student Society" | "Developer Community" | "Technical Club";
   domain: string;
   logo: string;
   description: string;
@@ -31,6 +31,24 @@ export const TECHNICAL_CHAPTERS: TechnicalChapter[] = [
     domain: "Cloud, Mobile & AI Technologies",
     logo: "/images/chapters/gdg-hitam.png",
     description: "Google Developer Groups on Campus student tech community",
+  },
+  {
+    id: "hitam-ai",
+    name: "HITAM AI Club",
+    shortName: "HITAM AI",
+    category: "Technical Club",
+    domain: "Artificial Intelligence & Neural Systems",
+    logo: "/images/chapters/hitam-ai.png",
+    description: "HITAM Artificial Intelligence Club for machine learning & deep tech innovations",
+  },
+  {
+    id: "hitam-coding-club",
+    name: "HITAM Coding Club",
+    shortName: "HITAM Coding Club",
+    category: "Technical Club",
+    domain: "Algorithms, Competitive Programming & Dev",
+    logo: "/images/chapters/hitam-coding-club.png",
+    description: "Premier coding and algorithmic problem solving club at HITAM",
   },
   {
     id: "iucee-ewb",
@@ -60,4 +78,5 @@ export const TECHNICAL_CHAPTERS: TechnicalChapter[] = [
     description: "Modern Innovation for Next-Gen Data-Science Society",
   },
 ];
+
 
