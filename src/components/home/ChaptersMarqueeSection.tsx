@@ -50,12 +50,25 @@ export function ChaptersMarqueeSection() {
           {/* Header & Hierarchy */}
           <div className="relative z-10 max-w-3xl mb-10 sm:mb-12">
             
-            {/* Institutional Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-orange/30 bg-surface/80 mb-5">
-              <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" aria-hidden="true" />
-              <span className="font-mono text-xs font-bold tracking-widest text-text-secondary uppercase">
-                ORGANISING BODY & TECHNICAL ALLIANCE
-              </span>
+            {/* Apex Organizer SSG Badge with Official Logo */}
+            <div className="flex flex-wrap items-center gap-3 mb-5">
+              <div className="relative w-12 h-12 p-1 rounded-xl bg-white border border-white/30 shadow-[0_0_20px_rgba(255,94,0,0.3)] flex items-center justify-center shrink-0">
+                <Image
+                  src="/images/brand/ssg-logo.png"
+                  alt="SSG - Student Special Interest Groups"
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-contain"
+                  priority
+                />
+              </div>
+
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-orange/40 bg-surface/90 backdrop-blur-md shadow-[0_0_15px_rgba(255,94,0,0.15)]">
+                <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" aria-hidden="true" />
+                <span className="font-mono text-xs font-bold tracking-widest text-text-primary uppercase">
+                  APEX ORGANISING BODY & TECHNICAL ALLIANCE
+                </span>
+              </div>
             </div>
 
             {/* Dominant Headline */}
@@ -135,9 +148,21 @@ export function ChaptersMarqueeSection() {
             
             {/* Pillar 01: Apex Organizing Body */}
             <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm hover:border-brand-orange/40 transition-colors">
-              <div className="flex items-center gap-2.5 mb-2.5 text-brand-orange">
-                <ShieldCheck className="w-5 h-5" />
-                <span className="font-mono font-bold text-xs uppercase tracking-wider">APEX ORGANISER</span>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2 text-brand-orange">
+                  <ShieldCheck className="w-5 h-5" />
+                  <span className="font-mono font-bold text-xs uppercase tracking-wider">APEX ORGANISER</span>
+                </div>
+                {/* Official SSG Logo Badge */}
+                <div className="w-8 h-8 p-0.5 rounded-lg bg-white border border-white/30 flex items-center justify-center">
+                  <Image
+                    src="/images/brand/ssg-logo.png"
+                    alt="SSG"
+                    width={28}
+                    height={28}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
               </div>
               <h3 className="font-display font-bold text-base text-text-primary uppercase mb-1">
                 SSG HITAM
