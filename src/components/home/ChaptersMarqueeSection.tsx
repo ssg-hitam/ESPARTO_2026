@@ -46,10 +46,10 @@ export function ChaptersMarqueeSection() {
           <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" aria-hidden="true" />
 
           {/* Header & Enlarged SSG Logo Layout */}
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 lg:gap-10 mb-10 sm:mb-12">
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-10 sm:mb-12">
             
             {/* Left Content Column */}
-            <div className="max-w-xl lg:max-w-2xl">
+            <div className="md:col-span-8 lg:col-span-8 max-w-2xl">
               {/* Dominant Headline */}
               <h2 className="font-display font-black text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-text-primary tracking-tight leading-[1.1] uppercase mb-4">
                 ORGANISED BY <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">SSG</span> <br />
@@ -64,16 +64,18 @@ export function ChaptersMarqueeSection() {
               </p>
             </div>
 
-            {/* Enlarged Pure SSG Logo (Only the official emblem, no extra text) */}
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 p-3 rounded-3xl bg-white border border-white/40 flex items-center justify-center shrink-0 shadow-[0_0_40px_rgba(255,94,0,0.3)] hover:scale-105 transition-transform duration-300">
-              <Image
-                src="/images/brand/ssg-logo.png"
-                alt="SSG - Student Self Governance"
-                width={190}
-                height={190}
-                className="w-full h-full object-contain"
-                priority
-              />
+            {/* Enlarged Pure SSG Logo (Centered in the right space, brought left from the far edge) */}
+            <div className="md:col-span-4 lg:col-span-4 flex justify-start md:justify-center">
+              <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-44 lg:h-44 p-3 rounded-3xl bg-white border border-white/40 flex items-center justify-center shrink-0 shadow-[0_0_40px_rgba(255,94,0,0.3)] hover:scale-105 transition-transform duration-300">
+                <Image
+                  src="/images/brand/ssg-logo.png"
+                  alt="SSG - Student Self Governance"
+                  width={190}
+                  height={190}
+                  className="w-full h-full object-contain"
+                  priority
+                />
+              </div>
             </div>
 
           </div>
