@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { ArrowRight } from "lucide-react";
 
 /**
  * IntroVideoOverlay Component
@@ -68,11 +67,11 @@ export function IntroVideoOverlay() {
       role="dialog"
       aria-modal="true"
       aria-label="ESPARTO 2026 Intro Video"
-      className={`fixed inset-0 z-[99999] w-screen h-screen bg-black flex items-center justify-center overflow-hidden transition-opacity duration-700 ease-out ${
+      className={`fixed inset-0 z-[99999] flex items-center justify-center bg-black overflow-hidden transition-opacity duration-1000 ease-in-out ${
         isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
-      {/* Full-Screen Pure Black Cinematic Video */}
+      {/* Centered Video Clip with Pure Black Canvas */}
       <video
         ref={videoRef}
         src="/video/esparto_2026_video.mp4"
@@ -81,20 +80,17 @@ export function IntroVideoOverlay() {
         playsInline
         preload="auto"
         onEnded={handleDismiss}
-        className="w-full h-full object-contain bg-black select-none pointer-events-none"
+        className="w-[85vw] h-[80vh] max-w-4xl md:max-w-5xl lg:max-w-6xl object-contain select-none pointer-events-none"
       />
 
-      {/* Minimal Bottom-Right Skip Intro Button */}
-      <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 z-30">
-        <button
-          type="button"
-          onClick={handleDismiss}
-          className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border border-white/20 bg-black/80 backdrop-blur-md hover:bg-white/15 hover:border-white/40 text-zinc-300 hover:text-white font-mono text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 shadow-2xl group hover:scale-105 active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan"
-        >
-          <span>SKIP INTRO</span>
-          <ArrowRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-white group-hover:translate-x-1 transition-all" />
-        </button>
-      </div>
+      {/* Minds-ds Style Minimal Skip Intro Button */}
+      <button
+        type="button"
+        onClick={handleDismiss}
+        className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 text-white/40 hover:text-white/90 transition-colors z-20 text-xs sm:text-sm tracking-widest uppercase font-mono font-light cursor-pointer select-none focus:outline-none"
+      >
+        Skip Intro
+      </button>
     </div>
   );
 }
