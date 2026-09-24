@@ -99,21 +99,25 @@ export function ChaptersMarqueeSection() {
                 {marqueeChapters.map((chapter, index) => (
                   <div
                     key={`${chapter.id}-${index}`}
-                    className="group relative flex items-center gap-4 px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl border border-white/10 bg-[#0d0726]/90 backdrop-blur-md hover:border-brand-magenta/60 hover:shadow-[0_0_24px_rgba(255,0,122,0.25)] hover:scale-[1.03] transition-all duration-300 cursor-default shrink-0"
+                    className="group relative flex items-center gap-4 px-6 sm:px-7 py-3 sm:py-3.5 rounded-2xl border border-white/10 bg-[#0d0726]/90 backdrop-blur-md hover:border-brand-magenta/60 hover:shadow-[0_0_24px_rgba(255,0,122,0.25)] hover:scale-[1.03] transition-all duration-300 cursor-default shrink-0"
                   >
-                    {/* Chapter Logo Square */}
-                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 p-2 rounded-xl bg-white border border-white/20 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                    {/* Direct Logo Display (No clumsy nested box, uniform size, enlarged GDG) */}
+                    <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shrink-0">
                       <Image
                         src={chapter.logo}
                         alt={chapter.name}
-                        width={56}
-                        height={56}
-                        className="w-full h-full object-contain"
+                        width={64}
+                        height={64}
+                        className={`object-contain transition-transform duration-300 group-hover:scale-110 ${
+                          chapter.id === "gdg"
+                            ? "w-20 sm:w-24 max-h-12 scale-125"
+                            : "w-full h-full max-h-14 max-w-14"
+                        }`}
                       />
                     </div>
 
                     {/* Pure Chapter Name */}
-                    <span className="font-display font-extrabold text-sm sm:text-base text-text-primary tracking-wide group-hover:text-white transition-colors whitespace-nowrap pr-2">
+                    <span className="font-display font-extrabold text-sm sm:text-base text-text-primary tracking-wide group-hover:text-white transition-colors whitespace-nowrap">
                       {chapter.shortName}
                     </span>
                   </div>
