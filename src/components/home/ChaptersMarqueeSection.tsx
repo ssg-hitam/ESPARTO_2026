@@ -45,11 +45,11 @@ export function ChaptersMarqueeSection() {
           {/* Subtle Cyber Grid Background */}
           <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" aria-hidden="true" />
 
-          {/* Header & Prominent SSG Logo Grid */}
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-10 sm:mb-12">
+          {/* Header & Enlarged SSG Logo Layout */}
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 lg:gap-10 mb-10 sm:mb-12">
             
             {/* Left Content Column */}
-            <div className="max-w-2xl">
+            <div className="max-w-xl lg:max-w-2xl">
               {/* Dominant Headline */}
               <h2 className="font-display font-black text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-text-primary tracking-tight leading-[1.1] uppercase mb-4">
                 ORGANISED BY <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">SSG</span> <br />
@@ -64,26 +64,16 @@ export function ChaptersMarqueeSection() {
               </p>
             </div>
 
-            {/* Right Column: Prominent SSG (Student Self Governance) Logo Emblem */}
-            <div className="flex flex-row md:flex-col items-center gap-4 p-4 sm:p-5 rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.02] backdrop-blur-md shadow-[0_0_35px_rgba(255,94,0,0.25)] shrink-0 self-start md:self-auto hover:border-brand-magenta/50 transition-all duration-300">
-              <div className="relative w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 p-2.5 rounded-2xl bg-white border border-white/40 flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
-                <Image
-                  src="/images/brand/ssg-logo.png"
-                  alt="SSG - Student Self Governance"
-                  width={128}
-                  height={128}
-                  className="w-full h-full object-contain"
-                  priority
-                />
-              </div>
-              <div className="text-left md:text-center">
-                <span className="font-display font-black text-sm sm:text-base text-text-primary uppercase tracking-wider block">
-                  SSG HITAM
-                </span>
-                <span className="font-mono text-[10px] sm:text-xs text-brand-orange font-bold uppercase tracking-widest block">
-                  STUDENT SELF GOVERNANCE
-                </span>
-              </div>
+            {/* Enlarged Pure SSG Logo (Only the official emblem, no extra text) */}
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 p-3 rounded-3xl bg-white border border-white/40 flex items-center justify-center shrink-0 shadow-[0_0_40px_rgba(255,94,0,0.3)] hover:scale-105 transition-transform duration-300">
+              <Image
+                src="/images/brand/ssg-logo.png"
+                alt="SSG - Student Self Governance"
+                width={190}
+                height={190}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
 
           </div>
