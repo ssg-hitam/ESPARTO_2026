@@ -99,7 +99,7 @@ export function ChaptersMarqueeSection() {
                 {marqueeChapters.map((chapter, index) => (
                   <div
                     key={`${chapter.id}-${index}`}
-                    className="group relative flex items-center gap-4 px-5 py-3.5 rounded-2xl border border-white/10 bg-[#0d0726]/90 backdrop-blur-md hover:border-brand-magenta/60 hover:shadow-[0_0_24px_rgba(255,0,122,0.25)] hover:scale-[1.02] transition-all duration-300 cursor-default shrink-0 min-w-[310px] sm:min-w-[340px]"
+                    className="group relative flex items-center gap-4 px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl border border-white/10 bg-[#0d0726]/90 backdrop-blur-md hover:border-brand-magenta/60 hover:shadow-[0_0_24px_rgba(255,0,122,0.25)] hover:scale-[1.03] transition-all duration-300 cursor-default shrink-0"
                   >
                     {/* Chapter Logo Square */}
                     <div className="relative w-12 h-12 sm:w-14 sm:h-14 p-2 rounded-xl bg-white border border-white/20 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
@@ -112,25 +112,9 @@ export function ChaptersMarqueeSection() {
                       />
                     </div>
 
-                    {/* Metadata */}
-                    <div className="flex flex-col text-left overflow-hidden pr-2">
-                      <div className="flex items-center gap-1.5 mb-0.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-brand-magenta" />
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-brand-orange font-semibold">
-                          {chapter.category}
-                        </span>
-                      </div>
-                      <span className="font-display font-extrabold text-sm sm:text-base text-text-primary tracking-wide group-hover:text-white transition-colors truncate">
-                        {chapter.shortName}
-                      </span>
-                      <span className="font-mono text-[11px] text-text-muted truncate">
-                        {chapter.domain}
-                      </span>
-                    </div>
-
-                    {/* Corner Tag */}
-                    <span className="absolute top-2.5 right-3 font-mono text-[9px] text-white/20 uppercase tracking-widest group-hover:text-brand-violet/60 transition-colors">
-                      TECHNICAL CLUB
+                    {/* Pure Chapter Name */}
+                    <span className="font-display font-extrabold text-sm sm:text-base text-text-primary tracking-wide group-hover:text-white transition-colors whitespace-nowrap pr-2">
+                      {chapter.shortName}
                     </span>
                   </div>
                 ))}

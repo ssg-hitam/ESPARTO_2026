@@ -70,9 +70,9 @@ export const TECHNICAL_CHAPTERS: TechnicalChapter[] = [
   },
   {
     id: "minds",
-    name: "MINDS Student Society",
-    shortName: "MINDS",
-    category: "Student Society",
+    name: "MINDS Club",
+    shortName: "MINDS CLUB",
+    category: "Technical Club",
     domain: "Data Science & Artificial Intelligence",
     logo: "/images/chapters/minds-hitam.png",
     description: "Modern Innovation for Next-Gen Data-Science Society",
