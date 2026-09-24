@@ -7,8 +7,9 @@ import { TECHNICAL_CHAPTERS } from "@/data/chapters";
  * ChaptersMarqueeSection Component
  * 
  * Clean, high-impact institutional marquee section:
- * - Organised by SSG (Student Senate & Special Interest Groups)
+ * - Organised by SSG (Student Self Governance)
  * - In collaboration with HITAM Technical Council
+ * - Prominent SSG official emblem card balancing the header
  * - Multi-chapter infinite marquee showcasing all technical chapters & student clubs
  */
 export function ChaptersMarqueeSection() {
@@ -44,42 +45,47 @@ export function ChaptersMarqueeSection() {
           {/* Subtle Cyber Grid Background */}
           <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" aria-hidden="true" />
 
-          {/* Header & Hierarchy */}
-          <div className="relative z-10 max-w-3xl mb-8 sm:mb-10">
+          {/* Header & Prominent SSG Logo Grid */}
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-10 sm:mb-12">
             
-            {/* Apex Organizer SSG Badge with Official Logo */}
-            <div className="flex flex-wrap items-center gap-3 mb-5">
-              <div className="relative w-12 h-12 p-1 rounded-xl bg-white border border-white/30 shadow-[0_0_20px_rgba(255,94,0,0.3)] flex items-center justify-center shrink-0">
+            {/* Left Content Column */}
+            <div className="max-w-2xl">
+              {/* Dominant Headline */}
+              <h2 className="font-display font-black text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-text-primary tracking-tight leading-[1.1] uppercase mb-4">
+                ORGANISED BY <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">SSG</span> <br />
+                <span className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl text-text-secondary font-extrabold">
+                  IN COLLABORATION WITH HITAM TECHNICAL COUNCIL
+                </span>
+              </h2>
+
+              {/* Concise Mission Statement */}
+              <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed border-l-2 border-brand-magenta/40 pl-4 py-0.5">
+                ESPARTO 2026 is spearheaded by <strong className="text-text-primary font-semibold">SSG (Student Self Governance)</strong> in collaboration with the <strong className="text-text-primary font-semibold">HITAM Technical Council</strong>, uniting all premier student chapters and technical clubs across campus.
+              </p>
+            </div>
+
+            {/* Right Column: Prominent SSG (Student Self Governance) Logo Emblem */}
+            <div className="flex flex-row md:flex-col items-center gap-4 p-4 sm:p-5 rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.02] backdrop-blur-md shadow-[0_0_35px_rgba(255,94,0,0.25)] shrink-0 self-start md:self-auto hover:border-brand-magenta/50 transition-all duration-300">
+              <div className="relative w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 p-2.5 rounded-2xl bg-white border border-white/40 flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
                 <Image
                   src="/images/brand/ssg-logo.png"
-                  alt="SSG - Student Special Interest Groups"
-                  width={48}
-                  height={48}
+                  alt="SSG - Student Self Governance"
+                  width={128}
+                  height={128}
                   className="w-full h-full object-contain"
                   priority
                 />
               </div>
-
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-orange/40 bg-surface/90 backdrop-blur-md shadow-[0_0_15px_rgba(255,94,0,0.15)]">
-                <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" aria-hidden="true" />
-                <span className="font-mono text-xs font-bold tracking-widest text-text-primary uppercase">
-                  APEX ORGANISER & TECHNICAL COUNCIL ALLIANCE
+              <div className="text-left md:text-center">
+                <span className="font-display font-black text-sm sm:text-base text-text-primary uppercase tracking-wider block">
+                  SSG HITAM
+                </span>
+                <span className="font-mono text-[10px] sm:text-xs text-brand-orange font-bold uppercase tracking-widest block">
+                  STUDENT SELF GOVERNANCE
                 </span>
               </div>
             </div>
 
-            {/* Dominant Headline */}
-            <h2 className="font-display font-black text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-text-primary tracking-tight leading-[1.1] uppercase mb-4">
-              ORGANISED BY <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">SSG</span> <br />
-              <span className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl text-text-secondary font-extrabold">
-                IN COLLABORATION WITH HITAM TECHNICAL COUNCIL
-              </span>
-            </h2>
-
-            {/* Concise Mission Statement */}
-            <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed max-w-2xl border-l-2 border-brand-magenta/40 pl-4 py-0.5">
-              ESPARTO 2026 is spearheaded by the <strong className="text-text-primary font-semibold">Student Senate & Special Interest Groups (SSG)</strong> in collaboration with the <strong className="text-text-primary font-semibold">HITAM Technical Council</strong>, uniting all premier student chapters and technical clubs across campus.
-            </p>
           </div>
 
           {/* MARQUEE CONTAINER: Clean, high-contrast partner chapter cards */}
