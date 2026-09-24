@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { ArrowRight, VolumeX } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 /**
  * IntroVideoOverlay Component
