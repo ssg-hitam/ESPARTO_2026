@@ -42,6 +42,15 @@ export const TECHNICAL_CHAPTERS: TechnicalChapter[] = [
     description: "Industrial Engineering and Operations Management Society",
   },
   {
+    id: "csi",
+    name: "Computer Society of India - HITAM Student Chapter",
+    shortName: "CSI HITAM",
+    category: "Technical Chapter",
+    domain: "Computer Science & Information Technology",
+    logo: "/images/chapters/csi-hitam.png",
+    description: "Computer Society of India Student Chapter at HITAM",
+  },
+  {
     id: "gdg",
     name: "Google Developer Groups On Campus",
     shortName: "GDG on Campus",
