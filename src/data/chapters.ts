@@ -8,49 +8,56 @@ export interface TechnicalChapter {
   name: string;
   shortName: string;
   category: "Technical Chapter" | "Student Society" | "Developer Community";
+  domain: string;
   logo: string;
-  description?: string;
+  description: string;
 }
 
 export const TECHNICAL_CHAPTERS: TechnicalChapter[] = [
+  {
+    id: "ieee",
+    name: "IEEE Student Branch HITAM",
+    shortName: "IEEE HITAM",
+    category: "Technical Chapter",
+    domain: "Computing & Electrical Engineering",
+    logo: "/images/chapters/ieee-hitam.png",
+    description: "Institute of Electrical and Electronics Engineers Student Branch",
+  },
+  {
+    id: "gdg",
+    name: "Google Developer Groups On Campus",
+    shortName: "GDG on Campus",
+    category: "Developer Community",
+    domain: "Cloud, Mobile & AI Technologies",
+    logo: "/images/chapters/gdg-hitam.png",
+    description: "Google Developer Groups on Campus student tech community",
+  },
   {
     id: "iucee-ewb",
     name: "IUCEE-EWB HITAM Student Chapter",
     shortName: "IUCEE-EWB",
     category: "Technical Chapter",
+    domain: "Engineering Education & Global Impact",
     logo: "/images/chapters/iucee-ewb-hitam.png",
     description: "Indo Universal Collaboration for Engineering Education & Engineers Without Borders",
   },
   {
-    id: "ieee",
-    name: "IEEE Student Branch HITAM",
-    shortName: "IEEE",
-    category: "Technical Chapter",
-    logo: "/images/chapters/ieee-hitam.png",
-    description: "Institute of Electrical and Electronics Engineers Student Branch",
-  },
-  {
     id: "ieom",
     name: "IEOM HITAM Student Chapter",
-    shortName: "IEOM",
+    shortName: "IEOM HITAM",
     category: "Technical Chapter",
+    domain: "Industrial & Operations Management",
     logo: "/images/chapters/ieom-hitam.png",
     description: "Industrial Engineering and Operations Management Society",
   },
   {
-    id: "gdg",
-    name: "Google Developer Groups On Campus • HITAM",
-    shortName: "GDG on Campus",
-    category: "Developer Community",
-    logo: "/images/chapters/gdg-hitam.png",
-    description: "Google Developer Groups on Campus student tech community",
-  },
-  {
     id: "minds",
-    name: "MINDS",
+    name: "MINDS Student Society",
     shortName: "MINDS",
     category: "Student Society",
+    domain: "Data Science & Artificial Intelligence",
     logo: "/images/chapters/minds-hitam.png",
     description: "Modern Innovation for Next-Gen Data-Science Society",
   },
 ];
+
