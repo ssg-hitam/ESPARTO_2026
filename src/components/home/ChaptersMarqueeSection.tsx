@@ -66,12 +66,12 @@ export function ChaptersMarqueeSection() {
 
             {/* Enlarged Pure SSG Logo (Centered in the right space, brought left from the far edge) */}
             <div className="md:col-span-4 lg:col-span-4 flex justify-start md:justify-center">
-              <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-44 lg:h-44 p-3 rounded-3xl bg-white border border-white/40 flex items-center justify-center shrink-0 shadow-[0_0_40px_rgba(255,94,0,0.3)] hover:scale-105 transition-transform duration-300">
+              <div className="relative w-36 h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 xl:w-60 xl:h-60 p-4 sm:p-5 rounded-3xl bg-white border border-white/40 flex items-center justify-center shrink-0 shadow-[0_0_50px_rgba(255,94,0,0.35)] hover:scale-105 transition-transform duration-300">
                 <Image
                   src="/images/brand/ssg-logo.png"
                   alt="SSG - Student Self Governance"
-                  width={190}
-                  height={190}
+                  width={240}
+                  height={240}
                   className="w-full h-full object-contain"
                   priority
                 />
