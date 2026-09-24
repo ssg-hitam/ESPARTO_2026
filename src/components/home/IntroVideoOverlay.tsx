@@ -1,77 +1,74 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+interface IntroVideoOverlayProps {
+  /** Called when the intro finishes (video end or skip). Parent unmounts this component. */
+  onComplete: () => void;
+}
 
 /**
- * IntroVideoOverlay Component
- * 
- * Plays the official ESPARTO 2026 intro teaser (/video/esparto_2026_video.mp4)
- * on initial site visit:
- * - Autoplays muted without audio
- * - Centered, medium-sized glassmorphic cinematic frame
- * - Skip video option to immediately enter main festival page
- * - Auto-dismisses when the video playback concludes
+ * IntroVideoOverlay — STATE 1 (Intro Only)
+ *
+ * Occupies 100vw × 100vh with a pure black background.
+ * The homepage does NOT exist in the DOM while this is rendered.
+ *
+ * Flow:
+ *   Load → black screen → video plays → video ends → onComplete() → homepage revealed
+ *   OR: user clicks "Skip Intro" → onComplete() → homepage revealed
  */
-export function IntroVideoOverlay() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isFadingOut, setIsFadingOut] = useState(false);
+export function IntroVideoOverlay({ onComplete }: IntroVideoOverlayProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isFadingOut, setIsFadingOut] = useState(false);
 
+  // Lock body scroll while intro is active
   useEffect(() => {
-    // Check if user has already viewed the intro in this session
-    const hasSeenIntro = sessionStorage.getItem("esparto_2026_intro_played");
-    if (!hasSeenIntro) {
-      setIsVisible(true);
-      // Lock scroll while intro is playing
-      document.body.style.overflow = "hidden";
-    }
-
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
   }, []);
 
-  const handleDismiss = React.useCallback(() => {
-    if (isFadingOut) return;
-    setIsFadingOut(true);
-    sessionStorage.setItem("esparto_2026_intro_played", "true");
-    document.body.style.overflow = "";
-    
-    // Pause video to free resources
-    if (videoRef.current) {
-      videoRef.current.pause();
-    }
-
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 600);
-  }, [isFadingOut]);
-
+  // Keyboard shortcut — Escape or Space to skip
   useEffect(() => {
-    // Allow user to dismiss with Escape key or Space key
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.key === "Escape" || e.key === " ") && isVisible) {
+      if (e.key === "Escape" || e.key === " ") {
         e.preventDefault();
-        handleDismiss();
+        handleSkip();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isVisible, handleDismiss]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFadingOut]);
 
-  if (!isVisible) return null;
+  const handleSkip = () => {
+    if (isFadingOut) return;
+    setIsFadingOut(true);
+    if (videoRef.current) videoRef.current.pause();
+    // Short black hold, then signal parent to unmount and show homepage
+    setTimeout(() => {
+      onComplete();
+    }, 700);
+  };
+
+  const handleVideoEnded = () => {
+    if (isFadingOut) return;
+    setIsFadingOut(true);
+    // Natural end — slightly longer hold before transitioning
+    setTimeout(() => {
+      onComplete();
+    }, 800);
+  };
 
   return (
     <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="ESPARTO 2026 Intro Video"
-      className={`fixed inset-0 z-[99999] flex items-center justify-center bg-black overflow-hidden transition-opacity duration-1000 ease-in-out ${
+      aria-label="ESPARTO 2026 Intro"
+      className={`fixed inset-0 z-[99999] flex items-center justify-center bg-black transition-opacity duration-700 ease-in-out ${
         isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
-      {/* Centered Video Clip with Pure Black Canvas */}
+      {/* Centered video — black canvas fills all sides */}
       <video
         ref={videoRef}
         src="/video/esparto_2026_video.mp4"
@@ -79,15 +76,15 @@ export function IntroVideoOverlay() {
         muted
         playsInline
         preload="auto"
-        onEnded={handleDismiss}
-        className="w-[85vw] h-[80vh] max-w-4xl md:max-w-5xl lg:max-w-6xl object-contain select-none pointer-events-none"
+        onEnded={handleVideoEnded}
+        className="w-[65vw] h-[60vh] max-w-2xl md:max-w-3xl lg:max-w-4xl object-contain select-none pointer-events-none"
       />
 
-      {/* Minds-ds Style Minimal Skip Intro Button */}
+      {/* MINDS-style minimal Skip Intro — bottom right */}
       <button
         type="button"
-        onClick={handleDismiss}
-        className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 text-white/40 hover:text-white/90 transition-colors z-20 text-xs sm:text-sm tracking-widest uppercase font-mono font-light cursor-pointer select-none focus:outline-none"
+        onClick={handleSkip}
+        className="absolute bottom-8 right-8 text-white/40 hover:text-white/90 transition-colors duration-200 text-xs tracking-widest uppercase font-mono font-light cursor-pointer select-none focus:outline-none"
       >
         Skip Intro
       </button>
