@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { SkipLink } from "@/components/shared/SkipLink";
+import { IntroProvider } from "@/context/IntroContext";
+import { LayoutShell } from "@/components/layout/LayoutShell";
 import "./globals.css";
 
 const fontDisplay = Outfit({
@@ -74,17 +74,18 @@ export default function RootLayout({
       className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable} dark`}
     >
       <body className="bg-background text-text-primary antialiased min-h-screen flex flex-col selection:bg-brand-magenta selection:text-white">
-        {/* Skip to Main Content link for keyboard accessibility */}
-        <SkipLink />
-
-        {/* Global Application Shell */}
-        <div className="relative z-10 flex flex-col min-h-screen">
-          <Navbar />
-          <main id="main-content" className="flex-grow flex flex-col">
+        <IntroProvider>
+          <SkipLink />
+          {/*
+           * LayoutShell is a client component that reads IntroContext.
+           * During intro: Navbar + Footer have visibility:hidden so the
+           * layout shell holds full min-h-screen height (no footer flash).
+           * After intro: Navbar + Footer fade in alongside the hero.
+           */}
+          <LayoutShell>
             {children}
-          </main>
-          <Footer />
-        </div>
+          </LayoutShell>
+        </IntroProvider>
       </body>
     </html>
   );

@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useIntro } from "@/context/IntroContext";
 import { IntroVideoOverlay } from "@/components/home/IntroVideoOverlay";
 import { HeroSection } from "@/components/home/HeroSection";
 import { CountdownSection } from "@/components/home/CountdownSection";
@@ -10,88 +12,67 @@ import { RegisterCtaSection } from "@/components/home/RegisterCtaSection";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 /**
- * ESPARTO 2026 — Strict Two-State Homepage
+ * ESPARTO 2026 — Homepage
  *
- * STATE 1 → IntroVideoOverlay (only this is rendered — homepage does NOT exist in DOM)
- * STATE 2 → Homepage with scroll-triggered progressive section reveals
+ * Flow:
+ *   IntroVideoOverlay exits (AnimatePresence) → onExitComplete →
+ *   markIntroComplete() → IntroContext updates → LayoutShell reveals
+ *   Navbar + Footer → motion.main fades in with HeroSection →
+ *   user scrolls → below-fold sections reveal via IntersectionObserver.
  *
- * The transition between states is:
- *   Video ends (or skip) → 700ms black hold → homepage fades in → scroll to explore
- *
- * NEVER renders both states simultaneously.
+ * Key points:
+ *  • IntroContext is the single source of truth — page.tsx + LayoutShell both read it.
+ *  • Navbar + Footer are visibility:hidden (not removed) during intro,
+ *    so the flex shell holds full height and footer can't float up.
+ *  • Only the hero has a mount animation. All other sections are scroll-triggered.
+ *  • style.y (MotionValue) and initial.opacity are on separate axes — no conflict.
  */
 export default function Home() {
-  /**
-   * introComplete: tracks whether we should show homepage.
-   * Defaults to `true` if already seen this session (skip video on revisit).
-   */
-  const [introComplete, setIntroComplete] = useState<boolean | null>(null);
-  const [homepageVisible, setHomepageVisible] = useState(false);
+  const { introComplete, markIntroComplete } = useIntro();
 
-  useEffect(() => {
-    const alreadySeen =
-      typeof sessionStorage !== "undefined" &&
-      sessionStorage.getItem("esparto_2026_intro_played") === "true";
+  // Scroll-linked hero parallax
+  const { scrollY } = useScroll();
+  const heroYRaw = useTransform(scrollY, [0, 500], [0, -55]);
+  const heroY = useSpring(heroYRaw, { stiffness: 55, damping: 22, mass: 1 });
 
-    if (alreadySeen) {
-      // Skip intro — go straight to homepage
-      setIntroComplete(true);
-      setHomepageVisible(true);
-    } else {
-      // Show intro first
-      setIntroComplete(false);
-    }
-  }, []);
-
-  const handleIntroComplete = () => {
-    // Mark session so revisits skip the intro
-    sessionStorage.setItem("esparto_2026_intro_played", "true");
-    setIntroComplete(true);
-    // Small delay for fade transition, then reveal homepage
-    requestAnimationFrame(() => {
-      setHomepageVisible(true);
-    });
-  };
-
-  // While we haven't determined state yet (SSR/hydration moment), show black screen
-  if (introComplete === null) {
-    return <div className="fixed inset-0 bg-black z-[99999]" />;
-  }
-
-  // STATE 1 — INTRO ONLY. Homepage does not exist in the DOM.
+  // STATE 1 — Show intro video overlay
   if (!introComplete) {
-    return <IntroVideoOverlay onComplete={handleIntroComplete} />;
+    return <IntroVideoOverlay onComplete={markIntroComplete} />;
   }
 
-  // STATE 2 — HOMEPAGE (fade in once intro is done)
+  // STATE 2 — Homepage
   return (
-    <main
-      className={`transition-opacity duration-700 ease-out ${
-        homepageVisible ? "opacity-100" : "opacity-0"
-      }`}
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      {/* 1. Hero — immediately visible above fold */}
-      <HeroSection />
+      {/* Hero — opacity animates on mount; y driven by scroll spring */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        style={{ y: heroY }}
+      >
+        <HeroSection />
+      </motion.div>
 
-      {/* 2. Countdown — revealed on scroll */}
-      <ScrollReveal threshold={0.1} delay={0} direction="up">
+      {/* Below-fold — scroll-triggered only, never on mount */}
+      <ScrollReveal threshold={0.12} direction="up">
         <CountdownSection />
       </ScrollReveal>
 
-      {/* 3. ESPARTO Identity — revealed on scroll */}
-      <ScrollReveal threshold={0.1} delay={0} direction="up">
+      <ScrollReveal threshold={0.1} direction="up">
         <IdeaSection />
       </ScrollReveal>
 
-      {/* 4. Chapters Marquee — revealed on scroll */}
-      <ScrollReveal threshold={0.08} delay={0} direction="up">
+      <ScrollReveal threshold={0.08} direction="up">
         <ChaptersMarqueeSection />
       </ScrollReveal>
 
-      {/* 5. Register CTA — revealed on scroll */}
-      <ScrollReveal threshold={0.1} delay={0} direction="up">
+      <ScrollReveal threshold={0.1} direction="up">
         <RegisterCtaSection />
       </ScrollReveal>
-    </main>
+    </motion.main>
   );
 }
