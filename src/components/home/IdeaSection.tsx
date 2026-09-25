@@ -50,14 +50,6 @@ export function IdeaSection() {
           </div>
 
           <div className="relative z-10 max-w-3xl">
-            {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-violet/30 bg-surface/80 mb-6">
-              <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" aria-hidden="true" />
-              <span className="font-mono text-xs font-bold tracking-widest text-text-secondary uppercase">
-                THE IDEA
-              </span>
-            </div>
-
             {/* Dominant Headline */}
             <h2 className="font-display font-black text-3xl xs:text-4xl sm:text-5xl lg:text-6xl text-text-primary tracking-tight leading-[1.05] uppercase mb-5">
               EVERYTHING STARTS <br />

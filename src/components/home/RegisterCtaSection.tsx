@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 /**
  * RegisterCtaSection Component — Final Homepage CTA
@@ -30,14 +30,6 @@ export function RegisterCtaSection() {
 
       <Container size="md" className="relative z-10">
         
-        {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-orange/30 bg-surface/80 mb-6 shadow-[0_0_15px_rgba(255,94,0,0.15)]">
-          <Sparkles className="w-3.5 h-3.5 text-brand-orange animate-pulse" />
-          <span className="font-mono text-xs font-bold tracking-widest text-text-secondary uppercase">
-            OCTOBER 09–10, 2026 • HITAM HYDERABAD
-          </span>
-        </div>
-
         {/* Dominant Headline */}
         <h2 className="font-display font-black text-4xl xs:text-5xl sm:text-6xl md:text-7xl text-text-primary tracking-tight leading-[1.05] uppercase mb-6">
           READY TO BUILD <br />

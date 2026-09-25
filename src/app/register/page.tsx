@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/ui/FadeUp";
-import { ArrowLeft, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ArrowRight } from "lucide-react";
 
 export default function RegisterPage() {
   return (
@@ -28,12 +28,6 @@ export default function RegisterPage() {
         {/* Header */}
         <FadeUp delay={0.1} distance={55}>
           <div className="text-center max-w-xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-orange/30 bg-surface/80 mb-5">
-              <Sparkles className="w-3.5 h-3.5 text-brand-orange animate-pulse" />
-              <span className="font-mono text-xs font-bold tracking-widest text-text-secondary uppercase">
-                EARLY ACCESS &amp; PASSES
-              </span>
-            </div>
             <h1 className="font-display font-black text-4xl sm:text-6xl text-text-primary tracking-tight leading-[1.05] uppercase mb-4">
               JOIN <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">

@@ -137,14 +137,6 @@ export function ChaptersSphereSection() {
 
                 {/* Header Section matching reference */}
                 <div className="max-w-2xl mx-auto mb-8 sm:mb-12">
-                    {/* Eyebrow */}
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-orange/40 bg-surface/80 mb-4 shadow-[0_0_12px_rgba(255,94,0,0.2)]">
-                        <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" aria-hidden="true" />
-                        <span className="font-mono text-xs font-bold tracking-[0.2em] text-text-primary uppercase">
-                            [ COMMUNITY ALLIANCE // TECHNICAL SOCIETIES ]
-                        </span>
-                    </div>
-
                     {/* Headline */}
                     <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-text-primary tracking-tight uppercase mb-4">
                         ORGANISERS

@@ -38,12 +38,6 @@ export default function SchedulePage() {
 
         <FadeUp delay={0.1} distance={55}>
           <div className="max-w-3xl mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-violet/30 bg-surface/80 mb-5">
-              <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" aria-hidden="true" />
-              <span className="font-mono text-xs font-bold tracking-widest text-text-secondary uppercase">
-                FESTIVAL TIMELINE
-              </span>
-            </div>
             <h1 className="font-display font-black text-4xl sm:text-6xl text-text-primary tracking-tight leading-[1.05] uppercase mb-6">
               EVENT <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">

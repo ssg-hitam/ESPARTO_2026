@@ -52,14 +52,6 @@ export function CountdownSection() {
               ===================================================================== */}
           <div className="lg:col-span-5 flex flex-col items-start text-left">
             
-            {/* Category Tag */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-violet/30 bg-surface/80 mb-4">
-              <span className="w-2 h-2 rounded-full bg-brand-magenta animate-pulse" aria-hidden="true" />
-              <span className="font-mono text-xs font-bold tracking-widest text-text-secondary uppercase">
-                FESTIVAL COUNTDOWN
-              </span>
-            </div>
-
             {/* Editorial Heading */}
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-text-primary tracking-tight leading-[1.05] uppercase mb-5">
               THE CLOCK <br />
@@ -68,16 +60,10 @@ export function CountdownSection() {
               </span>
             </h2>
 
-            {/* Event Dates */}
-            <div className="border-l-2 border-brand-magenta/40 pl-4 py-1">
-              <p className="text-sm sm:text-base font-bold text-text-primary tracking-widest uppercase">
-                OCTOBER 09 — 10, 2026
-              </p>
-              <p className="text-xs font-mono text-text-muted tracking-wider uppercase mt-1">
-                {FEST_INFO.institution.shortName} TECHNICAL FEST
-              </p>
-            </div>
-
+            {/* Supporting Context */}
+            <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed max-w-sm border-l-2 border-brand-magenta/40 pl-4 py-1">
+              Two days of high-stakes hackathons, competitive robotics, and breakthrough engineering at {FEST_INFO.institution.shortName}.
+            </p>
           </div>
 
           {/* =====================================================================
@@ -88,9 +74,6 @@ export function CountdownSection() {
             {isLive ? (
               /* Celebration / Live Event State */
               <div className="flex flex-col items-start lg:items-center justify-center p-8 sm:p-12 rounded-2xl border border-brand-magenta/40 bg-[#0a061d]/80 shadow-[0_0_30px_rgba(255,0,122,0.25)]">
-                <span className="text-xs font-mono font-bold tracking-widest text-brand-orange uppercase mb-2">
-                  OCTOBER 09 — 10, 2026
-                </span>
                 <p className="font-display font-black text-5xl sm:text-7xl lg:text-8xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple uppercase animate-pulse">
                   ESPARTO IS LIVE
                 </p>

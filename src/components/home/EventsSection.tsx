@@ -69,12 +69,6 @@ export function EventsSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-violet/30 bg-surface/80 mb-4">
-              <span className="w-2 h-2 rounded-full bg-brand-magenta animate-pulse" aria-hidden="true" />
-              <span className="font-mono text-xs font-bold tracking-widest text-text-secondary uppercase">
-                FEATURED TRACKS
-              </span>
-            </div>
             <h2 className="font-display font-black text-3xl xs:text-4xl sm:text-5xl text-text-primary tracking-tight uppercase">
               EXPLORE THE <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">
