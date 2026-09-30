@@ -126,7 +126,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 10px;
+  bottom: calc(50% + 86px);
   display: flex;
   flex-direction: column;
   align-items: center;

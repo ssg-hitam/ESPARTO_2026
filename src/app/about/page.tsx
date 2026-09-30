@@ -305,7 +305,7 @@ export default function AboutPage() {
               <div className="flex flex-wrap items-center gap-2 mb-1.5 text-xs text-emerald-400 font-semibold">
                 <span>UGC Autonomous</span>
                 <span className="text-white/20">·</span>
-                <span>NAAC Grade 'A+'</span>
+                <span>NAAC Grade &apos;A+&apos;</span>
                 <span className="text-white/20">·</span>
                 <span>NBA Accredited</span>
               </div>

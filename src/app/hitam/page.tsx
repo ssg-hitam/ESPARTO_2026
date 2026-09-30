@@ -8,15 +8,12 @@ import { FadeUp } from "@/components/ui/FadeUp";
 import {
   ArrowLeft,
   ArrowUpRight,
-  FlaskConical,
   Globe2,
-  GraduationCap,
   Layers,
   Lightbulb,
   Microscope,
   Award,
   Building2,
-  Users,
   CheckCircle2,
   MapPin,
   ExternalLink,
@@ -65,38 +62,6 @@ const PROGRAMS = [
   { name: "Mechanical Engineering", short: "MECH" },
 ];
 
-const INITIATIVES = [
-  {
-    icon: FlaskConical,
-    title: "Doing Engineering",
-    desc: "HITAM's signature learning approach: moving away from conventional rote memorization to active, project-based engineering. From Day 1, students tackle real engineering problems with physical prototyping and collaborative build sprints.",
-  },
-  {
-    icon: Globe2,
-    title: "Integrated Twinning Program",
-    desc: "A globally recognized academic pathway enabling students to begin their B.Tech at HITAM and complete credits at top-ranked universities abroad, gaining global dual exposure and international credentials.",
-  },
-  {
-    icon: Microscope,
-    title: "Research & Innovation (IIIC)",
-    desc: "The Industry-Institute-Incubation Centre (IIIC) spearheads research papers in Scopus-indexed journals, student patents, and technology transfer, nurturing entrepreneurial mindsets on campus.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Experiential Learning Labs",
-    desc: "Modern multi-disciplinary fabrication labs, IoT research setups, robotics arenas, and high-performance computing clusters that give students unconstrained access to tools and technologies.",
-  },
-  {
-    icon: Users,
-    title: "Inclusive & Green Campus",
-    desc: "Recognized as one of India's greenest campuses with LEED Silver certification, eco-friendly infrastructure, student welfare chapters, and over 15+ active student-led technical and cultural clubs.",
-  },
-  {
-    icon: Layers,
-    title: "Industry Partnerships & MoUs",
-    desc: "Strong ties with multinational engineering giants and tech enterprises for continuous internships, industry-vetted course electives, hackathon sponsorships, and dedicated recruitment drives.",
-  },
-];
 
 const GLOBAL_PARTNERS = [
   { name: "University of Alabama Huntsville", country: "United States", short: "UAH", desc: "Ranked Tier-1 Research University" },

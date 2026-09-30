@@ -82,7 +82,7 @@ export function ChaptersMarqueeSection() {
           </div>
 
           {/* 3D CIRCULAR CAROUSEL: Built-in small text caption above marquee ring, zero separate box */}
-          <div className="relative -mx-4 sm:-mx-8 lg:-mx-10 overflow-hidden pt-1">
+          <div className="relative -mx-4 sm:-mx-8 lg:-mx-10 overflow-hidden pt-3 sm:pt-4 pb-4">
             
             {/* Top & Bottom Hairline Accents */}
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -94,7 +94,7 @@ export function ChaptersMarqueeSection() {
               aria-hidden="true" 
             />
 
-            <div className="w-full h-[360px] sm:h-[385px] relative">
+            <div className="w-full h-[320px] sm:h-[340px] relative">
               <CircularCarousel
                 items={carouselItems}
                 preset="cylinder"
@@ -118,7 +118,7 @@ export function ChaptersMarqueeSection() {
             </div>
 
             {/* Interactive hint */}
-            <div className="relative z-10 flex items-center justify-center gap-2 mt-2 text-[11px] text-text-tertiary tracking-wider font-mono uppercase">
+            <div className="relative z-10 flex items-center justify-center gap-2 mt-3 sm:mt-4 text-[11px] sm:text-xs text-text-tertiary tracking-wider font-mono uppercase">
               <span>✦ Drag horizontally or scroll to spin</span>
               <span className="opacity-40">•</span>
               <span>Tap card to focus</span>

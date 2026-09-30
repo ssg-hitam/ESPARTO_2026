@@ -4,15 +4,11 @@ import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { FadeUp } from "@/components/ui/FadeUp";
 import { FEST_EVENTS, FestEventItem, EventCategoryType } from "@/data/events";
 import { 
   ArrowLeft, 
   ArrowUpRight, 
   Search, 
-  Calendar, 
-  Clock, 
-  Users, 
   Trophy, 
   CheckCircle2, 
   X, 
@@ -118,7 +114,7 @@ export default function EventsPage() {
   const hasActiveFilters = selectedCategory !== "All" || selectedDay !== "all" || searchQuery.trim() !== "";
 
   return (
-    <main className="min-h-screen pt-28 pb-24 bg-[#040210] relative overflow-hidden text-text-primary">
+    <main className="min-h-screen pt-4 sm:pt-6 pb-20 bg-[#040210] relative text-text-primary">
       
       {/* ESPARTO Brand Atmosphere */}
       <div 
@@ -132,55 +128,42 @@ export default function EventsPage() {
 
       <Container size="lg" className="relative z-10">
         
-        {/* Navigation Breadcrumb */}
-        <FadeUp delay={0}>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors mb-6 group"
-          >
-            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1 text-brand-orange" />
-            <span>BACK TO HOME</span>
-          </Link>
-        </FadeUp>
-
-        {/* Section Headline */}
-        <FadeUp delay={0.06} distance={20}>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-6 border-b border-white/10">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-brand-orange">
-                  ESPARTO 2026
-                </span>
-                <span className="text-white/20 text-xs">/</span>
-                <span className="text-[11px] font-mono tracking-wider text-text-muted">
-                  OFFICIAL DIRECTORY
-                </span>
-              </div>
-              <h1 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight uppercase">
-                EVENTS &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">COMPETITIONS</span>
-              </h1>
-            </div>
-
-            {/* Quick Metrics Bar */}
-            <div className="flex items-center gap-3 shrink-0 text-xs font-mono">
-              <div className="px-3 py-1.5 rounded-xl bg-[#08041d] border border-white/10">
-                <span className="text-text-muted text-[10px] block uppercase">TOTAL TRACKS</span>
-                <strong className="text-white text-xs">15 Events</strong>
-              </div>
-              <div className="px-3 py-1.5 rounded-xl bg-[#08041d] border border-white/10">
-                <span className="text-text-muted text-[10px] block uppercase">PRIZE POOL</span>
-                <strong className="text-brand-orange text-xs">₹90,000+</strong>
-              </div>
-              <div className="px-3 py-1.5 rounded-xl bg-[#08041d] border border-white/10">
-                <span className="text-text-muted text-[10px] block uppercase">OCT 09–10</span>
-                <strong className="text-white text-xs">HITAM Campus</strong>
-              </div>
+        {/* Compact Utility Header Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-5 pb-3 border-b border-white/10">
+          <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 font-mono text-xs text-text-muted hover:text-white transition-colors group"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1 text-brand-orange" />
+              <span>HOME</span>
+            </Link>
+            <span className="text-white/20 text-xs">/</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-orange">
+                ESPARTO 2026
+              </span>
+              <span className="text-xs font-display font-extrabold uppercase text-white tracking-wide">
+                EVENTS &amp; COMPETITIONS
+              </span>
             </div>
           </div>
-        </FadeUp>
+
+          <div className="flex items-center gap-2 text-xs font-mono text-text-muted">
+            <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-white font-bold text-[11px]">
+              15 TRACKS
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-brand-orange/10 border border-brand-orange/30 text-brand-orange font-bold text-[11px]">
+              ₹90,000+ PRIZE POOL
+            </span>
+            <span className="hidden sm:inline-block text-[11px] text-text-tertiary">
+              OCT 09–10 • HITAM
+            </span>
+          </div>
+        </div>
 
         {/* ── MASTER 2-COLUMN LAYOUT: SIDEBAR + MAIN CONTENT ──────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
           {/* ── LEFT SIDEBAR: CATEGORIES & CONTROLS ───────────────────────────── */}
           <aside className="lg:col-span-4 xl:col-span-3 lg:sticky lg:top-28 space-y-6">
