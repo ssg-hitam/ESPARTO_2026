@@ -267,34 +267,197 @@ export default function HitamPage() {
           ))}
         </div>
 
-        {/* ── UNIQUE INITIATIVES ─────────────────────────────────── */}
+        {/* ── ACADEMIC PHILOSOPHY & INITIATIVES ─────────────────── */}
         <FadeUp delay={0.16} distance={20}>
           <div className="mb-8">
+            <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1">
+              Academic Philosophy
+            </p>
             <h2 className="font-display font-bold text-2xl sm:text-3xl text-text-primary tracking-tight">
-              Unique Initiatives &amp; Academic Philosophy
+              A Culture Built on &lsquo;Doing Engineering&rsquo;
             </h2>
-            <p className="text-text-secondary text-sm font-body mt-1">
-              Pioneering modern engineering education through active practice and global pathways.
+            <p className="text-text-secondary text-sm font-body mt-1 max-w-3xl">
+              HITAM moves beyond passive lecture memorization, anchoring technical education in active
+              project build sprints, international degree pathways, and patent-driven incubation.
             </p>
           </div>
         </FadeUp>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
-          {INITIATIVES.map((item, i) => (
-            <FadeUp key={item.title} delay={0.18 + i * 0.05} distance={20}>
-              <div className="flex flex-col h-full rounded-2xl border border-white/10 bg-[#07041c]/60 p-6">
-                <div className="w-10 h-10 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center shrink-0 mb-4">
-                  <item.icon className="w-5 h-5 text-emerald-400" />
+        {/* Bento Grid */}
+        <div className="flex flex-col gap-5 mb-20">
+
+          {/* 1. Flagship Hero Feature Card: Doing Engineering */}
+          <FadeUp delay={0.18} distance={20}>
+            <div className="p-8 sm:p-10 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0c0828]/80 via-[#07041c]/80 to-[#040212]/90 backdrop-blur-xl">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                {/* Left: Philosophy & Pillars */}
+                <div className="lg:col-span-7 flex flex-col gap-4">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                    <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wide">
+                      Flagship Pedagogical Model
+                    </span>
+                  </div>
+
+                  <h3 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-text-primary tracking-tight leading-tight">
+                    Doing Engineering: Learning by Building from Day One
+                  </h3>
+
+                  <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed">
+                    From their very first semester, HITAM engineering students engage in physical prototyping,
+                    hardware fabrication, and software sprints. Theory is not left in textbooks—it is validated
+                    and tested through real-world, team-based engineering challenges.
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                    <div className="p-3.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                      <p className="font-display font-bold text-sm text-text-primary">Hands-on Prototyping</p>
+                      <p className="text-xs text-text-muted mt-0.5">Physical build sprints from semester 1</p>
+                    </div>
+                    <div className="p-3.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                      <p className="font-display font-bold text-sm text-text-primary">Cross-Disciplinary</p>
+                      <p className="text-xs text-text-muted mt-0.5">Multi-branch team problem solving</p>
+                    </div>
+                    <div className="p-3.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                      <p className="font-display font-bold text-sm text-text-primary">Industry Validated</p>
+                      <p className="text-xs text-text-muted mt-0.5">Direct practitioner feedback &amp; review</p>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="font-display font-bold text-base text-text-primary mb-2">
-                  {item.title}
-                </h3>
+
+                {/* Right: Editorial Quote / Metric Card */}
+                <div className="lg:col-span-5 flex flex-col justify-center p-7 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+                  <span className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
+                    Core Institutional Value
+                  </span>
+                  <blockquote className="font-display font-medium text-base sm:text-lg text-text-primary leading-snug italic mb-4">
+                    &ldquo;Engineering education must not be spectator learning. When students build systems that solve tangible problems, mastery naturally follows.&rdquo;
+                  </blockquote>
+                  <div className="h-px bg-white/10 w-full mb-3" />
+                  <p className="text-xs text-emerald-400 font-semibold">
+                    100% Practical Lab &amp; Project Integration
+                  </p>
+                  <p className="text-xs text-text-muted mt-0.5">
+                    Integrated across all B.Tech degree branches at HITAM
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </FadeUp>
+
+          {/* 2. Structured 4-Card Grid for Supporting Pillars */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+            {/* Global Twinning */}
+            <FadeUp delay={0.2} distance={20}>
+              <div className="flex flex-col p-7 rounded-2xl border border-white/10 bg-[#07041c]/60 h-full">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
+                    <Globe2 className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-semibold text-text-muted uppercase tracking-wider block">Global Pathways</span>
+                    <h3 className="font-display font-bold text-lg text-text-primary">Integrated Twinning Program</h3>
+                  </div>
+                </div>
                 <p className="text-text-secondary text-xs sm:text-sm font-body leading-relaxed flex-1">
-                  {item.desc}
+                  Students complete foundational coursework at HITAM and transition abroad to complete their degrees at partner institutions in the United States and Germany, gaining international exposure and credentials.
                 </p>
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10 mt-4 text-xs text-text-muted">
+                  <span className="text-emerald-400 font-medium">Partners:</span>
+                  <span>UAH (USA)</span>
+                  <span>·</span>
+                  <span>MSOE (USA)</span>
+                  <span>·</span>
+                  <span>George Mason (USA)</span>
+                  <span>·</span>
+                  <span>Reutlingen (Germany)</span>
+                </div>
               </div>
             </FadeUp>
-          ))}
+
+            {/* Research & IIIC */}
+            <FadeUp delay={0.22} distance={20}>
+              <div className="flex flex-col p-7 rounded-2xl border border-white/10 bg-[#07041c]/60 h-full">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
+                    <Microscope className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-semibold text-text-muted uppercase tracking-wider block">Intellectual Property</span>
+                    <h3 className="font-display font-bold text-lg text-text-primary">Research &amp; Innovation (IIIC)</h3>
+                  </div>
+                </div>
+                <p className="text-text-secondary text-xs sm:text-sm font-body leading-relaxed flex-1">
+                  The Industry-Institute-Incubation Centre mentors student startups from ideation to incubation, co-authors Scopus-indexed research papers with faculty, and facilitates patent filings for novel engineering inventions.
+                </p>
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10 mt-4 text-xs text-text-muted">
+                  <span className="text-emerald-400 font-medium">Outcomes:</span>
+                  <span>Student Patents</span>
+                  <span>·</span>
+                  <span>Scopus Publications</span>
+                  <span>·</span>
+                  <span>Startup Incubation</span>
+                </div>
+              </div>
+            </FadeUp>
+
+            {/* Experiential Labs */}
+            <FadeUp delay={0.24} distance={20}>
+              <div className="flex flex-col p-7 rounded-2xl border border-white/10 bg-[#07041c]/60 h-full">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
+                    <Lightbulb className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-semibold text-text-muted uppercase tracking-wider block">Advanced Infrastructure</span>
+                    <h3 className="font-display font-bold text-lg text-text-primary">Experiential Learning Labs</h3>
+                  </div>
+                </div>
+                <p className="text-text-secondary text-xs sm:text-sm font-body leading-relaxed flex-1">
+                  Multi-disciplinary fabrication labs, IoT testbeds, robotics arenas, and high-performance computing clusters open round-the-clock, giving students unconstrained access to modern industrial tools.
+                </p>
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10 mt-4 text-xs text-text-muted">
+                  <span className="text-emerald-400 font-medium">Facilities:</span>
+                  <span>IoT Testbeds</span>
+                  <span>·</span>
+                  <span>Robotics Arenas</span>
+                  <span>·</span>
+                  <span>Fab Labs</span>
+                </div>
+              </div>
+            </FadeUp>
+
+            {/* Industry MoUs & Green Campus */}
+            <FadeUp delay={0.26} distance={20}>
+              <div className="flex flex-col p-7 rounded-2xl border border-white/10 bg-[#07041c]/60 h-full">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
+                    <Layers className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-semibold text-text-muted uppercase tracking-wider block">Enterprise &amp; Campus</span>
+                    <h3 className="font-display font-bold text-lg text-text-primary">Industry MoUs &amp; Green Campus</h3>
+                  </div>
+                </div>
+                <p className="text-text-secondary text-xs sm:text-sm font-body leading-relaxed flex-1">
+                  Strong MoUs with leading technology enterprises guarantee ongoing internship and recruitment pipelines, set within one of India&apos;s few LEED Silver certified eco-friendly engineering campuses with 15+ student chapters.
+                </p>
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10 mt-4 text-xs text-text-muted">
+                  <span className="text-emerald-400 font-medium">Highlights:</span>
+                  <span>LEED Silver Campus</span>
+                  <span>·</span>
+                  <span>Industry MoUs</span>
+                  <span>·</span>
+                  <span>15+ Active Clubs</span>
+                </div>
+              </div>
+            </FadeUp>
+
+          </div>
+
         </div>
 
         {/* ── ACADEMIC PROGRAMS ──────────────────────────────────── */}
