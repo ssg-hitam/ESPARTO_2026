@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
@@ -34,8 +34,6 @@ import {
 } from "@/data/team";
 
 export default function TeamPage() {
-  const [activeFilter, setActiveFilter] = useState<"all" | "student-core" | "faculty" | "chapters">("all");
-
   const getHandlingIcon = (text?: string) => {
     if (!text) return <Sparkles className="w-3.5 h-3.5 text-brand-orange" />;
     const h = text.toLowerCase();
@@ -50,9 +48,6 @@ export default function TeamPage() {
     if (h.includes("sponsor") || h.includes("direction") || h.includes("lead")) return <Handshake className="w-3.5 h-3.5 text-amber-400" />;
     return <Layers className="w-3.5 h-3.5 text-brand-orange" />;
   };
-
-  const leadOrganizer = ssgLeadership.find(m => m.id === "tejal-iiic");
-  const coreStudentLeaders = ssgLeadership.filter(m => m.id !== "tejal-iiic");
 
   return (
     <main className="min-h-screen pt-28 pb-28 bg-[#05020d] relative overflow-hidden text-text-primary selection:bg-brand-orange/30 selection:text-white">
@@ -91,7 +86,7 @@ export default function TeamPage() {
 
         {/* Hero Header */}
         <FadeUp delay={0.06} distance={20}>
-          <div className="max-w-4xl mb-12">
+          <div className="max-w-4xl mb-16">
             <div className="flex items-center gap-2.5 mb-4">
               <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-brand-orange font-mono font-bold text-[11px] uppercase tracking-wider">
                 HITAM STUDENT SELF GOVERNANCE
@@ -110,338 +105,183 @@ export default function TeamPage() {
             </h1>
 
             <p className="text-text-secondary text-base sm:text-lg font-body leading-relaxed max-w-2xl font-light">
-              Meet the executive student directors, student deans, and faculty mentorship council orchestrating Hyderabad Institute of Technology and Management&apos;s flagship national technical festival.
+              Meet the executive student directors, student deans, faculty coordinators, and technical chapter core teams driving Hyderabad Institute of Technology and Management&apos;s flagship national technical festival.
             </p>
-
-            {/* Quick Metrics Ribbon */}
-            <div className="flex items-center gap-6 sm:gap-10 pt-8 mt-8 border-t border-white/10 flex-wrap">
-              <div>
-                <span className="font-display font-black text-2xl sm:text-3xl text-white block">10</span>
-                <span className="text-[11px] font-mono text-text-muted uppercase tracking-wider">Core Student Deans</span>
-              </div>
-              <div className="w-[1px] h-8 bg-white/10 hidden sm:block" />
-              <div>
-                <span className="font-display font-black text-2xl sm:text-3xl text-white block">2</span>
-                <span className="text-[11px] font-mono text-text-muted uppercase tracking-wider">Faculty Advisors</span>
-              </div>
-              <div className="w-[1px] h-8 bg-white/10 hidden sm:block" />
-              <div>
-                <span className="font-display font-black text-2xl sm:text-3xl text-white block">11</span>
-                <span className="text-[11px] font-mono text-text-muted uppercase tracking-wider">Technical Chapters</span>
-              </div>
-              <div className="w-[1px] h-8 bg-white/10 hidden sm:block" />
-              <div>
-                <span className="font-display font-black text-2xl sm:text-3xl text-brand-orange block">OCT 9–10</span>
-                <span className="text-[11px] font-mono text-text-muted uppercase tracking-wider">Festival Dates</span>
-              </div>
-            </div>
-          </div>
-        </FadeUp>
-
-        {/* Refined Segmented Control Filter */}
-        <FadeUp delay={0.1}>
-          <div className="flex items-center p-1 rounded-2xl bg-[#0b061e] border border-white/10 w-fit mb-14 overflow-x-auto max-w-full">
-            <button
-              onClick={() => setActiveFilter("all")}
-              className={`px-4 sm:px-5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
-                activeFilter === "all"
-                  ? "bg-gradient-to-r from-brand-orange to-brand-magenta text-white shadow-[0_0_20px_rgba(255,94,0,0.35)]"
-                  : "text-text-muted hover:text-white"
-              }`}
-            >
-              All Directory (23)
-            </button>
-            <button
-              onClick={() => setActiveFilter("student-core")}
-              className={`px-4 sm:px-5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
-                activeFilter === "student-core"
-                  ? "bg-gradient-to-r from-brand-orange to-brand-magenta text-white shadow-[0_0_20px_rgba(255,94,0,0.35)]"
-                  : "text-text-muted hover:text-white"
-              }`}
-            >
-              Student Core (10)
-            </button>
-            <button
-              onClick={() => setActiveFilter("faculty")}
-              className={`px-4 sm:px-5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
-                activeFilter === "faculty"
-                  ? "bg-gradient-to-r from-brand-orange to-brand-magenta text-white shadow-[0_0_20px_rgba(255,94,0,0.35)]"
-                  : "text-text-muted hover:text-white"
-              }`}
-            >
-              Faculty Mentors (2)
-            </button>
-            <button
-              onClick={() => setActiveFilter("chapters")}
-              className={`px-4 sm:px-5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
-                activeFilter === "chapters"
-                  ? "bg-gradient-to-r from-brand-orange to-brand-magenta text-white shadow-[0_0_20px_rgba(255,94,0,0.35)]"
-                  : "text-text-muted hover:text-white"
-              }`}
-            >
-              Chapters &amp; Clubs (11)
-            </button>
           </div>
         </FadeUp>
 
         {/* ═══════════════════════════════════════════════════════════════════════
             SECTION 1: STUDENT ORGANIZING CORE
         ═══════════════════════════════════════════════════════════════════════ */}
-        {(activeFilter === "all" || activeFilter === "student-core") && (
-          <section className="mb-24">
-            
-            {/* Section Header */}
-            <div className="flex items-center justify-between gap-4 mb-8">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange">
-                  <Users2 className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-brand-orange font-bold block">
-                    EXECUTIVE STUDENT GOVERNANCE
-                  </span>
-                  <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
-                    STUDENT ORGANIZING CORE
-                  </h2>
-                </div>
+        <section className="mb-24">
+          
+          {/* Section Header */}
+          <div className="flex items-center justify-between gap-4 mb-10 pb-4 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange shrink-0">
+                <Users2 className="w-5 h-5" />
               </div>
-
-              <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase">
-                10 Core Leadership Positions
-              </span>
+              <div>
+                <span className="text-[11px] font-mono uppercase tracking-wider text-brand-orange font-bold block">
+                  EXECUTIVE STUDENT GOVERNANCE
+                </span>
+                <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
+                  STUDENT ORGANIZING CORE
+                </h2>
+              </div>
             </div>
 
-            {/* Featured Lead Fest Organizer Card: Tejal */}
-            {leadOrganizer && (
-              <div className="relative mb-10 rounded-3xl bg-gradient-to-br from-[#12092b] via-[#09041a] to-[#040210] border border-brand-orange/40 shadow-[0_0_50px_rgba(255,94,0,0.12)] overflow-hidden group">
-                <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+            <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
+              10 Leadership Heads
+            </span>
+          </div>
+
+          {/* Unified Core Student Leaders Grid (Exact Same Size & Dead-Center Middle Alignment) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {ssgLeadership.map((member) => (
+              <div
+                key={member.id}
+                className={`rounded-3xl bg-gradient-to-b from-[#0e0728] via-[#09041d] to-[#050212] border transition-all duration-300 group overflow-hidden flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_35px_rgba(255,94,0,0.18)] ${
+                  member.highlight
+                    ? "border-brand-orange/50 hover:border-brand-orange"
+                    : "border-white/10 hover:border-white/25"
+                }`}
+              >
+                {/* Fixed-Height Canvas with Exact Middle Alignment */}
+                <div className="relative w-full h-72 sm:h-80 bg-gradient-to-b from-[#180d38] via-[#0e0728] to-[#070318] overflow-hidden flex items-center justify-center p-4">
                   
-                  {/* Photo Studio Frame */}
-                  <div className="lg:col-span-5 relative h-[360px] sm:h-[420px] lg:h-[460px] bg-gradient-to-b from-[#1b0c38] via-[#0e0622] to-[#070314] overflow-hidden flex items-end justify-center">
-                    {/* Atmospheric radial studio spotlight behind cutout */}
-                    <div className="absolute inset-0 bg-radial from-brand-orange/20 via-brand-magenta/15 to-transparent blur-2xl pointer-events-none" />
-                    
-                    {leadOrganizer.image ? (
-                      <div className="relative w-full h-full flex items-end justify-center pt-6">
-                        <Image
-                          src={leadOrganizer.image}
-                          alt={leadOrganizer.name}
-                          width={450}
-                          height={550}
-                          className="object-contain object-bottom h-[92%] w-auto max-w-full drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] transition-transform duration-700 ease-out group-hover:scale-105"
-                          priority
-                        />
-                      </div>
-                    ) : (
-                      <div className="w-24 h-24 rounded-3xl bg-brand-orange/15 border border-brand-orange/30 flex items-center justify-center text-brand-orange mb-16">
-                        <Sparkles className="w-12 h-12" />
-                      </div>
-                    )}
+                  {/* Studio ambient backlight glow in the exact middle */}
+                  <div className="absolute w-44 h-44 rounded-full bg-gradient-to-b from-brand-orange/20 via-brand-magenta/15 to-transparent blur-xl pointer-events-none" />
 
-                    {/* Gradient fade to prevent harsh bottom cutoff */}
-                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#09041a] to-transparent pointer-events-none" />
-
-                    {/* Floating pill badge on photo */}
-                    <div className="absolute top-5 left-5">
-                      <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-brand-orange/40 text-brand-orange font-mono text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <Sparkles className="w-3 h-3 text-brand-orange" />
-                        LEAD FEST ORGANIZER
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Editorial Text Content */}
-                  <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-[11px] font-mono uppercase tracking-wider text-brand-magenta font-semibold">
-                          Student Self Governance Council
-                        </span>
-                        <span className="text-white/20">•</span>
-                        <span className="text-[11px] font-mono uppercase tracking-wider text-text-muted">
-                          Official Convener
-                        </span>
-                      </div>
-
-                      <h3 className="font-display font-black text-3xl sm:text-5xl text-white tracking-tight mb-2">
-                        {leadOrganizer.name}
-                      </h3>
-
-                      <p className="text-sm sm:text-base font-mono text-text-secondary mb-6">
-                        {leadOrganizer.role}
-                      </p>
-
-                      <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 mb-8 max-w-xl">
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-brand-orange font-bold block mb-1.5 flex items-center gap-1.5">
-                          <Handshake className="w-3.5 h-3.5" />
-                          EVENT RESPONSIBILITY &amp; MANDATE
-                        </span>
-                        <p className="text-xs sm:text-sm font-body text-white/90 leading-relaxed font-light">
-                          Directing overall festival vision, inter-wing alignment, administrative clearances, corporate industry partnerships, and flagship sponsorships for ESPARTO 2026.
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Official Contact Strip */}
-                    <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-white/10">
-                      {leadOrganizer.socials?.email && (
-                        <a
-                          href={`mailto:${leadOrganizer.socials.email}`}
-                          className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand-orange/40 text-xs font-mono text-white transition-all group/btn"
-                        >
-                          <Mail className="w-4 h-4 text-brand-orange transition-transform group-hover/btn:scale-110" />
-                          <span>{leadOrganizer.socials.email}</span>
-                        </a>
-                      )}
-                      {leadOrganizer.contact && (
-                        <a
-                          href={`tel:${leadOrganizer.contact.replace(/\s+/g, '')}`}
-                          className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-xs font-mono text-emerald-400 transition-all group/btn"
-                        >
-                          <Phone className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
-                          <span>{leadOrganizer.contact}</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            )}
-
-            {/* Core Student Leaders Grid (9 Members with Official Photos) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {coreStudentLeaders.map((member) => (
-                <div
-                  key={member.id}
-                  className="rounded-3xl bg-gradient-to-b from-[#0c0624] to-[#070316] border border-white/10 hover:border-white/20 transition-all duration-300 group overflow-hidden flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.3)] hover:shadow-[0_10px_35px_rgba(255,94,0,0.12)]"
-                >
-                  {/* Portrait Canvas */}
-                  <div className="relative aspect-[4/5] bg-gradient-to-b from-[#180d36] via-[#0d0724] to-[#070316] overflow-hidden flex items-end justify-center">
-                    
-                    {/* Ambient spotlight behind cutout */}
-                    <div className="absolute inset-0 bg-radial from-brand-orange/15 via-brand-violet/10 to-transparent blur-xl pointer-events-none" />
-
-                    {/* Member Photo */}
+                  {/* Uniform Centered Image Viewport Container */}
+                  <div className="relative w-52 h-64 sm:w-56 sm:h-68 flex items-center justify-center z-10">
                     {member.image ? (
-                      <div className="relative w-full h-full flex items-end justify-center pt-4">
-                        <Image
-                          src={member.image}
-                          alt={member.name}
-                          width={380}
-                          height={500}
-                          className="object-contain object-bottom h-[94%] w-auto max-w-full drop-shadow-[0_12px_24px_rgba(0,0,0,0.7)] transition-transform duration-500 ease-out group-hover:scale-105"
-                        />
-                      </div>
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        sizes="(max-width: 640px) 210px, 230px"
+                        className="object-contain object-center filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.75)] transition-transform duration-500 ease-out group-hover:scale-105"
+                        priority={member.highlight}
+                      />
                     ) : (
-                      <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-text-muted mb-12">
+                      <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-text-muted">
                         <Users2 className="w-8 h-8" />
                       </div>
                     )}
-
-                    {/* Bottom Vignette */}
-                    <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#070316] to-transparent pointer-events-none" />
-
-                    {/* SSG Role Pill on top */}
-                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2">
-                      <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-mono text-white/90 font-bold uppercase tracking-wider truncate">
-                        {member.role}
-                      </span>
-                      <span className="w-2 h-2 rounded-full bg-brand-orange/70 shrink-0" />
-                    </div>
                   </div>
 
-                  {/* Information Base Card */}
-                  <div className="p-5 sm:p-6 flex flex-col justify-between flex-grow">
-                    <div>
-                      <h3 className="font-display font-black text-2xl text-white tracking-tight group-hover:text-brand-orange transition-colors mb-2">
-                        {member.name}
-                      </h3>
+                  {/* Role Pill Badge */}
+                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-20">
+                    <span className={`px-3 py-1 rounded-full backdrop-blur-md border text-[10px] font-mono font-bold uppercase tracking-wider truncate ${
+                      member.highlight
+                        ? "bg-brand-orange/20 border-brand-orange/50 text-brand-orange"
+                        : "bg-black/60 border-white/15 text-white/90"
+                    }`}>
+                      {member.role}
+                    </span>
+                    <span className={`w-2 h-2 rounded-full shrink-0 ${
+                      member.highlight ? "bg-brand-orange shadow-[0_0_8px_#ff5e00]" : "bg-white/40"
+                    }`} />
+                  </div>
+                </div>
 
-                      {/* Event Handling Credit */}
-                      {member.handling && (
-                        <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/5 mb-4">
-                          <div className="flex items-center gap-1.5 mb-1 text-brand-orange">
-                            {getHandlingIcon(member.handling)}
-                            <span className="text-[10px] font-mono uppercase tracking-wider font-bold">
-                              HANDLING
-                            </span>
-                          </div>
-                          <p className="text-xs font-semibold text-white/90 leading-snug pl-5 font-body">
-                            {member.handling}
-                          </p>
+                {/* Content Base Card */}
+                <div className="p-5 sm:p-6 flex flex-col justify-between flex-grow bg-[#09041a]/60">
+                  <div>
+                    <h3 className="font-display font-black text-2xl text-white tracking-tight group-hover:text-brand-orange transition-colors mb-2.5">
+                      {member.name}
+                    </h3>
+
+                    {/* Responsibility Text (Clean & Direct - No "HANDLING FOR FEST" label) */}
+                    {member.handling && (
+                      <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 mb-4 flex items-start gap-2.5">
+                        <div className="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0 mt-0.5 text-brand-orange">
+                          {getHandlingIcon(member.handling)}
                         </div>
-                      )}
-                    </div>
-
-                    {/* Footer Contact Action */}
-                    <div className="pt-3 border-t border-white/5 flex items-center justify-between">
-                      {member.socials?.email && (
-                        <a
-                          href={`mailto:${member.socials.email}`}
-                          className="inline-flex items-center gap-2 text-xs font-mono text-text-muted hover:text-white transition-colors truncate max-w-full group/mail"
-                        >
-                          <Mail className="w-3.5 h-3.5 text-brand-orange shrink-0 group-hover/mail:scale-110 transition-transform" />
-                          <span className="truncate">{member.socials.email}</span>
-                        </a>
-                      )}
-                    </div>
+                        <p className="text-xs sm:text-sm font-body text-white/90 leading-snug font-medium">
+                          {member.handling}
+                        </p>
+                      </div>
+                    )}
                   </div>
 
+                  {/* Contact Action Footer */}
+                  <div className="pt-3 border-t border-white/5 flex flex-wrap items-center justify-between gap-2">
+                    {member.socials?.email && (
+                      <a
+                        href={`mailto:${member.socials.email}`}
+                        className="inline-flex items-center gap-2 text-xs font-mono text-text-muted hover:text-white transition-colors truncate max-w-full group/mail"
+                      >
+                        <Mail className="w-3.5 h-3.5 text-brand-orange shrink-0 group-hover/mail:scale-110 transition-transform" />
+                        <span className="truncate">{member.socials.email}</span>
+                      </a>
+                    )}
+                    {member.contact && (
+                      <a
+                        href={`tel:${member.contact.replace(/\s+/g, '')}`}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-[11px] font-mono transition-colors shrink-0"
+                      >
+                        <Phone className="w-3 h-3" />
+                        <span>{member.contact}</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            ))}
+          </div>
+
+          {/* Supporting Fest Wings (Creative Media & Collective Sponsorships) */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-[#09051c] border border-white/10">
+            <div className="flex items-center gap-2.5 mb-4">
+              <span className="w-2 h-2 rounded-full bg-cyan-400" />
+              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
+                SUPPORTING FEST WINGS &amp; COLLECTIVE TEAMS
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {eventSupportWings.map((wing) => (
+                <div
+                  key={wing.id}
+                  className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] font-bold uppercase tracking-wider">
+                        {wing.role}
+                      </span>
+                      <div className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center">
+                        {getHandlingIcon(wing.name)}
+                      </div>
+                    </div>
+
+                    <h4 className="font-display font-black text-xl text-white tracking-tight mb-1">
+                      {wing.name}
+                    </h4>
+                    <p className="text-xs font-mono text-brand-orange font-semibold mb-3">
+                      Lead: {wing.lead}
+                    </p>
+                    <p className="text-xs font-body text-text-secondary leading-relaxed">
+                      {wing.handling}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
+          </div>
 
-            {/* Supporting Event Wings (Photography/Media & Collective Sponsorships) */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-[#09051c] border border-white/10">
-              <div className="flex items-center gap-2.5 mb-4">
-                <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
-                  SUPPORTING FEST WINGS &amp; COLLECTIVE TEAMS
-                </h3>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {eventSupportWings.map((wing) => (
-                  <div
-                    key={wing.id}
-                    className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between gap-3 mb-2">
-                        <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] font-bold uppercase tracking-wider">
-                          {wing.role}
-                        </span>
-                        <div className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center">
-                          {getHandlingIcon(wing.name)}
-                        </div>
-                      </div>
-
-                      <h4 className="font-display font-black text-xl text-white tracking-tight mb-1">
-                        {wing.name}
-                      </h4>
-                      <p className="text-xs font-mono text-brand-orange font-semibold mb-3">
-                        Lead: {wing.lead}
-                      </p>
-                      <p className="text-xs font-body text-text-secondary leading-relaxed">
-                        {wing.handling}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-          </section>
-        )}
+        </section>
 
         {/* ═══════════════════════════════════════════════════════════════════════
             SECTION 2: FACULTY COORDINATORS
         ═══════════════════════════════════════════════════════════════════════ */}
-        {(activeFilter === "all" || activeFilter === "faculty") && (
-          <section className="mb-24">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-2xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange">
+        <section className="mb-24">
+          <div className="flex items-center justify-between gap-4 mb-10 pb-4 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange shrink-0">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <div>
@@ -454,140 +294,142 @@ export default function TeamPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {facultyCoordinators.map((faculty) => (
-                <div
-                  key={faculty.id}
-                  className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0c0628] via-[#08041d] to-[#040112] border border-white/10 hover:border-brand-orange/40 transition-all duration-300 group shadow-[0_4px_25px_rgba(0,0,0,0.3)] flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-start justify-between gap-4 mb-5">
-                      <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange group-hover:scale-105 transition-transform shrink-0">
-                          <GraduationCap className="w-7 h-7" />
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-orange block">
-                            {faculty.role}
-                          </span>
-                          <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
-                            {faculty.name}
-                          </h3>
-                        </div>
+            <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
+              2 Faculty Leads
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {facultyCoordinators.map((faculty) => (
+              <div
+                key={faculty.id}
+                className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0c0628] via-[#08041d] to-[#040112] border border-white/10 hover:border-brand-orange/40 transition-all duration-300 group shadow-[0_4px_25px_rgba(0,0,0,0.3)] flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-2xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange group-hover:scale-105 transition-transform shrink-0">
+                        <GraduationCap className="w-7 h-7" />
                       </div>
-
-                      <span className="px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[10px] font-bold uppercase tracking-wider shrink-0">
-                        Faculty Mentor
-                      </span>
+                      <div>
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-orange block">
+                          {faculty.role}
+                        </span>
+                        <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
+                          {faculty.name}
+                        </h3>
+                      </div>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 mb-6">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted block font-semibold mb-0.5">
-                        DEPARTMENT
-                      </span>
-                      <p className="text-xs font-mono text-white/90">
-                        {faculty.department}
-                      </p>
-                    </div>
+                    <span className="px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[10px] font-bold uppercase tracking-wider shrink-0">
+                      Faculty Coordinator
+                    </span>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
-                    {faculty.socials?.email && (
-                      <a
-                        href={`mailto:${faculty.socials.email}`}
-                        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand-orange/40 text-xs font-mono text-white transition-all"
-                      >
-                        <Mail className="w-3.5 h-3.5 text-brand-orange" />
-                        <span>{faculty.socials.email}</span>
-                      </a>
-                    )}
-                    {faculty.contact && (
-                      <a
-                        href={`tel:${faculty.socials?.phone || faculty.contact.replace(/\s+/g, '')}`}
-                        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-xs font-mono text-emerald-400 transition-all"
-                      >
-                        <Phone className="w-3.5 h-3.5" />
-                        <span>{faculty.contact}</span>
-                      </a>
-                    )}
+                  <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 mb-6">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted block font-semibold mb-0.5">
+                      DEPARTMENT
+                    </span>
+                    <p className="text-xs font-mono text-white/90">
+                      {faculty.department}
+                    </p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
+
+                <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
+                  {faculty.socials?.email && (
+                    <a
+                      href={`mailto:${faculty.socials.email}`}
+                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand-orange/40 text-xs font-mono text-white transition-all"
+                    >
+                      <Mail className="w-3.5 h-3.5 text-brand-orange" />
+                      <span>{faculty.socials.email}</span>
+                    </a>
+                  )}
+                  {faculty.contact && (
+                    <a
+                      href={`tel:${faculty.socials?.phone || faculty.contact.replace(/\s+/g, '')}`}
+                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-xs font-mono text-emerald-400 transition-all"
+                    >
+                      <Phone className="w-3.5 h-3.5" />
+                      <span>{faculty.contact}</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* ═══════════════════════════════════════════════════════════════════════
             SECTION 3: STUDENT CHAPTERS & CLUBS
         ═══════════════════════════════════════════════════════════════════════ */}
-        {(activeFilter === "all" || activeFilter === "chapters") && (
-          <section className="mb-20">
-            <div className="flex items-center justify-between gap-4 mb-8">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-                  <Cpu className="w-5 h-5" />
-                </div>
+        <section className="mb-20">
+          <div className="flex items-center justify-between gap-4 mb-10 pb-4 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+                <Cpu className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-bold block">
+                  EVENT HUBS &amp; CLUSTERS
+                </span>
+                <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
+                  STUDENT CHAPTERS &amp; CLUBS
+                </h2>
+              </div>
+            </div>
+
+            <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
+              11 Active Technical Bodies
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {chapterCommittees.map((chapter) => (
+              <div
+                key={chapter.id}
+                className="p-5 rounded-2xl bg-gradient-to-b from-[#0b0620] to-[#060314] border border-white/10 hover:border-cyan-400/40 transition-all duration-300 group flex flex-col justify-between"
+              >
                 <div>
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-bold block">
-                    EVENT HUBS &amp; CLUSTERS
+                  {/* Chapter Logo Canvas */}
+                  <div className="relative w-full h-32 rounded-xl bg-white/[0.03] border border-white/10 overflow-hidden flex items-center justify-center mb-4 p-4 group-hover:border-cyan-400/30 transition-colors">
+                    {chapter.image ? (
+                      <Image
+                        src={chapter.image}
+                        alt={chapter.name}
+                        width={140}
+                        height={90}
+                        className="object-contain max-h-20 w-auto filter contrast-105 group-hover:scale-110 transition-transform duration-300"
+                      />
+                    ) : (
+                      <Cpu className="w-10 h-10 text-cyan-400/60" />
+                    )}
+                  </div>
+
+                  <h3 className="font-display font-black text-lg text-white tracking-tight group-hover:text-cyan-400 transition-colors mb-1">
+                    {chapter.name}
+                  </h3>
+
+                  <p className="text-xs font-mono text-text-muted mb-2">
+                    {chapter.role}
+                  </p>
+
+                  <p className="text-[11px] font-body text-text-secondary leading-relaxed">
+                    {chapter.department}
+                  </p>
+                </div>
+
+                <div className="pt-3 mt-4 border-t border-white/5 flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-cyan-400 uppercase font-semibold">
+                    Organizing Partner
                   </span>
-                  <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
-                    STUDENT CHAPTERS &amp; CLUBS
-                  </h2>
+                  <ExternalLink className="w-3 h-3 text-text-muted group-hover:text-white transition-colors" />
                 </div>
               </div>
-
-              <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase">
-                11 Active Technical Bodies
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {chapterCommittees.map((chapter) => (
-                <div
-                  key={chapter.id}
-                  className="p-5 rounded-2xl bg-gradient-to-b from-[#0b0620] to-[#060314] border border-white/10 hover:border-cyan-400/40 transition-all duration-300 group flex flex-col justify-between"
-                >
-                  <div>
-                    {/* Chapter Logo Canvas */}
-                    <div className="relative w-full h-32 rounded-xl bg-white/[0.03] border border-white/10 overflow-hidden flex items-center justify-center mb-4 p-4 group-hover:border-cyan-400/30 transition-colors">
-                      {chapter.image ? (
-                        <Image
-                          src={chapter.image}
-                          alt={chapter.name}
-                          width={140}
-                          height={90}
-                          className="object-contain max-h-20 w-auto filter contrast-105 group-hover:scale-110 transition-transform duration-300"
-                        />
-                      ) : (
-                        <Cpu className="w-10 h-10 text-cyan-400/60" />
-                      )}
-                    </div>
-
-                    <h3 className="font-display font-black text-lg text-white tracking-tight group-hover:text-cyan-400 transition-colors mb-1">
-                      {chapter.name}
-                    </h3>
-
-                    <p className="text-xs font-mono text-text-muted mb-2">
-                      {chapter.role}
-                    </p>
-
-                    <p className="text-[11px] font-body text-text-secondary leading-relaxed">
-                      {chapter.department}
-                    </p>
-                  </div>
-
-                  <div className="pt-3 mt-4 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-cyan-400 uppercase font-semibold">
-                      Organizing Partner
-                    </span>
-                    <ExternalLink className="w-3 h-3 text-text-muted group-hover:text-white transition-colors" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+            ))}
+          </div>
+        </section>
 
       </Container>
     </main>
