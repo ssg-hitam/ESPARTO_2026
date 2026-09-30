@@ -174,7 +174,11 @@ export default function TeamPage() {
                       {faculty.name}
                     </h3>
 
-                    <p className="text-xs sm:text-sm font-mono text-text-secondary mt-2 leading-relaxed">
+                    <p className="text-xs sm:text-sm font-mono text-brand-orange/90 font-semibold mt-1">
+                      {faculty.role}
+                    </p>
+
+                    <p className="text-xs sm:text-sm font-mono text-text-secondary mt-1 leading-relaxed">
                       {faculty.department}
                     </p>
                   </div>

@@ -8,10 +8,10 @@ export const facultyCoordinators: Organizer[] = [
   {
     id: "dr-bindu-madhavi",
     name: "Dr. Bindu Madhavi",
-    role: "Faculty Coordinator",
+    role: "Associate Professor",
     department: "Electronics & Communication Engineering (ECE)",
     teamDomain: "faculty-coordinator",
-    contact: "+91 9160308130",
+    contact: "+91 91 6030 813 0",
     image: "/images/team/faculties/bindumam.png",
     highlight: true,
     socials: {
@@ -22,7 +22,7 @@ export const facultyCoordinators: Organizer[] = [
   {
     id: "mr-p-praveen",
     name: "Mr. P. Praveen",
-    role: "Faculty Coordinator",
+    role: "Associate Professor",
     department: "Mechanical Engineering (MECH)",
     teamDomain: "faculty-coordinator",
     image: "/images/team/faculties/praveensir.png",
