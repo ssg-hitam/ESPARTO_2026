@@ -86,6 +86,33 @@ export const TECHNICAL_CHAPTERS: TechnicalChapter[] = [
     logo: "/images/chapters/hitam-coding-club.png",
     description: "Premier coding and algorithmic problem solving club at HITAM",
   },
+  {
+    id: "hhc",
+    name: "HITAM Hydroponics Club",
+    shortName: "HHC",
+    category: "Technical Club",
+    domain: "Sustainable Tech & Agri-Robotics",
+    logo: "/images/chapters/HHC.jpg",
+    description: "Hydroponics, sustainable engineering and smart agriculture club",
+  },
+  {
+    id: "isampe",
+    name: "ISAMPE HITAM Chapter",
+    shortName: "ISAMPE",
+    category: "Technical Chapter",
+    domain: "Materials & Process Engineering",
+    logo: "/images/chapters/ISAMPE.png",
+    description: "Indian Society for the Advancement of Materials and Process Engineering",
+  },
+  {
+    id: "torquex",
+    name: "TorqueX HITAM",
+    shortName: "TorqueX",
+    category: "Technical Club",
+    domain: "Automotive & Mechanical Design",
+    logo: "/images/chapters/torquex-logo.jpg",
+    description: "Automotive engineering, EV prototyping and mechanical design club",
+  },
 ];
 
 

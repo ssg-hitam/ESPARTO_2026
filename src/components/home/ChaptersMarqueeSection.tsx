@@ -1,7 +1,10 @@
+'use client';
+
 import React from "react";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { TECHNICAL_CHAPTERS } from "@/data/chapters";
+import CircularCarousel from "@/components/ui/CircularCarousel";
 
 /**
  * ChaptersMarqueeSection Component
@@ -10,16 +13,15 @@ import { TECHNICAL_CHAPTERS } from "@/data/chapters";
  * - Organised by SSG (Student Self Governance)
  * - In collaboration with HITAM Technical Council
  * - Prominent SSG official emblem card balancing the header
- * - Multi-chapter infinite marquee showcasing all technical chapters & student clubs
+ * - 3D Circular Carousel showcasing all 11 technical chapters & student clubs
  */
 export function ChaptersMarqueeSection() {
-  // Infinite repetition for seamless 120fps CSS hardware-accelerated scroll
-  const marqueeChapters = [
-    ...TECHNICAL_CHAPTERS,
-    ...TECHNICAL_CHAPTERS,
-    ...TECHNICAL_CHAPTERS,
-    ...TECHNICAL_CHAPTERS,
-  ];
+  const carouselItems = TECHNICAL_CHAPTERS.map((ch) => ({
+    src: ch.logo,
+    alt: ch.name,
+    title: ch.shortName,
+    subtitle: ch.domain,
+  }));
 
   return (
     <section
@@ -46,7 +48,7 @@ export function ChaptersMarqueeSection() {
           <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" aria-hidden="true" />
 
           {/* Header & Enlarged SSG Logo Layout */}
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-10 sm:mb-12">
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-6 sm:mb-8">
             
             {/* Left Content Column */}
             <div className="md:col-span-8 lg:col-span-8 max-w-2xl">
@@ -80,49 +82,47 @@ export function ChaptersMarqueeSection() {
 
           </div>
 
-          {/* MARQUEE CONTAINER: Clean, high-contrast partner chapter cards */}
-          <div className="relative -mx-6 sm:-mx-10 lg:-mx-12 overflow-hidden">
+          {/* 3D CIRCULAR CAROUSEL: Interactive 3D cylinder showcasing all 11 technical chapters */}
+          <div className="relative -mx-6 sm:-mx-10 lg:-mx-12 overflow-hidden pt-4 pb-2">
             
             {/* Top & Bottom Hairline Accents */}
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-            {/* Linear Mask for Seamless Edge Fading */}
+            {/* Ambient lighting under the 3D ring */}
             <div 
-              className="relative w-full overflow-hidden py-3"
-              style={{
-                maskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
-                WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
-              }}
-            >
-              <div className="flex items-center gap-5 sm:gap-6 w-max animate-marquee hover:[animation-play-state:paused] py-2">
-                {marqueeChapters.map((chapter, index) => (
-                  <div
-                    key={`${chapter.id}-${index}`}
-                    className="group relative flex items-center gap-4 px-6 sm:px-7 py-3 sm:py-3.5 rounded-2xl border border-white/10 bg-[#0d0726]/90 backdrop-blur-md hover:border-brand-magenta/60 hover:shadow-[0_0_24px_rgba(255,0,122,0.25)] hover:scale-[1.03] transition-all duration-300 cursor-default shrink-0"
-                  >
-                    {/* Direct Logo Display (No clumsy nested box, uniform size, enlarged GDG) */}
-                    <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shrink-0">
-                      <Image
-                        src={chapter.logo}
-                        alt={chapter.name}
-                        width={64}
-                        height={64}
-                        className={`object-contain transition-transform duration-300 group-hover:scale-110 ${
-                          chapter.id === "gdg"
-                            ? "w-20 sm:w-24 max-h-12 scale-125"
-                            : "w-full h-full max-h-14 max-w-14"
-                        }`}
-                      />
-                    </div>
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[260px] bg-brand-purple/15 blur-[120px] pointer-events-none rounded-full" 
+              aria-hidden="true" 
+            />
 
-                    {/* Pure Chapter Name */}
-                    <span className="font-display font-extrabold text-sm sm:text-base text-text-primary tracking-wide group-hover:text-white transition-colors whitespace-nowrap">
-                      {chapter.shortName}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div style={{ width: '100%', height: '560px', position: 'relative' }}>
+              <CircularCarousel
+                items={carouselItems}
+                preset="cylinder"
+                intro="rise"
+                cardWidth={150}
+                aspectRatio={1}
+                speed={5}
+                captions
+                gap={15}
+                tilt={-17}
+                curve={0.77}
+                perspective={1880}
+                momentum={0.19}
+                parallax={0.23}
+                stretch={0.16}
+                depthFade={0.25}
+                fadeColor="#08041d"
+                innerShade={0.3}
+                cornerRadius={12}
+              />
+            </div>
+
+            {/* Interactive hint */}
+            <div className="relative z-10 flex items-center justify-center gap-2 -mt-2 text-xs text-text-tertiary tracking-wider font-mono uppercase">
+              <span>✦ Drag horizontally or scroll to spin</span>
+              <span className="opacity-40">•</span>
+              <span>Tap card to focus</span>
             </div>
           </div>
 
