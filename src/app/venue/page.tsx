@@ -6,12 +6,12 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/ui/FadeUp";
 import { FEST_INFO } from "@/lib/constants";
-import { 
-  ArrowLeft, 
-  MapPin, 
-  Navigation, 
-  Building2, 
-  Trees, 
+import {
+  ArrowLeft,
+  MapPin,
+  Navigation,
+  Building2,
+  Trees,
   ExternalLink,
   ChevronLeft,
   ChevronRight,
@@ -20,7 +20,7 @@ import {
   Play
 } from "lucide-react";
 
-type CampusMediaItem = 
+type CampusMediaItem =
   | { type: "video"; src: string; poster: string; alt: string }
   | { type: "image"; src: string; alt: string };
 
@@ -82,7 +82,7 @@ function CampusAutoCarousel() {
         playPromise.catch(() => {
           // If browser policy requires muted
           video.muted = true;
-          video.play().catch(() => {});
+          video.play().catch(() => { });
         });
       }
     } else {
@@ -109,7 +109,7 @@ function CampusAutoCarousel() {
   };
 
   return (
-    <section 
+    <section
       className="mb-20"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -119,9 +119,8 @@ function CampusAutoCarousel() {
         {campusMedia.map((item, idx) => (
           <div
             key={item.src}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              idx === activeIndex ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
-            }`}
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${idx === activeIndex ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
+              }`}
           >
             {item.type === "video" ? (
               <div className="relative w-full h-full bg-black">
@@ -191,11 +190,10 @@ function CampusAutoCarousel() {
               key={idx}
               onClick={() => setActiveIndex(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`transition-all duration-300 rounded-full ${
-                idx === activeIndex
+              className={`transition-all duration-300 rounded-full ${idx === activeIndex
                   ? "w-8 h-2 bg-brand-orange"
                   : "w-2 h-2 bg-white/40 hover:bg-white/70"
-              }`}
+                }`}
             />
           ))}
         </div>
@@ -208,11 +206,10 @@ function CampusAutoCarousel() {
             key={item.src}
             onClick={() => setActiveIndex(idx)}
             aria-label={`Select media ${idx + 1}: ${item.alt}`}
-            className={`relative h-16 sm:h-20 md:h-22 rounded-xl overflow-hidden border transition-all duration-300 ${
-              idx === activeIndex
+            className={`relative h-16 sm:h-20 md:h-22 rounded-xl overflow-hidden border transition-all duration-300 ${idx === activeIndex
                 ? "border-brand-orange ring-2 ring-brand-orange/40 scale-[1.03]"
                 : "border-white/10 opacity-60 hover:opacity-100 hover:border-white/30"
-            }`}
+              }`}
           >
             <Image
               src={item.type === "video" ? item.poster : item.src}
@@ -281,11 +278,11 @@ export default function VenuePage() {
             FIRST: CAMPUS DETAILS & GOOGLE MAPS GRID
         ═══════════════════════════════════════════════════════════════════════ */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          
+
           {/* Left Card: HITAM Campus with Entrance Photo */}
           <FadeUp delay={0.1} distance={30}>
             <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] overflow-hidden flex flex-col justify-between h-full group hover:border-brand-orange/40 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.4)]">
-              
+
               {/* Featured Campus Visual Header */}
               <div className="relative w-full h-64 sm:h-72 overflow-hidden bg-black/40">
                 <Image
@@ -297,7 +294,7 @@ export default function VenuePage() {
                   priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0c0628] via-transparent to-black/30" />
-                
+
                 <div className="absolute top-4 left-4 z-10">
                   <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-emerald-400 font-mono text-[10px] font-bold uppercase tracking-wider">
                     LEED Silver Rated Campus
@@ -366,7 +363,7 @@ export default function VenuePage() {
           {/* Right Card: Google Maps */}
           <FadeUp delay={0.16} distance={30}>
             <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] overflow-hidden flex flex-col justify-between h-full group hover:border-brand-magenta/40 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.4)]">
-              
+
               {/* Card Header */}
               <div className="p-6 pb-4 flex items-center justify-between border-b border-white/10">
                 <div className="flex items-center gap-3">
@@ -378,7 +375,7 @@ export default function VenuePage() {
                       GOOGLE MAPS
                     </h2>
                     <span className="text-[11px] font-mono text-text-muted uppercase">
-                      Live Campus Navigation
+
                     </span>
                   </div>
                 </div>
