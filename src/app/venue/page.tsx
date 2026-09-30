@@ -10,7 +10,6 @@ import {
   ArrowLeft, 
   MapPin, 
   Navigation, 
-  Compass, 
   Globe, 
   Building2, 
   Trees, 
@@ -156,21 +155,6 @@ function CampusAutoCarousel() {
   );
 }
 
-const directions = [
-  {
-    from: "From Rajiv Gandhi Int'l Airport (HYD)",
-    desc: "Direct transit via Outer Ring Road (ORR) towards Medchal / Gowdavelly exit.",
-  },
-  {
-    from: "From Secunderabad Railway Station",
-    desc: "MMTS suburban rail to Gowdavelly Station or direct TSRTC express bus to Medchal highway.",
-  },
-  {
-    from: "From Jubilee Bus Station (JBS)",
-    desc: "Direct buses along Medchal National Highway 44 directly connecting to the campus junction.",
-  },
-];
-
 export default function VenuePage() {
   return (
     <main className="min-h-screen pt-32 pb-24 bg-[#040210] relative overflow-hidden">
@@ -214,30 +198,28 @@ export default function VenuePage() {
         </FadeUp>
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            FIRST: CAMPUS INFO & DIRECTIONS GRID (WITH INTEGRATED GOOGLE MAP)
+            FIRST: CAMPUS DETAILS & GOOGLE MAPS GRID
         ═══════════════════════════════════════════════════════════════════════ */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           
-          {/* Campus Card (7 cols) with Integrated Google Map Header */}
-          <FadeUp delay={0.1} distance={30} className="lg:col-span-7">
+          {/* Left Card: HITAM Campus with Entrance Photo */}
+          <FadeUp delay={0.1} distance={30}>
             <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] overflow-hidden flex flex-col justify-between h-full group hover:border-brand-orange/40 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.4)]">
               
-              {/* Integrated Google Map Frame */}
-              <div className="relative w-full h-72 sm:h-80 overflow-hidden bg-black/60 border-b border-white/10">
-                <iframe
-                  src="https://maps.google.com/maps?q=Hyderabad%20Institute%20of%20Technology%20and%20Management&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="HITAM Campus Google Maps Location"
-                  className="w-full h-full filter contrast-[1.02]"
+              {/* Featured Campus Visual Header */}
+              <div className="relative w-full h-64 sm:h-72 overflow-hidden bg-black/40">
+                <Image
+                  src="/images/campus/hitam_campus_entrance.jpg"
+                  alt="HITAM Campus Entrance"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 650px"
+                  className="object-cover object-center filter contrast-105 group-hover:scale-105 transition-transform duration-700"
+                  priority
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0c0628] via-transparent to-black/30" />
                 
-                <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                  <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/15 text-emerald-400 font-mono text-[10px] font-bold uppercase tracking-wider shadow-lg">
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-emerald-400 font-mono text-[10px] font-bold uppercase tracking-wider">
                     LEED Silver Rated Campus
                   </span>
                 </div>
@@ -301,46 +283,64 @@ export default function VenuePage() {
             </div>
           </FadeUp>
 
-          {/* Directions Card (5 cols) */}
-          <FadeUp delay={0.16} distance={30} className="lg:col-span-5">
-            <div className="p-6 sm:p-8 rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] flex flex-col justify-between h-full shadow-[0_4px_30px_rgba(0,0,0,0.4)]">
-              <div>
-                <div className="flex items-center gap-3 mb-6">
+          {/* Right Card: Google Maps (Replaced HOW TO REACH) */}
+          <FadeUp delay={0.16} distance={30}>
+            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] overflow-hidden flex flex-col justify-between h-full group hover:border-brand-magenta/40 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.4)]">
+              
+              {/* Card Header */}
+              <div className="p-6 pb-4 flex items-center justify-between border-b border-white/10">
+                <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-brand-magenta/10 border border-brand-magenta/30 flex items-center justify-center text-brand-magenta shrink-0">
-                    <Compass className="w-5 h-5" />
+                    <Navigation className="w-5 h-5" />
                   </div>
                   <div>
                     <h2 className="font-display font-black text-2xl text-white tracking-tight uppercase">
-                      HOW TO REACH
+                      GOOGLE MAPS
                     </h2>
                     <span className="text-[11px] font-mono text-text-muted uppercase">
-                      Transit &amp; Commute Routes
+                      Live Campus Navigation
                     </span>
                   </div>
                 </div>
 
-                <ul className="space-y-3.5 text-sm font-body text-text-secondary leading-relaxed">
-                  {directions.map((d, i) => (
-                    <li key={i} className="p-4 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-brand-magenta/30 transition-colors">
-                      <strong className="text-white block font-display uppercase text-xs mb-1 tracking-wide">
-                        {d.from}
-                      </strong>
-                      <p className="text-xs font-light text-text-secondary">
-                        {d.desc}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
+                <a
+                  href="https://maps.app.goo.gl/MEkJE3oaEy7RjLqy7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-brand-magenta text-white text-xs font-mono font-bold tracking-wider uppercase transition-all border border-white/15 group/btn"
+                >
+                  <span>Open App</span>
+                  <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                </a>
               </div>
 
-              <div className="pt-6 border-t border-white/10 mt-6">
-                <div className="p-4 rounded-2xl bg-brand-orange/5 border border-brand-orange/20 flex items-start gap-3">
-                  <Globe className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
-                  <p className="text-xs font-body text-text-secondary leading-relaxed font-light">
-                    Special fest transit shuttles and campus navigation points will be active during both festival days (October 09–10, 2026).
-                  </p>
+              {/* Interactive Map Iframe Container */}
+              <div className="relative w-full flex-1 min-h-[340px] sm:min-h-[380px] bg-black/60">
+                <iframe
+                  src="https://maps.google.com/maps?q=Hyderabad%20Institute%20of%20Technology%20and%20Management&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="HITAM Campus Google Maps Navigation"
+                  className="w-full h-full filter contrast-[1.02]"
+                />
+              </div>
+
+              {/* Bottom Details Bar */}
+              <div className="p-4 sm:p-5 border-t border-white/10 bg-white/[0.01] flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-xs font-mono text-text-muted">
+                  <MapPin className="w-4 h-4 text-brand-orange shrink-0" />
+                  <span>Gowdavelly, Medchal, Hyderabad (17.5958° N, 78.4526° E)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Globe className="w-3.5 h-3.5 text-brand-magenta shrink-0" />
+                  <span className="text-[11px] font-mono text-text-secondary">HITAM Fest Venue</span>
                 </div>
               </div>
+
             </div>
           </FadeUp>
         </div>
