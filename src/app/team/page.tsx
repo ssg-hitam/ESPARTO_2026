@@ -143,10 +143,6 @@ export default function TeamPage() {
                 </h2>
               </div>
             </div>
-
-            <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
-              2 Faculty Leads
-            </span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -250,8 +246,8 @@ export default function TeamPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              {FEST_INFO.officialLinks.ssgInstagram && (
+            {FEST_INFO.officialLinks.ssgInstagram && (
+              <div className="flex items-center gap-3">
                 <a
                   href={FEST_INFO.officialLinks.ssgInstagram}
                   target="_blank"
@@ -263,11 +259,8 @@ export default function TeamPage() {
                   <Instagram className="w-3.5 h-3.5 transition-transform group-hover/ssg:scale-110" />
                   <span className="hidden sm:inline">@ssg_hitam</span>
                 </a>
-              )}
-              <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
-                10 Leadership Heads
-              </span>
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Featured First: Tejal (Student Dean — IIIC & Lead Fest Organizer) */}
@@ -478,10 +471,6 @@ export default function TeamPage() {
                 </h2>
               </div>
             </div>
-
-            <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
-              2 Operational Wings
-            </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -540,10 +529,6 @@ export default function TeamPage() {
                 </h2>
               </div>
             </div>
-
-            <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
-              11 Active Technical Bodies
-            </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { FEST_INFO } from "@/lib/constants";
-import { Calendar, MapPin, Globe, Instagram, Linkedin, Youtube, Twitter } from "lucide-react";
+import { Calendar, MapPin, Globe, Instagram, Linkedin, Youtube } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -128,27 +128,22 @@ export function Footer() {
         </div>
 
         {/* Bottom Attribution Bar with "Developed by SSG" */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-text-muted">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-body text-text-muted">
           <p>
             © {currentYear} {FEST_INFO.name} — {FEST_INFO.institution.shortName} Technical Fest. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          <div>
             <span className="text-text-muted/80">
               Developed by{" "}
               <a
-                href="https://www.instagram.com/ssg_hitam/"
+                href={FEST_INFO.officialLinks.ssgInstagram || "https://www.instagram.com/ssg_hitam/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="SSG HITAM Instagram"
-                className="text-text-secondary font-bold hover:text-brand-magenta hover:underline underline-offset-2 transition-all inline-block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-magenta rounded"
+                className="text-text-secondary font-semibold hover:text-brand-magenta hover:underline underline-offset-2 transition-all inline-block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-magenta rounded"
               >
                 SSG
               </a>
-            </span>
-            <span className="text-white/20">•</span>
-            <span className="flex items-center gap-1.5 text-text-muted">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-orange inline-block" />
-              <span>HITAM INITIATIVE</span>
             </span>
           </div>
         </div>
