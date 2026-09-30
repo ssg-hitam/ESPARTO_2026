@@ -16,170 +16,88 @@ import {
   Trees, 
   ExternalLink,
   ChevronLeft,
-  ChevronRight,
-  Volume2,
-  VolumeX,
-  Play
+  ChevronRight
 } from "lucide-react";
 
-interface CampusMediaItem {
-  type: "video" | "image";
-  src: string;
-  poster?: string;
-  alt: string;
-  badge: string;
-}
-
-const campusMedia: CampusMediaItem[] = [
+const campusPhotos = [
   {
-    type: "video",
-    src: "/videos/hitam_campus_walkthrough.mp4",
-    poster: "/images/campus/hitam_tour_poster.jpg",
-    alt: "HITAM Campus Cinematic Walkthrough",
-    badge: "Official Walkthrough",
-  },
-  {
-    type: "image",
     src: "/images/campus/hitam_campus_facade.jpg",
     alt: "HITAM Academic Complex & Main Facade",
-    badge: "Main Facade",
   },
   {
-    type: "image",
     src: "/images/campus/hitam_campus_aerial.jpg",
     alt: "HITAM Main Campus Aerial View",
-    badge: "Aerial View",
   },
   {
-    type: "image",
     src: "/images/campus/hitam_campus_entrance.jpg",
     alt: "HITAM Campus Entrance & Avenue Trees",
-    badge: "Campus Entrance",
   },
   {
-    type: "image",
     src: "/images/campus/hitam_campus_panorama.jpg",
     alt: "HITAM Campus Aerial Panorama",
-    badge: "Green Canopy",
   },
   {
-    type: "image",
     src: "/images/campus/hitam_campus_greenary.jpg",
     alt: "HITAM Green Campus Architecture",
-    badge: "Eco Architecture",
   },
   {
-    type: "image",
     src: "/images/campus/hitam_campus_mainstairs.jpg",
     alt: "HITAM Central Campus Plazas",
-    badge: "Central Plazas",
   },
 ];
 
 function CampusAutoCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
-  const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
-  // Play video whenever activeIndex === 0
-  useEffect(() => {
-    if (activeIndex === 0 && videoRef.current) {
-      videoRef.current.play().catch(() => {
-        // Handled silently if autoplay restricted
-      });
-    }
-  }, [activeIndex]);
-
-  // Auto-advance: 12 seconds for video slide, 3.8s for photos
+  // Auto-advance every 3.5 seconds
   useEffect(() => {
     if (isPaused) return;
-    const intervalTime = activeIndex === 0 ? 12000 : 3800;
     const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % campusMedia.length);
-    }, intervalTime);
+      setActiveIndex((prev) => (prev + 1) % campusPhotos.length);
+    }, 3500);
     return () => clearInterval(timer);
-  }, [isPaused, activeIndex]);
+  }, [isPaused]);
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + campusMedia.length) % campusMedia.length);
+    setActiveIndex((prev) => (prev - 1 + campusPhotos.length) % campusPhotos.length);
   };
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % campusMedia.length);
+    setActiveIndex((prev) => (prev + 1) % campusPhotos.length);
   };
 
   return (
     <section 
-      className="mb-16"
+      className="mb-20"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Cinematic Main Viewport */}
-      <div className="relative w-full h-72 sm:h-96 md:h-[480px] lg:h-[540px] rounded-3xl border border-white/10 overflow-hidden bg-black shadow-[0_8px_40px_rgba(0,0,0,0.6)] group">
-        {campusMedia.map((item, idx) => (
+      <div className="relative w-full h-72 sm:h-96 md:h-[460px] lg:h-[520px] rounded-3xl border border-white/10 overflow-hidden bg-black/60 shadow-[0_8px_40px_rgba(0,0,0,0.6)] group">
+        {campusPhotos.map((photo, idx) => (
           <div
-            key={item.src}
+            key={photo.src}
             className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              idx === activeIndex ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
+              idx === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             }`}
           >
-            {item.type === "video" ? (
-              <div className="relative w-full h-full bg-black">
-                <video
-                  ref={videoRef}
-                  src={item.src}
-                  poster={item.poster}
-                  autoPlay
-                  loop
-                  muted={isMuted}
-                  playsInline
-                  preload="auto"
-                  className="w-full h-full object-cover object-center"
-                />
-
-                {/* Video Tag badge */}
-                <div className="absolute top-4 left-4 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-brand-orange/40 text-brand-orange font-mono text-[11px] font-bold uppercase tracking-wider">
-                  <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
-                  <span>Campus Walkthrough Video</span>
-                </div>
-
-                {/* Sound Control Button */}
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsMuted(!isMuted);
-                  }}
-                  aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-                  className="absolute bottom-6 right-6 z-30 p-2.5 rounded-full bg-black/70 hover:bg-brand-orange backdrop-blur-md border border-white/20 text-white transition-all duration-200 hover:scale-110 shadow-lg"
-                >
-                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                </button>
-              </div>
-            ) : (
-              <div className="relative w-full h-full">
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  fill
-                  sizes="(max-width: 1280px) 100vw, 1200px"
-                  priority={idx <= 1}
-                  className="object-cover object-center filter contrast-105"
-                />
-                <div className="absolute top-4 left-4 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-white/90 font-mono text-[11px] font-bold uppercase tracking-wider">
-                  <span>{item.badge}</span>
-                </div>
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              sizes="(max-width: 1280px) 100vw, 1200px"
+              priority={idx === 0}
+              className="object-cover object-center filter contrast-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
           </div>
         ))}
 
         {/* Prev Button */}
         <button
           onClick={handlePrev}
-          aria-label="Previous slide"
+          aria-label="Previous photo"
           className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-brand-orange backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-105"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -188,7 +106,7 @@ function CampusAutoCarousel() {
         {/* Next Button */}
         <button
           onClick={handleNext}
-          aria-label="Next slide"
+          aria-label="Next photo"
           className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-brand-orange backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-105"
         >
           <ChevronRight className="w-5 h-5" />
@@ -196,11 +114,11 @@ function CampusAutoCarousel() {
 
         {/* Bottom Dot Indicators */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
-          {campusMedia.map((_, idx) => (
+          {campusPhotos.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setActiveIndex(idx)}
-              aria-label={`Go to slide ${idx + 1}`}
+              aria-label={`Go to photo ${idx + 1}`}
               className={`transition-all duration-300 rounded-full ${
                 idx === activeIndex
                   ? "w-8 h-2 bg-brand-orange"
@@ -212,32 +130,25 @@ function CampusAutoCarousel() {
       </div>
 
       {/* Thumbnail Bar */}
-      <div className="grid grid-cols-4 sm:grid-cols-7 max-w-5xl mx-auto gap-2 sm:gap-3 mt-4">
-        {campusMedia.map((item, idx) => (
+      <div className="grid grid-cols-6 max-w-4xl mx-auto gap-2 sm:gap-3 mt-4">
+        {campusPhotos.map((photo, idx) => (
           <button
-            key={item.src}
+            key={photo.src}
             onClick={() => setActiveIndex(idx)}
-            aria-label={`Select media ${idx + 1}: ${item.alt}`}
-            className={`relative h-16 sm:h-20 md:h-22 rounded-xl overflow-hidden border transition-all duration-300 ${
+            aria-label={`Select photo ${idx + 1}: ${photo.alt}`}
+            className={`relative h-16 sm:h-20 md:h-24 rounded-xl overflow-hidden border transition-all duration-300 ${
               idx === activeIndex
-                ? "border-brand-orange ring-2 ring-brand-orange/40 scale-[1.03]"
+                ? "border-brand-orange ring-2 ring-brand-orange/40 scale-[1.02]"
                 : "border-white/10 opacity-60 hover:opacity-100 hover:border-white/30"
             }`}
           >
             <Image
-              src={item.poster || item.src}
-              alt={item.alt}
+              src={photo.src}
+              alt={photo.alt}
               fill
-              sizes="(max-width: 640px) 25vw, 160px"
+              sizes="(max-width: 640px) 16vw, 160px"
               className="object-cover object-center"
             />
-            {item.type === "video" && (
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                <div className="w-6 h-6 rounded-full bg-brand-orange/90 flex items-center justify-center shadow-md">
-                  <Play className="w-3 h-3 text-white fill-white ml-0.5" />
-                </div>
-              </div>
-            )}
           </button>
         ))}
       </div>
@@ -303,33 +214,30 @@ export default function VenuePage() {
         </FadeUp>
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            CAMPUS VIDEO & PHOTO AUTO-CAROUSEL (FIRST MEDIA PRESENTATION)
+            FIRST: CAMPUS INFO & DIRECTIONS GRID (WITH INTEGRATED GOOGLE MAP)
         ═══════════════════════════════════════════════════════════════════════ */}
-        <FadeUp delay={0.08} distance={20}>
-          <CampusAutoCarousel />
-        </FadeUp>
-
-        {/* Main Grid: Campus Info & Directions */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
           
-          {/* Campus Card (7 cols) with Photo Preview */}
-          <FadeUp delay={0.12} distance={30} className="lg:col-span-7">
+          {/* Campus Card (7 cols) with Integrated Google Map Header */}
+          <FadeUp delay={0.1} distance={30} className="lg:col-span-7">
             <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] overflow-hidden flex flex-col justify-between h-full group hover:border-brand-orange/40 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.4)]">
               
-              {/* Featured Campus Visual Header */}
-              <div className="relative w-full h-64 sm:h-72 overflow-hidden bg-black/40">
-                <Image
-                  src="/images/campus/hitam_campus_aerial.jpg"
-                  alt="HITAM Main Campus Aerial View"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 700px"
-                  className="object-cover object-center filter contrast-105 group-hover:scale-105 transition-transform duration-700"
-                  priority
+              {/* Integrated Google Map Frame */}
+              <div className="relative w-full h-72 sm:h-80 overflow-hidden bg-black/60 border-b border-white/10">
+                <iframe
+                  src="https://maps.google.com/maps?q=Hyderabad%20Institute%20of%20Technology%20and%20Management&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="HITAM Campus Google Maps Location"
+                  className="w-full h-full filter contrast-[1.02]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0c0628] via-transparent to-black/30" />
                 
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-emerald-400 font-mono text-[10px] font-bold uppercase tracking-wider">
+                <div className="absolute top-4 left-4 z-10 pointer-events-none">
+                  <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/15 text-emerald-400 font-mono text-[10px] font-bold uppercase tracking-wider shadow-lg">
                     LEED Silver Rated Campus
                   </span>
                 </div>
@@ -394,7 +302,7 @@ export default function VenuePage() {
           </FadeUp>
 
           {/* Directions Card (5 cols) */}
-          <FadeUp delay={0.2} distance={30} className="lg:col-span-5">
+          <FadeUp delay={0.16} distance={30} className="lg:col-span-5">
             <div className="p-6 sm:p-8 rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] flex flex-col justify-between h-full shadow-[0_4px_30px_rgba(0,0,0,0.4)]">
               <div>
                 <div className="flex items-center gap-3 mb-6">
@@ -438,60 +346,10 @@ export default function VenuePage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            CAMPUS GOOGLE MAP (INTERACTIVE EMBED)
+            NEXT: CAMPUS PHOTO AUTO-CAROUSEL
         ═══════════════════════════════════════════════════════════════════════ */}
-        <FadeUp delay={0.24} distance={30} className="mb-20">
-          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] p-4 sm:p-7 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
-            {/* Header / Info bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5 pb-5 border-b border-white/10">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-display font-black text-xl text-white tracking-tight uppercase">
-                      HITAM ON GOOGLE MAPS
-                    </h3>
-                    <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-orange/10 border border-brand-orange/30 text-brand-orange font-mono text-[10px] font-bold uppercase tracking-wider">
-                      Live Navigation
-                    </span>
-                  </div>
-                  <p className="text-xs font-mono text-text-muted mt-0.5">
-                    Gowdavelly, Medchal, Hyderabad, Telangana 501401 (17.5958° N, 78.4526° E)
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <a
-                  href="https://maps.app.goo.gl/MEkJE3oaEy7RjLqy7"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 text-white text-xs font-mono font-bold tracking-wider uppercase transition-all shadow-md shadow-brand-orange/20 group"
-                >
-                  <Navigation className="w-3.5 h-3.5" />
-                  <span>OPEN IN GOOGLE MAPS</span>
-                  <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
-              </div>
-            </div>
-
-            {/* Map Frame Container (matching img 2) */}
-            <div className="relative w-full h-[380px] sm:h-[460px] rounded-2xl overflow-hidden border border-white/10 bg-[#12121e] shadow-inner">
-              <iframe
-                src="https://maps.google.com/maps?q=Hyderabad%20Institute%20of%20Technology%20and%20Management&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Hyderabad Institute of Technology and Management Location Map"
-                className="w-full h-full filter contrast-[1.02]"
-              />
-            </div>
-          </div>
+        <FadeUp delay={0.2} distance={30}>
+          <CampusAutoCarousel />
         </FadeUp>
 
       </Container>
