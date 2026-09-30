@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
@@ -16,33 +16,38 @@ import {
   Trophy, 
   CheckCircle2, 
   X, 
-  Filter,
-  Sparkles
+  Ticket,
+  ChevronLeft,
+  ChevronRight,
+  Info
 } from "lucide-react";
 
-const CATEGORIES: EventCategoryType[] = [
-  "All",
-  "Hackathon",
-  "Ideathon",
-  "Challenge",
-  "Workshop",
-  "Gaming & Coding"
+const CATEGORIES: { label: string; value: EventCategoryType }[] = [
+  { label: "ALL", value: "All" },
+  { label: "HACKATHONS", value: "Hackathon" },
+  { label: "IDEATHONS", value: "Ideathon" },
+  { label: "CHALLENGES", value: "Challenge" },
+  { label: "WORKSHOPS", value: "Workshop" },
+  { label: "GAMING & CODING", value: "Gaming & Coding" },
 ];
 
 const DAYS = [
-  { label: "All Days", value: "all" },
-  { label: "Day 1 (Oct 9)", value: "1" },
-  { label: "Day 2 (Oct 10)", value: "2" },
-  { label: "Both Days", value: "both" },
+  { label: "ALL DAYS", value: "all" },
+  { label: "DAY 1 (OCT 09)", value: "1" },
+  { label: "DAY 2 (OCT 10)", value: "2" },
+  { label: "BOTH DAYS", value: "both" },
 ];
+
+const ITEMS_PER_PAGE = 6;
 
 export default function EventsPage() {
   const [selectedCategory, setSelectedCategory] = useState<EventCategoryType>("All");
   const [selectedDay, setSelectedDay] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeModalEvent, setActiveModalEvent] = useState<FestEventItem | null>(null);
 
-  // Compute dynamic counts for category tabs
+  // Dynamic counts for categories
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { All: FEST_EVENTS.length };
     FEST_EVENTS.forEach((ev) => {
@@ -51,7 +56,7 @@ export default function EventsPage() {
     return counts;
   }, []);
 
-  // Compute dynamic counts for day filters
+  // Dynamic counts for days
   const dayCounts = useMemo(() => {
     return {
       all: FEST_EVENTS.length,
@@ -98,12 +103,24 @@ export default function EventsPage() {
     });
   }, [selectedCategory, selectedDay, searchQuery]);
 
+  // Reset to first page whenever filter or search query changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, selectedDay, searchQuery]);
+
+  // Pagination calculation
+  const totalPages = Math.max(1, Math.ceil(filteredEvents.length / ITEMS_PER_PAGE));
+  const paginatedEvents = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredEvents.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredEvents, currentPage]);
+
   const hasActiveFilters = selectedCategory !== "All" || selectedDay !== "all" || searchQuery.trim() !== "";
 
   return (
-    <main className="min-h-screen pt-32 pb-24 bg-[#040210] relative overflow-hidden text-text-primary">
+    <main className="min-h-screen pt-28 pb-24 bg-[#040210] relative overflow-hidden text-text-primary">
       
-      {/* ESPARTO Brand Atmospheric Aura */}
+      {/* ESPARTO Brand Atmosphere */}
       <div 
         className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full bg-brand-purple/10 blur-[160px] pointer-events-none"
         aria-hidden="true"
@@ -115,74 +132,177 @@ export default function EventsPage() {
 
       <Container size="lg" className="relative z-10">
         
-        {/* Breadcrumb Navigation */}
+        {/* Navigation Breadcrumb */}
         <FadeUp delay={0}>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors mb-6 group"
           >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-brand-orange" />
+            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1 text-brand-orange" />
             <span>BACK TO HOME</span>
           </Link>
         </FadeUp>
 
-        {/* Section Header */}
-        <FadeUp delay={0.08} distance={30}>
-          <div className="mb-12">
-            <div className="max-w-3xl mb-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-magenta/10 border border-brand-magenta/30 text-brand-magenta text-[11px] font-mono uppercase tracking-wider mb-4">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>OFFICIAL FESTIVAL PROGRAM</span>
-              </div>
-              <h1 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-text-primary tracking-tight leading-[1.05] uppercase mb-4">
-                TECHNICAL <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">
-                  EVENTS &amp; TRACKS
+        {/* Section Headline */}
+        <FadeUp delay={0.06} distance={20}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-6 border-b border-white/10">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-brand-orange">
+                  ESPARTO 2026
                 </span>
+                <span className="text-white/20 text-xs">/</span>
+                <span className="text-[11px] font-mono tracking-wider text-text-muted">
+                  OFFICIAL DIRECTORY
+                </span>
+              </div>
+              <h1 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight uppercase">
+                EVENTS &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">COMPETITIONS</span>
               </h1>
-              <p className="text-text-secondary text-base sm:text-lg font-body leading-relaxed border-l-2 border-brand-magenta/40 pl-5">
-                15 official tracks organized across hackathons, ideathons, workshops, and engineering competitions at HITAM on October 09 &amp; 10, 2026. Explore team formats, check registration fees, and register directly.
-              </p>
             </div>
 
             {/* Quick Metrics Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-4 rounded-2xl border border-white/10 bg-[#08041d]/80 backdrop-blur-md">
-                <span className="text-text-muted font-mono text-[11px] uppercase block mb-1">TOTAL EVENTS</span>
-                <span className="font-display font-black text-2xl text-white">15 Tracks</span>
+            <div className="flex items-center gap-3 shrink-0 text-xs font-mono">
+              <div className="px-3 py-1.5 rounded-xl bg-[#08041d] border border-white/10">
+                <span className="text-text-muted text-[10px] block uppercase">TOTAL TRACKS</span>
+                <strong className="text-white text-xs">15 Events</strong>
               </div>
-              <div className="p-4 rounded-2xl border border-white/10 bg-[#08041d]/80 backdrop-blur-md">
-                <span className="text-text-muted font-mono text-[11px] uppercase block mb-1">PRIZE POOL</span>
-                <span className="font-display font-black text-2xl text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-amber">₹90,000+</span>
+              <div className="px-3 py-1.5 rounded-xl bg-[#08041d] border border-white/10">
+                <span className="text-text-muted text-[10px] block uppercase">PRIZE POOL</span>
+                <strong className="text-brand-orange text-xs">₹90,000+</strong>
               </div>
-              <div className="p-4 rounded-2xl border border-white/10 bg-[#08041d]/80 backdrop-blur-md">
-                <span className="text-text-muted font-mono text-[11px] uppercase block mb-1">FESTIVAL DATES</span>
-                <span className="font-display font-black text-2xl text-white">Oct 9–10</span>
-              </div>
-              <div className="p-4 rounded-2xl border border-white/10 bg-[#08041d]/80 backdrop-blur-md">
-                <span className="text-text-muted font-mono text-[11px] uppercase block mb-1">ELIGIBILITY</span>
-                <span className="font-display font-black text-2xl text-white">All Colleges</span>
+              <div className="px-3 py-1.5 rounded-xl bg-[#08041d] border border-white/10">
+                <span className="text-text-muted text-[10px] block uppercase">OCT 09–10</span>
+                <strong className="text-white text-xs">HITAM Campus</strong>
               </div>
             </div>
           </div>
         </FadeUp>
 
-        {/* Filter & Search Toolbar */}
-        <FadeUp delay={0.14} distance={25}>
-          <div className="p-5 sm:p-6 rounded-3xl border border-brand-violet/25 bg-[#08041d]/90 backdrop-blur-md mb-10 shadow-[0_4px_30px_rgba(0,0,0,0.4)] space-y-4">
+        {/* ── MASTER 2-COLUMN LAYOUT: SIDEBAR + MAIN CONTENT ──────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* ── LEFT SIDEBAR: CATEGORIES & CONTROLS ───────────────────────────── */}
+          <aside className="lg:col-span-4 xl:col-span-3 lg:sticky lg:top-28 space-y-6">
             
-            {/* Search Row & Day Switcher */}
-            <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+            {/* Category Index Card */}
+            <div className="rounded-2xl border border-white/10 bg-[#08041d]/90 backdrop-blur-md overflow-hidden shadow-lg">
               
-              {/* Search Box */}
+              {/* Sidebar Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/[0.02]">
+                <span className="text-xs font-mono font-bold tracking-widest uppercase text-text-primary">
+                  CATEGORIES
+                </span>
+                <span className="text-[11px] font-mono text-brand-orange font-bold">
+                  INDEX [{CATEGORIES.length}]
+                </span>
+              </div>
+
+              {/* Vertical Category Options Stack */}
+              <div className="p-2 space-y-1">
+                {CATEGORIES.map((cat) => {
+                  const isActive = selectedCategory === cat.value;
+                  const count = categoryCounts[cat.value] || 0;
+                  return (
+                    <button
+                      key={cat.value}
+                      onClick={() => setSelectedCategory(cat.value)}
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-mono text-xs transition-all text-left group ${
+                        isActive
+                          ? "bg-gradient-to-r from-brand-orange to-brand-magenta text-white font-bold shadow-[0_0_15px_rgba(255,94,0,0.35)]"
+                          : "text-text-secondary hover:text-white hover:bg-white/[0.04] border border-transparent"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className={`w-1.5 h-1.5 rounded-xs transition-transform ${
+                          isActive ? "bg-white scale-125" : "bg-text-muted group-hover:bg-brand-magenta"
+                        }`} />
+                        <span className="tracking-wider uppercase">{cat.label}</span>
+                      </div>
+                      <span className={`text-[11px] font-mono ${
+                        isActive ? "text-white/90 font-bold" : "text-text-muted group-hover:text-text-secondary"
+                      }`}>
+                        [{count.toString().padStart(2, "0")}]
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+            </div>
+
+            {/* Schedule / Day Index Card */}
+            <div className="rounded-2xl border border-white/10 bg-[#08041d]/90 backdrop-blur-md overflow-hidden shadow-lg">
+              
+              <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/[0.02]">
+                <span className="text-xs font-mono font-bold tracking-widest uppercase text-text-primary">
+                  SCHEDULE
+                </span>
+                <span className="text-[11px] font-mono text-brand-magenta font-bold">
+                  DAYS [02]
+                </span>
+              </div>
+
+              <div className="p-2 space-y-1">
+                {DAYS.map((d) => {
+                  const isActive = selectedDay === d.value;
+                  const count = dayCounts[d.value as keyof typeof dayCounts];
+                  return (
+                    <button
+                      key={d.value}
+                      onClick={() => setSelectedDay(d.value)}
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-mono text-xs transition-all text-left group ${
+                        isActive
+                          ? "bg-white/15 text-white font-bold border border-white/20"
+                          : "text-text-secondary hover:text-white hover:bg-white/[0.04] border border-transparent"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className={`w-1.5 h-1.5 rounded-xs ${
+                          isActive ? "bg-brand-magenta" : "bg-text-muted"
+                        }`} />
+                        <span className="tracking-wider">{d.label}</span>
+                      </div>
+                      <span className={`text-[11px] font-mono ${
+                        isActive ? "text-white font-bold" : "text-text-muted"
+                      }`}>
+                        [{count.toString().padStart(2, "0")}]
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+            </div>
+
+            {/* ESPARTO 2-Day Pass Notice Box */}
+            <div className="p-4 rounded-2xl border border-brand-orange/30 bg-gradient-to-br from-brand-orange/10 via-[#08041d] to-[#08041d] text-xs font-mono space-y-2">
+              <div className="flex items-center gap-2 text-brand-orange font-bold uppercase text-[11px] tracking-wider">
+                <Ticket className="w-3.5 h-3.5" />
+                <span>ESPARTO PASS – ₹700</span>
+              </div>
+              <p className="text-text-secondary font-body text-[11px] leading-relaxed">
+                Provides full access to the two-day technical fest. Register separately for individual competitions on Unstop.
+              </p>
+            </div>
+
+          </aside>
+
+          {/* ── RIGHT MAIN AREA: SEARCH & 2-COLUMN EVENT CARDS ───────────────── */}
+          <div className="lg:col-span-8 xl:col-span-9 space-y-6">
+            
+            {/* Top Search & Filter Status Row */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-3 rounded-2xl bg-[#08041d]/90 border border-white/10">
+              
+              {/* Search Bar */}
               <div className="relative flex-1">
                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by event title, chapter (e.g. IEEE, GDG, HHC), or keywords..."
-                  className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs sm:text-sm font-body text-text-primary placeholder:text-text-muted/60 focus:outline-none focus:border-brand-magenta focus:ring-1 focus:ring-brand-magenta transition-all"
+                  placeholder="Search events by title, chapter (e.g. IEEE, GDG, HHC, Torque X)..."
+                  className="w-full pl-10 pr-9 py-2 rounded-xl bg-black/40 border border-white/10 text-xs font-body text-text-primary placeholder:text-text-muted/60 focus:outline-none focus:border-brand-magenta transition-all"
                 />
                 {searchQuery && (
                   <button
@@ -195,245 +315,220 @@ export default function EventsPage() {
                 )}
               </div>
 
-              {/* Day Filter Pills */}
-              <div className="flex items-center gap-1.5 p-1 bg-black/40 rounded-xl border border-white/10 overflow-x-auto shrink-0">
-                {DAYS.map((d) => {
-                  const isActive = selectedDay === d.value;
-                  const count = dayCounts[d.value as keyof typeof dayCounts];
-                  return (
-                    <button
-                      key={d.value}
-                      onClick={() => setSelectedDay(d.value)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all whitespace-nowrap flex items-center gap-1.5 ${
-                        isActive
-                          ? "bg-gradient-to-r from-brand-orange to-brand-magenta text-white shadow-[0_0_15px_rgba(255,94,0,0.35)]"
-                          : "text-text-secondary hover:text-white hover:bg-white/5"
-                      }`}
-                    >
-                      <span>{d.label}</span>
-                      <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                        isActive ? "bg-black/30 text-white" : "bg-white/10 text-text-muted"
-                      }`}>
-                        {count}
-                      </span>
-                    </button>
-                  );
-                })}
+              {/* Status & Filter Reset */}
+              <div className="flex items-center justify-between sm:justify-end gap-3 px-2 text-xs font-mono text-text-muted shrink-0">
+                <span>
+                  Showing <strong className="text-white">{filteredEvents.length}</strong> Results
+                </span>
+                {hasActiveFilters && (
+                  <button
+                    onClick={() => {
+                      setSelectedCategory("All");
+                      setSelectedDay("all");
+                      setSearchQuery("");
+                    }}
+                    className="text-brand-orange hover:underline text-[11px] font-bold"
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
 
             </div>
 
-            {/* Category Filter Chips */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 border-t border-white/5 pt-3">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-text-muted mr-1 shrink-0">
-                Track:
-              </span>
-              {CATEGORIES.map((cat) => {
-                const isActive = selectedCategory === cat;
-                const count = categoryCounts[cat] || 0;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-3.5 py-1 rounded-full text-xs font-mono transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0 ${
-                      isActive
-                        ? "bg-gradient-to-r from-brand-magenta to-brand-purple text-white font-bold shadow-[0_0_15px_rgba(255,0,122,0.35)] border border-brand-magenta/40"
-                        : "bg-white/5 text-text-secondary hover:bg-white/10 hover:text-white border border-white/10"
-                    }`}
-                  >
-                    <span>{cat}</span>
-                    <span className={`text-[10px] px-1 rounded-full ${
-                      isActive ? "bg-black/30 text-white" : "bg-white/10 text-text-muted"
-                    }`}>
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+            {/* ── 2-COLUMN EVENT CARDS GRID (AS IN REFERENCE DESIGN) ──────────── */}
+            {paginatedEvents.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {paginatedEvents.map((event, idx) => {
+                  // Calculate actual 1-based index in the filtered list
+                  const globalIdx = (currentPage - 1) * ITEMS_PER_PAGE + idx + 1;
+                  const passCode = `PASS #${globalIdx.toString().padStart(3, "0")}`;
 
-            {/* Active Counter & Reset */}
-            <div className="flex items-center justify-between text-xs font-mono text-text-muted pt-1">
-              <span>
-                Showing <strong className="text-white">{filteredEvents.length}</strong> of {FEST_EVENTS.length} events
-              </span>
-              {hasActiveFilters && (
+                  return (
+                    <div
+                      key={event.id}
+                      className="group relative flex flex-col justify-between rounded-2xl border border-white/10 bg-[#08041d]/90 backdrop-blur-md overflow-hidden hover:border-brand-violet/40 hover:shadow-[0_0_25px_rgba(121,80,242,0.15)] transition-all duration-200"
+                    >
+                      {/* Card Content Wrapper */}
+                      <div className="p-4 sm:p-5">
+                        
+                        {/* Top Meta Bar: PASS #XXX & Category Badge */}
+                        <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-white/10">
+                          <span className="font-mono text-xs font-bold tracking-wider text-brand-orange">
+                            {passCode}
+                          </span>
+                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-white/15 bg-white/5 text-text-secondary">
+                            {event.category}
+                          </span>
+                        </div>
+
+                        {/* Event Visual Banner Box */}
+                        <div className="relative w-full h-36 rounded-xl overflow-hidden mb-4 border border-white/10 bg-gradient-to-br from-black/80 via-[#0e0a2b] to-[#1a0e38] flex flex-col justify-between p-3.5 group-hover:border-white/20 transition-all">
+                          
+                          {/* Banner Top Row: Organizing Chapter */}
+                          <div className="flex items-center justify-between gap-2 z-10">
+                            <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+                              <div className="relative w-4 h-4 rounded-full overflow-hidden bg-white shrink-0">
+                                <Image
+                                  src={event.clubLogo}
+                                  alt={event.club}
+                                  fill
+                                  className="object-contain p-0.5"
+                                />
+                              </div>
+                              <span className="font-mono text-[10px] text-text-secondary font-medium truncate max-w-[140px]">
+                                {event.club}
+                              </span>
+                            </div>
+
+                            {/* Prize Badge if cash prize declared */}
+                            {event.prizePool && event.prizePool !== "Certifications & GDG Kits" && (
+                              <div className="flex items-center gap-1 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full text-amber-300 font-mono font-bold text-[10px] shrink-0">
+                                <Trophy className="w-3 h-3 text-amber-400" />
+                                <span>{event.prizePool}</span>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Banner Center: Distinct Title Representation */}
+                          <div className="z-10 mt-auto">
+                            <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider block">
+                              {event.date}
+                            </span>
+                            <h3 className="font-display font-black text-lg text-white leading-tight drop-shadow-md truncate">
+                              {event.title}
+                            </h3>
+                          </div>
+
+                          {/* Subtle Graphic Grid Accent */}
+                          <div 
+                            className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none"
+                            aria-hidden="true"
+                          />
+                        </div>
+
+                        {/* Title and Short Overview */}
+                        <div className="mb-4">
+                          <h2 className="font-display font-bold text-lg text-text-primary tracking-tight group-hover:text-white transition-colors mb-1.5">
+                            {event.title}
+                          </h2>
+                          <p className="text-xs text-text-secondary font-body line-clamp-2 leading-relaxed">
+                            {event.description}
+                          </p>
+                        </div>
+
+                        {/* Registration Specs (Date, Time, Team Size, Fee) */}
+                        <div className="grid grid-cols-2 gap-2 text-[11px] font-mono p-2.5 rounded-xl bg-black/40 border border-white/5 mb-3">
+                          <div>
+                            <span className="text-[9px] text-text-muted uppercase block">SCHEDULE</span>
+                            <span className="text-white font-medium truncate block">{event.date}</span>
+                          </div>
+                          <div>
+                            <span className="text-[9px] text-text-muted uppercase block">TIMINGS</span>
+                            <span className="text-white font-medium truncate block">{event.timings}</span>
+                          </div>
+                          <div>
+                            <span className="text-[9px] text-text-muted uppercase block">TEAM SIZE</span>
+                            <span className="text-white font-medium truncate block">{event.teamSize}</span>
+                          </div>
+                          <div>
+                            <span className="text-[9px] text-text-muted uppercase block">HITAM ENTRY</span>
+                            <span className="text-brand-orange font-bold truncate block">{event.registrationFee.hitam}</span>
+                          </div>
+                        </div>
+
+                        {/* Quick Details Trigger */}
+                        <button
+                          onClick={() => setActiveModalEvent(event)}
+                          className="w-full text-center text-[11px] font-mono text-text-muted hover:text-white py-1 transition-colors"
+                        >
+                          View Full Details &amp; Prize Breakdown →
+                        </button>
+
+                      </div>
+
+                      {/* ── CARD BOTTOM ACTION: SOLID "REGISTER HERE ▶" BUTTON ── */}
+                      <Link
+                        href={`/register?event=${event.slug}`}
+                        className="w-full py-3 px-4 font-mono font-black text-xs uppercase tracking-widest text-center text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-1.5 shadow-[0_-2px_10px_rgba(0,0,0,0.4)]"
+                      >
+                        <span>REGISTER HERE</span>
+                        <span>▶</span>
+                      </Link>
+
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              /* Empty Search State */
+              <div className="p-12 text-center rounded-2xl border border-white/10 bg-[#08041d]/80">
+                <Info className="w-8 h-8 text-text-muted mx-auto mb-3 opacity-60" />
+                <h3 className="font-display font-bold text-lg text-white mb-2">No matching events found</h3>
+                <p className="text-xs sm:text-sm text-text-secondary max-w-md mx-auto mb-5 font-body">
+                  No events match the selected category, day, or search keywords.
+                </p>
                 <button
                   onClick={() => {
                     setSelectedCategory("All");
                     setSelectedDay("all");
                     setSearchQuery("");
                   }}
-                  className="text-brand-orange hover:underline text-[11px] font-bold"
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-brand-orange to-brand-magenta text-white font-mono font-bold text-xs"
                 >
-                  Reset filters
+                  Reset Filters
                 </button>
-              )}
-            </div>
+              </div>
+            )}
+
+            {/* ── PAGINATION CONTROLS (AS SHOWN IN REFERENCE DESIGN) ──────────── */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-1.5 p-3 rounded-2xl bg-[#08041d]/90 border border-white/10 font-mono text-xs">
+                
+                {/* Previous Button */}
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-40 disabled:pointer-events-none text-text-secondary hover:text-white transition-all flex items-center gap-1"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>PREV</span>
+                </button>
+
+                {/* Page Number Buttons */}
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+                  const isActive = currentPage === pageNum;
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => setCurrentPage(pageNum)}
+                      className={`w-8 h-8 rounded-lg font-bold transition-all ${
+                        isActive
+                          ? "bg-brand-orange text-white shadow-[0_0_12px_rgba(255,94,0,0.4)]"
+                          : "border border-white/10 bg-white/5 text-text-secondary hover:text-white hover:bg-white/10"
+                      }`}
+                    >
+                      {pageNum.toString().padStart(2, "0")}
+                    </button>
+                  );
+                })}
+
+                {/* Next Button */}
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-40 disabled:pointer-events-none text-text-secondary hover:text-white transition-all flex items-center gap-1"
+                >
+                  <span>NEXT</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+
+              </div>
+            )}
 
           </div>
-        </FadeUp>
 
-        {/* Events Grid */}
-        {filteredEvents.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            {filteredEvents.map((event, i) => (
-              <FadeUp key={event.id} delay={0.03 * (i % 6)} distance={20}>
-                <div className="group relative flex flex-col justify-between h-full p-6 sm:p-7 rounded-3xl border border-white/10 bg-[#08041d]/85 backdrop-blur-md hover:border-brand-magenta/40 hover:shadow-[0_0_30px_rgba(255,0,122,0.15)] transition-all duration-300">
-                  
-                  {/* Card Content Top */}
-                  <div>
-                    {/* Chapter & Category Row */}
-                    <div className="flex items-center justify-between gap-3 mb-4">
-                      
-                      {/* Chapter Pill */}
-                      <div className="flex items-center gap-2 max-w-[65%]">
-                        <div className="relative w-6 h-6 rounded-full overflow-hidden shrink-0 border border-white/15 bg-white">
-                          <Image
-                            src={event.clubLogo}
-                            alt={event.club}
-                            fill
-                            className="object-contain p-0.5"
-                          />
-                        </div>
-                        <span className="font-display font-bold text-xs text-text-secondary truncate">
-                          {event.club}
-                        </span>
-                      </div>
-
-                      {/* Category Tag */}
-                      <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border shrink-0 ${
-                        event.category === "Hackathon"
-                          ? "text-brand-orange bg-brand-orange/15 border-brand-orange/30"
-                          : event.category === "Ideathon"
-                          ? "text-brand-magenta bg-brand-magenta/15 border-brand-magenta/30"
-                          : event.category === "Workshop"
-                          ? "text-brand-violet bg-brand-violet/15 border-brand-violet/30"
-                          : event.category === "Gaming & Coding"
-                          ? "text-cyan-400 bg-cyan-400/15 border-cyan-400/30"
-                          : "text-amber-400 bg-amber-400/15 border-amber-400/30"
-                      }`}>
-                        {event.category}
-                      </span>
-                    </div>
-
-                    {/* Prize Pool Pill (if cash prize available) */}
-                    {event.prizePool && event.prizePool !== "Certifications & GDG Kits" && (
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-amber-500/15 to-brand-orange/15 border border-amber-500/30 text-amber-300 text-xs font-display font-extrabold mb-3">
-                        <Trophy className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                        <span>Prize Pool: {event.prizePool}</span>
-                      </div>
-                    )}
-
-                    {/* Event Title */}
-                    <h2 className="font-display font-black text-xl sm:text-2xl text-text-primary tracking-tight leading-snug group-hover:text-white transition-colors mb-2">
-                      {event.title}
-                    </h2>
-
-                    {/* Tagline */}
-                    <p className="text-xs font-body font-medium text-brand-magenta mb-3 leading-relaxed">
-                      {event.tagline}
-                    </p>
-
-                    {/* Description */}
-                    <p className="text-xs sm:text-sm text-text-secondary font-body leading-relaxed line-clamp-3 mb-5">
-                      {event.description}
-                    </p>
-                  </div>
-
-                  {/* Card Bottom: Registration Specs, Fee Box & Action CTAs */}
-                  <div className="space-y-3.5 mt-auto pt-4 border-t border-white/5">
-                    
-                    {/* Key Registration Specs (2x2 Matrix) */}
-                    <div className="grid grid-cols-2 gap-2 text-[11px] font-mono p-3 rounded-2xl bg-white/[0.02] border border-white/5">
-                      <div>
-                        <span className="text-[10px] text-text-muted block">SCHEDULE</span>
-                        <div className="flex items-center gap-1 text-white font-medium truncate">
-                          <Calendar className="w-3.5 h-3.5 text-brand-magenta shrink-0" />
-                          <span className="truncate">{event.date}</span>
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-[10px] text-text-muted block">TIMINGS</span>
-                        <div className="flex items-center gap-1 text-white font-medium truncate">
-                          <Clock className="w-3.5 h-3.5 text-brand-violet shrink-0" />
-                          <span className="truncate">{event.timings}</span>
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-[10px] text-text-muted block">TEAM FORMAT</span>
-                        <div className="flex items-center gap-1 text-white font-medium truncate">
-                          <Users className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                          <span className="truncate">{event.teamSize}</span>
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-[10px] text-text-muted block">AWARD / POOL</span>
-                        <div className="flex items-center gap-1 text-amber-300 font-medium truncate">
-                          <Trophy className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                          <span className="truncate">{event.prizePool}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Registration Fee Breakdown Box */}
-                    <div className="p-3 rounded-2xl bg-gradient-to-r from-brand-violet/10 to-transparent border border-brand-violet/20 flex flex-col gap-1 text-xs font-mono">
-                      <div className="flex items-center justify-between">
-                        <span className="text-text-muted text-[11px]">HITAM Student:</span>
-                        <span className="text-text-primary font-bold">{event.registrationFee.hitam}</span>
-                      </div>
-                      {event.registrationFee.nonHitam && event.registrationFee.nonHitam !== event.registrationFee.hitam && (
-                        <div className="flex items-center justify-between border-t border-white/5 pt-1">
-                          <span className="text-text-muted text-[11px]">Outside College:</span>
-                          <span className="text-brand-magenta font-semibold">{event.registrationFee.nonHitam}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="grid grid-cols-2 gap-2 pt-1">
-                      <button
-                        onClick={() => setActiveModalEvent(event)}
-                        className="py-2.5 px-3 rounded-xl border border-white/15 bg-white/5 hover:bg-brand-purple/20 hover:border-brand-violet/50 text-xs font-display font-bold text-text-secondary hover:text-white transition-all text-center cursor-pointer"
-                      >
-                        Quick Details
-                      </button>
-
-                      <Link
-                        href={`/register?event=${event.slug}`}
-                        className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple hover:brightness-110 text-xs font-display font-bold text-white transition-all text-center inline-flex items-center justify-center gap-1 shadow-[0_0_20px_rgba(255,94,0,0.3)] hover:shadow-[0_0_28px_rgba(255,0,122,0.45)]"
-                      >
-                        <span>Register Now</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
-                      </Link>
-                    </div>
-
-                  </div>
-
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-        ) : (
-          /* Empty Search State */
-          <div className="p-12 text-center rounded-3xl border border-brand-violet/30 bg-[#08041d]/80 backdrop-blur-md mb-16">
-            <Filter className="w-10 h-10 text-text-muted mx-auto mb-3 opacity-50" />
-            <h3 className="font-display font-bold text-lg text-text-primary mb-2">No matching events found</h3>
-            <p className="text-sm text-text-secondary max-w-md mx-auto mb-6">
-              We couldn&apos;t find any events matching your selected category, day, or search keywords.
-            </p>
-            <button
-              onClick={() => {
-                setSelectedCategory("All");
-                setSelectedDay("all");
-                setSearchQuery("");
-              }}
-              className="px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-orange to-brand-magenta text-white font-display font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(255,94,0,0.4)]"
-            >
-              Reset Filters
-            </button>
-          </div>
-        )}
+        </div>
 
       </Container>
 
@@ -478,7 +573,7 @@ export default function EventsPage() {
               </button>
             </div>
 
-            {/* Prize Pool Spotlight (if available) */}
+            {/* Prize Pool Breakdown (if declared) */}
             {activeModalEvent.prizePool && (
               <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-brand-orange/15 to-transparent border border-amber-500/30 mb-6">
                 <div className="flex items-center gap-2 mb-1.5">
@@ -513,7 +608,7 @@ export default function EventsPage() {
               </div>
             )}
 
-            {/* Overview / Problem Statement */}
+            {/* Track Overview */}
             <div className="mb-6">
               <h4 className="text-xs font-mono uppercase tracking-wider text-text-muted mb-2">Track Overview</h4>
               <p className="text-sm font-body text-text-secondary leading-relaxed">
@@ -521,7 +616,7 @@ export default function EventsPage() {
               </p>
             </div>
 
-            {/* Essential Registration Details (No internal room numbers) */}
+            {/* Essential Registration Details */}
             <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 mb-6 space-y-3 text-xs font-mono">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-3 border-b border-white/5">
                 <div>
@@ -567,7 +662,7 @@ export default function EventsPage() {
               </div>
             </div>
 
-            {/* Key Highlights Checklist */}
+            {/* Key Highlights */}
             <div className="mb-8">
               <h4 className="text-xs font-mono uppercase tracking-wider text-text-muted mb-3">Key Highlights &amp; Inclusions</h4>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -580,7 +675,7 @@ export default function EventsPage() {
               </ul>
             </div>
 
-            {/* Modal Bottom Actions */}
+            {/* Modal Actions */}
             <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
               <button
                 onClick={() => setActiveModalEvent(null)}
@@ -590,7 +685,7 @@ export default function EventsPage() {
               </button>
               <Link
                 href={`/register?event=${activeModalEvent.slug}`}
-                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple hover:brightness-110 text-xs font-display font-bold text-white transition-all inline-flex items-center gap-1.5 shadow-[0_0_24px_rgba(255,94,0,0.4)] hover:shadow-[0_0_35px_rgba(255,0,122,0.6)]"
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple hover:brightness-110 text-xs font-display font-bold text-white transition-all inline-flex items-center gap-1.5 shadow-[0_0_24px_rgba(255,94,0,0.4)]"
               >
                 <span>Register for this Event</span>
                 <ArrowUpRight className="w-4 h-4" />
