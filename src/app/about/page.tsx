@@ -88,24 +88,49 @@ export default function AboutPage() {
           </Link>
         </FadeUp>
 
-        {/* ── §1 HEADER + OVERVIEW ───────────────────────────────────── */}
+        {/* ── §1 HEADER + OVERVIEW & ESPARTO LOGO ───────────────────── */}
         <FadeUp delay={0.08} distance={30}>
-          <div className="max-w-3xl mb-12">
-            <h1 className="font-display font-black text-4xl sm:text-6xl text-text-primary tracking-tight leading-[1.05] uppercase mb-6">
-              About <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">
-                ESPARTO 2026
-              </span>
-            </h1>
-            <p className="text-text-secondary text-base sm:text-lg font-body leading-relaxed border-l-2 border-brand-magenta/40 pl-5">
-              {FEST_INFO.name} is a national-level technical fest that unites all the technical clubs
-              and professional chapters of {FEST_INFO.institution.shortName} under one banner. It
-              reflects {FEST_INFO.institution.shortName}&apos;s &lsquo;Doing Engineering&rsquo; approach by
-              encouraging hands-on learning through workshops, hackathons, and competitions. The fest
-              gives students an opportunity to collaborate and compete with peers from diverse
-              institutions, promoting innovation, teamwork, and continuous learning in line with{" "}
-              {FEST_INFO.institution.shortName}&apos;s vision and values.
-            </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-12">
+            
+            {/* Left Column: Heading & Description */}
+            <div className="lg:col-span-7">
+              <h1 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-text-primary tracking-tight leading-[1.05] uppercase mb-6">
+                About <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">
+                  ESPARTO 2026
+                </span>
+              </h1>
+              <p className="text-text-secondary text-base sm:text-lg font-body leading-relaxed border-l-2 border-brand-magenta/40 pl-5">
+                {FEST_INFO.name} is a national-level technical fest that unites all the technical clubs
+                and professional chapters of {FEST_INFO.institution.shortName} under one banner. It
+                reflects {FEST_INFO.institution.shortName}&apos;s &lsquo;Doing Engineering&rsquo; approach by
+                encouraging hands-on learning through workshops, hackathons, and competitions. The fest
+                gives students an opportunity to collaborate and compete with peers from diverse
+                institutions, promoting innovation, teamwork, and continuous learning in line with{" "}
+                {FEST_INFO.institution.shortName}&apos;s vision and values.
+              </p>
+            </div>
+
+            {/* Right Column: ESPARTO Official Logo Showcase */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end">
+              <div className="relative group w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] p-6 sm:p-8 rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex items-center justify-center overflow-hidden">
+                {/* Ambient glow behind logo */}
+                <div 
+                  className="absolute inset-0 bg-gradient-to-br from-brand-orange/20 via-brand-magenta/15 to-brand-violet/20 blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none" 
+                  aria-hidden="true" 
+                />
+                
+                <Image
+                  src="/images/brand/esparto-logo.png"
+                  alt="ESPARTO 2026 Official Festival Logo"
+                  width={420}
+                  height={280}
+                  className="relative z-10 w-full h-auto object-contain filter drop-shadow-[0_4px_24px_rgba(255,94,0,0.35)] group-hover:scale-105 transition-transform duration-500"
+                  priority
+                />
+              </div>
+            </div>
+
           </div>
         </FadeUp>
 
