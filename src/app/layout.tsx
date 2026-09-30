@@ -88,8 +88,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable} dark`}
+      suppressHydrationWarning
     >
-      <body className="bg-background text-text-primary antialiased min-h-screen flex flex-col selection:bg-brand-magenta selection:text-white">
+      <body
+        className="bg-background text-text-primary antialiased min-h-screen flex flex-col selection:bg-brand-magenta selection:text-white"
+        suppressHydrationWarning
+      >
         <IntroProvider>
           <SkipLink />
           {/*

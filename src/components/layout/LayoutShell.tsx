@@ -19,7 +19,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
   const { introComplete } = useIntro();
 
   return (
-    <div className="relative z-10 flex flex-col min-h-screen">
+    <div className="relative z-10 flex flex-col min-h-screen" suppressHydrationWarning>
       {/* Navbar — hidden while intro plays */}
       <div
         style={{
