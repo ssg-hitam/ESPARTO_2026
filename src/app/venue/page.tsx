@@ -370,7 +370,7 @@ export default function VenuePage() {
 
                 <div className="pt-6 border-t border-white/10 mt-6 flex flex-wrap items-center justify-between gap-4">
                   <a
-                    href="https://maps.google.com/?q=HITAM+Hyderabad"
+                    href="https://maps.app.goo.gl/MEkJE3oaEy7RjLqy7"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-display font-bold text-xs uppercase tracking-wider text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 transition-all shadow-lg shadow-brand-orange/20"
@@ -436,6 +436,63 @@ export default function VenuePage() {
             </div>
           </FadeUp>
         </div>
+
+        {/* ═══════════════════════════════════════════════════════════════════════
+            CAMPUS GOOGLE MAP (INTERACTIVE EMBED)
+        ═══════════════════════════════════════════════════════════════════════ */}
+        <FadeUp delay={0.24} distance={30} className="mb-20">
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] p-4 sm:p-7 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+            {/* Header / Info bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5 pb-5 border-b border-white/10">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange shrink-0">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-display font-black text-xl text-white tracking-tight uppercase">
+                      HITAM ON GOOGLE MAPS
+                    </h3>
+                    <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-orange/10 border border-brand-orange/30 text-brand-orange font-mono text-[10px] font-bold uppercase tracking-wider">
+                      Live Navigation
+                    </span>
+                  </div>
+                  <p className="text-xs font-mono text-text-muted mt-0.5">
+                    Gowdavelly, Medchal, Hyderabad, Telangana 501401 (17.5958° N, 78.4526° E)
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://maps.app.goo.gl/MEkJE3oaEy7RjLqy7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 text-white text-xs font-mono font-bold tracking-wider uppercase transition-all shadow-md shadow-brand-orange/20 group"
+                >
+                  <Navigation className="w-3.5 h-3.5" />
+                  <span>OPEN IN GOOGLE MAPS</span>
+                  <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+              </div>
+            </div>
+
+            {/* Map Frame Container (matching img 2) */}
+            <div className="relative w-full h-[380px] sm:h-[460px] rounded-2xl overflow-hidden border border-white/10 bg-[#12121e] shadow-inner">
+              <iframe
+                src="https://maps.google.com/maps?q=Hyderabad%20Institute%20of%20Technology%20and%20Management&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Hyderabad Institute of Technology and Management Location Map"
+                className="w-full h-full filter contrast-[1.02]"
+              />
+            </div>
+          </div>
+        </FadeUp>
 
       </Container>
     </main>
