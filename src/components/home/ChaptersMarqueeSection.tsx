@@ -117,12 +117,6 @@ export function ChaptersMarqueeSection() {
               />
             </div>
 
-            {/* Interactive hint */}
-            <div className="relative z-10 flex items-center justify-center gap-2 mt-3 sm:mt-4 text-[11px] sm:text-xs text-text-tertiary tracking-wider font-mono uppercase">
-              <span>✦ Drag horizontally or scroll to spin</span>
-              <span className="opacity-40">•</span>
-              <span>Tap card to focus</span>
-            </div>
           </div>
 
         </div>
