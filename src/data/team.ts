@@ -11,7 +11,8 @@ export const facultyCoordinators: Organizer[] = [
     role: "Faculty Coordinator",
     department: "Electronics & Communication Engineering (ECE)",
     teamDomain: "faculty-coordinator",
-    contact: "+91 91 6030 813 0",
+    contact: "+91 9160308130",
+    image: "/images/team/faculties/bindumam.png",
     highlight: true,
     socials: {
       email: "bindum.ece@hitam.org",
@@ -24,6 +25,7 @@ export const facultyCoordinators: Organizer[] = [
     role: "Faculty Coordinator",
     department: "Mechanical Engineering (MECH)",
     teamDomain: "faculty-coordinator",
+    image: "/images/team/faculties/praveensir.png",
     highlight: true,
     socials: {
       email: "praveenp.mech@hitam.org"
