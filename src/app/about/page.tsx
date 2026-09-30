@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/ui/FadeUp";
 import { FEST_INFO } from "@/lib/constants";
@@ -288,29 +289,43 @@ export default function AboutPage() {
         <FadeUp delay={0.3} distance={24}>
           <Link
             href="/hitam"
-            className="group flex flex-col sm:flex-row items-start sm:items-center gap-6 p-8 rounded-2xl border border-brand-orange/20 bg-gradient-to-r from-brand-orange/5 to-brand-violet/5 hover:from-brand-orange/10 hover:to-brand-violet/10 transition-all duration-300 mb-20 cursor-pointer"
+            className="group flex flex-col sm:flex-row items-start sm:items-center gap-6 p-8 rounded-2xl border border-emerald-500/25 bg-gradient-to-r from-emerald-950/20 via-[#07041c]/60 to-brand-violet/10 hover:border-emerald-500/50 hover:from-emerald-950/30 transition-all duration-300 mb-20 cursor-pointer shadow-[0_0_30px_rgba(16,185,129,0.06)]"
           >
-            {/* HITAM emblem */}
-            <div className="relative w-16 h-16 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center shrink-0 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/20 to-brand-violet/20" />
-              <BookOpen className="w-8 h-8 text-white relative z-10" />
+            {/* Official HITAM Logo */}
+            <div className="relative w-20 h-24 sm:w-22 sm:h-28 rounded-2xl border border-emerald-500/40 bg-[#43a047] flex items-center justify-center shrink-0 overflow-hidden shadow-xl">
+              <Image
+                src="/images/hitam/hitam_logo.jpg"
+                alt="HITAM Logo - Find your path"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+              />
             </div>
             <div className="flex-1">
-              <p className="font-mono text-[10px] font-bold tracking-[0.35em] text-text-muted uppercase mb-1">ORGANISING INSTITUTION</p>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="font-mono text-[9px] font-bold tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full uppercase">
+                  HOST INSTITUTION
+                </span>
+                <span className="font-mono text-[9px] font-bold tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-full uppercase">
+                  NAAC A+
+                </span>
+                <span className="font-mono text-[9px] font-bold tracking-widest text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-2 py-0.5 rounded-full uppercase">
+                  NBA ACCREDITED
+                </span>
+              </div>
               <h3 className="font-display font-bold text-xl sm:text-2xl text-text-primary uppercase mb-2">
                 Hyderabad Institute of Technology &amp; Management
               </h3>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
                 <span className="flex items-center gap-1.5 font-mono text-xs text-text-muted">
-                  <MapPin className="w-3.5 h-3.5 text-brand-orange" />
+                  <MapPin className="w-3.5 h-3.5 text-emerald-400" />
                   Medchal, Hyderabad, Telangana
                 </span>
-                <span className="font-mono text-xs text-brand-orange">hitam.org</span>
-                <span className="font-mono text-xs text-text-muted">· Est. 2001 · NAAC Accredited · UGC Autonomous</span>
+                <span className="font-mono text-xs text-emerald-400 font-semibold">hitam.org</span>
+                <span className="font-mono text-xs text-text-muted">· Est. 2001 · UGC Autonomous · Affiliated to JNTUH</span>
               </div>
             </div>
-            <div className="flex items-center gap-2 font-mono text-xs text-brand-orange group-hover:gap-3 transition-all shrink-0">
-              <span className="uppercase tracking-widest">Explore HITAM</span>
+            <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 group-hover:gap-3 transition-all shrink-0">
+              <span className="uppercase tracking-widest font-bold">Explore HITAM</span>
               <ArrowUpRight className="w-4 h-4" />
             </div>
           </Link>
