@@ -10,7 +10,6 @@ import {
   ArrowLeft, 
   MapPin, 
   Navigation, 
-  Globe, 
   Building2, 
   Trees, 
   ExternalLink,
@@ -315,7 +314,7 @@ export default function VenuePage() {
               </div>
 
               {/* Interactive Map Iframe Container */}
-              <div className="relative w-full flex-1 min-h-[340px] sm:min-h-[380px] bg-black/60">
+              <div className="relative w-full flex-1 min-h-[360px] sm:min-h-[420px] bg-black/60">
                 <iframe
                   src="https://maps.google.com/maps?q=Hyderabad%20Institute%20of%20Technology%20and%20Management&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   width="100%"
@@ -327,18 +326,6 @@ export default function VenuePage() {
                   title="HITAM Campus Google Maps Navigation"
                   className="w-full h-full filter contrast-[1.02]"
                 />
-              </div>
-
-              {/* Bottom Details Bar */}
-              <div className="p-4 sm:p-5 border-t border-white/10 bg-white/[0.01] flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2 text-xs font-mono text-text-muted">
-                  <MapPin className="w-4 h-4 text-brand-orange shrink-0" />
-                  <span>Gowdavelly, Medchal, Hyderabad (17.5958° N, 78.4526° E)</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Globe className="w-3.5 h-3.5 text-brand-magenta shrink-0" />
-                  <span className="text-[11px] font-mono text-text-secondary">HITAM Fest Venue</span>
-                </div>
               </div>
 
             </div>
