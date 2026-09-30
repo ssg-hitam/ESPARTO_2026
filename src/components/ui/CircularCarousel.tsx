@@ -160,7 +160,7 @@ const OVERLAP = 2.5;
 const DRAG_THRESHOLD = 5;
 const SPRING = 118;
 const SETTLE_SPEED = 9;
-const CAPTION_SPACE = 54;
+const CAPTION_SPACE = 46;
 const TO_RAD = Math.PI / 180;
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -406,8 +406,8 @@ export const CircularCarousel: React.FC<CircularCarouselProps> = ({
       const rect = root.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
       const room = s.captions ? CAPTION_SPACE : 0;
-      const width = rect.width * 0.94;
-      const height = (rect.height - room) * 0.92;
+      const width = rect.width * 0.96;
+      const height = Math.max(1, rect.height - room);
       const P = s.perspective;
       let minX = Infinity;
       let maxX = -Infinity;

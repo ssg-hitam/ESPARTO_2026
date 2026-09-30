@@ -47,33 +47,31 @@ export function ChaptersMarqueeSection() {
           {/* Subtle Cyber Grid Background */}
           <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" aria-hidden="true" />
 
-          {/* Header & Enlarged SSG Logo Layout */}
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-6 sm:mb-8">
+          {/* Header & SSG Logo Layout — tight, balanced, zero vertical waste */}
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-2 sm:mb-3">
             
             {/* Left Content Column */}
-            <div className="md:col-span-8 lg:col-span-8 max-w-2xl">
-              {/* Dominant Headline */}
-              <h2 className="font-display font-black text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-text-primary tracking-tight leading-[1.1] uppercase mb-4">
+            <div className="max-w-2xl">
+              <h2 className="font-display font-black text-2xl xs:text-3xl sm:text-4xl text-text-primary tracking-tight leading-[1.15] uppercase mb-2">
                 ORGANISED BY <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">SSG</span> <br />
-                <span className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl text-text-secondary font-extrabold">
+                <span className="text-lg xs:text-xl sm:text-2xl text-text-secondary font-extrabold">
                   IN COLLABORATION WITH HITAM TECHNICAL COUNCIL
                 </span>
               </h2>
 
-              {/* Concise Mission Statement */}
-              <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed border-l-2 border-brand-magenta/40 pl-4 py-0.5">
+              <p className="text-text-secondary text-xs sm:text-sm font-body leading-relaxed border-l-2 border-brand-magenta/40 pl-3">
                 ESPARTO 2026 is spearheaded by <strong className="text-text-primary font-semibold">SSG (Student Self Governance)</strong> in collaboration with the <strong className="text-text-primary font-semibold">HITAM Technical Council</strong>, uniting all premier student chapters and technical clubs across campus.
               </p>
             </div>
 
-            {/* Enlarged Pure SSG Logo (Centered in the right space, brought left from the far edge) */}
-            <div className="md:col-span-4 lg:col-span-4 flex justify-start md:justify-center">
-              <div className="relative w-36 h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 xl:w-60 xl:h-60 p-4 sm:p-5 rounded-3xl bg-white border border-white/40 flex items-center justify-center shrink-0 shadow-[0_0_50px_rgba(255,94,0,0.35)] hover:scale-105 transition-transform duration-300">
+            {/* Compact, proportional SSG emblem badge */}
+            <div className="shrink-0 flex items-center">
+              <div className="relative w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 p-3 rounded-2xl bg-white border border-white/40 flex items-center justify-center shadow-[0_0_35px_rgba(255,94,0,0.3)] hover:scale-105 transition-transform duration-300">
                 <Image
                   src="/images/brand/ssg-logo.png"
                   alt="SSG - Student Self Governance"
-                  width={240}
-                  height={240}
+                  width={128}
+                  height={128}
                   className="w-full h-full object-contain"
                   priority
                 />
@@ -82,8 +80,8 @@ export function ChaptersMarqueeSection() {
 
           </div>
 
-          {/* 3D CIRCULAR CAROUSEL: Interactive 3D cylinder showcasing all 11 technical chapters */}
-          <div className="relative -mx-6 sm:-mx-10 lg:-mx-12 overflow-hidden pt-2 pb-2">
+          {/* 3D CIRCULAR CAROUSEL: Snug fit, no empty gaps */}
+          <div className="relative -mx-4 sm:-mx-8 lg:-mx-10 overflow-hidden">
             
             {/* Top & Bottom Hairline Accents */}
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -91,35 +89,35 @@ export function ChaptersMarqueeSection() {
 
             {/* Ambient lighting under the 3D ring */}
             <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[220px] bg-brand-purple/15 blur-[100px] pointer-events-none rounded-full" 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[460px] h-[190px] bg-brand-purple/15 blur-[90px] pointer-events-none rounded-full" 
               aria-hidden="true" 
             />
 
-            <div className="w-full h-[370px] sm:h-[410px] relative">
+            <div className="w-full h-[310px] sm:h-[330px] relative">
               <CircularCarousel
                 items={carouselItems}
                 preset="cylinder"
                 intro="rise"
-                cardWidth={185}
+                cardWidth={170}
                 aspectRatio={1}
                 speed={5}
                 captions
-                gap={16}
-                tilt={-11}
-                curve={0.75}
+                gap={15}
+                tilt={-10}
+                curve={0.72}
                 perspective={1900}
                 momentum={0.2}
-                parallax={0.23}
+                parallax={0.22}
                 stretch={0.16}
                 depthFade={0.25}
                 fadeColor="#08041d"
                 innerShade={0.3}
-                cornerRadius={14}
+                cornerRadius={12}
               />
             </div>
 
             {/* Interactive hint */}
-            <div className="relative z-10 flex items-center justify-center gap-2 mt-1 text-[11px] text-text-tertiary tracking-wider font-mono uppercase">
+            <div className="relative z-10 flex items-center justify-center gap-2 mt-0.5 text-[11px] text-text-tertiary tracking-wider font-mono uppercase">
               <span>✦ Drag horizontally or scroll to spin</span>
               <span className="opacity-40">•</span>
               <span>Tap card to focus</span>
