@@ -40,109 +40,109 @@ export const ssgLeadership: Organizer[] = [
     teamDomain: "lead-organizer",
     contact: "+91 90591 11595",
     highlight: true,
-    handling: "Overall Fest Direction, Lead Coordination, Industry Partnerships & Corporate Relations",
+    handling: "Overall Fest Direction, Lead Coordination & Sponsorships",
     socials: {
       email: "ssg.iiic@hitam.org",
       phone: "+919059111595"
     }
   },
   {
-    id: "student-director",
-    name: "Student Director",
+    id: "bhavya-director",
+    name: "Bhavya",
     role: "Student Director",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
-    handling: "Fest Strategy, High-Level Resource Planning & Inter-Wing Alignment",
+    handling: "Stage Management / Program Quality",
     socials: {
       email: "ssg.director@hitam.org"
     }
   },
   {
-    id: "student-principal",
-    name: "Student Principal",
+    id: "sriya-principal",
+    name: "Sriya",
     role: "Student Principal",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
-    handling: "Institutional Protocol, Departmental Synergy & Fest Governance",
+    handling: "Public Relations (PR) & Outreach",
     socials: {
       email: "ssg.principal@hitam.org"
     }
   },
   {
-    id: "student-registrar",
-    name: "Student Registrar",
+    id: "harsith-registrar",
+    name: "Harsith",
     role: "Student Registrar",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
-    handling: "Administrative Approvals, Logistics Clearances & Official Permissions",
+    handling: "Finance / Stall Management",
     socials: {
       email: "ssg.registrar@hitam.org"
     }
   },
   {
-    id: "student-dean-academics",
-    name: "Student Dean — Academics",
+    id: "sreeram-academics",
+    name: "Sree Ram",
     role: "Student Dean — Academics",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
-    handling: "Technical Symposiums, Paper Presentations & Faculty Jury Coordination",
+    handling: "Logistics & Infrastructure",
     socials: {
       email: "ssg.deanacademics@hitam.org"
     }
   },
   {
-    id: "student-dean-freshmen",
-    name: "Student Dean — Freshmen",
+    id: "hemanth-freshmen",
+    name: "Hemanth",
     role: "Student Dean — Freshmen",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
-    handling: "First-Year Student Participation, Induction Arenas & Volunteer Mobilization",
+    handling: "Registrations & Delegate Desk",
     socials: {
       email: "ssg.deanfreshmen@hitam.org"
     }
   },
   {
-    id: "student-lead-se",
-    name: "Student Lead — SE",
-    role: "Student Lead — Student Engagement",
+    id: "mavya-se",
+    name: "Mavya",
+    role: "Student Dean — Student Engagement (SE)",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
-    handling: "Campus Ambience, Engagement Zones, Informal Challenges & Student Experience",
+    handling: "Decoration & Design",
     socials: {
       email: "ssg.se@hitam.org"
     }
   },
   {
-    id: "student-dean-cdc",
-    name: "Student Dean — CDC",
+    id: "vennela-cdc",
+    name: "Vennela",
     role: "Student Dean — CDC",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
-    handling: "Career Conclaves, Tech Talks, Industry Networking & Sponsor Recruitment Booths",
+    handling: "Decoration & Design",
     socials: {
       email: "ssg.cdc@hitam.org"
     }
   },
   {
-    id: "student-dean-sports",
-    name: "Student Dean — Sports",
-    role: "Student Dean — Sports",
-    department: "Student Organizing Core",
-    teamDomain: "student-leadership",
-    handling: "Esports Tournaments, Arena Sports Activities & Outdoor Team Dynamics",
-    socials: {
-      email: "ssg.sports@hitam.org"
-    }
-  },
-  {
-    id: "student-dean-rand",
-    name: "Student Dean — R&D",
+    id: "mahesh-rand",
+    name: "Mahesh",
     role: "Student Dean — R&D",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
-    handling: "Flagship Hackathons, Tech Prototype Expos & Patent/Innovation Showcases",
+    handling: "Logistics & Infrastructure",
     socials: {
       email: "ssg.rand@hitam.org"
+    }
+  },
+  {
+    id: "abhinav-sports",
+    name: "Abhinav",
+    role: "Student Dean — Sports",
+    department: "Student Organizing Core",
+    teamDomain: "student-leadership",
+    handling: "Discipline & Campus Protocol",
+    socials: {
+      email: "ssg.sports@hitam.org"
     }
   }
 ];
@@ -235,6 +235,31 @@ export const chapterCommittees: Organizer[] = [
     department: "Vehicle Design & Racing",
     teamDomain: "chapter-committee",
     image: "/images/chapters/torquex-logo.jpg"
+  }
+];
+
+export interface EventSupportWing {
+  id: string;
+  name: string;
+  lead: string;
+  role: string;
+  handling: string;
+}
+
+export const eventSupportWings: EventSupportWing[] = [
+  {
+    id: "media-photo",
+    name: "Photography & Videography",
+    lead: "Branding / Photography Club",
+    role: "Media & Visual Documentation",
+    handling: "Official aftermovie production, live event photo coverage, keynote captures, and drone videography."
+  },
+  {
+    id: "sponsorships-collective",
+    name: "Sponsorships & Partnerships",
+    lead: "All of US (Organizing Committee)",
+    role: "Collective Organizing Effort",
+    handling: "Corporate sponsor outreach, pitch presentations, brochure dissemination, and partner deliverable tracking."
   }
 ];
 
