@@ -26,6 +26,7 @@ import {
   ExternalLink,
   Instagram
 } from "lucide-react";
+import { FEST_INFO } from "@/lib/constants";
 import { 
   facultyCoordinators, 
   ssgLeadership, 
@@ -90,10 +91,25 @@ export default function TeamPage() {
         {/* Hero Header */}
         <FadeUp delay={0.06} distance={20}>
           <div className="max-w-4xl mb-16">
-            <div className="mb-4">
+            <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-mono tracking-wider text-brand-orange uppercase font-bold">
                 ESPARTO 2026
               </span>
+              {FEST_INFO.officialLinks.instagram && (
+                <>
+                  <span className="text-white/20 text-xs">•</span>
+                  <a
+                    href={FEST_INFO.officialLinks.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-pink-400 text-[11px] font-mono transition-all"
+                    title="Official ESPARTO Instagram (@esparto_hitam)"
+                  >
+                    <Instagram className="w-3 h-3" />
+                    <span>@esparto_hitam</span>
+                  </a>
+                </>
+              )}
             </div>
 
             <h1 className="font-display font-black text-4xl sm:text-6xl lg:text-7xl text-white tracking-tight uppercase leading-[0.98] mb-5">
@@ -234,9 +250,24 @@ export default function TeamPage() {
               </div>
             </div>
 
-            <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
-              10 Leadership Heads
-            </span>
+            <div className="flex items-center gap-3">
+              {FEST_INFO.officialLinks.ssgInstagram && (
+                <a
+                  href={FEST_INFO.officialLinks.ssgInstagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-pink-400 text-xs font-mono transition-all group/ssg"
+                  aria-label="SSG HITAM Instagram"
+                  title="Follow SSG HITAM (@ssg_hitam)"
+                >
+                  <Instagram className="w-3.5 h-3.5 transition-transform group-hover/ssg:scale-110" />
+                  <span className="hidden sm:inline">@ssg_hitam</span>
+                </a>
+              )}
+              <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
+                10 Leadership Heads
+              </span>
+            </div>
           </div>
 
           {/* Featured First: Tejal (Student Dean — IIIC & Lead Fest Organizer) */}

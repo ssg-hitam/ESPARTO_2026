@@ -237,6 +237,7 @@ export interface FestInformation {
     unstopPortal?: string;
     devfolioPortal?: string;
     instagram?: string;
+    ssgInstagram?: string;
     linkedin?: string;
     youtube?: string;
     twitter?: string;

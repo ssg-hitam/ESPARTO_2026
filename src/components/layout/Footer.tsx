@@ -19,10 +19,10 @@ export function Footer() {
   ];
 
   const socialChannels = [
-    { name: "Instagram", icon: Instagram, url: FEST_INFO.officialLinks.instagram },
-    { name: "LinkedIn", icon: Linkedin, url: FEST_INFO.officialLinks.linkedin },
-    { name: "YouTube", icon: Youtube, url: FEST_INFO.officialLinks.youtube },
-    { name: "Twitter / X", icon: Twitter, url: FEST_INFO.officialLinks.twitter },
+    { name: "ESPARTO Instagram", icon: Instagram, url: FEST_INFO.officialLinks.instagram },
+    { name: "SSG HITAM Instagram", icon: Instagram, url: FEST_INFO.officialLinks.ssgInstagram },
+    { name: "HITAM LinkedIn", icon: Linkedin, url: FEST_INFO.officialLinks.linkedin },
+    { name: "HITAM YouTube", icon: Youtube, url: FEST_INFO.officialLinks.youtube },
   ];
 
   return (
@@ -102,7 +102,8 @@ export function Footer() {
                       href={channel.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Official ESPARTO ${channel.name}`}
+                      aria-label={channel.name}
+                      title={channel.name}
                       className="p-2.5 rounded-lg border border-white/10 bg-white/5 text-text-secondary hover:text-white hover:border-brand-violet hover:bg-brand-purple/20 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-violet"
                     >
                       <Icon className="w-4 h-4" />

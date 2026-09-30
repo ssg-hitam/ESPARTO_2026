@@ -39,9 +39,10 @@ export const FEST_INFO: FestInformation = {
   officialLinks: {
     unstopPortal: UNSTOP_ESPARTO_PASS_URL,
     devfolioPortal: undefined, // CONTENT_REQUIRED
-    instagram: undefined, // CONTENT_REQUIRED
-    linkedin: undefined, // CONTENT_REQUIRED
-    youtube: undefined, // CONTENT_REQUIRED
+    instagram: "https://www.instagram.com/esparto_hitam",
+    ssgInstagram: "https://www.instagram.com/ssg_hitam",
+    linkedin: "https://www.linkedin.com/school/hitamhyderabad",
+    youtube: "https://www.youtube.com/@hitamautonomous",
     twitter: undefined, // CONTENT_REQUIRED
   },
 };
