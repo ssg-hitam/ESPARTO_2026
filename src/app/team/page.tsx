@@ -49,6 +49,8 @@ export default function TeamPage() {
     return <Layers className="w-3.5 h-3.5 text-brand-orange" />;
   };
 
+  const leadOrganizer = ssgLeadership.find(m => m.id === "tejal-iiic");
+
   return (
     <main className="min-h-screen pt-28 pb-28 bg-[#05020d] relative overflow-hidden text-text-primary selection:bg-brand-orange/30 selection:text-white">
       {/* Designer Ambient Lighting */}
@@ -136,16 +138,109 @@ export default function TeamPage() {
             </span>
           </div>
 
+          {/* Featured First: Tejal (Student Dean — IIIC & Lead Fest Organizer) */}
+          {leadOrganizer && (
+            <div className="relative mb-10 rounded-3xl bg-gradient-to-br from-[#12092b] via-[#09041a] to-[#040210] border border-brand-orange/40 shadow-[0_0_50px_rgba(255,94,0,0.12)] overflow-hidden group">
+              <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+                
+                {/* Photo Studio Frame - Exactly Centered Middle Alignment */}
+                <div className="lg:col-span-5 relative h-[360px] sm:h-[400px] lg:h-[420px] bg-gradient-to-b from-[#180d38] via-[#0e0728] to-[#070318] overflow-hidden flex items-center justify-center p-6">
+                  {/* Studio radial backlight glow in exact middle */}
+                  <div className="absolute w-52 h-52 rounded-full bg-gradient-to-b from-brand-orange/20 via-brand-magenta/15 to-transparent blur-2xl pointer-events-none" />
+                  
+                  {/* Uniform Centered Image Container */}
+                  <div className="relative w-56 h-72 sm:w-60 sm:h-76 flex items-center justify-center z-10">
+                    {leadOrganizer.image ? (
+                      <Image
+                        src={leadOrganizer.image}
+                        alt={leadOrganizer.name}
+                        fill
+                        sizes="(max-width: 1024px) 250px, 300px"
+                        className="object-contain object-center filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] transition-transform duration-700 ease-out group-hover:scale-105"
+                        priority
+                      />
+                    ) : (
+                      <div className="w-20 h-20 rounded-2xl bg-brand-orange/15 border border-brand-orange/30 flex items-center justify-center text-brand-orange">
+                        <Sparkles className="w-10 h-10" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Floating pill badge on photo */}
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-brand-orange/40 text-brand-orange font-mono text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3 text-brand-orange" />
+                      LEAD FEST ORGANIZER
+                    </span>
+                  </div>
+                </div>
+
+                {/* Editorial Content */}
+                <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-[11px] font-mono uppercase tracking-wider text-brand-magenta font-semibold">
+                        Student Self Governance Council
+                      </span>
+                      <span className="text-white/20">•</span>
+                      <span className="text-[11px] font-mono uppercase tracking-wider text-text-muted">
+                        Lead Organizer
+                      </span>
+                    </div>
+
+                    <h3 className="font-display font-black text-3xl sm:text-5xl text-white tracking-tight mb-2">
+                      {leadOrganizer.name}
+                    </h3>
+
+                    <p className="text-sm sm:text-base font-mono text-text-secondary mb-6">
+                      {leadOrganizer.role}
+                    </p>
+
+                    {leadOrganizer.handling && (
+                      <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 mb-8 max-w-xl flex items-start gap-3">
+                        <div className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center shrink-0 mt-0.5 text-brand-orange">
+                          <Handshake className="w-4 h-4" />
+                        </div>
+                        <p className="text-xs sm:text-sm font-body text-white/90 leading-relaxed font-light">
+                          {leadOrganizer.handling}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Official Contact Strip */}
+                  <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-white/10">
+                    {leadOrganizer.socials?.email && (
+                      <a
+                        href={`mailto:${leadOrganizer.socials.email}`}
+                        className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand-orange/40 text-xs font-mono text-white transition-all group/btn"
+                      >
+                        <Mail className="w-4 h-4 text-brand-orange transition-transform group-hover/btn:scale-110" />
+                        <span>{leadOrganizer.socials.email}</span>
+                      </a>
+                    )}
+                    {leadOrganizer.contact && (
+                      <a
+                        href={`tel:${leadOrganizer.contact.replace(/\s+/g, '')}`}
+                        className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-xs font-mono text-emerald-400 transition-all group/btn"
+                      >
+                        <Phone className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
+                        <span>{leadOrganizer.contact}</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
+
           {/* Unified Core Student Leaders Grid (Exact Same Size & Dead-Center Middle Alignment) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {ssgLeadership.map((member) => (
+            {ssgLeadership.filter(m => m.id !== "tejal-iiic").map((member) => (
               <div
                 key={member.id}
-                className={`rounded-3xl bg-gradient-to-b from-[#0e0728] via-[#09041d] to-[#050212] border transition-all duration-300 group overflow-hidden flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_35px_rgba(255,94,0,0.18)] ${
-                  member.highlight
-                    ? "border-brand-orange/50 hover:border-brand-orange"
-                    : "border-white/10 hover:border-white/25"
-                }`}
+                className="rounded-3xl bg-gradient-to-b from-[#0e0728] via-[#09041d] to-[#050212] border border-white/10 hover:border-white/25 transition-all duration-300 group overflow-hidden flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_35px_rgba(255,94,0,0.18)]"
               >
                 {/* Fixed-Height Canvas with Exact Middle Alignment */}
                 <div className="relative w-full h-72 sm:h-80 bg-gradient-to-b from-[#180d38] via-[#0e0728] to-[#070318] overflow-hidden flex items-center justify-center p-4">
@@ -162,7 +257,6 @@ export default function TeamPage() {
                         fill
                         sizes="(max-width: 640px) 210px, 230px"
                         className="object-contain object-center filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.75)] transition-transform duration-500 ease-out group-hover:scale-105"
-                        priority={member.highlight}
                       />
                     ) : (
                       <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-text-muted">
@@ -173,16 +267,10 @@ export default function TeamPage() {
 
                   {/* Role Pill Badge */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-20">
-                    <span className={`px-3 py-1 rounded-full backdrop-blur-md border text-[10px] font-mono font-bold uppercase tracking-wider truncate ${
-                      member.highlight
-                        ? "bg-brand-orange/20 border-brand-orange/50 text-brand-orange"
-                        : "bg-black/60 border-white/15 text-white/90"
-                    }`}>
+                    <span className="px-3 py-1 rounded-full backdrop-blur-md border border-white/15 bg-black/60 text-white/90 text-[10px] font-mono font-bold uppercase tracking-wider truncate">
                       {member.role}
                     </span>
-                    <span className={`w-2 h-2 rounded-full shrink-0 ${
-                      member.highlight ? "bg-brand-orange shadow-[0_0_8px_#ff5e00]" : "bg-white/40"
-                    }`} />
+                    <span className="w-2 h-2 rounded-full bg-white/40 shrink-0" />
                   </div>
                 </div>
 
