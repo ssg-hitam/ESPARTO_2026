@@ -40,6 +40,7 @@ export interface FestEventItem {
   };
   highlights: string[];
   featured?: boolean;
+  unstopUrl?: string;
 }
 
 export const FEST_EVENTS: FestEventItem[] = [

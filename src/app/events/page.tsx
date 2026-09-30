@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { FEST_EVENTS, FestEventItem, EventCategoryType } from "@/data/events";
+import { UNSTOP_ESPARTO_PASS_URL } from "@/lib/constants";
 import { 
   ArrowLeft, 
   ArrowUpRight, 
@@ -259,14 +260,28 @@ export default function EventsPage() {
             </div>
 
             {/* ESPARTO 2-Day Pass Notice Box */}
-            <div className="p-4 rounded-2xl border border-brand-orange/30 bg-gradient-to-br from-brand-orange/10 via-[#08041d] to-[#08041d] text-xs font-mono space-y-2">
-              <div className="flex items-center gap-2 text-brand-orange font-bold uppercase text-[11px] tracking-wider">
-                <Ticket className="w-3.5 h-3.5" />
-                <span>ESPARTO PASS – ₹700</span>
+            <div className="p-4 rounded-2xl border border-brand-orange/30 bg-gradient-to-br from-brand-orange/15 via-[#08041d] to-[#08041d] text-xs font-mono space-y-2.5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5 text-brand-orange font-bold uppercase text-[11px] tracking-wider">
+                  <Ticket className="w-3.5 h-3.5" />
+                  <span>2-DAY PASS – ₹700</span>
+                </div>
+                <span className="px-1.5 py-0.5 rounded text-[9px] bg-brand-orange/20 text-brand-orange font-mono">
+                  ALL-ACCESS
+                </span>
               </div>
               <p className="text-text-secondary font-body text-[11px] leading-relaxed">
-                Provides full access to the two-day technical fest. Register separately for individual competitions on Unstop.
+                Attend ANY event, competition &amp; workshop across both days without paying per-event fees.
               </p>
+              <a
+                href={UNSTOP_ESPARTO_PASS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-brand-orange to-brand-magenta text-white font-display font-bold text-[11px] uppercase tracking-wider hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,94,0,0.3)]"
+              >
+                <span>GET PASS ON UNSTOP</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
             </div>
 
           </aside>

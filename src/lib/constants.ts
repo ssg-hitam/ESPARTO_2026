@@ -1,5 +1,8 @@
 import { FestInformation } from "@/types";
 
+export const UNSTOP_ESPARTO_PASS_URL = 
+  "https://unstop.com/p/esparto-2026-2-day-technical-fest-pass-esparto-2026-hyderabad-institute-of-technology-and-management-hitm-hyderabad-1763831";
+
 /**
  * Verified Core ESPARTO 2026 Festival Constants
  * All unverified/pending information is explicitly typed as "CONTENT_REQUIRED".
@@ -34,7 +37,7 @@ export const FEST_INFO: FestInformation = {
     totalPrizePool: "₹90,000+",
   },
   officialLinks: {
-    unstopPortal: undefined, // CONTENT_REQUIRED
+    unstopPortal: UNSTOP_ESPARTO_PASS_URL,
     devfolioPortal: undefined, // CONTENT_REQUIRED
     instagram: undefined, // CONTENT_REQUIRED
     linkedin: undefined, // CONTENT_REQUIRED

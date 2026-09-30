@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { getButtonClasses } from "@/components/ui/Button";
-import { FEST_INFO } from "@/lib/constants";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +20,7 @@ export interface RegisterButtonProps {
  * a controlled "Register Soon" state without broken links.
  */
 export function RegisterButton({
-  registrationUrl = FEST_INFO.officialLinks.unstopPortal || FEST_INFO.officialLinks.devfolioPortal || "#events",
+  registrationUrl = "/register",
   label,
   showIcon = true,
   size = "md",
