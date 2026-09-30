@@ -263,71 +263,7 @@ export const eventSupportWings: EventSupportWing[] = [
   }
 ];
 
-export interface OperationalLead {
-  id: string;
-  committee: string;
-  leads: string;
-  description: string;
-  tag?: string;
-}
 
-export const operationalCommittees: OperationalLead[] = [
-  {
-    id: "dec-design",
-    committee: "Decoration & Design",
-    leads: "Mavya & Vennela",
-    description: "Atmosphere design, creative stage backdrops, entrance arches, installations, and visual aesthetic."
-  },
-  {
-    id: "sponsorships",
-    committee: "Sponsorships & Partnerships",
-    leads: "All of US",
-    description: "Corporate sponsor outreach, brochure dissemination, pitch presentations, and partner deliverable tracking.",
-    tag: "Collective Effort"
-  },
-  {
-    id: "finance-stalls",
-    committee: "Finance / Stall Management",
-    leads: "Harsith",
-    description: "Budget allocations, commercial tech/food stall management, invoices, and accounting compliance."
-  },
-  {
-    id: "discipline",
-    committee: "Discipline & Campus Protocol",
-    leads: "Abhinav",
-    description: "Campus code of conduct, volunteer security coordination, crowd management, and delegate discipline."
-  },
-  {
-    id: "stage-quality",
-    committee: "Stage Management / Program Quality",
-    leads: "Bhavya",
-    description: "Auditorium scheduling, VIP felicitation protocols, acoustic & screen quality, and live run-of-show."
-  },
-  {
-    id: "registrations",
-    committee: "Registrations & Delegate Desk",
-    leads: "Hemanth",
-    description: "Unstop pass accreditation, QR barcode check-ins, delegate badge kits, and query resolution desks."
-  },
-  {
-    id: "media-photo",
-    committee: "Photography & Videography",
-    leads: "Branding / Photography Club",
-    description: "Official aftermovie production, live event photo coverage, keynote captures, and drone videography."
-  },
-  {
-    id: "public-relations",
-    committee: "Public Relations (PR) & Outreach",
-    leads: "Sriya",
-    description: "Inter-college communication, media communications, campus ambassador network, and press relations."
-  },
-  {
-    id: "logistics",
-    committee: "Logistics & Infrastructure",
-    leads: "Mahesh & Sreeram",
-    description: "Stage hardware, equipment procurement, electrical/network backbone, venue setup, and transport."
-  }
-];
 
 export const teamData: Organizer[] = [
   ...facultyCoordinators,
