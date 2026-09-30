@@ -559,12 +559,11 @@ export default function TeamPage() {
                       href={chapter.socials.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-pink-400 text-xs font-mono transition-all group/insta"
+                      className="w-7 h-7 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-pink-400 hover:text-pink-300 flex items-center justify-center transition-all group/insta"
                       aria-label={`${chapter.name} Instagram`}
+                      title="Instagram"
                     >
-                      <Instagram className="w-3.5 h-3.5" />
-                      <span>Instagram</span>
-                      <ExternalLink className="w-3 h-3 transition-transform group-hover/insta:translate-x-0.5 group-hover/insta:-translate-y-0.5" />
+                      <Instagram className="w-3.5 h-3.5 transition-transform group-hover/insta:scale-110" />
                     </a>
                   ) : (
                     <ExternalLink className="w-3 h-3 text-text-muted group-hover:text-white transition-colors" />
