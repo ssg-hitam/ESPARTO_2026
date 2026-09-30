@@ -474,7 +474,7 @@ export default function SponsorsPage() {
                   </a>
 
                   <a
-                    href="tel:+917981495420"
+                    href="tel:+919059111595"
                     className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.04] border border-white/10 hover:border-emerald-500/50 hover:bg-white/[0.08] transition-all group"
                   >
                     <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
@@ -482,8 +482,8 @@ export default function SponsorsPage() {
                     </div>
                     <div>
                       <span className="text-[10px] font-mono text-text-muted block uppercase">CALL / WHATSAPP</span>
-                      <strong className="text-white text-xs font-mono block">Sharath — Lead</strong>
-                      <span className="text-emerald-400 font-mono text-xs">+91 7981495420</span>
+                      <strong className="text-white text-xs font-mono block">Tejal — Sponsorship Lead</strong>
+                      <span className="text-emerald-400 font-mono text-xs">+91 90591 11595</span>
                     </div>
                   </a>
                 </div>

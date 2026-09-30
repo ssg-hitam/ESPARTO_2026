@@ -72,10 +72,6 @@ export function SponsorsPreviewSection() {
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-orange">
                 CALL FOR PARTNERSHIPS
               </span>
-              <span className="text-white/20 text-xs">/</span>
-              <span className="text-xs font-mono text-text-muted">
-                2,000+ FOOTFALL REACH
-              </span>
             </div>
 
             <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight uppercase leading-[1.1]">
@@ -174,11 +170,11 @@ export function SponsorsPreviewSection() {
             </a>
             <span className="text-white/20">•</span>
             <a 
-              href="tel:+917981495420" 
+              href="tel:+919059111595" 
               className="flex items-center gap-1.5 text-emerald-400 hover:underline"
             >
               <Phone className="w-3.5 h-3.5" />
-              <span>Sharath: +91 7981495420</span>
+              <span>Tejal: +91 90591 11595</span>
             </a>
           </div>
 
