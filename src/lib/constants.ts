@@ -28,10 +28,10 @@ export const FEST_INFO: FestInformation = {
     dailyEnd: "16:30",
   },
   metrics: {
-    totalEvents: "CONTENT_REQUIRED",
-    expectedParticipants: "CONTENT_REQUIRED",
-    participatingColleges: "CONTENT_REQUIRED",
-    totalPrizePool: "CONTENT_REQUIRED",
+    totalEvents: "15+",
+    expectedParticipants: "1000+",
+    participatingColleges: "50+",
+    totalPrizePool: "₹90,000+",
   },
   officialLinks: {
     unstopPortal: undefined, // CONTENT_REQUIRED
