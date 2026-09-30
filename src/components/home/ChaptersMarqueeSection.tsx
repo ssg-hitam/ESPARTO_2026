@@ -27,7 +27,7 @@ export function ChaptersMarqueeSection() {
     <section
       id="chapters"
       aria-label="Organisers and Partner Technical Chapters"
-      className="relative py-16 sm:py-24 bg-[#050212] overflow-hidden border-b border-brand-violet/15"
+      className="relative py-10 sm:py-16 bg-[#050212] overflow-hidden border-b border-brand-violet/15"
     >
       {/* Ambient Lighting Gradients */}
       <div 
@@ -42,7 +42,7 @@ export function ChaptersMarqueeSection() {
       <Container size="lg" className="relative z-10">
         
         {/* Section Container Box matching IdeaSection aesthetic */}
-        <div className="relative p-6 sm:p-10 lg:p-12 rounded-3xl border border-brand-violet/25 bg-[#08041d]/85 backdrop-blur-md overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
+        <div className="relative p-6 sm:p-8 lg:p-10 rounded-3xl border border-brand-violet/25 bg-[#08041d]/85 backdrop-blur-md overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
           
           {/* Subtle Cyber Grid Background */}
           <div className="absolute inset-0 tech-grid opacity-20 pointer-events-none" aria-hidden="true" />
@@ -83,7 +83,7 @@ export function ChaptersMarqueeSection() {
           </div>
 
           {/* 3D CIRCULAR CAROUSEL: Interactive 3D cylinder showcasing all 11 technical chapters */}
-          <div className="relative -mx-6 sm:-mx-10 lg:-mx-12 overflow-hidden pt-4 pb-2">
+          <div className="relative -mx-6 sm:-mx-10 lg:-mx-12 overflow-hidden pt-2 pb-2">
             
             {/* Top & Bottom Hairline Accents */}
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -91,35 +91,35 @@ export function ChaptersMarqueeSection() {
 
             {/* Ambient lighting under the 3D ring */}
             <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[260px] bg-brand-purple/15 blur-[120px] pointer-events-none rounded-full" 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[220px] bg-brand-purple/15 blur-[100px] pointer-events-none rounded-full" 
               aria-hidden="true" 
             />
 
-            <div style={{ width: '100%', height: '560px', position: 'relative' }}>
+            <div className="w-full h-[370px] sm:h-[410px] relative">
               <CircularCarousel
                 items={carouselItems}
                 preset="cylinder"
                 intro="rise"
-                cardWidth={150}
+                cardWidth={185}
                 aspectRatio={1}
                 speed={5}
                 captions
-                gap={15}
-                tilt={-17}
-                curve={0.77}
-                perspective={1880}
-                momentum={0.19}
+                gap={16}
+                tilt={-11}
+                curve={0.75}
+                perspective={1900}
+                momentum={0.2}
                 parallax={0.23}
                 stretch={0.16}
                 depthFade={0.25}
                 fadeColor="#08041d"
                 innerShade={0.3}
-                cornerRadius={12}
+                cornerRadius={14}
               />
             </div>
 
             {/* Interactive hint */}
-            <div className="relative z-10 flex items-center justify-center gap-2 -mt-2 text-xs text-text-tertiary tracking-wider font-mono uppercase">
+            <div className="relative z-10 flex items-center justify-center gap-2 mt-1 text-[11px] text-text-tertiary tracking-wider font-mono uppercase">
               <span>✦ Drag horizontally or scroll to spin</span>
               <span className="opacity-40">•</span>
               <span>Tap card to focus</span>
