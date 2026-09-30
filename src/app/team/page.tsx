@@ -5,12 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/ui/FadeUp";
-import { 
-  ArrowLeft, 
-  Mail, 
-  Phone, 
-  ShieldCheck, 
-  GraduationCap, 
+import {
+  ArrowLeft,
+  Mail,
+  Phone,
+  ShieldCheck,
+  GraduationCap,
   Sparkles,
   Users2,
   Cpu,
@@ -26,11 +26,11 @@ import {
   Truck,
   ExternalLink
 } from "lucide-react";
-import { 
-  facultyCoordinators, 
-  ssgLeadership, 
+import {
+  facultyCoordinators,
+  ssgLeadership,
   chapterCommittees,
-  eventSupportWings 
+  eventSupportWings
 } from "@/data/team";
 
 export default function TeamPage() {
@@ -54,27 +54,27 @@ export default function TeamPage() {
   return (
     <main className="min-h-screen pt-28 pb-28 bg-[#05020d] relative overflow-hidden text-text-primary selection:bg-brand-orange/30 selection:text-white">
       {/* Designer Ambient Lighting */}
-      <div 
+      <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] rounded-full bg-gradient-to-b from-brand-orange/[0.12] via-brand-magenta/[0.08] to-transparent blur-[160px] pointer-events-none"
         aria-hidden="true"
       />
-      <div 
+      <div
         className="absolute top-[35%] -left-32 w-[600px] h-[600px] rounded-full bg-brand-violet/[0.08] blur-[180px] pointer-events-none"
         aria-hidden="true"
       />
-      <div 
+      <div
         className="absolute top-[65%] -right-32 w-[600px] h-[600px] rounded-full bg-brand-orange/[0.06] blur-[180px] pointer-events-none"
         aria-hidden="true"
       />
 
       {/* Subtle architectural background grid */}
-      <div 
+      <div
         className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"
         aria-hidden="true"
       />
 
       <Container size="lg" className="relative z-10">
-        
+
         {/* Navigation Breadcrumb */}
         <FadeUp delay={0}>
           <Link
@@ -116,7 +116,7 @@ export default function TeamPage() {
             SECTION 1: STUDENT ORGANIZING CORE
         ═══════════════════════════════════════════════════════════════════════ */}
         <section className="mb-24">
-          
+
           {/* Section Header */}
           <div className="flex items-center justify-between gap-4 mb-10 pb-4 border-b border-white/10">
             <div className="flex items-center gap-3">
@@ -142,37 +142,40 @@ export default function TeamPage() {
           {leadOrganizer && (
             <div className="relative mb-10 rounded-3xl bg-gradient-to-br from-[#12092b] via-[#09041a] to-[#040210] border border-brand-orange/40 shadow-[0_0_50px_rgba(255,94,0,0.12)] overflow-hidden group">
               <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-                
-                {/* Photo Studio Frame - Exactly Centered Middle Alignment */}
-                <div className="lg:col-span-5 relative h-[360px] sm:h-[400px] lg:h-[420px] bg-gradient-to-b from-[#180d38] via-[#0e0728] to-[#070318] overflow-hidden flex items-center justify-center p-6">
-                  {/* Studio radial backlight glow in exact middle */}
-                  <div className="absolute w-52 h-52 rounded-full bg-gradient-to-b from-brand-orange/20 via-brand-magenta/15 to-transparent blur-2xl pointer-events-none" />
-                  
-                  {/* Uniform Centered Image Container */}
-                  <div className="relative w-56 h-72 sm:w-60 sm:h-76 flex items-center justify-center z-10">
+
+                {/* Photo Studio Frame - Enlarged, Grounded & Prominent */}
+                <div className="lg:col-span-5 relative h-[420px] sm:h-[460px] lg:h-[480px] bg-gradient-to-b from-[#1b0c38] via-[#0e0622] to-[#070314] overflow-hidden flex items-end justify-center">
+                  {/* Studio radial backlight glow */}
+                  <div className="absolute inset-0 bg-radial from-brand-orange/25 via-brand-magenta/15 to-transparent blur-3xl pointer-events-none" />
+
+                  {/* Floating pill badge on photo */}
+                  <div className="absolute top-5 left-5 z-20">
+                    <span className="px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-brand-orange/40 text-brand-orange font-mono text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                      <Sparkles className="w-3.5 h-3.5 text-brand-orange" />
+                      LEAD FEST ORGANIZER
+                    </span>
+                  </div>
+
+                  {/* Large Prominent Photo */}
+                  <div className="relative w-full h-[95%] flex items-end justify-center z-10 pt-4">
                     {leadOrganizer.image ? (
                       <Image
                         src={leadOrganizer.image}
                         alt={leadOrganizer.name}
-                        fill
-                        sizes="(max-width: 1024px) 250px, 300px"
-                        className="object-contain object-center filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] transition-transform duration-700 ease-out group-hover:scale-105"
+                        width={480}
+                        height={600}
+                        className="object-contain object-bottom h-full w-auto max-w-full filter drop-shadow-[0_18px_35px_rgba(0,0,0,0.85)] transition-transform duration-700 ease-out group-hover:scale-105"
                         priority
                       />
                     ) : (
-                      <div className="w-20 h-20 rounded-2xl bg-brand-orange/15 border border-brand-orange/30 flex items-center justify-center text-brand-orange">
+                      <div className="w-20 h-20 rounded-2xl bg-brand-orange/15 border border-brand-orange/30 flex items-center justify-center text-brand-orange mb-12">
                         <Sparkles className="w-10 h-10" />
                       </div>
                     )}
                   </div>
 
-                  {/* Floating pill badge on photo */}
-                  <div className="absolute top-4 left-4 z-20">
-                    <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-brand-orange/40 text-brand-orange font-mono text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                      <Sparkles className="w-3 h-3 text-brand-orange" />
-                      LEAD FEST ORGANIZER
-                    </span>
-                  </div>
+                  {/* Smooth bottom gradient fade */}
+                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#09041a] via-[#09041a]/60 to-transparent pointer-events-none z-10" />
                 </div>
 
                 {/* Editorial Content */}
@@ -180,7 +183,7 @@ export default function TeamPage() {
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-[11px] font-mono uppercase tracking-wider text-brand-magenta font-semibold">
-                        Student Self Governance Council
+                        Student Self Governance
                       </span>
                       <span className="text-white/20">•</span>
                       <span className="text-[11px] font-mono uppercase tracking-wider text-text-muted">
@@ -235,43 +238,46 @@ export default function TeamPage() {
             </div>
           )}
 
-          {/* Unified Core Student Leaders Grid (Exact Same Size & Dead-Center Middle Alignment) */}
+          {/* Unified Core Student Leaders Grid (Large, Grounded, Prominent Portraits) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {ssgLeadership.filter(m => m.id !== "tejal-iiic").map((member) => (
               <div
                 key={member.id}
-                className="rounded-3xl bg-gradient-to-b from-[#0e0728] via-[#09041d] to-[#050212] border border-white/10 hover:border-white/25 transition-all duration-300 group overflow-hidden flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_35px_rgba(255,94,0,0.18)]"
+                className="rounded-3xl bg-gradient-to-b from-[#0e0728] via-[#09041d] to-[#050212] border border-white/10 hover:border-brand-orange/40 transition-all duration-300 group overflow-hidden flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_35px_rgba(255,94,0,0.18)]"
               >
-                {/* Fixed-Height Canvas with Exact Middle Alignment */}
-                <div className="relative w-full h-72 sm:h-80 bg-gradient-to-b from-[#180d38] via-[#0e0728] to-[#070318] overflow-hidden flex items-center justify-center p-4">
-                  
-                  {/* Studio ambient backlight glow in the exact middle */}
-                  <div className="absolute w-44 h-44 rounded-full bg-gradient-to-b from-brand-orange/20 via-brand-magenta/15 to-transparent blur-xl pointer-events-none" />
+                {/* Large Grounded Portrait Canvas */}
+                <div className="relative w-full h-[380px] sm:h-[420px] bg-gradient-to-b from-[#180d38] via-[#0e0728] to-[#070318] overflow-hidden flex items-end justify-center">
 
-                  {/* Uniform Centered Image Viewport Container */}
-                  <div className="relative w-52 h-64 sm:w-56 sm:h-68 flex items-center justify-center z-10">
-                    {member.image ? (
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        sizes="(max-width: 640px) 210px, 230px"
-                        className="object-contain object-center filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.75)] transition-transform duration-500 ease-out group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-text-muted">
-                        <Users2 className="w-8 h-8" />
-                      </div>
-                    )}
-                  </div>
+                  {/* Studio ambient backlight glow */}
+                  <div className="absolute inset-0 bg-radial from-brand-orange/18 via-brand-magenta/10 to-transparent blur-2xl pointer-events-none" />
 
                   {/* Role Pill Badge */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-20">
-                    <span className="px-3 py-1 rounded-full backdrop-blur-md border border-white/15 bg-black/60 text-white/90 text-[10px] font-mono font-bold uppercase tracking-wider truncate">
+                    <span className="px-3 py-1 rounded-full backdrop-blur-md border border-white/15 bg-black/70 text-white/90 text-[10px] font-mono font-bold uppercase tracking-wider truncate shadow-md">
                       {member.role}
                     </span>
-                    <span className="w-2 h-2 rounded-full bg-white/40 shrink-0" />
+                    <span className="w-2 h-2 rounded-full bg-brand-orange/80 shrink-0 shadow-[0_0_8px_#ff5e00]" />
                   </div>
+
+                  {/* Enlarged Prominent Portrait */}
+                  {member.image ? (
+                    <div className="relative w-full h-[95%] flex items-end justify-center z-10 pt-4 px-2">
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        width={440}
+                        height={600}
+                        className="object-contain object-bottom h-full w-auto max-w-full filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.85)] transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-text-muted mb-12">
+                      <Users2 className="w-8 h-8" />
+                    </div>
+                  )}
+
+                  {/* Bottom Vignette to blend cutout base smoothly into card */}
+                  <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#09041a] via-[#09041a]/60 to-transparent pointer-events-none z-10" />
                 </div>
 
                 {/* Content Base Card */}
