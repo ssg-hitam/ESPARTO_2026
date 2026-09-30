@@ -293,12 +293,12 @@ export default function HitamPage() {
               <div className={`relative flex flex-col sm:flex-row items-center sm:items-start gap-6 p-7 rounded-2xl border ${item.border} bg-gradient-to-br ${item.accent} backdrop-blur-md h-full hover:scale-[1.01] transition-transform duration-300`}>
                 
                 {/* Logo Frame */}
-                <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl p-2 bg-white/95 border border-white/20 shadow-lg flex items-center justify-center shrink-0 overflow-hidden">
+                <div className="relative w-28 h-24 sm:w-32 sm:h-28 rounded-2xl p-2 bg-white/95 border border-white/20 shadow-lg flex items-center justify-center shrink-0 overflow-hidden">
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    className="object-contain p-2"
+                    className="object-contain p-1.5"
                   />
                 </div>
 
