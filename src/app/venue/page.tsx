@@ -25,6 +25,10 @@ const campusPhotos = [
     alt: "HITAM Main Campus Aerial View",
   },
   {
+    src: "/images/campus/hitam_campus_facade.jpg",
+    alt: "HITAM Academic Complex & Main Facade",
+  },
+  {
     src: "/images/campus/hitam_campus_greenary.jpg",
     alt: "HITAM Green Campus Architecture",
   },
@@ -118,7 +122,7 @@ function CampusAutoCarousel() {
       </div>
 
       {/* Thumbnail Bar */}
-      <div className="grid grid-cols-3 max-w-xl mx-auto gap-3 sm:gap-4 mt-4">
+      <div className="grid grid-cols-4 max-w-2xl mx-auto gap-3 sm:gap-4 mt-4">
         {campusPhotos.map((photo, idx) => (
           <button
             key={photo.src}
