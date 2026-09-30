@@ -8,6 +8,7 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { CountdownSection } from "@/components/home/CountdownSection";
 import { IdeaSection } from "@/components/home/IdeaSection";
 import { ChaptersMarqueeSection } from "@/components/home/ChaptersMarqueeSection";
+import { SponsorsPreviewSection } from "@/components/home/SponsorsPreviewSection";
 import { RegisterCtaSection } from "@/components/home/RegisterCtaSection";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
@@ -68,6 +69,10 @@ export default function Home() {
 
       <ScrollReveal threshold={0.08} direction="up">
         <ChaptersMarqueeSection />
+      </ScrollReveal>
+
+      <ScrollReveal threshold={0.1} direction="up">
+        <SponsorsPreviewSection />
       </ScrollReveal>
 
       <ScrollReveal threshold={0.1} direction="up">
