@@ -124,12 +124,6 @@ export default function RegisterPage() {
                       <Ticket className="w-3.5 h-3.5 fill-black" />
                       OFFICIAL ESPARTO 2026 PASS
                     </span>
-                    <span className="px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white font-mono text-xs uppercase tracking-wider">
-                      2-DAY ALL-ACCESS PASS
-                    </span>
-                    <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs uppercase tracking-wider">
-                      MOST POPULAR
-                    </span>
                   </div>
 
                   {/* Main Pass Title */}
@@ -321,9 +315,9 @@ export default function RegisterPage() {
 
           </div>
 
-          {/* Event Cards Grid */}
+          {/* Event Cards Grid (Starting 6 Tracks) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-            {filteredEvents.map((event) => (
+            {filteredEvents.slice(0, 6).map((event) => (
               <div
                 key={event.id}
                 className="flex flex-col justify-between p-5 rounded-2xl border border-white/10 bg-[#08041d]/80 hover:border-brand-violet/50 hover:bg-[#0c0628] transition-all duration-300 group"
