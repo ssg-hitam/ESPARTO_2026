@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
@@ -14,47 +14,135 @@ import {
   Globe, 
   Building2, 
   Trees, 
-  ExternalLink 
+  ExternalLink,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 
 const campusPhotos = [
   {
-    title: "Main Campus & Aerial Green Canopy",
-    tag: "AERIAL PERSPECTIVE",
-    desc: "Panoramic aerial view of the main academic block nestled within lush natural green canopies and windmills.",
     src: "/images/campus/hitam_campus_aerial.jpg",
+    alt: "HITAM Main Campus Aerial View",
   },
   {
-    title: "India's First LEED Silver Campus",
-    tag: "SUSTAINABLE ARCHITECTURE",
-    desc: "Designed with passive natural cooling corridors, solar infrastructure, and abundant green cover.",
     src: "/images/campus/hitam_campus_greenary.jpg",
+    alt: "HITAM Green Campus Architecture",
   },
   {
-    title: "Academic Complex & Main Facade",
-    tag: "CAMPUS ARCHITECTURE",
-    desc: "State-of-the-art engineering blocks, advanced technical hubs, and landscaped pathways.",
-    src: "/images/campus/hitam_campus_facade.jpg",
-  },
-  {
-    title: "Central Plazas & Student Commons",
-    tag: "CAMPUS LIFE",
-    desc: "Sprawling central staircases and open-air hubs fostering student communities and clubs.",
     src: "/images/campus/hitam_campus_mainstairs.jpg",
-  },
-  {
-    title: "Academic & Research Wings",
-    tag: "INNOVATION HUBS",
-    desc: "Modern multi-disciplinary laboratories, research centers, and seminar spaces.",
-    src: "/images/campus/hitam_campus_leed_1.jpg",
-  },
-  {
-    title: "Eco-Friendly Courtyards",
-    tag: "GREEN COMMONS",
-    desc: "Open-air landscaped plazas and shaded corridors fostering collaborative technical ideation.",
-    src: "/images/campus/hitam_campus_leed_2.jpg",
+    alt: "HITAM Central Campus Plazas",
   },
 ];
+
+function CampusAutoCarousel() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Auto-advance every 3.5 seconds
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % campusPhotos.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + campusPhotos.length) % campusPhotos.length);
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % campusPhotos.length);
+  };
+
+  return (
+    <section 
+      className="mb-20"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Cinematic Main Viewport */}
+      <div className="relative w-full h-72 sm:h-96 md:h-[460px] lg:h-[520px] rounded-3xl border border-white/10 overflow-hidden bg-black/60 shadow-[0_8px_40px_rgba(0,0,0,0.6)] group">
+        {campusPhotos.map((photo, idx) => (
+          <div
+            key={photo.src}
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+              idx === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+            }`}
+          >
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              sizes="(max-width: 1280px) 100vw, 1200px"
+              priority={idx === 0}
+              className="object-cover object-center filter contrast-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+          </div>
+        ))}
+
+        {/* Prev Button */}
+        <button
+          onClick={handlePrev}
+          aria-label="Previous image"
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-brand-orange backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-105"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+
+        {/* Next Button */}
+        <button
+          onClick={handleNext}
+          aria-label="Next image"
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-brand-orange backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-105"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
+        {/* Bottom Dot Indicators */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
+          {campusPhotos.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveIndex(idx)}
+              aria-label={`Go to image ${idx + 1}`}
+              className={`transition-all duration-300 rounded-full ${
+                idx === activeIndex
+                  ? "w-8 h-2 bg-brand-orange"
+                  : "w-2 h-2 bg-white/40 hover:bg-white/70"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Thumbnail Bar */}
+      <div className="grid grid-cols-3 max-w-xl mx-auto gap-3 sm:gap-4 mt-4">
+        {campusPhotos.map((photo, idx) => (
+          <button
+            key={photo.src}
+            onClick={() => setActiveIndex(idx)}
+            aria-label={`Select photo ${idx + 1}`}
+            className={`relative h-16 sm:h-20 md:h-24 rounded-xl overflow-hidden border transition-all duration-300 ${
+              idx === activeIndex
+                ? "border-brand-orange ring-2 ring-brand-orange/40 scale-[1.02]"
+                : "border-white/10 opacity-60 hover:opacity-100 hover:border-white/30"
+            }`}
+          >
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              sizes="(max-width: 640px) 16vw, 160px"
+              className="object-cover object-center"
+            />
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 const directions = [
   {
@@ -242,61 +330,9 @@ export default function VenuePage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            CAMPUS PHOTO GALLERY SECTION
+            CAMPUS PHOTO AUTO-CAROUSEL
         ═══════════════════════════════════════════════════════════════════════ */}
-        <section className="mb-16">
-          <div className="flex items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
-            <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-brand-orange font-bold block mb-1">
-                INFRASTRUCTURE &amp; ENVIRONMENT
-              </span>
-              <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
-                CAMPUS GALLERY
-              </h2>
-            </div>
-            <span className="text-xs font-mono text-text-muted uppercase">
-              HITAM Hyderabad
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {campusPhotos.map((photo, idx) => (
-              <FadeUp key={photo.title} delay={0.1 + idx * 0.08} distance={25}>
-                <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-[#0c0628] to-[#040112] overflow-hidden group hover:border-brand-orange/40 transition-all duration-300 h-full flex flex-col justify-between">
-                  {/* Photo Canvas */}
-                  <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-black/40">
-                    <Image
-                      src={photo.src}
-                      alt={photo.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover object-center filter contrast-105 group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0c0628] via-transparent to-transparent" />
-                    
-                    <div className="absolute top-3 left-3 z-10">
-                      <span className="px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-white/15 text-brand-orange font-mono text-[9px] font-bold uppercase tracking-wider">
-                        {photo.tag}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Caption Details */}
-                  <div className="p-5 flex flex-col justify-between flex-1">
-                    <div>
-                      <h3 className="font-display font-black text-base text-white tracking-tight mb-1.5 group-hover:text-brand-orange transition-colors">
-                        {photo.title}
-                      </h3>
-                      <p className="text-xs font-body text-text-secondary leading-relaxed font-light">
-                        {photo.desc}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-        </section>
+        <CampusAutoCarousel />
 
       </Container>
     </main>
