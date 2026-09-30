@@ -348,6 +348,7 @@ export default function EventsPage() {
                                   src={event.clubLogo}
                                   alt={event.club}
                                   fill
+                                  sizes="16px"
                                   className="object-contain p-0.5"
                                 />
                               </div>
