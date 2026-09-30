@@ -93,12 +93,12 @@ export function ChaptersMarqueeSection() {
               aria-hidden="true" 
             />
 
-            <div className="w-full h-[310px] sm:h-[330px] relative">
+            <div className="w-full h-[350px] sm:h-[375px] relative">
               <CircularCarousel
                 items={carouselItems}
                 preset="cylinder"
                 intro="rise"
-                cardWidth={170}
+                cardWidth={165}
                 aspectRatio={1}
                 speed={5}
                 captions
@@ -117,7 +117,7 @@ export function ChaptersMarqueeSection() {
             </div>
 
             {/* Interactive hint */}
-            <div className="relative z-10 flex items-center justify-center gap-2 mt-0.5 text-[11px] text-text-tertiary tracking-wider font-mono uppercase">
+            <div className="relative z-10 flex items-center justify-center gap-2 mt-2 text-[11px] text-text-tertiary tracking-wider font-mono uppercase">
               <span>✦ Drag horizontally or scroll to spin</span>
               <span className="opacity-40">•</span>
               <span>Tap card to focus</span>

@@ -160,7 +160,7 @@ const OVERLAP = 2.5;
 const DRAG_THRESHOLD = 5;
 const SPRING = 118;
 const SETTLE_SPEED = 9;
-const CAPTION_SPACE = 46;
+const CAPTION_SPACE = 72;
 const TO_RAD = Math.PI / 180;
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
