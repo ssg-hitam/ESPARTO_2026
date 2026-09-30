@@ -129,38 +129,15 @@ export default function EventsPage() {
 
       <Container size="lg" className="relative z-10">
         
-        {/* Compact Utility Header Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-5 pb-3 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 font-mono text-xs text-text-muted hover:text-white transition-colors group"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1 text-brand-orange" />
-              <span>HOME</span>
-            </Link>
-            <span className="text-white/20 text-xs">/</span>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-orange">
-                ESPARTO 2026
-              </span>
-              <span className="text-xs font-display font-extrabold uppercase text-white tracking-wide">
-                EVENTS &amp; COMPETITIONS
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 text-xs font-mono text-text-muted">
-            <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-white font-bold text-[11px]">
-              15 TRACKS
-            </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-brand-orange/10 border border-brand-orange/30 text-brand-orange font-bold text-[11px]">
-              ₹90,000+ PRIZE POOL
-            </span>
-            <span className="hidden sm:inline-block text-[11px] text-text-tertiary">
-              OCT 09–10 • HITAM
-            </span>
-          </div>
+        {/* Clean Back Navigation */}
+        <div className="mb-6">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors group"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1 text-brand-orange" />
+            <span>BACK TO HOME</span>
+          </Link>
         </div>
 
         {/* ── MASTER 2-COLUMN LAYOUT: SIDEBAR + MAIN CONTENT ──────────────────── */}

@@ -42,6 +42,18 @@ const campusPhotos = [
     desc: "Home to active student technical chapters, creative clubs, and cultural arenas.",
     src: "/images/campus/hitam_campus_students.jpg",
   },
+  {
+    title: "Grand Seminar & Auditorium Halls",
+    tag: "KEYNOTE ARENA",
+    desc: "Acoustically treated halls equipped with high-definition projection for plenary keynotes and addresses.",
+    src: "/images/campus/hitam_campus_auditorium.jpg",
+  },
+  {
+    title: "Collaborative Maker Spaces",
+    tag: "HACKATHONS & LABS",
+    desc: "Dedicated incubation and prototyping arenas for multi-hour builds, robotics, and coding contests.",
+    src: "/images/campus/hitam_campus_activity.jpg",
+  },
 ];
 
 const directions = [
@@ -114,6 +126,7 @@ export default function VenuePage() {
                   src="/images/campus/hitam_campus_main.jpg"
                   alt="HITAM Green Campus"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 700px"
                   className="object-cover object-center filter contrast-105 group-hover:scale-105 transition-transform duration-700"
                   priority
                 />
@@ -246,7 +259,7 @@ export default function VenuePage() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {campusPhotos.map((photo, idx) => (
               <FadeUp key={photo.title} delay={0.1 + idx * 0.08} distance={25}>
                 <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-[#0c0628] to-[#040112] overflow-hidden group hover:border-brand-orange/40 transition-all duration-300 h-full flex flex-col justify-between">
@@ -256,6 +269,7 @@ export default function VenuePage() {
                       src={photo.src}
                       alt={photo.title}
                       fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover object-center filter contrast-105 group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0c0628] via-transparent to-transparent" />

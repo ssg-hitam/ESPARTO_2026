@@ -88,6 +88,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable} dark`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body

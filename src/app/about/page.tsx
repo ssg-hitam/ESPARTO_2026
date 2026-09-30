@@ -173,6 +173,7 @@ export default function AboutPage() {
                     src="/images/hitam/hitam_logo.jpg"
                     alt="HITAM Official Logo"
                     fill
+                    sizes="48px"
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
@@ -298,6 +299,7 @@ export default function AboutPage() {
                 src="/images/hitam/hitam_logo.jpg"
                 alt="HITAM Logo"
                 fill
+                sizes="80px"
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>

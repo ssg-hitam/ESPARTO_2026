@@ -147,6 +147,7 @@ export default function HitamPage() {
                   src="/images/hitam/hitam_logo.jpg"
                   alt="Hyderabad Institute of Technology and Management"
                   fill
+                  sizes="(max-width: 640px) 192px, 208px"
                   className="object-cover"
                   priority
                 />
@@ -196,6 +197,7 @@ export default function HitamPage() {
                 src="/images/hitam/hitam_rankings_banner.png"
                 alt="HITAM Accreditations and Rankings Banner"
                 fill
+                sizes="(max-width: 1024px) 100vw, 896px"
                 className="object-cover"
               />
             </div>
@@ -214,6 +216,7 @@ export default function HitamPage() {
                     src={item.image}
                     alt={item.title}
                     fill
+                    sizes="128px"
                     className="object-contain p-1.5"
                   />
                 </div>
