@@ -106,7 +106,8 @@ const HISTORICAL_FOOTFALL = [
   { year: "Elysian 2019", count: "400", percent: "22%", note: "Annual College Fest" },
   { year: "Elysian 2022", count: "653", percent: "36%", note: "Post-Pandemic Resurgence" },
   { year: "Elysian 2023", count: "1,100+", percent: "61%", note: "Multi-Campus Engagement" },
-  { year: "Elysian 2025", count: "1,800+", percent: "100%", note: "Last Year's Annual Fest", highlight: true },
+  { year: "Elysian 2024", count: "1,400+", percent: "78%", note: "Expanded Technical Tracks" },
+  { year: "Elysian 2025", count: "1,800+", percent: "100%", note: "ESPARTO Revived & Celebrated", highlight: true },
 ];
 
 const MATRIX_ROWS = [
@@ -196,11 +197,11 @@ export default function SponsorsPage() {
                 </h2>
 
                 <p className="text-text-secondary text-xs sm:text-sm font-body leading-relaxed">
-                  Until last year, technical competitions were hosted under <strong className="text-white">Elysian</strong>, HITAM&apos;s renowned annual festival. With exponential growth in innovation, developer clubs, and research initiatives, the technical council and SSG made the landmark decision to separate the technical domain into its own independent flagship festival: <strong className="text-brand-orange">ESPARTO 2026</strong>.
+                  Historically, technical competitions were hosted under <strong className="text-white">Elysian</strong>, HITAM&apos;s annual festival. While ESPARTO was conceived earlier, it hadn&apos;t taken place until the technical council and SSG successfully <strong className="text-brand-orange">revived ESPARTO during Elysian 2025</strong>.
                 </p>
 
                 <p className="text-text-secondary text-xs sm:text-sm font-body leading-relaxed">
-                  This dedicated focus unlocks 100% technical immersion—uniting specialized tracks spanning hackathons, AI challenges, robotics arenas, and technical symposiums.
+                  Following the record-breaking response at Elysian 2025 with over <strong className="text-white">1,800+ attendees</strong>, the council took the landmark step to officially separate ESPARTO into its own independent, full-scale flagship technical festival: <strong className="text-brand-orange">ESPARTO 2026</strong>.
                 </p>
               </div>
 

@@ -79,7 +79,7 @@ export function SponsorsPreviewSection() {
             </h2>
 
             <p className="text-text-secondary text-xs sm:text-sm font-body mt-2 max-w-2xl leading-relaxed">
-              Previously part of HITAM&apos;s annual festival Elysian, ESPARTO has evolved into an independent flagship national technical festival. Showcase your brand to aspiring engineers, innovators, and future tech leaders across institutions.
+              Previously part of HITAM&apos;s annual festival Elysian (reaching 1,800+ footfall in 2025 where ESPARTO was revived), ESPARTO has now evolved into an independent flagship national technical festival. Showcase your brand to aspiring engineers, innovators, and future tech leaders across institutions.
             </p>
           </div>
 
