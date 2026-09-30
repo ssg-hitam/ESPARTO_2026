@@ -153,12 +153,12 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-0.5">
-                    Host Institution
+                    Our Institution
                   </p>
                   <p className="font-display font-bold text-base text-text-primary uppercase group-hover:text-emerald-300 transition-colors">
                     About HITAM
                   </p>
-                  <p className="text-xs text-text-muted font-body">UGC Autonomous · Estd. 2001</p>
+                  <p className="text-xs text-text-muted font-body">Annual Flagship Tech Fest</p>
                 </div>
               </div>
 
@@ -250,14 +250,14 @@ export default function AboutPage() {
           ))}
         </div>
 
-        {/* ── HOST INSTITUTION SHOWCASE ─────────────────────────────── */}
+        {/* ── ABOUT HITAM ─────────────────────────────────────────── */}
         <FadeUp delay={0.16} distance={20}>
           <div className="mb-8">
             <h2 className="font-display font-bold text-2xl sm:text-3xl text-text-primary tracking-tight">
-              Host Institution
+              About HITAM
             </h2>
             <p className="text-text-secondary text-sm font-body mt-1">
-              Presented by Hyderabad Institute of Technology &amp; Management.
+              ESPARTO is the annual flagship technical festival of Hyderabad Institute of Technology &amp; Management.
             </p>
           </div>
         </FadeUp>

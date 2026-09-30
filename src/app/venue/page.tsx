@@ -46,7 +46,7 @@ export default function VenuePage() {
               </span>
             </h1>
             <p className="text-text-secondary text-base sm:text-lg font-body leading-relaxed border-l-2 border-brand-orange/40 pl-5">
-              Hosted at the green, sustainable campus of {FEST_INFO.institution.name} in Hyderabad.
+              Held across the green, sustainable campus of {FEST_INFO.institution.name} (HITAM) in Hyderabad.
             </p>
           </div>
         </FadeUp>

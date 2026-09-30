@@ -132,6 +132,8 @@ export default function HitamPage() {
             {/* Left Content (8 cols) */}
             <div className="lg:col-span-8 flex flex-col gap-4">
               <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wide text-emerald-400">
+                <span>Annual Flagship Technical Fest</span>
+                <span className="text-white/20">·</span>
                 <span>UGC Autonomous</span>
                 <span className="text-white/20">·</span>
                 <span>NAAC A+</span>
@@ -149,9 +151,11 @@ export default function HitamPage() {
               </h1>
 
               <p className="text-text-secondary text-base sm:text-lg font-body leading-relaxed border-l-2 border-emerald-500/40 pl-5">
-                Established in 2001, HITAM is an autonomous engineering institution renowned for its unique
-                &lsquo;Doing Engineering&rsquo; philosophy, nurturing future innovators through project-centric
-                experiential learning, international academic collaborations, and active research incubation.
+                Established in 2001, Hyderabad Institute of Technology and Management (HITAM) is an autonomous
+                engineering institution renowned for its unique &lsquo;Doing Engineering&rsquo; philosophy.
+                ESPARTO is HITAM&apos;s annual flagship technical fest, uniting all technical clubs, professional
+                chapters, and students under one banner to celebrate engineering innovation, competitive coding,
+                robotics, and hands-on workshops.
               </p>
 
               <div className="flex flex-wrap items-center gap-5 pt-1 text-xs text-text-muted">
@@ -539,10 +543,10 @@ export default function HitamPage() {
           <div className="p-8 sm:p-10 rounded-2xl border border-white/10 bg-gradient-to-r from-[#06180e]/90 to-[#08031a]/90 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
               <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wide">
-                Campus Location
+                Campus Festival
               </p>
               <h3 className="font-display font-bold text-2xl text-text-primary uppercase mt-1 mb-1">
-                Join us at HITAM for ESPARTO 2026
+                Experience ESPARTO 2026 at HITAM
               </h3>
               <p className="text-text-secondary text-sm font-body">
                 October 09–10, 2026 · HITAM Campus, Medchal, Hyderabad, Telangana
