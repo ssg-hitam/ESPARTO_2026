@@ -151,88 +151,88 @@ export const chapterCommittees: Organizer[] = [
   {
     id: "iucee-ewb-core",
     name: "IUCEE EWB HITAM",
-    role: "Technical Chapter Core Committee",
-    department: "Engineers Without Borders",
+    role: "Engineers Without Borders",
+    department: "Sustainable Engineering Chapter",
     teamDomain: "chapter-committee",
     image: "/images/chapters/iucee-ewb-hitam.png"
   },
   {
     id: "ieee-core",
     name: "IEEE Student Branch HITAM",
-    role: "Technical Chapter Core Committee",
-    department: "IEEE HITAM",
+    role: "IEEE Student Branch",
+    department: "Electrical & Electronics Engineering",
     teamDomain: "chapter-committee",
     image: "/images/chapters/ieee-hitam.png"
   },
   {
     id: "ieom-core",
     name: "IEOM HITAM Student Chapter",
-    role: "Technical Chapter Core Committee",
-    department: "Industrial Engineering & Operations",
+    role: "Operations & Industrial Engineering",
+    department: "Industrial Engineering Society",
     teamDomain: "chapter-committee",
     image: "/images/chapters/ieom-hitam.png"
   },
   {
     id: "csi-core",
     name: "CSI HITAM Chapter",
-    role: "Technical Chapter Core Committee",
-    department: "Computer Society of India",
+    role: "Computer Society of India",
+    department: "Computer Science & Engineering",
     teamDomain: "chapter-committee",
     image: "/images/chapters/csi-hitam.png"
   },
   {
     id: "gdg-core",
     name: "GDG on Campus",
-    role: "Developer Community Core Committee",
-    department: "Google Developer Groups",
+    role: "Google Developer Groups",
+    department: "Cloud, Web & Mobile Ecosystem",
     teamDomain: "chapter-committee",
     image: "/images/chapters/gdg-hitam.png"
   },
   {
     id: "minds-core",
     name: "MINDS Club",
-    role: "Data Science Society Core Committee",
-    department: "Data Science & AI",
+    role: "Data Science & Analytics",
+    department: "Machine Learning & Big Data",
     teamDomain: "chapter-committee",
     image: "/images/chapters/minds-hitam.png"
   },
   {
     id: "hitam-ai-core",
     name: "HITAM AI Club",
-    role: "Artificial Intelligence Core Committee",
-    department: "AI & Neural Systems",
+    role: "Artificial Intelligence",
+    department: "Generative AI & Neural Networks",
     teamDomain: "chapter-committee",
     image: "/images/chapters/hitam-ai.png"
   },
   {
     id: "hitam-coding-core",
     name: "HITAM Coding Club",
-    role: "Competitive Coding Core Committee",
-    department: "Algorithms & Competitive Programming",
+    role: "Competitive Programming",
+    department: "Data Structures & Algorithms",
     teamDomain: "chapter-committee",
     image: "/images/chapters/hitam-coding-club.png"
   },
   {
     id: "hhc-core",
     name: "HITAM Hackathon Club (HHC)",
-    role: "Hackathon Track Core Committee",
-    department: "Product Prototyping & Hackathons",
+    role: "Hackathons & Rapid Prototyping",
+    department: "Product Building & Ideation",
     teamDomain: "chapter-committee",
     image: "/images/chapters/HHC.jpg"
   },
   {
     id: "isampe-core",
     name: "ISAMPE Chapter",
-    role: "Technical Chapter Core Committee",
-    department: "Materials & Process Engineering",
+    role: "Materials & Process Engineering",
+    department: "Advanced Engineering Materials",
     teamDomain: "chapter-committee",
     image: "/images/chapters/ISAMPE.png"
   },
   {
     id: "torquex-core",
     name: "TorqueX Motorsport",
-    role: "Technical Club Core Committee",
-    department: "Automotive & EV Prototyping",
+    role: "Automotive & EV Prototyping",
+    department: "Vehicle Design & Racing",
     teamDomain: "chapter-committee",
     image: "/images/chapters/torquex-logo.jpg"
   }

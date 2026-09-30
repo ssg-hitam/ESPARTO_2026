@@ -35,7 +35,7 @@ import {
 } from "@/data/team";
 
 export default function TeamPage() {
-  const [activeFilter, setActiveFilter] = useState<"all" | "faculty" | "ssg" | "committees" | "chapters">("all");
+  const [activeFilter, setActiveFilter] = useState<"all" | "faculty" | "student-core" | "chapters">("all");
 
   const getCommitteeIcon = (id: string) => {
     switch (id) {
@@ -108,7 +108,7 @@ export default function TeamPage() {
             </h1>
 
             <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed max-w-2xl">
-              Meet our institutional faculty coordinators, Student Self Governance (SSG) leadership, functional committee leads, and technical chapter core committees steering Hyderabad Institute of Technology and Management&apos;s flagship technical festival.
+              Meet our institutional faculty coordinators, Student Self Governance (SSG) leadership, functional committee leads, and technical chapter core teams steering Hyderabad Institute of Technology and Management&apos;s flagship technical festival.
             </p>
           </div>
         </FadeUp>
@@ -137,24 +137,14 @@ export default function TeamPage() {
               Faculty Coordinators
             </button>
             <button
-              onClick={() => setActiveFilter("ssg")}
+              onClick={() => setActiveFilter("student-core")}
               className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all ${
-                activeFilter === "ssg"
+                activeFilter === "student-core"
                   ? "bg-gradient-to-r from-brand-orange to-brand-magenta text-white shadow-[0_0_15px_rgba(255,94,0,0.4)]"
                   : "text-text-muted hover:text-white"
               }`}
             >
-              SSG Student Core
-            </button>
-            <button
-              onClick={() => setActiveFilter("committees")}
-              className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all ${
-                activeFilter === "committees"
-                  ? "bg-gradient-to-r from-brand-orange to-brand-magenta text-white shadow-[0_0_15px_rgba(255,94,0,0.4)]"
-                  : "text-text-muted hover:text-white"
-              }`}
-            >
-              Functional Leads
+              Student Organizing Core
             </button>
             <button
               onClick={() => setActiveFilter("chapters")}
@@ -164,7 +154,7 @@ export default function TeamPage() {
                   : "text-text-muted hover:text-white"
               }`}
             >
-              Chapters &amp; Clubs
+              Student Chapters &amp; Clubs
             </button>
           </div>
         </FadeUp>
@@ -244,9 +234,9 @@ export default function TeamPage() {
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            SECTION 2: STUDENT SELF GOVERNANCE (SSG) LEADERSHIP
+            SECTION 2: STUDENT ORGANIZING CORE
         ═══════════════════════════════════════════════════════════════════════ */}
-        {(activeFilter === "all" || activeFilter === "ssg") && (
+        {(activeFilter === "all" || activeFilter === "student-core") && (
           <div className="mb-20">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-xl bg-brand-magenta/10 border border-brand-magenta/30 flex items-center justify-center text-brand-magenta">
@@ -254,7 +244,7 @@ export default function TeamPage() {
               </div>
               <div>
                 <span className="text-[11px] font-mono uppercase tracking-wider text-brand-magenta font-bold block">
-                  STUDENT SELF GOVERNANCE (SSG)
+                  STUDENT LEADERSHIP &amp; FUNCTIONAL WINGS
                 </span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
                   STUDENT ORGANIZING CORE
@@ -263,7 +253,7 @@ export default function TeamPage() {
             </div>
 
             {/* Tejal Spotlight Card (Lead Organizer) */}
-            <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#12082b] via-[#09041a] to-[#040210] border border-brand-orange/50 shadow-[0_0_40px_rgba(255,94,0,0.18)] mb-8 overflow-hidden group">
+            <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#12082b] via-[#09041a] to-[#040210] border border-brand-orange/50 shadow-[0_0_40px_rgba(255,94,0,0.18)] mb-10 overflow-hidden group">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="flex items-start gap-4 sm:gap-5">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-brand-orange/20 to-brand-magenta/20 border border-brand-orange/40 flex items-center justify-center text-brand-orange shrink-0 group-hover:scale-105 transition-transform">
@@ -316,130 +306,125 @@ export default function TeamPage() {
               </div>
             </div>
 
-            {/* Other SSG Deans & Heads Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {ssgLeadership.filter(member => member.id !== "tejal-iiic").map((member) => (
-                <div
-                  key={member.id}
-                  className="p-5 rounded-2xl bg-[#08041d]/80 border border-white/10 hover:border-white/25 hover:bg-[#0c0628] transition-all duration-300 group flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="px-2 py-0.5 rounded-md bg-brand-orange/10 border border-brand-orange/20 text-[10px] font-mono text-brand-orange uppercase font-semibold">
-                        STUDENT CORE
-                      </span>
-                      <span className="w-2 h-2 rounded-full bg-brand-orange/60" />
-                    </div>
+            {/* Sub-block 1: Functional Committee Wings */}
+            <div className="mb-10">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2 h-2 rounded-full bg-brand-orange" />
+                <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
+                  OPERATIONAL COMMITTEES &amp; FUNCTIONAL LEADS
+                </h3>
+              </div>
 
-                    <h4 className="font-display font-bold text-xl text-white tracking-tight mb-2 group-hover:text-brand-orange transition-colors">
-                      {member.name}
-                    </h4>
-
-                    {member.handling && (
-                      <div className="mt-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/5">
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-brand-orange/90 block font-bold mb-1">
-                          HANDLING FOR FEST
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {operationalCommittees.map((op, idx) => (
+                  <div
+                    key={op.id}
+                    className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#0c0628] to-[#07031c] border border-white/10 hover:border-brand-orange/40 hover:bg-[#0f0833] transition-all duration-300 group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-3 mb-3">
+                        <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                          {getCommitteeIcon(op.id)}
+                        </div>
+                        <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono text-text-muted">
+                          WING 0{idx + 1}
                         </span>
-                        <p className="text-xs text-text-secondary leading-relaxed font-body">
-                          {member.handling}
-                        </p>
+                      </div>
+
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted block">
+                        COMMITTEE
+                      </span>
+                      <h4 className="font-display font-black text-lg text-white tracking-tight mb-2.5">
+                        {op.committee}
+                      </h4>
+
+                      {/* Leads Highlight Box */}
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 mb-2.5">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-brand-orange block font-bold mb-0.5">
+                          LEADS
+                        </span>
+                        <strong className="text-xs sm:text-sm font-display font-bold text-white block">
+                          {op.leads}
+                        </strong>
+                      </div>
+
+                      <p className="text-xs font-body text-text-secondary leading-relaxed">
+                        {op.description}
+                      </p>
+                    </div>
+
+                    {op.tag && (
+                      <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-end">
+                        <span className="px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-mono font-bold uppercase">
+                          {op.tag}
+                        </span>
                       </div>
                     )}
                   </div>
-
-                  <div className="pt-4 mt-4 border-t border-white/5">
-                    {member.socials?.email && (
-                      <a
-                        href={`mailto:${member.socials.email}`}
-                        className="inline-flex items-center gap-1.5 text-[11px] font-mono text-text-muted hover:text-white transition-colors truncate max-w-full"
-                      >
-                        <Mail className="w-3 h-3 text-brand-orange shrink-0" />
-                        <span className="truncate">{member.socials.email}</span>
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+
+            {/* Sub-block 2: Student Deans & Executive Core */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2 h-2 rounded-full bg-brand-magenta" />
+                <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
+                  STUDENT DEANS &amp; EXECUTIVE COORDINATORS
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {ssgLeadership.filter(member => member.id !== "tejal-iiic").map((member) => (
+                  <div
+                    key={member.id}
+                    className="p-5 rounded-2xl bg-[#08041d]/80 border border-white/10 hover:border-white/25 hover:bg-[#0c0628] transition-all duration-300 group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span className="px-2 py-0.5 rounded-md bg-brand-orange/10 border border-brand-orange/20 text-[10px] font-mono text-brand-orange uppercase font-semibold">
+                          STUDENT CORE
+                        </span>
+                        <span className="w-2 h-2 rounded-full bg-brand-orange/60" />
+                      </div>
+
+                      <h4 className="font-display font-bold text-xl text-white tracking-tight mb-2 group-hover:text-brand-orange transition-colors">
+                        {member.name}
+                      </h4>
+
+                      {member.handling && (
+                        <div className="mt-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                          <span className="text-[10px] font-mono uppercase tracking-wider text-brand-orange/90 block font-bold mb-1">
+                            HANDLING FOR FEST
+                          </span>
+                          <p className="text-xs text-text-secondary leading-relaxed font-body">
+                            {member.handling}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="pt-4 mt-4 border-t border-white/5">
+                      {member.socials?.email && (
+                        <a
+                          href={`mailto:${member.socials.email}`}
+                          className="inline-flex items-center gap-1.5 text-[11px] font-mono text-text-muted hover:text-white transition-colors truncate max-w-full"
+                        >
+                          <Mail className="w-3 h-3 text-brand-orange shrink-0" />
+                          <span className="truncate">{member.socials.email}</span>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            SECTION 3: FUNCTIONAL COMMITTEES & OPERATIONAL LEADS
-        ═══════════════════════════════════════════════════════════════════════ */}
-        {(activeFilter === "all" || activeFilter === "committees") && (
-          <div className="mb-20">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
-                <Workflow className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[11px] font-mono uppercase tracking-wider text-purple-400 font-bold block">
-                  OPERATIONAL WINGS
-                </span>
-                <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
-                  FUNCTIONAL COMMITTEES &amp; LEADS
-                </h2>
-              </div>
-            </div>
-
-            <p className="text-text-secondary text-xs sm:text-sm font-body max-w-3xl mb-8 leading-relaxed">
-              Dedicated student leads driving end-to-end festival execution across design, finance, registrations, logistics, stage production, and media coverage.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {operationalCommittees.map((op, idx) => (
-                <div
-                  key={op.id}
-                  className="p-6 rounded-2xl bg-gradient-to-br from-[#0c0628] to-[#07031c] border border-white/10 hover:border-purple-500/40 hover:bg-[#0f0833] transition-all duration-300 group flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-3 mb-4">
-                      <div className="w-11 h-11 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                        {getCommitteeIcon(op.id)}
-                      </div>
-                      <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono text-text-muted">
-                        WING 0{idx + 1}
-                      </span>
-                    </div>
-
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted block">
-                      COMMITTEE
-                    </span>
-                    <h4 className="font-display font-black text-lg sm:text-xl text-white tracking-tight mb-3">
-                      {op.committee}
-                    </h4>
-
-                    {/* Leads Highlight Box */}
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 mb-3">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-brand-orange block font-semibold mb-0.5">
-                        HEAD / LEADS
-                      </span>
-                      <strong className="text-sm font-display font-bold text-white block">
-                        {op.leads}
-                      </strong>
-                    </div>
-
-                    <p className="text-xs font-body text-text-secondary leading-relaxed">
-                      {op.description}
-                    </p>
-                  </div>
-
-                  {op.tag && (
-                    <div className="pt-3 mt-4 border-t border-white/5 flex items-center justify-end">
-                      <span className="px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-mono font-bold uppercase">
-                        {op.tag}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ═══════════════════════════════════════════════════════════════════════
-            SECTION 4: CORE COMMITTEES OF STUDENT CHAPTERS & CLUBS
+            SECTION 3: STUDENT CHAPTERS & CLUBS
         ═══════════════════════════════════════════════════════════════════════ */}
         {(activeFilter === "all" || activeFilter === "chapters") && (
           <div className="mb-16">
@@ -452,13 +437,13 @@ export default function TeamPage() {
                   TECHNICAL ORGANIZERS
                 </span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
-                  CHAPTERS &amp; CLUBS CORE COMMITTEES
+                  STUDENT CHAPTERS &amp; CLUBS
                 </h2>
               </div>
             </div>
 
             <p className="text-text-secondary text-xs sm:text-sm font-body max-w-3xl mb-8 leading-relaxed">
-              The driving technical backbone of ESPARTO 2026. Each student chapter and technical club core committee actively designs, judges, and coordinates specific flagship hackathons, coding arenas, robotics challenges, and paper symposiums.
+              The driving technical backbone of ESPARTO 2026. Student chapters and technical clubs actively design, judge, and coordinate specific flagship hackathons, coding arenas, robotics challenges, and paper symposiums.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
