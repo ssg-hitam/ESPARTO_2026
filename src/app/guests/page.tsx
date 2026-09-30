@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/ui/FadeUp";
-import { ArrowLeft, Sparkles, UserCheck } from "lucide-react";
+import { ArrowLeft, UserCheck } from "lucide-react";
 
 export default function GuestsPage() {
   return (
@@ -44,7 +44,7 @@ export default function GuestsPage() {
           <div className="p-12 rounded-3xl border border-brand-violet/30 bg-[#08041d]/80 backdrop-blur-md text-center max-w-2xl mx-auto">
             <FadeUp delay={0.3} distance={30}>
               <div className="w-16 h-16 rounded-2xl border border-brand-magenta/40 bg-brand-magenta/10 flex items-center justify-center mx-auto mb-6">
-                <Sparkles className="w-8 h-8 text-brand-magenta animate-pulse" />
+                <UserCheck className="w-8 h-8 text-brand-magenta" />
               </div>
             </FadeUp>
             <FadeUp delay={0.38} distance={20}>

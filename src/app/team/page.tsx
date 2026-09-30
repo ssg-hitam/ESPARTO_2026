@@ -11,7 +11,6 @@ import {
   Phone,
   ShieldCheck,
   GraduationCap,
-  Sparkles,
   Users2,
   Cpu,
   Layers,
@@ -35,7 +34,7 @@ import {
 
 export default function TeamPage() {
   const getHandlingIcon = (text?: string) => {
-    if (!text) return <Sparkles className="w-3.5 h-3.5 text-brand-orange" />;
+    if (!text) return <Layers className="w-3.5 h-3.5 text-brand-orange" />;
     const h = text.toLowerCase();
     if (h.includes("stage") || h.includes("program")) return <Mic2 className="w-3.5 h-3.5 text-purple-400" />;
     if (h.includes("public relations") || h.includes("pr") || h.includes("outreach")) return <Megaphone className="w-3.5 h-3.5 text-blue-400" />;
@@ -150,8 +149,7 @@ export default function TeamPage() {
 
                   {/* Floating pill badge on photo */}
                   <div className="absolute top-5 left-5 z-20">
-                    <span className="px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-brand-orange/40 text-brand-orange font-mono text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
-                      <Sparkles className="w-3.5 h-3.5 text-brand-orange" />
+                    <span className="px-3.5 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-brand-orange/40 text-brand-orange font-mono text-[10px] font-bold uppercase tracking-wider shadow-lg">
                       LEAD FEST ORGANIZER
                     </span>
                   </div>
@@ -169,7 +167,7 @@ export default function TeamPage() {
                       />
                     ) : (
                       <div className="w-20 h-20 rounded-2xl bg-brand-orange/15 border border-brand-orange/30 flex items-center justify-center text-brand-orange mb-12">
-                        <Sparkles className="w-10 h-10" />
+                        <Users2 className="w-10 h-10" />
                       </div>
                     )}
                   </div>

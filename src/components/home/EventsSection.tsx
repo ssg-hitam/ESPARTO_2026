@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { EVENT_TRACKS } from "@/data/events";
-import { ArrowRight, ArrowUpRight, Terminal, Sparkles, Cpu } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Terminal, Trophy, Cpu } from "lucide-react";
 
 /**
  * EventsSection Component — Featured Events Preview
@@ -21,7 +21,7 @@ export function EventsSection() {
       case "hackathons":
         return <Terminal className="w-5 h-5 text-brand-orange" />;
       case "competitions":
-        return <Sparkles className="w-5 h-5 text-brand-magenta" />;
+        return <Trophy className="w-5 h-5 text-brand-magenta" />;
       case "robotics":
         return <Cpu className="w-5 h-5 text-brand-violet" />;
       default:
