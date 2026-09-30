@@ -275,7 +275,7 @@ export default function TeamPage() {
                         LEAD FEST ORGANIZER
                       </span>
                       <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white/80 font-mono text-[10px] uppercase">
-                        SSG EXECUTIVE
+                        STUDENT CORE
                       </span>
                     </div>
 
@@ -285,9 +285,15 @@ export default function TeamPage() {
                     <p className="text-xs sm:text-sm font-mono text-text-secondary mt-0.5">
                       Student Dean — Industry Institute Incubation Centre (IIIC)
                     </p>
-                    <p className="text-xs font-body text-text-muted mt-2 max-w-xl leading-relaxed">
-                      Orchestrating central operations, industry partnerships, and overall student execution for ESPARTO 2026 alongside the SSG executive leadership team.
-                    </p>
+
+                    <div className="mt-3 p-3 rounded-xl bg-white/[0.04] border border-white/10 max-w-xl">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-brand-orange block font-bold mb-0.5">
+                        HANDLING FOR FEST
+                      </span>
+                      <p className="text-xs font-body text-text-secondary leading-relaxed">
+                        Overall Fest Direction, Lead Coordination, Industry Partnerships &amp; Corporate Relations.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -319,19 +325,26 @@ export default function TeamPage() {
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] font-mono text-text-muted uppercase">
-                        {member.department}
+                      <span className="px-2 py-0.5 rounded-md bg-brand-orange/10 border border-brand-orange/20 text-[10px] font-mono text-brand-orange uppercase font-semibold">
+                        STUDENT CORE
                       </span>
                       <span className="w-2 h-2 rounded-full bg-brand-orange/60" />
                     </div>
 
-                    <h4 className="font-display font-bold text-xl text-white tracking-tight mb-1 group-hover:text-brand-orange transition-colors">
+                    <h4 className="font-display font-bold text-xl text-white tracking-tight mb-2 group-hover:text-brand-orange transition-colors">
                       {member.name}
                     </h4>
 
-                    <p className="text-xs font-mono text-text-secondary leading-snug">
-                      {member.role}
-                    </p>
+                    {member.handling && (
+                      <div className="mt-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-brand-orange/90 block font-bold mb-1">
+                          HANDLING FOR FEST
+                        </span>
+                        <p className="text-xs text-text-secondary leading-relaxed font-body">
+                          {member.handling}
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   <div className="pt-4 mt-4 border-t border-white/5">

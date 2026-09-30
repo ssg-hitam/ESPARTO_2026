@@ -35,11 +35,12 @@ export const ssgLeadership: Organizer[] = [
   {
     id: "tejal-iiic",
     name: "Tejal",
-    role: "Student Dean — IIIC & Lead Fest Organizer",
-    department: "Industry Institute Incubation Centre (IIIC)",
+    role: "Student Dean — IIIC",
+    department: "Student Organizing Core",
     teamDomain: "lead-organizer",
     contact: "+91 90591 11595",
     highlight: true,
+    handling: "Overall Fest Direction, Lead Coordination, Industry Partnerships & Corporate Relations",
     socials: {
       email: "ssg.iiic@hitam.org",
       phone: "+919059111595"
@@ -48,9 +49,10 @@ export const ssgLeadership: Organizer[] = [
   {
     id: "student-director",
     name: "Student Director",
-    role: "Director of Student Self Governance",
-    department: "Student Self Governance (SSG)",
+    role: "Student Director",
+    department: "Student Organizing Core",
     teamDomain: "student-leadership",
+    handling: "Fest Strategy, High-Level Resource Planning & Inter-Wing Alignment",
     socials: {
       email: "ssg.director@hitam.org"
     }
@@ -58,9 +60,10 @@ export const ssgLeadership: Organizer[] = [
   {
     id: "student-principal",
     name: "Student Principal",
-    role: "Head of Student Governance Council",
-    department: "Student Self Governance (SSG)",
+    role: "Student Principal",
+    department: "Student Organizing Core",
     teamDomain: "student-leadership",
+    handling: "Institutional Protocol, Departmental Synergy & Fest Governance",
     socials: {
       email: "ssg.principal@hitam.org"
     }
@@ -68,9 +71,10 @@ export const ssgLeadership: Organizer[] = [
   {
     id: "student-registrar",
     name: "Student Registrar",
-    role: "Registrar — Student Administration",
-    department: "Student Self Governance (SSG)",
+    role: "Student Registrar",
+    department: "Student Organizing Core",
     teamDomain: "student-leadership",
+    handling: "Administrative Approvals, Logistics Clearances & Official Permissions",
     socials: {
       email: "ssg.registrar@hitam.org"
     }
@@ -78,9 +82,10 @@ export const ssgLeadership: Organizer[] = [
   {
     id: "student-dean-academics",
     name: "Student Dean — Academics",
-    role: "Dean of Academic Affairs",
-    department: "Academic Affairs Council",
+    role: "Student Dean — Academics",
+    department: "Student Organizing Core",
     teamDomain: "student-leadership",
+    handling: "Technical Symposiums, Paper Presentations & Faculty Jury Coordination",
     socials: {
       email: "ssg.deanacademics@hitam.org"
     }
@@ -88,9 +93,10 @@ export const ssgLeadership: Organizer[] = [
   {
     id: "student-dean-freshmen",
     name: "Student Dean — Freshmen",
-    role: "Dean of Freshmen Engineering",
-    department: "Freshmen Engineering Council",
+    role: "Student Dean — Freshmen",
+    department: "Student Organizing Core",
     teamDomain: "student-leadership",
+    handling: "First-Year Student Participation, Induction Arenas & Volunteer Mobilization",
     socials: {
       email: "ssg.deanfreshmen@hitam.org"
     }
@@ -98,9 +104,10 @@ export const ssgLeadership: Organizer[] = [
   {
     id: "student-lead-se",
     name: "Student Lead — SE",
-    role: "Lead — Student Engagement",
-    department: "Student Engagement & Activities",
+    role: "Student Lead — Student Engagement",
+    department: "Student Organizing Core",
     teamDomain: "student-leadership",
+    handling: "Campus Ambience, Engagement Zones, Informal Challenges & Student Experience",
     socials: {
       email: "ssg.se@hitam.org"
     }
@@ -108,9 +115,10 @@ export const ssgLeadership: Organizer[] = [
   {
     id: "student-dean-cdc",
     name: "Student Dean — CDC",
-    role: "Dean of Career Development Centre",
-    department: "Career Development Centre (CDC)",
+    role: "Student Dean — CDC",
+    department: "Student Organizing Core",
     teamDomain: "student-leadership",
+    handling: "Career Conclaves, Tech Talks, Industry Networking & Sponsor Recruitment Booths",
     socials: {
       email: "ssg.cdc@hitam.org"
     }
@@ -118,9 +126,10 @@ export const ssgLeadership: Organizer[] = [
   {
     id: "student-dean-sports",
     name: "Student Dean — Sports",
-    role: "Dean of Sports & Athletics Council",
-    department: "Sports Council",
+    role: "Student Dean — Sports",
+    department: "Student Organizing Core",
     teamDomain: "student-leadership",
+    handling: "Esports Tournaments, Arena Sports Activities & Outdoor Team Dynamics",
     socials: {
       email: "ssg.sports@hitam.org"
     }
@@ -128,9 +137,10 @@ export const ssgLeadership: Organizer[] = [
   {
     id: "student-dean-rand",
     name: "Student Dean — R&D",
-    role: "Dean of Research & Development",
-    department: "Research & Development Council",
+    role: "Student Dean — R&D",
+    department: "Student Organizing Core",
     teamDomain: "student-leadership",
+    handling: "Flagship Hackathons, Tech Prototype Expos & Patent/Innovation Showcases",
     socials: {
       email: "ssg.rand@hitam.org"
     }
