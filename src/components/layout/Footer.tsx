@@ -12,7 +12,6 @@ export function Footer() {
     { label: "About ESPARTO", href: "/about" },
     { label: "About HITAM", href: "/hitam" },
     { label: "Events", href: "/events" },
-    { label: "Schedule", href: "/schedule" },
     { label: "Guests", href: "/guests" },
     { label: "Team", href: "/team" },
     { label: "Venue", href: "/venue" },
