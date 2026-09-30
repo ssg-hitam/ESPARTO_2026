@@ -13,29 +13,38 @@ import {
 
 const SPONSOR_PREVIEWS = [
   {
-    tier: "🥉 BRONZE",
+    tier: "BRONZE",
+    emoji: "🥉",
     price: "₹10,000",
     color: "from-amber-600 to-amber-700",
+    titleColor: "text-amber-400",
     badge: "border-amber-600/40 text-amber-400 bg-amber-600/10",
+    border: "border-amber-600/30 hover:border-amber-500/60 shadow-[0_0_30px_rgba(217,119,6,0.1)]",
     desc: "Logo on all festival banners, social media promotion & 1 campus banner.",
     perks: ["Logos on all banners", "Social media promotion", "1 Display banner on campus", "Digital boards promotion"]
   },
   {
-    tier: "🥈 SILVER",
+    tier: "SILVER",
+    emoji: "🥈",
     price: "₹20,000",
     slots: "Max 10 Slots",
     popular: true,
     color: "from-slate-300 via-gray-100 to-zinc-400",
+    titleColor: "text-slate-100",
     badge: "border-slate-300/40 text-slate-200 bg-slate-300/10",
+    border: "border-slate-300/40 hover:border-slate-200 shadow-[0_0_30px_rgba(226,232,240,0.12)]",
     desc: "Standard exhibition stall space, 2 campus banners & priority digital display.",
     perks: ["Stall space for product demo", "2 Display banners on campus", "10s per 60s digital boards", "Memento & Certificate"]
   },
   {
-    tier: "🥇 GOLD",
+    tier: "GOLD",
+    emoji: "🥇",
     price: "₹30,000",
     slots: "Max 5 Slots",
     color: "from-yellow-400 via-amber-300 to-yellow-600",
+    titleColor: "text-yellow-400",
     badge: "border-amber-400/50 text-amber-300 bg-amber-400/10",
+    border: "border-amber-400/50 hover:border-amber-300 shadow-[0_0_35px_rgba(251,191,36,0.18)]",
     desc: "Prime courtyard exhibition stall, stage speaking slot & 3 banners.",
     perks: ["Prime courtyard exhibition stall", "5–10 mins stage speaking slot", "3 Display banners on campus", "VIP executive delegate passes"]
   }
@@ -90,25 +99,45 @@ export function SponsorsPreviewSection() {
           {SPONSOR_PREVIEWS.map((item, idx) => (
             <div
               key={idx}
-              className={`relative flex flex-col justify-between p-6 rounded-2xl bg-[#08041d]/85 border border-white/10 hover:border-brand-orange/40 hover:bg-[#0c0628] transition-all duration-300 group ${
-                item.popular ? "shadow-[0_0_25px_rgba(255,94,0,0.15)] border-brand-orange/30" : ""
-              }`}
+              className={`relative flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-[#08041d]/90 border ${item.border} hover:bg-[#0c0628] transition-all duration-300 group hover:scale-[1.02]`}
             >
+              {/* Popular Pill */}
+              {item.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-brand-orange to-brand-magenta text-white font-mono font-bold text-[10px] uppercase tracking-wider shadow-[0_0_15px_rgba(255,94,0,0.5)]">
+                  RECOMMENDED
+                </div>
+              )}
+
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className={`px-2.5 py-0.5 rounded-full border text-[10px] font-mono font-bold uppercase tracking-wider ${item.badge}`}>
-                    {item.tier}
-                  </span>
+                {/* Big Emoji / Symbol & Tier Header */}
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-3xl sm:text-4xl shadow-inner group-hover:scale-110 transition-transform">
+                      {item.emoji}
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono tracking-widest text-text-muted uppercase block">
+                        PARTNER TIER
+                      </span>
+                      <h3 className={`font-display font-black text-2xl sm:text-3xl tracking-tight uppercase ${item.titleColor}`}>
+                        {item.tier}
+                      </h3>
+                    </div>
+                  </div>
+
                   {item.slots && (
-                    <span className="text-[10px] font-mono text-text-muted">
+                    <span className="px-2.5 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-mono text-text-muted shrink-0">
                       {item.slots}
                     </span>
                   )}
                 </div>
 
-                <div className="mb-2">
-                  <span className="font-display font-black text-3xl text-white tracking-tight">
+                <div className="mb-3">
+                  <span className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
                     {item.price}
+                  </span>
+                  <span className="text-[11px] font-mono text-text-muted block mt-0.5">
+                    INR • Sponsorship Contribution
                   </span>
                 </div>
 
@@ -116,11 +145,11 @@ export function SponsorsPreviewSection() {
                   {item.desc}
                 </p>
 
-                <div className="space-y-2 pt-2 border-t border-white/5">
+                <div className="space-y-2 pt-3 border-t border-white/5">
                   {item.perks.map((perk, pIdx) => (
-                    <div key={pIdx} className="flex items-start gap-2 text-[11px]">
+                    <div key={pIdx} className="flex items-start gap-2 text-xs">
                       <CheckCircle2 className="w-3.5 h-3.5 text-brand-orange shrink-0 mt-0.5" />
-                      <span className="text-text-muted font-body leading-tight">
+                      <span className="text-text-secondary font-body leading-tight">
                         {perk}
                       </span>
                     </div>
@@ -128,12 +157,12 @@ export function SponsorsPreviewSection() {
                 </div>
               </div>
 
-              <div className="pt-5 mt-4 border-t border-white/5">
+              <div className="pt-5 mt-5 border-t border-white/5">
                 <a
                   href={`mailto:ssg@hitam.org?cc=ssg.iiic@hitam.org&subject=Inquiry: ${item.tier} Sponsorship for ESPARTO 2026`}
-                  className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/20 text-white font-mono text-xs uppercase tracking-wider transition-all"
+                  className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 hover:border-brand-orange/50 text-white font-display font-bold text-xs uppercase tracking-wider transition-all"
                 >
-                  <span>CONNECT NOW</span>
+                  <span>CONNECT FOR {item.tier}</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               </div>

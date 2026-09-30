@@ -17,6 +17,9 @@ import {
 interface SponsorshipTier {
   id: string;
   name: string;
+  title: string;
+  emoji: string;
+  titleColor: string;
   price: string;
   priceNumeric: number;
   slots: string;
@@ -31,14 +34,17 @@ interface SponsorshipTier {
 const TIERS: SponsorshipTier[] = [
   {
     id: "bronze",
-    name: "🥉 BRONZE PARTNER",
+    name: "BRONZE PARTNER",
+    title: "BRONZE",
+    emoji: "🥉",
+    titleColor: "text-amber-400",
     price: "₹10,000",
     priceNumeric: 10000,
     slots: "Available",
     tagline: "Ideal for emerging tech startups and local developer ecosystem partners.",
     accent: "from-amber-600 to-amber-700",
     badgeBg: "bg-amber-600/20 text-amber-400 border-amber-500/30",
-    borderCol: "border-amber-600/30 hover:border-amber-500/60",
+    borderCol: "border-amber-600/30 hover:border-amber-500/60 shadow-[0_0_30px_rgba(217,119,6,0.12)]",
     features: [
       "Logo on all official ESPARTO banners & posters",
       "Social media shoutouts across official SSG & ESPARTO handles",
@@ -50,7 +56,10 @@ const TIERS: SponsorshipTier[] = [
   },
   {
     id: "silver",
-    name: "🥈 SILVER PARTNER",
+    name: "SILVER PARTNER",
+    title: "SILVER",
+    emoji: "🥈",
+    titleColor: "text-slate-100",
     price: "₹20,000",
     priceNumeric: 20000,
     slots: "Max: 10 Slots",
@@ -58,7 +67,7 @@ const TIERS: SponsorshipTier[] = [
     popular: true,
     accent: "from-slate-300 via-gray-100 to-zinc-400",
     badgeBg: "bg-slate-300/20 text-slate-200 border-slate-300/40",
-    borderCol: "border-slate-400/40 hover:border-slate-300",
+    borderCol: "border-slate-300/40 hover:border-slate-200 shadow-[0_0_30px_rgba(226,232,240,0.15)]",
     features: [
       "Logo prominently on all ESPARTO event backdrops & banners",
       "Dedicated social media spotlight reels & feature posts",
@@ -71,14 +80,17 @@ const TIERS: SponsorshipTier[] = [
   },
   {
     id: "gold",
-    name: "🥇 GOLD PARTNER",
+    name: "GOLD PARTNER",
+    title: "GOLD",
+    emoji: "🥇",
+    titleColor: "text-yellow-400",
     price: "₹30,000",
     priceNumeric: 30000,
     slots: "Max: 5 Slots",
     tagline: "High-impact brand prominence with prime exhibition stalls and speaking slot.",
     accent: "from-yellow-400 via-amber-300 to-yellow-600",
     badgeBg: "bg-amber-400/20 text-amber-300 border-amber-400/50",
-    borderCol: "border-amber-400/50 hover:border-amber-300 shadow-[0_0_35px_rgba(251,191,36,0.15)]",
+    borderCol: "border-amber-400/50 hover:border-amber-300 shadow-[0_0_40px_rgba(251,191,36,0.22)]",
     features: [
       "Priority branding: Large logo on main stage backdrop & banners",
       "Extensive campaign across all Instagram, LinkedIn & YouTube handles",
@@ -308,12 +320,23 @@ export default function SponsorsPage() {
                 )}
 
                 <div>
-                  {/* Tier Badge & Slots */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className={`px-2.5 py-0.5 rounded-full border text-[10px] font-mono font-bold uppercase tracking-wider ${tier.badgeBg}`}>
-                      {tier.name}
-                    </span>
-                    <span className="text-[10px] font-mono text-text-muted">
+                  {/* Big Emoji / Symbol & Tier Header */}
+                  <div className="flex items-center justify-between gap-3 mb-5">
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-3xl sm:text-4xl shadow-inner group-hover:scale-110 transition-transform">
+                        {tier.emoji}
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-mono tracking-widest text-text-muted uppercase block">
+                          OFFICIAL TIER
+                        </span>
+                        <h3 className={`font-display font-black text-2xl sm:text-3xl tracking-tight uppercase ${tier.titleColor}`}>
+                          {tier.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <span className="px-2.5 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-mono text-text-muted shrink-0">
                       {tier.slots}
                     </span>
                   </div>
@@ -348,10 +371,10 @@ export default function SponsorsPage() {
                 {/* Card Contact CTA */}
                 <div className="pt-4 border-t border-white/5">
                   <a
-                    href={`mailto:ssg@hitam.org?cc=ssg.iiic@hitam.org&subject=Sponsorship Inquiry: ${tier.name} for ESPARTO 2026`}
+                    href={`mailto:ssg@hitam.org?cc=ssg.iiic@hitam.org&subject=Sponsorship Inquiry: ${tier.title} Tier for ESPARTO 2026`}
                     className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider text-white bg-white/10 hover:bg-white/20 border border-white/15 hover:border-brand-orange/50 transition-all"
                   >
-                    <span>SPONSOR THIS TIER</span>
+                    <span>SPONSOR {tier.title} TIER</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </a>
                 </div>
@@ -370,17 +393,22 @@ export default function SponsorsPage() {
                   <th className="p-4 sm:p-5 text-white font-bold uppercase tracking-wider min-w-[240px]">
                     BENEFITS AND PERKS
                   </th>
-                  <th className="p-4 sm:p-5 text-amber-400 font-bold uppercase tracking-wider text-center">
-                    🥉 BRONZE
-                    <span className="block text-[10px] text-text-muted font-normal">₹10,000</span>
+                  <th className="p-4 sm:p-6 text-amber-400 font-bold uppercase tracking-wider text-center">
+                    <span className="text-3xl sm:text-4xl block mb-1">🥉</span>
+                    <span className="text-base sm:text-xl font-black font-display tracking-wide block text-amber-400">BRONZE</span>
+                    <span className="block text-xs text-text-muted font-mono font-normal mt-0.5">₹10,000</span>
                   </th>
-                  <th className="p-4 sm:p-5 text-slate-300 font-bold uppercase tracking-wider text-center">
-                    🥈 SILVER (Max 10)
-                    <span className="block text-[10px] text-text-muted font-normal">₹20,000</span>
+                  <th className="p-4 sm:p-6 text-slate-200 font-bold uppercase tracking-wider text-center">
+                    <span className="text-3xl sm:text-4xl block mb-1">🥈</span>
+                    <span className="text-base sm:text-xl font-black font-display tracking-wide block text-slate-100">SILVER</span>
+                    <span className="block text-[10px] text-brand-orange font-mono font-semibold">(Max 10 Slots)</span>
+                    <span className="block text-xs text-text-muted font-mono font-normal mt-0.5">₹20,000</span>
                   </th>
-                  <th className="p-4 sm:p-5 text-yellow-400 font-bold uppercase tracking-wider text-center">
-                    🥇 GOLD (Max 5)
-                    <span className="block text-[10px] text-text-muted font-normal">₹30,000</span>
+                  <th className="p-4 sm:p-6 text-yellow-400 font-bold uppercase tracking-wider text-center">
+                    <span className="text-3xl sm:text-4xl block mb-1">🥇</span>
+                    <span className="text-base sm:text-xl font-black font-display tracking-wide block text-yellow-400">GOLD</span>
+                    <span className="block text-[10px] text-brand-orange font-mono font-semibold">(Max 5 Slots)</span>
+                    <span className="block text-xs text-text-muted font-mono font-normal mt-0.5">₹30,000</span>
                   </th>
                 </tr>
               </thead>
