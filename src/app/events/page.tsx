@@ -12,7 +12,6 @@ import {
   Search, 
   Calendar, 
   Clock, 
-  MapPin, 
   Users, 
   Trophy, 
   CheckCircle2, 
@@ -69,8 +68,7 @@ export default function EventsPage() {
         const matchesClub = ev.club.toLowerCase().includes(query);
         const matchesDesc = ev.description.toLowerCase().includes(query);
         const matchesTagline = ev.tagline.toLowerCase().includes(query);
-        const matchesVenue = ev.venue.toLowerCase().includes(query);
-        if (!matchesTitle && !matchesClub && !matchesDesc && !matchesTagline && !matchesVenue) {
+        if (!matchesTitle && !matchesClub && !matchesDesc && !matchesTagline) {
           return false;
         }
       }
@@ -323,34 +321,35 @@ export default function EventsPage() {
                   </div>
 
                   {/* Card Bottom Logistics & Actions */}
-                  <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
-                    
-                    {/* Meta Pills (Date, Time, Venue, Team Size) */}
+                  <div className="space-y-3 mt-auto pt-4 border-t border-white/5">
+                    {/* Key Registration Meta (Date, Time, Team Size) */}
                     <div className="grid grid-cols-2 gap-2 text-[11px] font-mono text-text-muted">
                       <div className="flex items-center gap-1.5 truncate">
                         <Calendar className="w-3.5 h-3.5 text-brand-magenta shrink-0" />
                         <span className="truncate">{event.date}</span>
                       </div>
                       <div className="flex items-center gap-1.5 truncate">
-                        <Clock className="w-3.5 h-3.5 text-brand-violet shrink-0" />
-                        <span className="truncate">{event.timings}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 truncate">
-                        <MapPin className="w-3.5 h-3.5 text-brand-orange shrink-0" />
-                        <span className="truncate">{event.venue}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 truncate">
                         <Users className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                         <span className="truncate">{event.teamSize}</span>
                       </div>
+                      <div className="col-span-2 flex items-center gap-1.5 truncate text-[11px] text-text-muted">
+                        <Clock className="w-3.5 h-3.5 text-brand-violet shrink-0" />
+                        <span className="truncate">{event.timings}</span>
+                      </div>
                     </div>
 
-                    {/* Fee Summary */}
-                    <div className="flex items-center justify-between text-xs font-mono pt-1">
-                      <span className="text-text-tertiary">Registration:</span>
-                      <span className="text-text-primary font-semibold truncate max-w-[60%] text-right">
-                        {event.registrationFee.hitam}
-                      </span>
+                    {/* Registration Fee Breakdown Box */}
+                    <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/10 flex flex-col gap-1 text-xs font-mono">
+                      <div className="flex items-center justify-between">
+                        <span className="text-text-tertiary">HITAM Fee:</span>
+                        <span className="text-text-primary font-bold">{event.registrationFee.hitam}</span>
+                      </div>
+                      {event.registrationFee.nonHitam && event.registrationFee.nonHitam !== event.registrationFee.hitam && (
+                        <div className="flex items-center justify-between border-t border-white/5 pt-1">
+                          <span className="text-text-tertiary">Outside Fee:</span>
+                          <span className="text-brand-magenta font-semibold">{event.registrationFee.nonHitam}</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Action Buttons */}
@@ -484,30 +483,38 @@ export default function EventsPage() {
               </p>
             </div>
 
-            {/* Key Logistics Grid */}
+            {/* Key Registration Details */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 p-4 rounded-2xl bg-white/[0.02] border border-white/10 text-xs font-mono">
+              <div>
+                <span className="text-text-tertiary block text-[10px]">EVENT DATE</span>
+                <span className="text-text-primary font-semibold">{activeModalEvent.date}</span>
+              </div>
               <div>
                 <span className="text-text-tertiary block text-[10px]">TIMINGS &amp; SCHEDULE</span>
                 <span className="text-text-primary font-semibold">{activeModalEvent.timings}</span>
-              </div>
-              <div>
-                <span className="text-text-tertiary block text-[10px]">VENUE LOCATION</span>
-                <span className="text-text-primary font-semibold">{activeModalEvent.venue}</span>
               </div>
               <div>
                 <span className="text-text-tertiary block text-[10px]">TEAM STRUCTURE</span>
                 <span className="text-text-primary font-semibold">{activeModalEvent.teamSize}</span>
               </div>
               <div>
-                <span className="text-text-tertiary block text-[10px]">REGISTRATION FEE</span>
-                <span className="text-text-primary font-semibold">
-                  {activeModalEvent.registrationFee.hitam}
-                  {activeModalEvent.registrationFee.nonHitam !== activeModalEvent.registrationFee.hitam && (
-                    <span className="text-text-muted block text-[10px]">
-                      Non-Hitamite: {activeModalEvent.registrationFee.nonHitam}
-                    </span>
+                <span className="text-text-tertiary block text-[10px]">ORGANIZING CHAPTER</span>
+                <span className="text-text-primary font-semibold truncate block">{activeModalEvent.club}</span>
+              </div>
+              <div className="sm:col-span-2 pt-3 mt-1 border-t border-white/10">
+                <span className="text-text-tertiary block text-[10px] mb-1.5 font-bold uppercase tracking-wider">REGISTRATION FEE</span>
+                <div className="flex flex-wrap items-center justify-between gap-3 bg-white/[0.03] p-2.5 rounded-xl border border-white/5">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-text-secondary text-[11px]">HITAM Student:</span>
+                    <span className="text-brand-orange font-bold text-xs">{activeModalEvent.registrationFee.hitam}</span>
+                  </div>
+                  {activeModalEvent.registrationFee.nonHitam && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-text-secondary text-[11px]">Outside College:</span>
+                      <span className="text-brand-magenta font-bold text-xs">{activeModalEvent.registrationFee.nonHitam}</span>
+                    </div>
                   )}
-                </span>
+                </div>
               </div>
             </div>
 

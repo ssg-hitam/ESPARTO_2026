@@ -56,7 +56,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Both Days (Oct 9–10)",
     dayNumber: 0,
     timings: "9:30 AM – 4:30 PM",
-    venue: "AB Ground Floor",
+    venue: "HITAM Campus",
     prizePool: "₹30,000",
     teamSize: "3–4 Members",
     registrationFee: {
@@ -81,7 +81,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Both Days (Oct 9–10)",
     dayNumber: 0,
     timings: "9:30 AM – 4:30 PM",
-    venue: "Activity Block GF (Day 1) / Room F04 (Day 2)",
+    venue: "HITAM Campus",
     prizePool: "₹10,000",
     prizeBreakup: {
       first: "₹5,000",
@@ -110,7 +110,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Both Days (Oct 9–10)",
     dayNumber: 0,
     timings: "9:30 AM – 4:30 PM",
-    venue: "Activity Block (2nd & 3rd Floor)",
+    venue: "HITAM Campus",
     prizePool: "₹10,000",
     prizeBreakup: {
       first: "₹5,000",
@@ -139,7 +139,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Day 1 (Oct 9)",
     dayNumber: 1,
     timings: "9:30 AM – 1:00 PM",
-    venue: "Activity Block Classroom",
+    venue: "HITAM Campus",
     prizePool: "Certifications & GDG Kits",
     teamSize: "Solo or Team of 2–4",
     registrationFee: {
@@ -162,7 +162,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Day 1 (Oct 9)",
     dayNumber: 1,
     timings: "1:30 PM – 4:30 PM",
-    venue: "Activity Block Ground Floor",
+    venue: "HITAM Campus",
     prizePool: "₹5,000",
     prizeBreakup: {
       first: "₹3,000",
@@ -189,7 +189,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Day 1 (Oct 9)",
     dayNumber: 1,
     timings: "10:00 AM – 4:00 PM",
-    venue: "Room F09",
+    venue: "HITAM Campus",
     prizePool: "₹10,000 Track Pool",
     prizeBreakup: {
       first: "₹1,000",
@@ -217,7 +217,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Day 2 (Oct 10)",
     dayNumber: 2,
     timings: "10:00 AM – 3:30 PM",
-    venue: "Room F09",
+    venue: "HITAM Campus",
     prizePool: "₹10,000 Track Pool",
     prizeBreakup: {
       first: "₹1,000",
@@ -245,7 +245,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Day 1 (Oct 9)",
     dayNumber: 1,
     timings: "10:00 AM – 4:00 PM",
-    venue: "Room F04",
+    venue: "HITAM Campus",
     prizePool: "₹5,000",
     prizeBreakup: {
       first: "₹2,500",
@@ -273,7 +273,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Day 2 (Oct 10)",
     dayNumber: 2,
     timings: "10:00 AM – 4:00 PM",
-    venue: "Room F04",
+    venue: "HITAM Campus",
     prizePool: "₹5,000",
     prizeBreakup: {
       first: "₹2,500",
@@ -301,7 +301,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Both Days (Oct 9–10)",
     dayNumber: 0,
     timings: "9:30 AM – 4:00 PM",
-    venue: "Room F04 (Day 1) / AB Ground Floor (Day 2)",
+    venue: "HITAM Campus",
     prizePool: "₹3,000",
     prizeBreakup: {
       first: "₹1,500",
@@ -329,7 +329,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Both Days (Oct 9–10)",
     dayNumber: 0,
     timings: "9:30 AM – 4:00 PM",
-    venue: "Room F04 (Day 1) / AB Ground Floor (Day 2)",
+    venue: "HITAM Campus",
     prizePool: "₹3,000",
     prizeBreakup: {
       first: "₹1,500",
@@ -357,7 +357,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Day 2 (Oct 10)",
     dayNumber: 2,
     timings: "10:00 AM – 4:00 PM",
-    venue: "Motorsport Arena / Mechanical Workshop",
+    venue: "HITAM Campus",
     prizePool: "₹5,000",
     prizeBreakup: {
       first: "₹2,500",
@@ -385,7 +385,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Day 1 (Oct 9)",
     dayNumber: 1,
     timings: "10:00 AM – 4:00 PM",
-    venue: "FO1 Workshop Arena",
+    venue: "HITAM Campus",
     prizePool: "₹5,000",
     prizeBreakup: {
       first: "₹1,500",
@@ -413,7 +413,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Day 1 (Oct 9)",
     dayNumber: 1,
     timings: "11:00 AM – 2:00 PM",
-    venue: "Room S03",
+    venue: "HITAM Campus",
     prizePool: "₹1,200",
     prizeBreakup: {
       first: "₹600",
@@ -441,7 +441,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     date: "Day 2 (Oct 10)",
     dayNumber: 2,
     timings: "10:30 AM – 3:30 PM",
-    venue: "Room S03",
+    venue: "HITAM Campus",
     prizePool: "₹5,000",
     prizeBreakup: {
       first: "₹3,000",
