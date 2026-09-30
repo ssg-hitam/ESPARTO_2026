@@ -19,10 +19,16 @@ import {
 
 const campusPhotos = [
   {
+    title: "Main Campus & Aerial Green Canopy",
+    tag: "AERIAL PERSPECTIVE",
+    desc: "Panoramic aerial view of the main academic block nestled within lush natural green canopies and windmills.",
+    src: "/images/campus/hitam_campus_aerial.jpg",
+  },
+  {
     title: "India's First LEED Silver Campus",
     tag: "SUSTAINABLE ARCHITECTURE",
     desc: "Designed with passive natural cooling corridors, solar infrastructure, and abundant green cover.",
-    src: "/images/campus/hitam_campus_main.jpg",
+    src: "/images/campus/hitam_campus_greenary.jpg",
   },
   {
     title: "Academic Complex & Main Facade",
@@ -34,25 +40,19 @@ const campusPhotos = [
     title: "Central Plazas & Student Commons",
     tag: "CAMPUS LIFE",
     desc: "Sprawling central staircases and open-air hubs fostering student communities and clubs.",
-    src: "/images/campus/hitam_campus_students.jpg",
+    src: "/images/campus/hitam_campus_mainstairs.jpg",
   },
   {
-    title: "Open-Air Amphitheater & Fest Stage",
-    tag: "CULTURAL ARENA",
-    desc: "High-capacity amphitheater designed for electrifying festival pro-nights, keynotes, and ceremonies.",
-    src: "/images/campus/hitam_campus_amphitheater.jpg",
+    title: "Academic & Research Wings",
+    tag: "INNOVATION HUBS",
+    desc: "Modern multi-disciplinary laboratories, research centers, and seminar spaces.",
+    src: "/images/campus/hitam_campus_leed_1.jpg",
   },
   {
     title: "Eco-Friendly Courtyards",
     tag: "GREEN COMMONS",
     desc: "Open-air landscaped plazas and shaded corridors fostering collaborative technical ideation.",
     src: "/images/campus/hitam_campus_leed_2.jpg",
-  },
-  {
-    title: "Sports Complex & Championship Grounds",
-    tag: "OUTDOOR ARENA",
-    desc: "Expansive athletics and sports grounds hosting inter-college sports meets and campus games.",
-    src: "/images/campus/hitam_campus_arena.jpg",
   },
 ];
 
@@ -123,8 +123,8 @@ export default function VenuePage() {
               {/* Featured Campus Visual Header */}
               <div className="relative w-full h-64 sm:h-72 overflow-hidden bg-black/40">
                 <Image
-                  src="/images/campus/hitam_campus_main.jpg"
-                  alt="HITAM Green Campus"
+                  src="/images/campus/hitam_campus_aerial.jpg"
+                  alt="HITAM Main Campus Aerial View"
                   fill
                   sizes="(max-width: 1024px) 100vw, 700px"
                   className="object-cover object-center filter contrast-105 group-hover:scale-105 transition-transform duration-700"
