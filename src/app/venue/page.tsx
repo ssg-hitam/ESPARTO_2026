@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
@@ -14,31 +14,50 @@ import {
   Trees, 
   ExternalLink,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Volume2,
+  VolumeX,
+  Play
 } from "lucide-react";
 
-const campusPhotos = [
+type CampusMediaItem = 
+  | { type: "video"; src: string; poster: string; alt: string }
+  | { type: "image"; src: string; alt: string };
+
+const campusMedia: CampusMediaItem[] = [
   {
+    type: "video",
+    src: "/videos/hitam_campus_walkthrough.mp4",
+    poster: "/images/campus/hitam_tour_poster.jpg",
+    alt: "HITAM Campus Tour Video",
+  },
+  {
+    type: "image",
     src: "/images/campus/hitam_campus_facade.jpg",
     alt: "HITAM Academic Complex & Main Facade",
   },
   {
+    type: "image",
     src: "/images/campus/hitam_campus_aerial.jpg",
     alt: "HITAM Main Campus Aerial View",
   },
   {
+    type: "image",
     src: "/images/campus/hitam_campus_entrance.jpg",
     alt: "HITAM Campus Entrance & Avenue Trees",
   },
   {
+    type: "image",
     src: "/images/campus/hitam_campus_panorama.jpg",
     alt: "HITAM Campus Aerial Panorama",
   },
   {
+    type: "image",
     src: "/images/campus/hitam_campus_greenary.jpg",
     alt: "HITAM Green Campus Architecture",
   },
   {
+    type: "image",
     src: "/images/campus/hitam_campus_mainstairs.jpg",
     alt: "HITAM Central Campus Plazas",
   },
@@ -47,22 +66,46 @@ const campusPhotos = [
 function CampusAutoCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // Auto-advance every 3.5 seconds
+  // Play video automatically on slide 0 and pause when away
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (activeIndex === 0) {
+      video.muted = isMuted;
+      video.defaultMuted = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // If browser policy requires muted
+          video.muted = true;
+          video.play().catch(() => {});
+        });
+      }
+    } else {
+      video.pause();
+    }
+  }, [activeIndex, isMuted]);
+
+  // Auto-advance: 12 seconds on video slide, 3.8s for photos
   useEffect(() => {
     if (isPaused) return;
+    const intervalTime = activeIndex === 0 ? 12000 : 3800;
     const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % campusPhotos.length);
-    }, 3500);
+      setActiveIndex((prev) => (prev + 1) % campusMedia.length);
+    }, intervalTime);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, activeIndex]);
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + campusPhotos.length) % campusPhotos.length);
+    setActiveIndex((prev) => (prev - 1 + campusMedia.length) % campusMedia.length);
   };
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % campusPhotos.length);
+    setActiveIndex((prev) => (prev + 1) % campusMedia.length);
   };
 
   return (
@@ -72,30 +115,61 @@ function CampusAutoCarousel() {
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Cinematic Main Viewport */}
-      <div className="relative w-full h-72 sm:h-96 md:h-[460px] lg:h-[520px] rounded-3xl border border-white/10 overflow-hidden bg-black/60 shadow-[0_8px_40px_rgba(0,0,0,0.6)] group">
-        {campusPhotos.map((photo, idx) => (
+      <div className="relative w-full h-72 sm:h-96 md:h-[480px] lg:h-[540px] rounded-3xl border border-white/10 overflow-hidden bg-black shadow-[0_8px_40px_rgba(0,0,0,0.6)] group">
+        {campusMedia.map((item, idx) => (
           <div
-            key={photo.src}
+            key={item.src}
             className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              idx === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+              idx === activeIndex ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
             }`}
           >
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              sizes="(max-width: 1280px) 100vw, 1200px"
-              priority={idx === 0}
-              className="object-cover object-center filter contrast-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+            {item.type === "video" ? (
+              <div className="relative w-full h-full bg-black">
+                <video
+                  ref={videoRef}
+                  src={item.src}
+                  poster={item.poster}
+                  autoPlay
+                  loop
+                  muted={isMuted}
+                  playsInline
+                  preload="auto"
+                  className="w-full h-full object-cover object-center"
+                />
+
+                {/* Subtle sound toggle */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMuted(!isMuted);
+                  }}
+                  aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+                  className="absolute bottom-5 right-5 z-30 p-2.5 rounded-full bg-black/70 hover:bg-brand-orange backdrop-blur-md border border-white/20 text-white transition-all duration-200 hover:scale-110 shadow-lg"
+                >
+                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                </button>
+              </div>
+            ) : (
+              <div className="relative w-full h-full">
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  fill
+                  sizes="(max-width: 1280px) 100vw, 1200px"
+                  priority={idx <= 1}
+                  className="object-cover object-center filter contrast-105"
+                />
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
           </div>
         ))}
 
         {/* Prev Button */}
         <button
           onClick={handlePrev}
-          aria-label="Previous photo"
+          aria-label="Previous slide"
           className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-brand-orange backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-105"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -104,7 +178,7 @@ function CampusAutoCarousel() {
         {/* Next Button */}
         <button
           onClick={handleNext}
-          aria-label="Next photo"
+          aria-label="Next slide"
           className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-brand-orange backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-105"
         >
           <ChevronRight className="w-5 h-5" />
@@ -112,11 +186,11 @@ function CampusAutoCarousel() {
 
         {/* Bottom Dot Indicators */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
-          {campusPhotos.map((_, idx) => (
+          {campusMedia.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setActiveIndex(idx)}
-              aria-label={`Go to photo ${idx + 1}`}
+              aria-label={`Go to slide ${idx + 1}`}
               className={`transition-all duration-300 rounded-full ${
                 idx === activeIndex
                   ? "w-8 h-2 bg-brand-orange"
@@ -128,25 +202,32 @@ function CampusAutoCarousel() {
       </div>
 
       {/* Thumbnail Bar */}
-      <div className="grid grid-cols-6 max-w-4xl mx-auto gap-2 sm:gap-3 mt-4">
-        {campusPhotos.map((photo, idx) => (
+      <div className="grid grid-cols-4 sm:grid-cols-7 max-w-5xl mx-auto gap-2 sm:gap-3 mt-4">
+        {campusMedia.map((item, idx) => (
           <button
-            key={photo.src}
+            key={item.src}
             onClick={() => setActiveIndex(idx)}
-            aria-label={`Select photo ${idx + 1}: ${photo.alt}`}
-            className={`relative h-16 sm:h-20 md:h-24 rounded-xl overflow-hidden border transition-all duration-300 ${
+            aria-label={`Select media ${idx + 1}: ${item.alt}`}
+            className={`relative h-16 sm:h-20 md:h-22 rounded-xl overflow-hidden border transition-all duration-300 ${
               idx === activeIndex
-                ? "border-brand-orange ring-2 ring-brand-orange/40 scale-[1.02]"
+                ? "border-brand-orange ring-2 ring-brand-orange/40 scale-[1.03]"
                 : "border-white/10 opacity-60 hover:opacity-100 hover:border-white/30"
             }`}
           >
             <Image
-              src={photo.src}
-              alt={photo.alt}
+              src={item.type === "video" ? item.poster : item.src}
+              alt={item.alt}
               fill
-              sizes="(max-width: 640px) 16vw, 160px"
+              sizes="(max-width: 640px) 25vw, 160px"
               className="object-cover object-center"
             />
+            {item.type === "video" && (
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                <div className="w-6 h-6 rounded-full bg-brand-orange/90 flex items-center justify-center shadow-md">
+                  <Play className="w-3 h-3 text-white fill-white ml-0.5" />
+                </div>
+              </div>
+            )}
           </button>
         ))}
       </div>
@@ -282,7 +363,7 @@ export default function VenuePage() {
             </div>
           </FadeUp>
 
-          {/* Right Card: Google Maps (Replaced HOW TO REACH) */}
+          {/* Right Card: Google Maps */}
           <FadeUp delay={0.16} distance={30}>
             <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] overflow-hidden flex flex-col justify-between h-full group hover:border-brand-magenta/40 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.4)]">
               
@@ -333,7 +414,7 @@ export default function VenuePage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            NEXT: CAMPUS PHOTO AUTO-CAROUSEL
+            NEXT: CAMPUS AUTO-CAROUSEL (COLLEGE VIDEO + PHOTOS)
         ═══════════════════════════════════════════════════════════════════════ */}
         <FadeUp delay={0.2} distance={30}>
           <CampusAutoCarousel />
