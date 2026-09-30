@@ -23,7 +23,8 @@ import {
   Camera,
   Megaphone,
   Truck,
-  ExternalLink
+  ExternalLink,
+  Instagram
 } from "lucide-react";
 import { 
   facultyCoordinators, 
@@ -89,12 +90,8 @@ export default function TeamPage() {
         {/* Hero Header */}
         <FadeUp delay={0.06} distance={20}>
           <div className="max-w-4xl mb-16">
-            <div className="flex items-center gap-2.5 mb-4">
-              <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-brand-orange font-mono font-bold text-[11px] uppercase tracking-wider">
-                HITAM STUDENT SELF GOVERNANCE
-              </span>
-              <span className="text-white/20 text-xs">•</span>
-              <span className="text-[11px] font-mono tracking-wider text-text-muted uppercase">
+            <div className="mb-4">
+              <span className="text-xs font-mono tracking-wider text-brand-orange uppercase font-bold">
                 ESPARTO 2026
               </span>
             </div>
@@ -524,7 +521,21 @@ export default function TeamPage() {
                   <span className="text-[10px] font-mono text-cyan-400 uppercase font-semibold">
                     Organizing Partner
                   </span>
-                  <ExternalLink className="w-3 h-3 text-text-muted group-hover:text-white transition-colors" />
+                  {chapter.socials?.instagram ? (
+                    <a
+                      href={chapter.socials.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-pink-400 text-xs font-mono transition-all group/insta"
+                      aria-label={`${chapter.name} Instagram`}
+                    >
+                      <Instagram className="w-3.5 h-3.5" />
+                      <span>Instagram</span>
+                      <ExternalLink className="w-3 h-3 transition-transform group-hover/insta:translate-x-0.5 group-hover/insta:-translate-y-0.5" />
+                    </a>
+                  ) : (
+                    <ExternalLink className="w-3 h-3 text-text-muted group-hover:text-white transition-colors" />
+                  )}
                 </div>
               </div>
             ))}

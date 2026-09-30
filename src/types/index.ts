@@ -137,6 +137,7 @@ export interface Organizer {
     github?: string;
     email?: string;
     phone?: string;
+    instagram?: string;
   };
 }
 

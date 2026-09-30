@@ -164,7 +164,10 @@ export const chapterCommittees: Organizer[] = [
     role: "Engineers Without Borders",
     department: "Sustainable Engineering Chapter",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/iucee-ewb-hitam.png"
+    image: "/images/chapters/iucee-ewb-hitam.png",
+    socials: {
+      instagram: "https://www.instagram.com/iucee.ewb.hitam/"
+    }
   },
   {
     id: "ieee-core",
@@ -172,7 +175,10 @@ export const chapterCommittees: Organizer[] = [
     role: "IEEE Student Branch",
     department: "Electrical & Electronics Engineering",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/ieee-hitam.png"
+    image: "/images/chapters/ieee-hitam.png",
+    socials: {
+      instagram: "https://www.instagram.com/ieee_hitam/"
+    }
   },
   {
     id: "ieom-core",
@@ -180,7 +186,10 @@ export const chapterCommittees: Organizer[] = [
     role: "Operations & Industrial Engineering",
     department: "Industrial Engineering Society",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/ieom-hitam.png"
+    image: "/images/chapters/ieom-hitam.png",
+    socials: {
+      instagram: "https://www.instagram.com/ieom_hitam/"
+    }
   },
   {
     id: "csi-core",
@@ -188,7 +197,10 @@ export const chapterCommittees: Organizer[] = [
     role: "Computer Society of India",
     department: "Computer Science & Engineering",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/csi-hitam.png"
+    image: "/images/chapters/csi-hitam.png",
+    socials: {
+      instagram: "https://www.instagram.com/csi_hitam/"
+    }
   },
   {
     id: "gdg-core",
@@ -196,7 +208,10 @@ export const chapterCommittees: Organizer[] = [
     role: "Google Developer Groups",
     department: "Cloud, Web & Mobile Ecosystem",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/gdg-hitam.png"
+    image: "/images/chapters/gdg-hitam.png",
+    socials: {
+      instagram: "https://www.instagram.com/gdgoc.hitam/"
+    }
   },
   {
     id: "minds-core",
@@ -204,7 +219,10 @@ export const chapterCommittees: Organizer[] = [
     role: "Data Science & Analytics",
     department: "Machine Learning & Big Data",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/minds-hitam.png"
+    image: "/images/chapters/minds-hitam.png",
+    socials: {
+      instagram: "https://www.instagram.com/hitam_minds_club/"
+    }
   },
   {
     id: "hitam-ai-core",
@@ -212,7 +230,10 @@ export const chapterCommittees: Organizer[] = [
     role: "Artificial Intelligence",
     department: "Generative AI & Neural Networks",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/hitam-ai.png"
+    image: "/images/chapters/hitam-ai.png",
+    socials: {
+      instagram: "https://www.instagram.com/hitamaiclub/"
+    }
   },
   {
     id: "hitam-coding-core",
@@ -220,7 +241,10 @@ export const chapterCommittees: Organizer[] = [
     role: "Competitive Programming",
     department: "Data Structures & Algorithms",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/hitam-coding-club.png"
+    image: "/images/chapters/hitam-coding-club.png",
+    socials: {
+      instagram: "https://www.instagram.com/coding_club_hitam/"
+    }
   },
   {
     id: "hhc-core",
@@ -228,7 +252,10 @@ export const chapterCommittees: Organizer[] = [
     role: "Hackathons & Rapid Prototyping",
     department: "Product Building & Ideation",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/HHC.jpg"
+    image: "/images/chapters/HHC.jpg",
+    socials: {
+      instagram: "https://www.instagram.com/hitam_hackathon_club/"
+    }
   },
   {
     id: "isampe-core",
@@ -236,7 +263,10 @@ export const chapterCommittees: Organizer[] = [
     role: "Materials & Process Engineering",
     department: "Advanced Engineering Materials",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/ISAMPE.png"
+    image: "/images/chapters/ISAMPE.png",
+    socials: {
+      instagram: "https://www.instagram.com/isampe_hitam/"
+    }
   },
   {
     id: "torquex-core",
@@ -244,7 +274,10 @@ export const chapterCommittees: Organizer[] = [
     role: "Automotive & EV Prototyping",
     department: "Vehicle Design & Racing",
     teamDomain: "chapter-committee",
-    image: "/images/chapters/torquex-logo.jpg"
+    image: "/images/chapters/torquex-logo.jpg",
+    socials: {
+      instagram: "https://www.instagram.com/motorsportsclub.hitam/"
+    }
   }
 ];
 
