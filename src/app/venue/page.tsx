@@ -25,6 +25,14 @@ const campusPhotos = [
     alt: "HITAM Main Campus Aerial View",
   },
   {
+    src: "/images/campus/hitam_campus_entrance.jpg",
+    alt: "HITAM Campus Entrance & Avenue Trees",
+  },
+  {
+    src: "/images/campus/hitam_campus_panorama.jpg",
+    alt: "HITAM Campus Aerial Panorama",
+  },
+  {
     src: "/images/campus/hitam_campus_facade.jpg",
     alt: "HITAM Academic Complex & Main Facade",
   },
@@ -122,7 +130,7 @@ function CampusAutoCarousel() {
       </div>
 
       {/* Thumbnail Bar */}
-      <div className="grid grid-cols-4 max-w-2xl mx-auto gap-3 sm:gap-4 mt-4">
+      <div className="grid grid-cols-6 max-w-4xl mx-auto gap-2 sm:gap-3 mt-4">
         {campusPhotos.map((photo, idx) => (
           <button
             key={photo.src}
@@ -164,6 +172,20 @@ const directions = [
 ];
 
 export default function VenuePage() {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (!document.getElementById("instagram-embed-script")) {
+        const script = document.createElement("script");
+        script.id = "instagram-embed-script";
+        script.src = "https://www.instagram.com/embed.js";
+        script.async = true;
+        document.body.appendChild(script);
+      } else if ((window as any).instgrm) {
+        (window as any).instgrm.Embeds.process();
+      }
+    }
+  }, []);
+
   return (
     <main className="min-h-screen pt-32 pb-24 bg-[#040210] relative overflow-hidden">
       {/* Ambient background glows */}
@@ -202,6 +224,54 @@ export default function VenuePage() {
             <p className="text-text-secondary text-base sm:text-lg font-body leading-relaxed border-l-2 border-brand-orange/40 pl-5 font-light">
               Held across the green, sustainable, LEED Silver-rated campus of {FEST_INFO.institution.name} (HITAM) in Hyderabad.
             </p>
+          </div>
+        </FadeUp>
+
+        {/* ═══════════════════════════════════════════════════════════════════════
+            CAMPUS WALKTHROUGH REEL (FIRST ON PAGE)
+        ═══════════════════════════════════════════════════════════════════════ */}
+        <FadeUp delay={0.08} distance={20} className="mb-14">
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c0628] via-[#08041c] to-[#040110] p-5 sm:p-8 shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
+            <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+              {/* Instagram Reel Player Container */}
+              <div className="w-full max-w-[380px] shrink-0 mx-auto rounded-2xl overflow-hidden bg-black/60 border border-white/15 shadow-2xl relative">
+                <iframe
+                  src="https://www.instagram.com/reel/DZZJReJP2tg/embed/"
+                  className="w-full h-[540px] sm:h-[580px] border-0 rounded-2xl bg-black"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  allowFullScreen
+                  title="Inside HITAM Campus Tour Reel"
+                />
+              </div>
+
+              {/* Reel Info */}
+              <div className="flex-1 space-y-4 text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-orange/10 border border-brand-orange/30 text-brand-orange font-mono text-xs font-bold uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
+                  <span>OFFICIAL CAMPUS WALKTHROUGH</span>
+                </div>
+                <h2 className="font-display font-black text-2xl sm:text-4xl text-white tracking-tight uppercase leading-tight">
+                  INSIDE HITAM: <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">
+                    A CAMPUS BUILT FOR FUTURE ENGINEERS
+                  </span>
+                </h2>
+                <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed font-light">
+                  Explore the green courtyards, academic blocks, advanced engineering centers, and vibrant student community across Hyderabad Institute of Technology and Management ahead of ESPARTO 2026.
+                </p>
+                <div className="pt-2">
+                  <a
+                    href="https://www.instagram.com/reel/DZZJReJP2tg/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-brand-orange text-white text-xs font-mono font-bold tracking-wider uppercase transition-colors border border-white/15 group"
+                  >
+                    <span>OPEN ON INSTAGRAM</span>
+                    <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </FadeUp>
 
