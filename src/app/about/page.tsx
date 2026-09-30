@@ -125,53 +125,63 @@ export default function AboutPage() {
           </div>
         </FadeUp>
 
-        {/* ── §2 DATES, TIMINGS & ESPARTO EMBLEM ─────────────────────── */}
+        {/* ── §2 DATES, TIMINGS & ABOUT HITAM ───────────────────────── */}
         <FadeUp delay={0.15} distance={40}>
-          <div className="flex flex-col lg:flex-row gap-6 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
 
-            {/* Info Cards */}
-            <div className="flex flex-col sm:flex-row gap-4 flex-1">
-              <div className="flex items-center gap-4 flex-1 p-5 rounded-2xl border border-brand-magenta/30 bg-brand-magenta/5 backdrop-blur-sm">
-                <div className="p-3 rounded-xl border border-brand-magenta/40 bg-brand-magenta/10 shadow-[0_0_16px_rgba(255,0,122,0.25)] shrink-0">
-                  <Calendar className="w-5 h-5 text-brand-magenta" />
-                </div>
-                <div>
-                  <p className="font-mono text-[10px] font-bold tracking-widest uppercase text-text-muted mb-0.5">DATES</p>
-                  <p className="font-display font-bold text-base text-text-primary tracking-wide uppercase">OCT 9 &amp; 10, 2026</p>
-                  <p className="font-mono text-xs text-text-muted">Two Days</p>
-                </div>
+            {/* DATES */}
+            <div className="flex items-center gap-4 p-5 rounded-2xl border border-brand-magenta/30 bg-brand-magenta/5 backdrop-blur-sm">
+              <div className="p-3 rounded-xl border border-brand-magenta/40 bg-brand-magenta/10 shadow-[0_0_16px_rgba(255,0,122,0.25)] shrink-0">
+                <Calendar className="w-5 h-5 text-brand-magenta" />
               </div>
-
-              <div className="flex items-center gap-4 flex-1 p-5 rounded-2xl border border-brand-violet/30 bg-brand-violet/5 backdrop-blur-sm">
-                <div className="p-3 rounded-xl border border-brand-violet/40 bg-brand-violet/10 shadow-[0_0_16px_rgba(121,80,242,0.25)] shrink-0">
-                  <Clock className="w-5 h-5 text-brand-violet" />
-                </div>
-                <div>
-                  <p className="font-mono text-[10px] font-bold tracking-widest uppercase text-text-muted mb-0.5">TIMINGS</p>
-                  <p className="font-display font-bold text-base text-text-primary tracking-wide uppercase">9:30 AM – 4:30 PM</p>
-                  <p className="font-mono text-xs text-text-muted">Daily (both days)</p>
-                </div>
+              <div>
+                <p className="font-mono text-[10px] font-bold tracking-widest uppercase text-text-muted mb-0.5">DATES</p>
+                <p className="font-display font-bold text-base text-text-primary tracking-wide uppercase">OCT 9 &amp; 10, 2026</p>
+                <p className="font-mono text-xs text-text-muted">Two Days</p>
               </div>
             </div>
 
-            {/* ESPARTO Emblem Visual */}
-            <div className="relative flex items-center justify-center w-full lg:w-64 h-40 lg:h-auto rounded-2xl border border-brand-orange/20 bg-gradient-to-br from-brand-orange/10 via-brand-magenta/10 to-brand-violet/10 backdrop-blur-sm overflow-hidden shrink-0">
-              {/* Animated ring */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 rounded-full border border-brand-orange/20 animate-spin" style={{ animationDuration: "12s" }} />
-                <div className="absolute w-24 h-24 rounded-full border border-brand-magenta/20 animate-spin" style={{ animationDuration: "8s", animationDirection: "reverse" }} />
-                <div className="absolute w-16 h-16 rounded-full border border-brand-violet/30 animate-spin" style={{ animationDuration: "5s" }} />
+            {/* TIMINGS */}
+            <div className="flex items-center gap-4 p-5 rounded-2xl border border-brand-violet/30 bg-brand-violet/5 backdrop-blur-sm">
+              <div className="p-3 rounded-xl border border-brand-violet/40 bg-brand-violet/10 shadow-[0_0_16px_rgba(121,80,242,0.25)] shrink-0">
+                <Clock className="w-5 h-5 text-brand-violet" />
               </div>
-              {/* Center text */}
-              <div className="relative z-10 text-center">
-                <p className="font-display font-black text-2xl tracking-widest uppercase text-transparent bg-clip-text bg-gradient-to-br from-brand-orange via-brand-magenta to-brand-violet leading-none">ESP</p>
-                <p className="font-display font-black text-2xl tracking-widest uppercase text-transparent bg-clip-text bg-gradient-to-br from-brand-magenta via-brand-violet to-brand-orange leading-none">ARTO</p>
-                <p className="font-mono text-[9px] tracking-[0.2em] text-text-muted mt-1">2026</p>
+              <div>
+                <p className="font-mono text-[10px] font-bold tracking-widest uppercase text-text-muted mb-0.5">TIMINGS</p>
+                <p className="font-display font-bold text-base text-text-primary tracking-wide uppercase">9:30 AM – 4:30 PM</p>
+                <p className="font-mono text-xs text-text-muted">Daily (both days)</p>
               </div>
-              {/* Corner glow */}
-              <div className="absolute -bottom-4 -right-4 w-20 h-20 rounded-full bg-brand-magenta/20 blur-xl" aria-hidden="true" />
-              <div className="absolute -top-4 -left-4 w-20 h-20 rounded-full bg-brand-orange/20 blur-xl" aria-hidden="true" />
             </div>
+
+            {/* ABOUT HITAM */}
+            <Link
+              href="/hitam"
+              className="group flex items-center justify-between gap-4 p-5 rounded-2xl border border-emerald-500/30 bg-emerald-950/20 hover:bg-emerald-950/40 hover:border-emerald-500/60 backdrop-blur-sm transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.1)] hover:shadow-[0_0_25px_rgba(16,185,129,0.25)] cursor-pointer sm:col-span-2 lg:col-span-1"
+            >
+              <div className="flex items-center gap-4">
+                <div className="relative w-12 h-14 rounded-xl overflow-hidden shadow-md shrink-0 border border-emerald-500/40 bg-[#43a047]">
+                  <Image
+                    src="/images/hitam/hitam_logo.jpg"
+                    alt="HITAM Official Logo"
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] font-bold tracking-widest uppercase text-emerald-400 mb-0.5">
+                    HOST CAMPUS
+                  </p>
+                  <p className="font-display font-bold text-base text-text-primary tracking-wide uppercase group-hover:text-emerald-300 transition-colors">
+                    ABOUT HITAM
+                  </p>
+                  <p className="font-mono text-xs text-text-muted">NAAC A+ · Autonomous</p>
+                </div>
+              </div>
+
+              <div className="w-8 h-8 rounded-full border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/30 transition-all">
+                <ArrowUpRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </div>
+            </Link>
 
           </div>
         </FadeUp>
