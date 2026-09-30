@@ -99,21 +99,21 @@ export function ChaptersMarqueeSection() {
                 items={carouselItems}
                 preset="cylinder"
                 intro="rise"
-                cardWidth={160}
+                cardWidth={140}
                 aspectRatio={1}
                 speed={5}
                 captions={true}
-                gap={15}
-                tilt={-10}
-                curve={0.72}
-                perspective={1900}
+                gap={50}
+                tilt={-8}
+                curve={0.65}
+                perspective={2100}
                 momentum={0.2}
                 parallax={0.22}
                 stretch={0.16}
                 depthFade={0.25}
                 fadeColor="#08041d"
                 innerShade={0.3}
-                cornerRadius={12}
+                cornerRadius={14}
               />
             </div>
 
