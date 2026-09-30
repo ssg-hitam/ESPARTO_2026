@@ -6,70 +6,54 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/ui/FadeUp";
 import { FEST_INFO } from "@/lib/constants";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Clock, Calendar, MapPin, BookOpen } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Clock, Calendar, MapPin } from "lucide-react";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    DATA
 ───────────────────────────────────────────────────────────────────────────── */
 
-
 const FORMATS = [
   {
-    tag: "FORMAT 01",
-    title: "HACKATHONS",
-    desc: "Time-boxed, high-pressure build sprints where teams design, code, and pitch working solutions from scratch.",
+    tag: "01",
+    title: "Hackathons",
+    desc: "Time-boxed build sprints where teams design, develop, and present functional solutions for complex engineering problems.",
     accent: "from-brand-orange to-brand-amber",
-    border: "border-brand-orange/30",
   },
   {
-    tag: "FORMAT 02",
-    title: "WORKSHOPS",
-    desc: "Hands-on sessions led by practitioners — covering emerging tech, real-world tools, and engineering workflows.",
+    tag: "02",
+    title: "Technical Workshops",
+    desc: "Hands-on sessions led by industry practitioners, introducing modern frameworks, developer tools, and practical workflows.",
     accent: "from-brand-magenta to-brand-purple",
-    border: "border-brand-magenta/30",
   },
   {
-    tag: "FORMAT 03",
-    title: "COMPETITIONS",
-    desc: "Head-to-head technical contests — robotics battles, coding duels, design challenges, and more.",
+    tag: "03",
+    title: "Engineering Contests",
+    desc: "Competitive arenas spanning robotics battles, coding challenges, circuit design, and mechanical design showcases.",
     accent: "from-brand-violet to-brand-purple",
-    border: "border-brand-violet/30",
   },
 ];
 
 const VMI = [
   {
-    num: "01",
-    word: "VISION",
+    word: "Vision",
     statement: "One fest. Every club. One banner.",
-    body: "Unite every technical club and professional chapter of HITAM under a single, high-impact national-level platform — making ESPARTO the definitive showcase of HITAM's engineering culture.",
+    body: "Unite every technical club and professional chapter of HITAM under a single national-level platform, creating the definitive showcase of HITAM's engineering culture.",
     topBar: "from-brand-orange to-brand-amber",
-    numColor: "text-brand-orange",
-    labelColor: "text-brand-orange",
-    borderClass: "border-brand-orange/20",
-    glowColor: "rgba(255,94,0,0.08)",
+    glowColor: "rgba(255,94,0,0.06)",
   },
   {
-    num: "02",
-    word: "MISSION",
+    word: "Mission",
     statement: "Learn by doing, not by watching.",
-    body: "Drive HITAM's 'Doing Engineering' philosophy — every event at ESPARTO is built around real participation: build sprints, live workshops, and head-to-head technical contests that turn theory into working practice.",
+    body: "Advance HITAM's 'Doing Engineering' philosophy through active participation: live build sprints, intensive workshops, and hands-on technical contests that turn theory into working systems.",
     topBar: "from-brand-magenta to-brand-purple",
-    numColor: "text-brand-magenta",
-    labelColor: "text-brand-magenta",
-    borderClass: "border-brand-magenta/20",
-    glowColor: "rgba(255,0,122,0.08)",
+    glowColor: "rgba(255,0,122,0.06)",
   },
   {
-    num: "03",
-    word: "IMPACT",
+    word: "Impact",
     statement: "Collaborate. Compete. Grow.",
-    body: "Connect students from diverse institutions, promoting innovation, teamwork, and continuous learning. ESPARTO builds bridges — between clubs, between colleges, and between where you are and where you want to be.",
+    body: "Bridge students across institutions to cultivate innovation, teamwork, and lifelong engineering curiosity in line with HITAM's founding principles.",
     topBar: "from-brand-violet to-brand-purple",
-    numColor: "text-brand-violet",
-    labelColor: "text-brand-violet",
-    borderClass: "border-brand-violet/20",
-    glowColor: "rgba(121,80,242,0.08)",
+    glowColor: "rgba(121,80,242,0.06)",
   },
 ];
 
@@ -81,13 +65,13 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen pt-32 pb-24 bg-[#040210] relative overflow-hidden">
 
-      {/* Ambient glows */}
+      {/* Subtle Ambient Background */}
       <div
         className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full bg-brand-purple/10 blur-[160px] pointer-events-none"
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-brand-magenta/[0.08] blur-[140px] pointer-events-none"
+        className="absolute bottom-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-brand-magenta/[0.06] blur-[140px] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -97,18 +81,18 @@ export default function AboutPage() {
         <FadeUp delay={0}>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 text-xs font-medium text-text-muted hover:text-white transition-colors mb-8 group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span>BACK TO HOME</span>
+            <span>Back to Home</span>
           </Link>
         </FadeUp>
 
         {/* ── §1 HEADER + OVERVIEW ───────────────────────────────────── */}
-        <FadeUp delay={0.1} distance={50}>
+        <FadeUp delay={0.08} distance={30}>
           <div className="max-w-3xl mb-12">
             <h1 className="font-display font-black text-4xl sm:text-6xl text-text-primary tracking-tight leading-[1.05] uppercase mb-6">
-              ABOUT <br />
+              About <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">
                 ESPARTO 2026
               </span>
@@ -126,60 +110,60 @@ export default function AboutPage() {
         </FadeUp>
 
         {/* ── §2 DATES, TIMINGS & ABOUT HITAM ───────────────────────── */}
-        <FadeUp delay={0.15} distance={40}>
+        <FadeUp delay={0.12} distance={20}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
 
             {/* DATES */}
-            <div className="flex items-center gap-4 p-5 rounded-2xl border border-brand-magenta/30 bg-brand-magenta/5 backdrop-blur-sm">
-              <div className="p-3 rounded-xl border border-brand-magenta/40 bg-brand-magenta/10 shadow-[0_0_16px_rgba(255,0,122,0.25)] shrink-0">
+            <div className="flex items-center gap-4 p-5 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+              <div className="p-3 rounded-xl border border-brand-magenta/30 bg-brand-magenta/10 shadow-[0_0_16px_rgba(255,0,122,0.15)] shrink-0">
                 <Calendar className="w-5 h-5 text-brand-magenta" />
               </div>
               <div>
-                <p className="font-mono text-[10px] font-bold tracking-widest uppercase text-text-muted mb-0.5">DATES</p>
-                <p className="font-display font-bold text-base text-text-primary tracking-wide uppercase">OCT 9 &amp; 10, 2026</p>
-                <p className="font-mono text-xs text-text-muted">Two Days</p>
+                <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-0.5">Festival Dates</p>
+                <p className="font-display font-bold text-base text-text-primary uppercase">Oct 9 &amp; 10, 2026</p>
+                <p className="text-xs text-text-muted font-body">Two Days</p>
               </div>
             </div>
 
             {/* TIMINGS */}
-            <div className="flex items-center gap-4 p-5 rounded-2xl border border-brand-violet/30 bg-brand-violet/5 backdrop-blur-sm">
-              <div className="p-3 rounded-xl border border-brand-violet/40 bg-brand-violet/10 shadow-[0_0_16px_rgba(121,80,242,0.25)] shrink-0">
+            <div className="flex items-center gap-4 p-5 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+              <div className="p-3 rounded-xl border border-brand-violet/30 bg-brand-violet/10 shadow-[0_0_16px_rgba(121,80,242,0.15)] shrink-0">
                 <Clock className="w-5 h-5 text-brand-violet" />
               </div>
               <div>
-                <p className="font-mono text-[10px] font-bold tracking-widest uppercase text-text-muted mb-0.5">TIMINGS</p>
-                <p className="font-display font-bold text-base text-text-primary tracking-wide uppercase">9:30 AM – 4:30 PM</p>
-                <p className="font-mono text-xs text-text-muted">Daily (both days)</p>
+                <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-0.5">Festival Timings</p>
+                <p className="font-display font-bold text-base text-text-primary uppercase">9:30 AM – 4:30 PM</p>
+                <p className="text-xs text-text-muted font-body">Daily (Both Days)</p>
               </div>
             </div>
 
             {/* ABOUT HITAM */}
             <Link
               href="/hitam"
-              className="group flex items-center justify-between gap-4 p-5 rounded-2xl border border-emerald-500/30 bg-emerald-950/20 hover:bg-emerald-950/40 hover:border-emerald-500/60 backdrop-blur-sm transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.1)] hover:shadow-[0_0_25px_rgba(16,185,129,0.25)] cursor-pointer sm:col-span-2 lg:col-span-1"
+              className="group flex items-center justify-between gap-4 p-5 rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-emerald-500/40 backdrop-blur-sm transition-all duration-300 cursor-pointer sm:col-span-2 lg:col-span-1"
             >
               <div className="flex items-center gap-4">
-                <div className="relative w-12 h-14 rounded-xl overflow-hidden shadow-md shrink-0 border border-emerald-500/40 bg-[#43a047]">
+                <div className="relative w-12 h-14 rounded-xl overflow-hidden shadow-md shrink-0 border border-emerald-500/30 bg-[#388e3c]">
                   <Image
                     src="/images/hitam/hitam_logo.jpg"
                     alt="HITAM Official Logo"
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div>
-                  <p className="font-mono text-[10px] font-bold tracking-widest uppercase text-emerald-400 mb-0.5">
-                    HOST CAMPUS
+                  <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-0.5">
+                    Host Institution
                   </p>
-                  <p className="font-display font-bold text-base text-text-primary tracking-wide uppercase group-hover:text-emerald-300 transition-colors">
-                    ABOUT HITAM
+                  <p className="font-display font-bold text-base text-text-primary uppercase group-hover:text-emerald-300 transition-colors">
+                    About HITAM
                   </p>
-                  <p className="font-mono text-xs text-text-muted">NAAC A+ · Autonomous</p>
+                  <p className="text-xs text-text-muted font-body">UGC Autonomous · Estd. 2001</p>
                 </div>
               </div>
 
-              <div className="w-8 h-8 rounded-full border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/30 transition-all">
-                <ArrowUpRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <div className="w-8 h-8 rounded-full border border-white/10 bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/40 transition-all">
+                <ArrowUpRight className="w-4 h-4 text-text-muted group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </div>
             </Link>
 
@@ -187,155 +171,133 @@ export default function AboutPage() {
         </FadeUp>
 
 
-        {/* ── §4 VISION · MISSION · IMPACT ───────────────────────────── */}
-        <FadeUp delay={0.22} distance={30}>
-          <div className="flex items-center gap-4 mb-10">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <p className="font-mono text-[11px] font-bold tracking-[0.3em] text-text-muted uppercase px-4">
-              VISION · MISSION · IMPACT
+        {/* ── §3 VISION · MISSION · IMPACT ───────────────────────────── */}
+        <FadeUp delay={0.16} distance={20}>
+          <div className="mb-8">
+            <h2 className="font-display font-bold text-2xl sm:text-3xl text-text-primary tracking-tight">
+              Vision, Mission &amp; Impact
+            </h2>
+            <p className="text-text-secondary text-sm font-body mt-1">
+              The foundational pillars guiding ESPARTO 2026.
             </p>
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           </div>
         </FadeUp>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
           {VMI.map((v, i) => (
-            <FadeUp key={v.word} delay={0.24 + i * 0.1} distance={36}>
+            <FadeUp key={v.word} delay={0.18 + i * 0.08} distance={20}>
               <div
-                className={`relative flex flex-col h-full rounded-2xl border ${v.borderClass} bg-[#07041c]/80 backdrop-blur-md overflow-hidden group hover:scale-[1.015] transition-transform duration-300`}
-                style={{ boxShadow: `0 0 40px ${v.glowColor}` }}
+                className="relative flex flex-col h-full rounded-2xl border border-white/10 bg-[#07041c]/70 backdrop-blur-md overflow-hidden group hover:border-white/20 transition-colors"
+                style={{ boxShadow: `0 0 30px ${v.glowColor}` }}
               >
                 {/* Colored top accent bar */}
                 <div className={`h-[3px] w-full bg-gradient-to-r ${v.topBar} shrink-0`} />
 
-                {/* Ghost numeral watermark */}
-                <span
-                  className={`absolute -bottom-4 -right-2 font-display font-black text-[8rem] leading-none select-none pointer-events-none opacity-[0.05] ${v.numColor} tracking-tighter`}
-                  aria-hidden="true"
-                >
-                  {v.num}
-                </span>
-
                 {/* Card body */}
-                <div className="relative z-10 flex flex-col gap-4 p-7 flex-1">
-
-                  {/* Mono label */}
-                  <span className={`font-mono text-[10px] font-bold tracking-[0.35em] uppercase ${v.labelColor}`}>
+                <div className="flex flex-col gap-3.5 p-7 flex-1">
+                  <h3 className="font-display font-black text-2xl text-text-primary tracking-tight uppercase">
                     {v.word}
-                  </span>
+                  </h3>
 
-                  {/* Large gradient word heading */}
-                  <h2
-                    className={`font-display font-black text-3xl sm:text-4xl tracking-tight uppercase leading-none text-transparent bg-clip-text bg-gradient-to-br ${v.topBar}`}
-                  >
-                    {v.word}
-                  </h2>
-
-                  {/* Punchy quoted statement */}
-                  <p className="font-display font-semibold text-base text-text-primary leading-snug">
+                  <p className="font-display font-semibold text-sm text-text-secondary leading-snug">
                     &ldquo;{v.statement}&rdquo;
                   </p>
 
-                  {/* Hairline rule */}
-                  <div className="h-px bg-white/[0.08] w-full" />
+                  <div className="h-px bg-white/[0.08] w-full my-1" />
 
-                  {/* Body copy */}
                   <p className="text-text-secondary text-sm font-body leading-relaxed flex-1">
                     {v.body}
                   </p>
-
                 </div>
               </div>
             </FadeUp>
           ))}
         </div>
 
-        {/* ── §5 WHAT HAPPENS AT ESPARTO ─────────────────────────────── */}
-        <FadeUp delay={0.3} distance={30}>
-          <p className="font-mono text-[11px] font-bold tracking-[0.25em] text-text-muted uppercase mb-5">
-            WHAT HAPPENS AT ESPARTO
-          </p>
+        {/* ── §4 WHAT HAPPENS AT ESPARTO ─────────────────────────────── */}
+        <FadeUp delay={0.16} distance={20}>
+          <div className="mb-8">
+            <h2 className="font-display font-bold text-2xl sm:text-3xl text-text-primary tracking-tight">
+              Event Formats
+            </h2>
+            <p className="text-text-secondary text-sm font-body mt-1">
+              Diverse avenues to build, learn, and compete across two intensive days.
+            </p>
+          </div>
         </FadeUp>
 
         <div className="flex flex-col gap-px mb-24">
           {FORMATS.map((f, i) => (
-            <FadeUp key={f.tag} delay={0.32 + i * 0.08} distance={24}>
+            <FadeUp key={f.tag} delay={0.18 + i * 0.06} distance={16}>
               <div
                 className={[
-                  "group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-10 px-6 sm:px-8 py-6 sm:py-7",
-                  `border ${f.border}`,
-                  "bg-[#07041c]/60 hover:bg-[#0e0830]/80 transition-all duration-300",
+                  "group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 px-6 sm:px-8 py-6",
+                  "border border-white/10 bg-[#07041c]/50 hover:bg-[#0c0828]/70 transition-colors",
                   i === 0 ? "rounded-t-2xl" : "",
                   i === FORMATS.length - 1 ? "rounded-b-2xl" : "",
                 ].join(" ")}
               >
-                <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-text-muted uppercase shrink-0 w-24">
+                <span className="text-xs font-semibold text-text-muted shrink-0 w-8">
                   {f.tag}
                 </span>
-                <div className="hidden sm:block h-8 w-px bg-white/10 shrink-0" aria-hidden="true" />
-                <h2
-                  className={`font-display font-black text-2xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r ${f.accent} tracking-tight uppercase shrink-0 sm:w-52`}
-                >
+                <div className="hidden sm:block h-6 w-px bg-white/10 shrink-0" aria-hidden="true" />
+                <h3 className={`font-display font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r ${f.accent} tracking-tight uppercase shrink-0 sm:w-56`}>
                   {f.title}
-                </h2>
-                <p className="text-text-secondary text-sm font-body leading-relaxed">{f.desc}</p>
+                </h3>
+                <p className="text-text-secondary text-sm font-body leading-relaxed flex-1">{f.desc}</p>
               </div>
             </FadeUp>
           ))}
         </div>
 
-
-        {/* ── ABOUT THE HOST INSTITUTION ───────────────────────────── */}
-        <FadeUp delay={0.28} distance={30}>
-          <div className="flex items-center gap-4 mb-10">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <p className="font-mono text-[11px] font-bold tracking-[0.3em] text-text-muted uppercase px-4">
-              HOST INSTITUTION
+        {/* ── HOST INSTITUTION SHOWCASE ─────────────────────────────── */}
+        <FadeUp delay={0.16} distance={20}>
+          <div className="mb-8">
+            <h2 className="font-display font-bold text-2xl sm:text-3xl text-text-primary tracking-tight">
+              Host Institution
+            </h2>
+            <p className="text-text-secondary text-sm font-body mt-1">
+              Presented by Hyderabad Institute of Technology &amp; Management.
             </p>
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           </div>
         </FadeUp>
 
-        <FadeUp delay={0.3} distance={24}>
+        <FadeUp delay={0.18} distance={20}>
           <Link
             href="/hitam"
-            className="group flex flex-col sm:flex-row items-start sm:items-center gap-6 p-8 rounded-2xl border border-emerald-500/25 bg-gradient-to-r from-emerald-950/20 via-[#07041c]/60 to-brand-violet/10 hover:border-emerald-500/50 hover:from-emerald-950/30 transition-all duration-300 mb-20 cursor-pointer shadow-[0_0_30px_rgba(16,185,129,0.06)]"
+            className="group flex flex-col sm:flex-row items-start sm:items-center gap-6 p-7 sm:p-8 rounded-2xl border border-white/10 bg-[#07041c]/60 hover:bg-[#0c0828]/80 hover:border-emerald-500/40 transition-all duration-300 mb-20 cursor-pointer shadow-lg"
           >
             {/* Official HITAM Logo */}
-            <div className="relative w-20 h-24 sm:w-22 sm:h-28 rounded-2xl border border-emerald-500/40 bg-[#43a047] flex items-center justify-center shrink-0 overflow-hidden shadow-xl">
+            <div className="relative w-18 h-22 sm:w-20 sm:h-24 rounded-xl border border-white/10 bg-[#388e3c] flex items-center justify-center shrink-0 overflow-hidden shadow-md">
               <Image
                 src="/images/hitam/hitam_logo.jpg"
-                alt="HITAM Logo - Find your path"
+                alt="HITAM Logo"
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
             <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-2 mb-2">
-                <span className="font-mono text-[9px] font-bold tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full uppercase">
-                  HOST INSTITUTION
-                </span>
-                <span className="font-mono text-[9px] font-bold tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-full uppercase">
-                  NAAC A+
-                </span>
-                <span className="font-mono text-[9px] font-bold tracking-widest text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-2 py-0.5 rounded-full uppercase">
-                  NBA ACCREDITED
-                </span>
+              <div className="flex flex-wrap items-center gap-2 mb-1.5 text-xs text-emerald-400 font-semibold">
+                <span>UGC Autonomous</span>
+                <span className="text-white/20">·</span>
+                <span>NAAC Grade 'A+'</span>
+                <span className="text-white/20">·</span>
+                <span>NBA Accredited</span>
               </div>
               <h3 className="font-display font-bold text-xl sm:text-2xl text-text-primary uppercase mb-2">
                 Hyderabad Institute of Technology &amp; Management
               </h3>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                <span className="flex items-center gap-1.5 font-mono text-xs text-text-muted">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
+                <span className="flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-emerald-400" />
                   Medchal, Hyderabad, Telangana
                 </span>
-                <span className="font-mono text-xs text-emerald-400 font-semibold">hitam.org</span>
-                <span className="font-mono text-xs text-text-muted">· Est. 2001 · UGC Autonomous · Affiliated to JNTUH</span>
+                <span className="text-emerald-400 font-medium">hitam.org</span>
+                <span>· Estd. 2001 · Affiliated to JNTUH</span>
               </div>
             </div>
-            <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 group-hover:gap-3 transition-all shrink-0">
-              <span className="uppercase tracking-widest font-bold">Explore HITAM</span>
+            <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400 group-hover:gap-3 transition-all shrink-0">
+              <span className="uppercase tracking-wider">Explore HITAM</span>
               <ArrowUpRight className="w-4 h-4" />
             </div>
           </Link>
@@ -343,10 +305,10 @@ export default function AboutPage() {
 
         {/* ── CTA ────────────────────────────────────────────────────── */}
         <FadeUp delay={0.1} threshold={0.2}>
-          <div className="p-10 rounded-2xl border border-brand-violet/30 bg-gradient-to-r from-[#0d0728] to-[#08031a] flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="p-8 sm:p-10 rounded-2xl border border-white/10 bg-gradient-to-r from-[#0d0728] to-[#08031a] flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
               <h3 className="font-display font-bold text-2xl text-text-primary uppercase mb-2">
-                READY TO EXPLORE EVENTS?
+                Ready to Explore Events?
               </h3>
               <p className="text-text-secondary text-sm font-body">
                 Browse all technical tracks, workshops, and competitions.
@@ -354,9 +316,9 @@ export default function AboutPage() {
             </div>
             <Link
               href="/events"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-display font-bold text-xs sm:text-sm tracking-wider uppercase text-white bg-gradient-to-r from-brand-orange to-brand-magenta shadow-[0_0_20px_rgba(255,94,0,0.3)] hover:brightness-110 transition-all shrink-0"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-display font-bold text-xs sm:text-sm tracking-wider uppercase text-white bg-gradient-to-r from-brand-orange to-brand-magenta shadow-md hover:brightness-110 transition-all shrink-0"
             >
-              <span>VIEW ALL EVENTS</span>
+              <span>View All Events</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
