@@ -110,23 +110,23 @@ export function SponsorsPreviewSection() {
 
               <div>
                 {/* Big Emoji / Symbol & Tier Header */}
-                <div className="flex items-center justify-between gap-3 mb-5">
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-3xl sm:text-4xl shadow-inner group-hover:scale-110 transition-transform">
+                <div className="flex items-center justify-between gap-3 mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/[0.06] border border-white/15 flex items-center justify-center text-4xl sm:text-5xl shadow-[0_0_25px_rgba(255,255,255,0.06)] group-hover:scale-110 transition-transform">
                       {item.emoji}
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono tracking-widest text-text-muted uppercase block">
+                      <span className="text-[10px] font-mono tracking-widest text-text-muted uppercase block mb-0.5">
                         PARTNER TIER
                       </span>
-                      <h3 className={`font-display font-black text-2xl sm:text-3xl tracking-tight uppercase ${item.titleColor}`}>
+                      <h3 className={`font-display font-black text-3xl sm:text-4xl tracking-tight uppercase ${item.titleColor}`}>
                         {item.tier}
                       </h3>
                     </div>
                   </div>
 
                   {item.slots && (
-                    <span className="px-2.5 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-mono text-text-muted shrink-0">
+                    <span className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[11px] font-mono text-text-muted shrink-0">
                       {item.slots}
                     </span>
                   )}

@@ -10,8 +10,6 @@ import {
   Mail, 
   Phone, 
   CheckCircle2, 
-  Award, 
-  Building2, 
 } from "lucide-react";
 
 interface SponsorshipTier {
@@ -105,9 +103,10 @@ const TIERS: SponsorshipTier[] = [
 ];
 
 const HISTORICAL_FOOTFALL = [
-  { year: "Elysian 2019", count: "400", percent: "36%", note: "Annual College Fest" },
-  { year: "Elysian 2022", count: "653", percent: "59%", note: "Post-Pandemic Resurgence" },
-  { year: "Elysian 2023", count: "1,100+", percent: "100%", note: "Multi-Campus Engagement", highlight: true },
+  { year: "Elysian 2019", count: "400", percent: "22%", note: "Annual College Fest" },
+  { year: "Elysian 2022", count: "653", percent: "36%", note: "Post-Pandemic Resurgence" },
+  { year: "Elysian 2023", count: "1,100+", percent: "61%", note: "Multi-Campus Engagement" },
+  { year: "Elysian 2025", count: "1,800+", percent: "100%", note: "Last Year's Annual Fest", highlight: true },
 ];
 
 const MATRIX_ROWS = [
@@ -201,23 +200,8 @@ export default function SponsorsPage() {
                 </p>
 
                 <p className="text-text-secondary text-xs sm:text-sm font-body leading-relaxed">
-                  This dedicated focus unlocks 100% technical immersion—uniting 15+ specialized tracks spanning hackathons, AI challenges, robotics arenas, and technical symposiums.
+                  This dedicated focus unlocks 100% technical immersion—uniting specialized tracks spanning hackathons, AI challenges, robotics arenas, and technical symposiums.
                 </p>
-
-                <div className="flex flex-wrap items-center gap-4 pt-2 text-xs font-mono text-text-muted">
-                  <span className="flex items-center gap-1.5 text-emerald-400">
-                    <CheckCircle2 className="w-4 h-4" />
-                    15+ Technical Tracks
-                  </span>
-                  <span className="flex items-center gap-1.5 text-white">
-                    <Building2 className="w-4 h-4 text-brand-orange" />
-                    50+ Engineering Colleges
-                  </span>
-                  <span className="flex items-center gap-1.5 text-white">
-                    <Award className="w-4 h-4 text-brand-magenta" />
-                    ₹90,000+ Prize Pool
-                  </span>
-                </div>
               </div>
 
               {/* Right Column: Historical Footfall Growth Bar Chart */}
@@ -227,7 +211,7 @@ export default function SponsorsPage() {
                     HISTORICAL ATTENDEE GROWTH
                   </span>
                   <span className="text-[10px] font-mono text-brand-orange">
-                    HITAM ANNUAL FEST HISTORY
+                    400 → 1,800+ FOOTFALL
                   </span>
                 </div>
 
@@ -321,22 +305,22 @@ export default function SponsorsPage() {
 
                 <div>
                   {/* Big Emoji / Symbol & Tier Header */}
-                  <div className="flex items-center justify-between gap-3 mb-5">
-                    <div className="flex items-center gap-3.5">
-                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-3xl sm:text-4xl shadow-inner group-hover:scale-110 transition-transform">
+                  <div className="flex items-center justify-between gap-3 mb-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/[0.06] border border-white/15 flex items-center justify-center text-4xl sm:text-5xl shadow-[0_0_25px_rgba(255,255,255,0.06)] group-hover:scale-110 transition-transform">
                         {tier.emoji}
                       </div>
                       <div>
-                        <span className="text-[10px] font-mono tracking-widest text-text-muted uppercase block">
+                        <span className="text-[10px] font-mono tracking-widest text-text-muted uppercase block mb-0.5">
                           OFFICIAL TIER
                         </span>
-                        <h3 className={`font-display font-black text-2xl sm:text-3xl tracking-tight uppercase ${tier.titleColor}`}>
+                        <h3 className={`font-display font-black text-3xl sm:text-4xl tracking-tight uppercase ${tier.titleColor}`}>
                           {tier.title}
                         </h3>
                       </div>
                     </div>
 
-                    <span className="px-2.5 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-mono text-text-muted shrink-0">
+                    <span className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[11px] font-mono text-text-muted shrink-0">
                       {tier.slots}
                     </span>
                   </div>
@@ -394,21 +378,21 @@ export default function SponsorsPage() {
                     BENEFITS AND PERKS
                   </th>
                   <th className="p-4 sm:p-6 text-amber-400 font-bold uppercase tracking-wider text-center">
-                    <span className="text-3xl sm:text-4xl block mb-1">🥉</span>
-                    <span className="text-base sm:text-xl font-black font-display tracking-wide block text-amber-400">BRONZE</span>
-                    <span className="block text-xs text-text-muted font-mono font-normal mt-0.5">₹10,000</span>
+                    <span className="text-4xl sm:text-5xl block mb-2">🥉</span>
+                    <span className="text-lg sm:text-2xl font-black font-display tracking-wide block text-amber-400">BRONZE</span>
+                    <span className="block text-xs text-text-muted font-mono font-normal mt-1">₹10,000</span>
                   </th>
                   <th className="p-4 sm:p-6 text-slate-200 font-bold uppercase tracking-wider text-center">
-                    <span className="text-3xl sm:text-4xl block mb-1">🥈</span>
-                    <span className="text-base sm:text-xl font-black font-display tracking-wide block text-slate-100">SILVER</span>
-                    <span className="block text-[10px] text-brand-orange font-mono font-semibold">(Max 10 Slots)</span>
-                    <span className="block text-xs text-text-muted font-mono font-normal mt-0.5">₹20,000</span>
+                    <span className="text-4xl sm:text-5xl block mb-2">🥈</span>
+                    <span className="text-lg sm:text-2xl font-black font-display tracking-wide block text-slate-100">SILVER</span>
+                    <span className="block text-[11px] text-brand-orange font-mono font-semibold">(Max 10 Slots)</span>
+                    <span className="block text-xs text-text-muted font-mono font-normal mt-1">₹20,000</span>
                   </th>
                   <th className="p-4 sm:p-6 text-yellow-400 font-bold uppercase tracking-wider text-center">
-                    <span className="text-3xl sm:text-4xl block mb-1">🥇</span>
-                    <span className="text-base sm:text-xl font-black font-display tracking-wide block text-yellow-400">GOLD</span>
-                    <span className="block text-[10px] text-brand-orange font-mono font-semibold">(Max 5 Slots)</span>
-                    <span className="block text-xs text-text-muted font-mono font-normal mt-0.5">₹30,000</span>
+                    <span className="text-4xl sm:text-5xl block mb-2">🥇</span>
+                    <span className="text-lg sm:text-2xl font-black font-display tracking-wide block text-yellow-400">GOLD</span>
+                    <span className="block text-[11px] text-brand-orange font-mono font-semibold">(Max 5 Slots)</span>
+                    <span className="block text-xs text-text-muted font-mono font-normal mt-1">₹30,000</span>
                   </th>
                 </tr>
               </thead>
