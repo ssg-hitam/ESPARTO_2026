@@ -5,12 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/ui/FadeUp";
-import {
-  ArrowLeft,
-  Mail,
-  Phone,
-  ShieldCheck,
-  GraduationCap,
+import { 
+  ArrowLeft, 
+  Mail, 
+  Phone, 
+  ShieldCheck, 
+  GraduationCap, 
   Users2,
   Cpu,
   Layers,
@@ -25,11 +25,11 @@ import {
   Truck,
   ExternalLink
 } from "lucide-react";
-import {
-  facultyCoordinators,
-  ssgLeadership,
+import { 
+  facultyCoordinators, 
+  ssgLeadership, 
   chapterCommittees,
-  eventSupportWings
+  eventSupportWings 
 } from "@/data/team";
 
 export default function TeamPage() {
@@ -49,31 +49,32 @@ export default function TeamPage() {
   };
 
   const leadOrganizer = ssgLeadership.find(m => m.id === "tejal-iiic");
+  const coreStudentLeaders = ssgLeadership.filter(m => m.id !== "tejal-iiic");
 
   return (
     <main className="min-h-screen pt-28 pb-28 bg-[#05020d] relative overflow-hidden text-text-primary selection:bg-brand-orange/30 selection:text-white">
       {/* Designer Ambient Lighting */}
-      <div
+      <div 
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] rounded-full bg-gradient-to-b from-brand-orange/[0.12] via-brand-magenta/[0.08] to-transparent blur-[160px] pointer-events-none"
         aria-hidden="true"
       />
-      <div
+      <div 
         className="absolute top-[35%] -left-32 w-[600px] h-[600px] rounded-full bg-brand-violet/[0.08] blur-[180px] pointer-events-none"
         aria-hidden="true"
       />
-      <div
+      <div 
         className="absolute top-[65%] -right-32 w-[600px] h-[600px] rounded-full bg-brand-orange/[0.06] blur-[180px] pointer-events-none"
         aria-hidden="true"
       />
 
       {/* Subtle architectural background grid */}
-      <div
+      <div 
         className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"
         aria-hidden="true"
       />
 
       <Container size="lg" className="relative z-10">
-
+        
         {/* Navigation Breadcrumb */}
         <FadeUp delay={0}>
           <Link
@@ -106,16 +107,87 @@ export default function TeamPage() {
             </h1>
 
             <p className="text-text-secondary text-base sm:text-lg font-body leading-relaxed max-w-2xl font-light">
-              Meet the executive student directors, student deans, faculty coordinators, and technical chapter core teams driving Hyderabad Institute of Technology and Management&apos;s flagship national technical festival.
+              Meet the faculty coordinators, executive student directors, student deans, and technical chapter core teams driving Hyderabad Institute of Technology and Management&apos;s flagship national technical festival.
             </p>
           </div>
         </FadeUp>
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            SECTION 1: STUDENT ORGANIZING CORE
+            SECTION 1: FACULTY COORDINATORS (COMES FIRST)
         ═══════════════════════════════════════════════════════════════════════ */}
         <section className="mb-24">
+          <div className="flex items-center justify-between gap-4 mb-10 pb-4 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange shrink-0">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-[11px] font-mono uppercase tracking-wider text-brand-orange font-bold block">
+                  INSTITUTIONAL MENTORSHIP
+                </span>
+                <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
+                  FACULTY COORDINATORS
+                </h2>
+              </div>
+            </div>
 
+            <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
+              2 Faculty Leads
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {facultyCoordinators.map((faculty) => (
+              <div
+                key={faculty.id}
+                className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0c0628] via-[#08041d] to-[#040112] border border-white/10 hover:border-brand-orange/40 transition-all duration-300 group shadow-[0_4px_25px_rgba(0,0,0,0.3)] flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-start gap-4 mb-5">
+                    <div className="w-14 h-14 rounded-2xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange group-hover:scale-105 transition-transform shrink-0">
+                      <GraduationCap className="w-7 h-7" />
+                    </div>
+                    <div>
+                      <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
+                        {faculty.name}
+                      </h3>
+                      <p className="text-xs sm:text-sm font-mono text-brand-orange/90 mt-1 font-medium">
+                        {faculty.department}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3 pt-5 border-t border-white/10 mt-2">
+                  {faculty.socials?.email && (
+                    <a
+                      href={`mailto:${faculty.socials.email}`}
+                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand-orange/40 text-xs font-mono text-white transition-all"
+                    >
+                      <Mail className="w-3.5 h-3.5 text-brand-orange" />
+                      <span>{faculty.socials.email}</span>
+                    </a>
+                  )}
+                  {faculty.contact && (
+                    <a
+                      href={`tel:${faculty.socials?.phone || faculty.contact.replace(/\s+/g, '')}`}
+                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-xs font-mono text-emerald-400 transition-all"
+                    >
+                      <Phone className="w-3.5 h-3.5" />
+                      <span>{faculty.contact}</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════════════════════════
+            SECTION 2: STUDENT ORGANIZING CORE
+        ═══════════════════════════════════════════════════════════════════════ */}
+        <section className="mb-24">
+          
           {/* Section Header */}
           <div className="flex items-center justify-between gap-4 mb-10 pb-4 border-b border-white/10">
             <div className="flex items-center gap-3">
@@ -238,7 +310,7 @@ export default function TeamPage() {
 
           {/* Unified Core Student Leaders Grid (Large, Grounded, Prominent Portraits) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {ssgLeadership.filter(m => m.id !== "tejal-iiic").map((member) => (
+            {coreStudentLeaders.map((member) => (
               <div
                 key={member.id}
                 className="rounded-3xl bg-gradient-to-b from-[#0e0728] via-[#09041d] to-[#050212] border border-white/10 hover:border-brand-orange/40 transition-all duration-300 group overflow-hidden flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.35)] hover:shadow-[0_12px_35px_rgba(255,94,0,0.18)]"
@@ -279,13 +351,13 @@ export default function TeamPage() {
                 </div>
 
                 {/* Content Base Card */}
-                <div className="p-5 sm:p-6 flex flex-col justify-between flex-grow bg-[#09041a]/60">
+                <div className="p-5 sm:p-6 flex flex-col justify-between flex-grow bg-[#09041a]/80">
                   <div>
                     <h3 className="font-display font-black text-2xl text-white tracking-tight group-hover:text-brand-orange transition-colors mb-2.5">
                       {member.name}
                     </h3>
 
-                    {/* Responsibility Text (Clean & Direct - No "HANDLING FOR FEST" label) */}
+                    {/* Responsibility Text */}
                     {member.handling && (
                       <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 mb-4 flex items-start gap-2.5">
                         <div className="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0 mt-0.5 text-brand-orange">
@@ -325,128 +397,64 @@ export default function TeamPage() {
             ))}
           </div>
 
-          {/* Supporting Fest Wings (Creative Media & Collective Sponsorships) */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#09051c] border border-white/10">
-            <div className="flex items-center gap-2.5 mb-4">
-              <span className="w-2 h-2 rounded-full bg-cyan-400" />
-              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
-                SUPPORTING FEST WINGS &amp; COLLECTIVE TEAMS
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {eventSupportWings.map((wing) => (
-                <div
-                  key={wing.id}
-                  className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-3 mb-2">
-                      <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] font-bold uppercase tracking-wider">
-                        {wing.role}
-                      </span>
-                      <div className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center">
-                        {getHandlingIcon(wing.name)}
-                      </div>
-                    </div>
-
-                    <h4 className="font-display font-black text-xl text-white tracking-tight mb-1">
-                      {wing.name}
-                    </h4>
-                    <p className="text-xs font-mono text-brand-orange font-semibold mb-3">
-                      Lead: {wing.lead}
-                    </p>
-                    <p className="text-xs font-body text-text-secondary leading-relaxed">
-                      {wing.handling}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            SECTION 2: FACULTY COORDINATORS
+            SECTION 3: SUPPORTING OPERATIONAL TEAMS (REDESIGNED)
         ═══════════════════════════════════════════════════════════════════════ */}
         <section className="mb-24">
           <div className="flex items-center justify-between gap-4 mb-10 pb-4 border-b border-white/10">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange shrink-0">
-                <ShieldCheck className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+                <Layers className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[11px] font-mono uppercase tracking-wider text-brand-orange font-bold block">
-                  INSTITUTIONAL MENTORSHIP
+                <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-bold block">
+                  COLLECTIVE DIVISIONS
                 </span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
-                  FACULTY COORDINATORS
+                  SUPPORTING FEST WINGS
                 </h2>
               </div>
             </div>
 
             <span className="hidden sm:inline-block text-xs font-mono text-text-muted uppercase tracking-wider">
-              2 Faculty Leads
+              2 Operational Wings
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {facultyCoordinators.map((faculty) => (
+            {eventSupportWings.map((wing) => (
               <div
-                key={faculty.id}
-                className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0c0628] via-[#08041d] to-[#040112] border border-white/10 hover:border-brand-orange/40 transition-all duration-300 group shadow-[0_4px_25px_rgba(0,0,0,0.3)] flex flex-col justify-between"
+                key={wing.id}
+                className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0c0628] via-[#08041d] to-[#040112] border border-white/10 hover:border-cyan-400/40 transition-all duration-300 group shadow-[0_4px_25px_rgba(0,0,0,0.3)] flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-start justify-between gap-4 mb-5">
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 rounded-2xl bg-brand-orange/10 border border-brand-orange/30 flex items-center justify-center text-brand-orange group-hover:scale-105 transition-transform shrink-0">
-                        <GraduationCap className="w-7 h-7" />
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-orange block">
-                          {faculty.role}
-                        </span>
-                        <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
-                          {faculty.name}
-                        </h3>
-                      </div>
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <span className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] font-bold uppercase tracking-wider">
+                      {wing.role}
+                    </span>
+                    <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0 text-cyan-400 group-hover:scale-110 transition-transform">
+                      {getHandlingIcon(wing.name)}
                     </div>
+                  </div>
 
-                    <span className="px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[10px] font-bold uppercase tracking-wider shrink-0">
-                      Faculty Coordinator
+                  <h3 className="font-display font-black text-2xl text-white tracking-tight mb-2">
+                    {wing.name}
+                  </h3>
+
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/10 mb-4">
+                    <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider font-semibold">
+                      LEAD:
+                    </span>
+                    <span className="text-xs font-mono text-brand-orange font-bold">
+                      {wing.lead}
                     </span>
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 mb-6">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted block font-semibold mb-0.5">
-                      DEPARTMENT
-                    </span>
-                    <p className="text-xs font-mono text-white/90">
-                      {faculty.department}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
-                  {faculty.socials?.email && (
-                    <a
-                      href={`mailto:${faculty.socials.email}`}
-                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand-orange/40 text-xs font-mono text-white transition-all"
-                    >
-                      <Mail className="w-3.5 h-3.5 text-brand-orange" />
-                      <span>{faculty.socials.email}</span>
-                    </a>
-                  )}
-                  {faculty.contact && (
-                    <a
-                      href={`tel:${faculty.socials?.phone || faculty.contact.replace(/\s+/g, '')}`}
-                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-xs font-mono text-emerald-400 transition-all"
-                    >
-                      <Phone className="w-3.5 h-3.5" />
-                      <span>{faculty.contact}</span>
-                    </a>
-                  )}
+                  <p className="text-xs sm:text-sm font-body text-text-secondary leading-relaxed font-light">
+                    {wing.handling}
+                  </p>
                 </div>
               </div>
             ))}
@@ -454,7 +462,7 @@ export default function TeamPage() {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            SECTION 3: STUDENT CHAPTERS & CLUBS
+            SECTION 4: STUDENT CHAPTERS & CLUBS
         ═══════════════════════════════════════════════════════════════════════ */}
         <section className="mb-20">
           <div className="flex items-center justify-between gap-4 mb-10 pb-4 border-b border-white/10">
