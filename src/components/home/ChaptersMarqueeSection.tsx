@@ -16,9 +16,6 @@ import CircularCarousel from "@/components/ui/CircularCarousel";
  * - 3D Circular Carousel showcasing all 11 technical chapters & student clubs
  */
 export function ChaptersMarqueeSection() {
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  const activeChapter = TECHNICAL_CHAPTERS[activeIndex] || TECHNICAL_CHAPTERS[0];
-
   const carouselItems = React.useMemo(() => 
     TECHNICAL_CHAPTERS.map((ch) => ({
       src: ch.logo,
@@ -84,31 +81,8 @@ export function ChaptersMarqueeSection() {
 
           </div>
 
-          {/* Active Chapter Showcase HUD — Positioned UPWARDS above the 3D ring for 100% collision-free clarity */}
-          <div className="relative z-20 my-3 py-3 px-5 rounded-2xl bg-[#0d0726]/80 border border-brand-violet/30 backdrop-blur-md max-w-2xl mx-auto text-center shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
-            {/* Tag / Counter */}
-            <div className="inline-flex items-center gap-2 mb-1">
-              <span className="text-[11px] font-mono font-semibold tracking-widest text-brand-magenta uppercase px-2.5 py-0.5 rounded-full bg-brand-magenta/10 border border-brand-magenta/25">
-                {activeChapter.category}
-              </span>
-              <span className="text-[11px] font-mono text-text-tertiary">
-                {String(activeIndex + 1).padStart(2, '0')} / {String(TECHNICAL_CHAPTERS.length).padStart(2, '0')}
-              </span>
-            </div>
-
-            {/* Club Name */}
-            <h3 className="font-display font-black text-xl sm:text-2xl text-text-primary tracking-tight leading-tight">
-              {activeChapter.shortName}
-            </h3>
-
-            {/* Full Form / Domain Description */}
-            <p className="text-xs sm:text-sm text-text-secondary font-medium tracking-wide mt-1 max-w-xl mx-auto leading-relaxed">
-              {activeChapter.domain}
-            </p>
-          </div>
-
-          {/* 3D CIRCULAR CAROUSEL: Zero overlap, snug viewport */}
-          <div className="relative -mx-4 sm:-mx-8 lg:-mx-10 overflow-hidden">
+          {/* 3D CIRCULAR CAROUSEL: Built-in small text caption above marquee ring, zero separate box */}
+          <div className="relative -mx-4 sm:-mx-8 lg:-mx-10 overflow-hidden pt-1">
             
             {/* Top & Bottom Hairline Accents */}
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -116,19 +90,19 @@ export function ChaptersMarqueeSection() {
 
             {/* Ambient lighting under the 3D ring */}
             <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[460px] h-[190px] bg-brand-purple/15 blur-[90px] pointer-events-none rounded-full" 
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[220px] bg-brand-purple/15 blur-[100px] pointer-events-none rounded-full" 
               aria-hidden="true" 
             />
 
-            <div className="w-full h-[270px] sm:h-[290px] relative">
+            <div className="w-full h-[360px] sm:h-[385px] relative">
               <CircularCarousel
                 items={carouselItems}
                 preset="cylinder"
                 intro="rise"
-                cardWidth={165}
+                cardWidth={160}
                 aspectRatio={1}
                 speed={5}
-                captions={false}
+                captions={true}
                 gap={15}
                 tilt={-10}
                 curve={0.72}
@@ -140,7 +114,6 @@ export function ChaptersMarqueeSection() {
                 fadeColor="#08041d"
                 innerShade={0.3}
                 cornerRadius={12}
-                onChange={setActiveIndex}
               />
             </div>
 

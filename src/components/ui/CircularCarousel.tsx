@@ -455,7 +455,7 @@ export const CircularCarousel: React.FC<CircularCarouselProps> = ({
       const spanY = Math.max(maxY - minY, 1);
       const fit = Math.min(1, width / spanX, height / spanY);
       state.fit = fit;
-      state.shift = -((minY + maxY) / 2) * fit - room / 2;
+      state.shift = -((minY + maxY) / 2) * fit + room / 2;
       state.drop = s.axis === 'x' ? (rect.width / fit) * 0.55 + s.cardW : (rect.height / fit) * 0.55 + s.cardH;
       stage.style.perspective = `${P}px`;
       stage.style.transform = `translate3d(0, ${state.shift}px, 0) scale(${fit})`;
