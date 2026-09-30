@@ -120,17 +120,22 @@ export interface Organizer {
     | "convenor"
     | "faculty-coordinator"
     | "lead-organizer"
+    | "student-leadership"
     | "technical"
     | "design"
     | "operations"
     | "marketing"
-    | "sponsorship";
+    | "sponsorship"
+    | "chapter-committee";
   department?: string;
   image?: string;
+  contact?: string;
+  highlight?: boolean;
   socials?: {
     linkedin?: string;
     github?: string;
     email?: string;
+    phone?: string;
   };
 }
 
