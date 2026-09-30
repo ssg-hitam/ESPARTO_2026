@@ -15,16 +15,52 @@ import {
   Sparkles,
   Users2,
   Cpu,
-  Layers
+  Layers,
+  Palette,
+  Handshake,
+  Wallet,
+  ShieldAlert,
+  Mic2,
+  ClipboardCheck,
+  Camera,
+  Megaphone,
+  Truck,
+  Workflow
 } from "lucide-react";
 import { 
   facultyCoordinators, 
   ssgLeadership, 
-  chapterCommittees 
+  chapterCommittees,
+  operationalCommittees 
 } from "@/data/team";
 
 export default function TeamPage() {
-  const [activeFilter, setActiveFilter] = useState<"all" | "faculty" | "ssg" | "chapters">("all");
+  const [activeFilter, setActiveFilter] = useState<"all" | "faculty" | "ssg" | "committees" | "chapters">("all");
+
+  const getCommitteeIcon = (id: string) => {
+    switch (id) {
+      case "dec-design":
+        return <Palette className="w-5 h-5 text-pink-400" />;
+      case "sponsorships":
+        return <Handshake className="w-5 h-5 text-amber-400" />;
+      case "finance-stalls":
+        return <Wallet className="w-5 h-5 text-emerald-400" />;
+      case "discipline":
+        return <ShieldAlert className="w-5 h-5 text-rose-400" />;
+      case "stage-quality":
+        return <Mic2 className="w-5 h-5 text-purple-400" />;
+      case "registrations":
+        return <ClipboardCheck className="w-5 h-5 text-brand-orange" />;
+      case "media-photo":
+        return <Camera className="w-5 h-5 text-cyan-400" />;
+      case "public-relations":
+        return <Megaphone className="w-5 h-5 text-blue-400" />;
+      case "logistics":
+        return <Truck className="w-5 h-5 text-yellow-400" />;
+      default:
+        return <Workflow className="w-5 h-5 text-brand-orange" />;
+    }
+  };
 
   return (
     <main className="min-h-screen pt-28 pb-24 bg-[#03010b] relative overflow-hidden text-text-primary">
@@ -72,7 +108,7 @@ export default function TeamPage() {
             </h1>
 
             <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed max-w-2xl">
-              Meet our institutional faculty coordinators, Student Self Governance (SSG) leadership, and technical chapter core committees steering South India&apos;s premier engineering and technology festival.
+              Meet our institutional faculty coordinators, Student Self Governance (SSG) leadership, functional committee leads, and technical chapter core committees steering Hyderabad Institute of Technology and Management&apos;s flagship technical festival.
             </p>
           </div>
         </FadeUp>
@@ -109,6 +145,16 @@ export default function TeamPage() {
               }`}
             >
               SSG Student Core
+            </button>
+            <button
+              onClick={() => setActiveFilter("committees")}
+              className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                activeFilter === "committees"
+                  ? "bg-gradient-to-r from-brand-orange to-brand-magenta text-white shadow-[0_0_15px_rgba(255,94,0,0.4)]"
+                  : "text-text-muted hover:text-white"
+              }`}
+            >
+              Functional Leads
             </button>
             <button
               onClick={() => setActiveFilter("chapters")}
@@ -306,7 +352,81 @@ export default function TeamPage() {
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            SECTION 3: CORE COMMITTEES OF STUDENT CHAPTERS & CLUBS
+            SECTION 3: FUNCTIONAL COMMITTEES & OPERATIONAL LEADS
+        ═══════════════════════════════════════════════════════════════════════ */}
+        {(activeFilter === "all" || activeFilter === "committees") && (
+          <div className="mb-20">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+                <Workflow className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-[11px] font-mono uppercase tracking-wider text-purple-400 font-bold block">
+                  OPERATIONAL WINGS
+                </span>
+                <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
+                  FUNCTIONAL COMMITTEES &amp; LEADS
+                </h2>
+              </div>
+            </div>
+
+            <p className="text-text-secondary text-xs sm:text-sm font-body max-w-3xl mb-8 leading-relaxed">
+              Dedicated student leads driving end-to-end festival execution across design, finance, registrations, logistics, stage production, and media coverage.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {operationalCommittees.map((op, idx) => (
+                <div
+                  key={op.id}
+                  className="p-6 rounded-2xl bg-gradient-to-br from-[#0c0628] to-[#07031c] border border-white/10 hover:border-purple-500/40 hover:bg-[#0f0833] transition-all duration-300 group flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-3 mb-4">
+                      <div className="w-11 h-11 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                        {getCommitteeIcon(op.id)}
+                      </div>
+                      <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono text-text-muted">
+                        WING 0{idx + 1}
+                      </span>
+                    </div>
+
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted block">
+                      COMMITTEE
+                    </span>
+                    <h4 className="font-display font-black text-lg sm:text-xl text-white tracking-tight mb-3">
+                      {op.committee}
+                    </h4>
+
+                    {/* Leads Highlight Box */}
+                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 mb-3">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-brand-orange block font-semibold mb-0.5">
+                        HEAD / LEADS
+                      </span>
+                      <strong className="text-sm font-display font-bold text-white block">
+                        {op.leads}
+                      </strong>
+                    </div>
+
+                    <p className="text-xs font-body text-text-secondary leading-relaxed">
+                      {op.description}
+                    </p>
+                  </div>
+
+                  {op.tag && (
+                    <div className="pt-3 mt-4 border-t border-white/5 flex items-center justify-end">
+                      <span className="px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-mono font-bold uppercase">
+                        {op.tag}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════════════════
+            SECTION 4: CORE COMMITTEES OF STUDENT CHAPTERS & CLUBS
         ═══════════════════════════════════════════════════════════════════════ */}
         {(activeFilter === "all" || activeFilter === "chapters") && (
           <div className="mb-16">
