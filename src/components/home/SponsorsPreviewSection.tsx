@@ -13,7 +13,7 @@ import {
 
 const SPONSOR_PREVIEWS = [
   {
-    tier: "BRONZE",
+    tier: "🥉 BRONZE",
     price: "₹10,000",
     color: "from-amber-600 to-amber-700",
     badge: "border-amber-600/40 text-amber-400 bg-amber-600/10",
@@ -21,7 +21,7 @@ const SPONSOR_PREVIEWS = [
     perks: ["Logos on all banners", "Social media promotion", "1 Display banner on campus", "Digital boards promotion"]
   },
   {
-    tier: "SILVER",
+    tier: "🥈 SILVER",
     price: "₹20,000",
     slots: "Max 10 Slots",
     popular: true,
@@ -31,22 +31,13 @@ const SPONSOR_PREVIEWS = [
     perks: ["Stall space for product demo", "2 Display banners on campus", "10s per 60s digital boards", "Memento & Certificate"]
   },
   {
-    tier: "GOLD",
+    tier: "🥇 GOLD",
     price: "₹30,000",
     slots: "Max 5 Slots",
     color: "from-yellow-400 via-amber-300 to-yellow-600",
     badge: "border-amber-400/50 text-amber-300 bg-amber-400/10",
     desc: "Prime courtyard exhibition stall, stage speaking slot & 3 banners.",
     perks: ["Prime courtyard exhibition stall", "5–10 mins stage speaking slot", "3 Display banners on campus", "VIP executive delegate passes"]
-  },
-  {
-    tier: "PLATINUM",
-    price: "₹50,000",
-    slots: "Max 2 Slots",
-    color: "from-brand-orange via-brand-magenta to-brand-violet",
-    badge: "border-brand-orange/50 text-white bg-brand-orange/20",
-    desc: "Title co-branding, exclusive keynote address & 5 main stage banners.",
-    perks: ["Title co-branding across fest", "15 mins keynote stage address", "5 Main stage banners", "Grand leadership felicitation"]
   }
 ];
 
@@ -79,7 +70,7 @@ export function SponsorsPreviewSection() {
             </h2>
 
             <p className="text-text-secondary text-xs sm:text-sm font-body mt-2 max-w-2xl leading-relaxed">
-              Previously part of HITAM&apos;s annual festival Elysian, ESPARTO has evolved into an independent flagship national technical festival. Showcase your brand to 2,000+ budding engineers and tech innovators.
+              Previously part of HITAM&apos;s annual festival Elysian, ESPARTO has evolved into an independent flagship national technical festival. Showcase your brand to aspiring engineers, innovators, and future tech leaders across institutions.
             </p>
           </div>
 
@@ -94,8 +85,8 @@ export function SponsorsPreviewSection() {
           </div>
         </div>
 
-        {/* 4 Sponsorship Tier Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+        {/* 3 Sponsorship Tier Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {SPONSOR_PREVIEWS.map((item, idx) => (
             <div
               key={idx}

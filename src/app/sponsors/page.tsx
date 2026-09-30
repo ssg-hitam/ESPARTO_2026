@@ -31,7 +31,7 @@ interface SponsorshipTier {
 const TIERS: SponsorshipTier[] = [
   {
     id: "bronze",
-    name: "BRONZE PARTNER",
+    name: "🥉 BRONZE PARTNER",
     price: "₹10,000",
     priceNumeric: 10000,
     slots: "Available",
@@ -50,7 +50,7 @@ const TIERS: SponsorshipTier[] = [
   },
   {
     id: "silver",
-    name: "SILVER PARTNER",
+    name: "🥈 SILVER PARTNER",
     price: "₹20,000",
     priceNumeric: 20000,
     slots: "Max: 10 Slots",
@@ -71,7 +71,7 @@ const TIERS: SponsorshipTier[] = [
   },
   {
     id: "gold",
-    name: "GOLD PARTNER",
+    name: "🥇 GOLD PARTNER",
     price: "₹30,000",
     priceNumeric: 30000,
     slots: "Max: 5 Slots",
@@ -89,46 +89,24 @@ const TIERS: SponsorshipTier[] = [
       "VIP delegate passes for company executives (4 passes)",
       "On-stage honouring & official memento presentation"
     ]
-  },
-  {
-    id: "platinum",
-    name: "PLATINUM / TITLE",
-    price: "₹50,000",
-    priceNumeric: 50000,
-    slots: "Max: 2 Slots",
-    tagline: "The premier partnership tier: co-branding across all 15+ tracks & keynote address.",
-    accent: "from-brand-orange via-brand-magenta to-brand-violet",
-    badgeBg: "bg-gradient-to-r from-brand-orange/20 to-brand-magenta/20 text-white border-brand-orange/40",
-    borderCol: "border-brand-magenta/40 hover:border-brand-orange/80 shadow-[0_0_40px_rgba(255,0,122,0.2)]",
-    features: [
-      "Title Co-branding: 'ESPARTO 2026 in association with [Your Brand]'",
-      "Top-tier logo dominance across all prints, banners & digital media",
-      "Exclusive sponsored hackathon track or arena naming rights",
-      "5 company display banners in main auditorium & quadrangle",
-      "Digital display boards priority broadcast (20s per 60s loop)",
-      "Premium interactive exhibition stall space with power hookups",
-      "15 minutes keynote stage address for brand promotion",
-      "Special felicitation ceremony with HITAM Chairman & Leadership"
-    ]
   }
 ];
 
 const HISTORICAL_FOOTFALL = [
-  { year: "Elysian 2019", count: 400, percent: "20%", note: "Annual College Fest" },
-  { year: "Elysian 2022", count: 653, percent: "33%", note: "Post-Pandemic Resurgence" },
-  { year: "Elysian 2023", count: 1100, percent: "55%", note: "Multi-Campus Engagement" },
-  { year: "ESPARTO 2026", count: "2,000+", percent: "100%", note: "Dedicated Flagship Technical Fest", highlight: true },
+  { year: "Elysian 2019", count: "400", percent: "36%", note: "Annual College Fest" },
+  { year: "Elysian 2022", count: "653", percent: "59%", note: "Post-Pandemic Resurgence" },
+  { year: "Elysian 2023", count: "1,100+", percent: "100%", note: "Multi-Campus Engagement", highlight: true },
 ];
 
 const MATRIX_ROWS = [
-  { feature: "Logo on all official festival banners", bronze: "Yes", silver: "Yes", gold: "Yes", platinum: "Yes (Top Tier)" },
-  { feature: "Virtual promotion on social media handles", bronze: "Yes", silver: "Yes", gold: "Yes", platinum: "Exclusive Reels" },
-  { feature: "Company display banners on fest grounds", bronze: "1 Banner", silver: "2 Banners", gold: "3 Banners", platinum: "5 Banners" },
-  { feature: "On-campus digital display board airtime", bronze: "5s / 60s", silver: "10s / 60s", gold: "15s / 60s", platinum: "20s / 60s" },
-  { feature: "Exhibition stall space for product demo", bronze: "Flyer Desk", silver: "Standard Stall", gold: "Prime Courtyard Stall", platinum: "Premium Interactive Booth" },
-  { feature: "Stage time for brand promotion & keynote", bronze: "—", silver: "—", gold: "5–10 Mins", platinum: "15 Mins Keynote" },
-  { feature: "On-stage honouring by HITAM Leadership", bronze: "Certificate", silver: "Memento & Cert", gold: "Felicitation & Memento", platinum: "Grand Felicitation" },
-  { feature: "Complimentary VIP All-Access Passes", bronze: "2 Passes", silver: "3 Passes", gold: "5 Passes", platinum: "10 Passes" },
+  { feature: "Logo on all official festival banners", bronze: "Yes", silver: "Yes", gold: "Yes" },
+  { feature: "Virtual promotion on social media handles", bronze: "Yes", silver: "Yes", gold: "Yes" },
+  { feature: "Company display banners on fest grounds", bronze: "1 Banner", silver: "2 Banners", gold: "3 Banners" },
+  { feature: "On-campus digital display board airtime", bronze: "5s / 60s", silver: "10s / 60s", gold: "15s / 60s" },
+  { feature: "Exhibition stall space for product demo", bronze: "Flyer Desk", silver: "Standard Stall", gold: "Prime Courtyard Stall" },
+  { feature: "Stage time for brand promotion & address", bronze: "—", silver: "—", gold: "5–10 Mins" },
+  { feature: "On-stage honouring by HITAM Leadership", bronze: "Certificate", silver: "Memento & Cert", gold: "Felicitation & Memento" },
+  { feature: "Complimentary VIP Delegate Passes", bronze: "2 Passes", silver: "3 Passes", gold: "5 Passes" },
 ];
 
 export default function SponsorsPage() {
@@ -181,7 +159,7 @@ export default function SponsorsPage() {
             </h1>
 
             <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed max-w-2xl">
-              Connect your brand with over <strong>2,000+ top engineering minds, innovators, developers, and tech leaders</strong> from 50+ institutions across India. Spearheaded by <strong>SSG (Student Self Governance)</strong> and HITAM.
+              Connect your brand with top engineering minds, innovators, developers, and student leaders from 50+ institutions across India. Spearheaded by <strong>SSG (Student Self Governance)</strong> and HITAM.
             </p>
           </div>
         </FadeUp>
@@ -217,7 +195,7 @@ export default function SponsorsPage() {
                 <div className="flex flex-wrap items-center gap-4 pt-2 text-xs font-mono text-text-muted">
                   <span className="flex items-center gap-1.5 text-emerald-400">
                     <CheckCircle2 className="w-4 h-4" />
-                    2,000+ Projected Footfall
+                    15+ Technical Tracks
                   </span>
                   <span className="flex items-center gap-1.5 text-white">
                     <Building2 className="w-4 h-4 text-brand-orange" />
@@ -237,7 +215,7 @@ export default function SponsorsPage() {
                     HISTORICAL ATTENDEE GROWTH
                   </span>
                   <span className="text-[10px] font-mono text-brand-orange">
-                    400 → 2,000+ REACH
+                    HITAM ANNUAL FEST HISTORY
                   </span>
                 </div>
 
@@ -313,10 +291,10 @@ export default function SponsorsPage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════════════
-            TAB 1: SPONSORSHIP TIERS CARDS (BRONZE, SILVER, GOLD, PLATINUM)
+            TAB 1: SPONSORSHIP TIERS CARDS (BRONZE, SILVER, GOLD)
         ═══════════════════════════════════════════════════════════════════════ */}
         {activeTab === "tiers" ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
             {TIERS.map((tier) => (
               <div
                 key={tier.id}
@@ -393,20 +371,16 @@ export default function SponsorsPage() {
                     BENEFITS AND PERKS
                   </th>
                   <th className="p-4 sm:p-5 text-amber-400 font-bold uppercase tracking-wider text-center">
-                    BRONZE
+                    🥉 BRONZE
                     <span className="block text-[10px] text-text-muted font-normal">₹10,000</span>
                   </th>
                   <th className="p-4 sm:p-5 text-slate-300 font-bold uppercase tracking-wider text-center">
-                    SILVER (Max 10)
+                    🥈 SILVER (Max 10)
                     <span className="block text-[10px] text-text-muted font-normal">₹20,000</span>
                   </th>
                   <th className="p-4 sm:p-5 text-yellow-400 font-bold uppercase tracking-wider text-center">
-                    GOLD (Max 5)
+                    🥇 GOLD (Max 5)
                     <span className="block text-[10px] text-text-muted font-normal">₹30,000</span>
-                  </th>
-                  <th className="p-4 sm:p-5 text-brand-orange font-bold uppercase tracking-wider text-center">
-                    PLATINUM (Max 2)
-                    <span className="block text-[10px] text-text-muted font-normal">₹50,000</span>
                   </th>
                 </tr>
               </thead>
@@ -424,9 +398,6 @@ export default function SponsorsPage() {
                     </td>
                     <td className="p-4 sm:p-5 text-center text-amber-300 font-bold">
                       {row.gold}
-                    </td>
-                    <td className="p-4 sm:p-5 text-center text-brand-orange font-extrabold">
-                      {row.platinum}
                     </td>
                   </tr>
                 ))}
@@ -500,7 +471,7 @@ export default function SponsorsPage() {
                     Have unique custom branding requirements or want to sponsor a specific flagship track? We offer flexible custom packages.
                   </p>
                   <a
-                    href="mailto:ssg@hitam.org?cc=ssg.iiic@hitam.org&subject=Custom Partnership Request for ESPARTO 2026&body=Hello SSG Team,%0D%0A%0D%0AWe are interested in exploring a sponsorship partnership with ESPARTO 2026 at HITAM.%0D%0A%0D%0ACompany Name:%0D%0APreferred Tier (Bronze/Silver/Gold/Platinum/Custom):%0D%0AContact Person:%0D%0APhone Number:%0D%0A%0D%0AThank you!"
+                    href="mailto:ssg@hitam.org?cc=ssg.iiic@hitam.org&subject=Custom Partnership Request for ESPARTO 2026&body=Hello SSG Team,%0D%0A%0D%0AWe are interested in exploring a sponsorship partnership with ESPARTO 2026 at HITAM.%0D%0A%0D%0ACompany Name:%0D%0APreferred Tier (Bronze/Silver/Gold/Custom):%0D%0AContact Person:%0D%0APhone Number:%0D%0A%0D%0AThank you!"
                     className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full font-display font-black text-xs sm:text-sm tracking-wider uppercase text-white bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple hover:scale-[1.02] shadow-[0_0_20px_rgba(255,94,0,0.4)] transition-all"
                   >
                     <Mail className="w-4 h-4" />
