@@ -41,6 +41,7 @@ export const ssgLeadership: Organizer[] = [
     contact: "+91 90591 11595",
     highlight: true,
     handling: "Overall Fest Direction, Lead Coordination & Sponsorships",
+    image: "/images/team/ssg/Student_Dean_IIIC.png",
     socials: {
       email: "ssg.iiic@hitam.org",
       phone: "+919059111595"
@@ -53,6 +54,7 @@ export const ssgLeadership: Organizer[] = [
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Stage Management / Program Quality",
+    image: "/images/team/ssg/Student_Director.png",
     socials: {
       email: "ssg.director@hitam.org"
     }
@@ -64,6 +66,7 @@ export const ssgLeadership: Organizer[] = [
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Public Relations (PR) & Outreach",
+    image: "/images/team/ssg/Student_Principal.png",
     socials: {
       email: "ssg.principal@hitam.org"
     }
@@ -75,6 +78,7 @@ export const ssgLeadership: Organizer[] = [
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Finance / Stall Management",
+    image: "/images/team/ssg/Student_Registrar.png",
     socials: {
       email: "ssg.registrar@hitam.org"
     }
@@ -86,6 +90,7 @@ export const ssgLeadership: Organizer[] = [
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Logistics & Infrastructure",
+    image: "/images/team/ssg/Student_Dean_Academics.png",
     socials: {
       email: "ssg.deanacademics@hitam.org"
     }
@@ -97,6 +102,7 @@ export const ssgLeadership: Organizer[] = [
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Registrations & Delegate Desk",
+    image: "/images/team/ssg/Student_Dean_Freshmen.png",
     socials: {
       email: "ssg.deanfreshmen@hitam.org"
     }
@@ -108,6 +114,7 @@ export const ssgLeadership: Organizer[] = [
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Decoration & Design",
+    image: "/images/team/ssg/Student_Dean_SE.png",
     socials: {
       email: "ssg.se@hitam.org"
     }
@@ -119,6 +126,7 @@ export const ssgLeadership: Organizer[] = [
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Decoration & Design",
+    image: "/images/team/ssg/Student_Dean_CDC.png",
     socials: {
       email: "ssg.cdc@hitam.org"
     }
@@ -130,6 +138,7 @@ export const ssgLeadership: Organizer[] = [
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Logistics & Infrastructure",
+    image: "/images/team/ssg/Student_Dean_R_D.png",
     socials: {
       email: "ssg.rand@hitam.org"
     }
@@ -141,6 +150,7 @@ export const ssgLeadership: Organizer[] = [
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Discipline & Campus Protocol",
+    image: "/images/team/ssg/Student_Dean_Sports.png",
     socials: {
       email: "ssg.sports@hitam.org"
     }
