@@ -19,11 +19,13 @@ export const FEST_INFO: FestInformation = {
   dates: {
     startDate: "2026-10-09",
     endDate: "2026-10-10",
-    // Temporary countdown target: start of event day.
-    // Replace with the official event start timestamp when provided by organizers.
-    isoStart: "2026-10-09T00:00:00+05:30",
-    isoEnd: "2026-10-10T23:59:59+05:30",
+    // Official event start: 9:30 AM IST on Day 1 (Oct 9, 2026)
+    isoStart: "2026-10-09T09:30:00+05:30",
+    isoEnd: "2026-10-10T16:30:00+05:30",
     timezone: "Asia/Kolkata",
+    // Official daily timings: 9:30 AM – 4:30 PM (both days)
+    dailyStart: "09:30",
+    dailyEnd: "16:30",
   },
   metrics: {
     totalEvents: "CONTENT_REQUIRED",
@@ -41,7 +43,6 @@ export const FEST_INFO: FestInformation = {
   },
 };
 
-// Temporary countdown target: start of event day.
-// Replace with the official event start timestamp when provided by organizers.
-export const COUNTDOWN_TARGET = "2026-10-09T00:00:00+05:30";
+// Official countdown target: 9:30 AM IST on October 9, 2026 (verified fest start time)
+export const COUNTDOWN_TARGET = "2026-10-09T09:30:00+05:30";
 

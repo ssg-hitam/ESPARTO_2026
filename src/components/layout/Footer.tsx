@@ -9,7 +9,8 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const navLinks = [
-    { label: "About", href: "/about" },
+    { label: "About ESPARTO", href: "/about" },
+    { label: "About HITAM", href: "/hitam" },
     { label: "Events", href: "/events" },
     { label: "Schedule", href: "/schedule" },
     { label: "Guests", href: "/guests" },

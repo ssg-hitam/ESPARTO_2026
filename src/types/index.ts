@@ -215,6 +215,10 @@ export interface FestInformation {
     isoStart: string;
     isoEnd: string;
     timezone: string;
+    /** Official daily start time in HH:MM (24h) e.g. "09:30" */
+    dailyStart?: string;
+    /** Official daily end time in HH:MM (24h) e.g. "16:30" */
+    dailyEnd?: string;
   };
   metrics: {
     totalEvents: string;

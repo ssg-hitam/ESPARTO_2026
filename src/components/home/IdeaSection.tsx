@@ -58,7 +58,7 @@ export function IdeaSection() {
 
             {/* Concise Manifesto */}
             <p className="text-text-secondary text-base sm:text-lg md:text-xl font-body leading-relaxed max-w-2xl mb-10 border-l-2 border-brand-magenta/40 pl-4 py-0.5">
-              ESPARTO is a platform where ideas become innovation, and innovation creates impact. A collaborative technical arena where curiosity transforms into engineering reality.
+              A national-level technical fest uniting all the technical clubs and professional chapters of HITAM under one banner — reflecting a &lsquo;Doing Engineering&rsquo; approach through workshops, hackathons, and competitions across October 9 &amp; 10, 2026.
             </p>
 
             {/* Progression Triad: 01 IDEA → 02 INNOVATION → 03 IMPACT */}
