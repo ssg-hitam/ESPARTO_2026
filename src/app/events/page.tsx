@@ -5,9 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { FEST_EVENTS, FestEventItem, EventCategoryType } from "@/data/events";
-import { UNSTOP_ESPARTO_PASS_URL } from "@/lib/constants";
 import { 
   ArrowLeft, 
+  ArrowRight,
   ArrowUpRight, 
   Search, 
   Trophy, 
@@ -253,29 +253,27 @@ export default function EventsPage() {
 
             </div>
 
-            {/* ESPARTO 2-Day Pass Notice Box */}
-            <div className="p-4 rounded-2xl border border-brand-orange/30 bg-gradient-to-br from-brand-orange/15 via-[#08041d] to-[#08041d] text-xs font-mono space-y-2.5">
+            {/* ESPARTO Event Registrations Box */}
+            <div className="p-4 rounded-2xl border border-brand-magenta/30 bg-gradient-to-br from-brand-magenta/15 via-[#08041d] to-[#08041d] text-xs font-mono space-y-2.5">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-brand-orange font-bold uppercase text-[11px] tracking-wider">
+                <div className="flex items-center gap-1.5 text-brand-magenta font-bold uppercase text-[11px] tracking-wider">
                   <Ticket className="w-3.5 h-3.5" />
-                  <span>2-DAY PASS – ₹700</span>
+                  <span>REGISTRATIONS</span>
                 </div>
-                <span className="px-1.5 py-0.5 rounded text-[9px] bg-brand-orange/20 text-brand-orange font-mono">
-                  ALL-ACCESS
+                <span className="px-1.5 py-0.5 rounded text-[9px] bg-brand-magenta/20 text-brand-magenta font-mono">
+                  OPEN NOW
                 </span>
               </div>
               <p className="text-text-secondary font-body text-[11px] leading-relaxed">
-                Attend ANY event, competition &amp; workshop across both days without paying per-event fees.
+                Register for hackathons, workshops, and competitions individually on Unstop.
               </p>
-              <a
-                href={UNSTOP_ESPARTO_PASS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/register"
                 className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-brand-orange to-brand-magenta text-white font-display font-bold text-[11px] uppercase tracking-wider hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,94,0,0.3)]"
               >
-                <span>GET PASS ON UNSTOP</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
+                <span>REGISTER FOR EVENTS</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
           </aside>
@@ -334,7 +332,7 @@ export default function EventsPage() {
                 {paginatedEvents.map((event, idx) => {
                   // Calculate actual 1-based index in the filtered list
                   const globalIdx = (currentPage - 1) * ITEMS_PER_PAGE + idx + 1;
-                  const passCode = `PASS #${globalIdx.toString().padStart(3, "0")}`;
+                  const trackCode = `TRACK #${globalIdx.toString().padStart(3, "0")}`;
 
                   return (
                     <div
@@ -344,10 +342,10 @@ export default function EventsPage() {
                       {/* Card Content Wrapper */}
                       <div className="p-4 sm:p-5">
                         
-                        {/* Top Meta Bar: PASS #XXX & Category Badge */}
+                        {/* Top Meta Bar: TRACK #XXX & Category Badge */}
                         <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-white/10">
                           <span className="font-mono text-xs font-bold tracking-wider text-brand-orange">
-                            {passCode}
+                            {trackCode}
                           </span>
                           <span className="font-mono text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-white/15 bg-white/5 text-text-secondary">
                             {event.category}
