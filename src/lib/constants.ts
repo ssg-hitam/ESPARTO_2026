@@ -43,6 +43,7 @@ export const FEST_INFO: FestInformation = {
     ssgInstagram: "https://www.instagram.com/ssg_hitam",
     linkedin: "https://www.linkedin.com/school/hitamhyderabad",
     youtube: "https://www.youtube.com/@hitamautonomous",
+    github: "https://github.com/ssg-hitam/ESPARTO_2026",
     twitter: undefined, // CONTENT_REQUIRED
   },
 };

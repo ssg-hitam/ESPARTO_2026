@@ -72,7 +72,7 @@ const GLOBAL_PARTNERS = [
 
 export default function HitamPage() {
   return (
-    <main className="min-h-screen pt-32 pb-24 bg-[#040210] relative overflow-hidden">
+    <main className="min-h-screen pt-6 sm:pt-8 pb-24 bg-[#040210] relative overflow-hidden">
       {/* Subtle Ambient Depth */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full bg-emerald-500/[0.04] blur-[160px] pointer-events-none" aria-hidden="true" />
       <div className="absolute bottom-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-brand-purple/[0.05] blur-[150px] pointer-events-none" aria-hidden="true" />
@@ -83,7 +83,7 @@ export default function HitamPage() {
         <FadeUp delay={0}>
           <Link
             href="/about"
-            className="inline-flex items-center gap-2 text-xs font-medium text-text-muted hover:text-white transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 text-xs font-medium text-text-muted hover:text-white transition-colors mb-6 group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             <span>Back to About ESPARTO</span>

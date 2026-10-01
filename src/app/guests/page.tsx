@@ -8,7 +8,7 @@ import { ArrowLeft, UserCheck } from "lucide-react";
 
 export default function GuestsPage() {
   return (
-    <main className="min-h-screen pt-32 pb-24 bg-[#040210] relative overflow-hidden">
+    <main className="min-h-screen pt-6 sm:pt-8 pb-24 bg-[#040210] relative overflow-hidden">
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-brand-magenta/8 blur-[180px] pointer-events-none"
         aria-hidden="true"
@@ -18,9 +18,9 @@ export default function GuestsPage() {
         <FadeUp delay={0}>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors mb-6 group"
           >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-brand-orange" />
             <span>BACK TO HOME</span>
           </Link>
         </FadeUp>

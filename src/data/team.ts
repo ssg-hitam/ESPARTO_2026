@@ -55,7 +55,7 @@ export const ssgLeadership: Organizer[] = [
     role: "Student Director",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
-    handling: "Stage Management / Program Quality",
+    handling: "Program Quality",
     image: "/images/team/ssg/Student_Director.png",
     socials: {
       email: "ssg.director@hitam.org"

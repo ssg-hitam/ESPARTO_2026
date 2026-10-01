@@ -140,6 +140,23 @@ export default function EventsPage() {
           </Link>
         </div>
 
+        {/* ── EVENTS PAGE HERO / INTRO HEADER ───────────────────────────────── */}
+        <div className="mb-8 pb-6 border-b border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="px-3 py-1 rounded-full bg-brand-orange/15 text-brand-orange border border-brand-orange/30 font-mono text-xs font-bold uppercase tracking-wider">
+              ESPARTO 2026
+            </span>
+          </div>
+
+          <h1 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight uppercase mb-3">
+            TECHNICAL EVENTS &amp; COMPETITIONS
+          </h1>
+
+          <p className="text-text-secondary text-sm sm:text-base font-body max-w-3xl leading-relaxed">
+            Two days of high-stakes hackathons, competitive robotics, ideathons, and industry workshops uniting all technical clubs and professional chapters of HITAM.
+          </p>
+        </div>
+
         {/* ── MASTER 2-COLUMN LAYOUT: SIDEBAR + MAIN CONTENT ──────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           

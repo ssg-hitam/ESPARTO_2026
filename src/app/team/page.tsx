@@ -52,7 +52,7 @@ export default function TeamPage() {
   const coreStudentLeaders = ssgLeadership.filter(m => m.id !== "tejal-iiic");
 
   return (
-    <main className="min-h-screen pt-28 pb-28 bg-[#05020d] relative overflow-hidden text-text-primary selection:bg-brand-orange/30 selection:text-white">
+    <main className="min-h-screen pt-6 sm:pt-8 pb-28 bg-[#05020d] relative overflow-hidden text-text-primary selection:bg-brand-orange/30 selection:text-white">
       {/* Designer Ambient Lighting */}
       <div 
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] rounded-full bg-gradient-to-b from-brand-orange/[0.12] via-brand-magenta/[0.08] to-transparent blur-[160px] pointer-events-none"
@@ -79,7 +79,7 @@ export default function TeamPage() {
         <FadeUp delay={0}>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors mb-6 group"
           >
             <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1 text-brand-orange" />
             <span>BACK TO HOME</span>

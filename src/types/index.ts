@@ -240,6 +240,7 @@ export interface FestInformation {
     ssgInstagram?: string;
     linkedin?: string;
     youtube?: string;
+    github?: string;
     twitter?: string;
     discord?: string;
   };

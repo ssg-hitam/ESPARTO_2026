@@ -63,7 +63,7 @@ const VMI = [
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen pt-32 pb-24 bg-[#040210] relative overflow-hidden">
+    <main className="min-h-screen pt-6 sm:pt-8 pb-24 bg-[#040210] relative overflow-hidden">
 
       {/* Subtle Ambient Background */}
       <div
@@ -77,15 +77,26 @@ export default function AboutPage() {
 
       <Container size="lg" className="relative z-10">
 
-        {/* ── BACK LINK ──────────────────────────────────────────────── */}
+        {/* ── TOP UTILITY ROW: BACK LINK & EVENTS LINK ──────────────────────── */}
         <FadeUp delay={0}>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-xs font-medium text-text-muted hover:text-white transition-colors mb-8 group"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span>Back to Home</span>
-          </Link>
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-xs font-medium text-text-muted hover:text-white transition-colors group"
+            >
+              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-brand-orange" />
+              <span>Back to Home</span>
+            </Link>
+
+            <Link
+              href="/events"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-orange/30 bg-brand-orange/10 hover:bg-brand-orange/20 text-xs font-mono text-brand-orange hover:text-white transition-all shadow-[0_0_12px_rgba(255,94,0,0.15)] group"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
+              <span className="font-bold">TECHNICAL EVENTS</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
         </FadeUp>
 
         {/* ── §1 HEADER + OVERVIEW & ESPARTO LOGO ───────────────────── */}
@@ -109,6 +120,20 @@ export default function AboutPage() {
                 institutions, promoting innovation, teamwork, and continuous learning in line with{" "}
                 {FEST_INFO.institution.shortName}&apos;s vision and values.
               </p>
+
+              {/* Quick Events Exploration CTA */}
+              <div className="mt-6 flex flex-wrap items-center gap-4">
+                <Link
+                  href="/events"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple text-white text-xs sm:text-sm font-display font-bold uppercase tracking-wider hover:brightness-110 shadow-[0_0_20px_rgba(255,94,0,0.35)] transition-all active:scale-95"
+                >
+                  <span>Explore All Events</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <span className="text-xs font-mono text-text-muted">
+                  Hackathons · Workshops · Contests
+                </span>
+              </div>
             </div>
 
             {/* Right Column: ESPARTO Official Logo Showcase */}

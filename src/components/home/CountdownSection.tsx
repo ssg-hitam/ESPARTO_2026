@@ -20,8 +20,8 @@ export function CountdownSection() {
   const accessibleCountdownText = isMounted
     ? isLive
       ? `${FEST_INFO.name} ${FEST_INFO.edition} is live now!`
-      : `Countdown to ${FEST_INFO.name} 2026: ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds remaining until October 09, 2026.`
-    : `Countdown to ${FEST_INFO.name} 2026. Scheduled for October 09–10, 2026.`;
+      : `Countdown to ${FEST_INFO.name} 2026: ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds remaining until October 09, 2026 at 9:30 AM IST.`
+    : `Countdown to ${FEST_INFO.name} 2026. Scheduled for October 09–10, 2026 starting at 9:30 AM IST.`;
 
   return (
     <section
@@ -88,8 +88,11 @@ export function CountdownSection() {
                 {/* 1. Primary Highlight Unit: DAYS */}
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-white/10 pb-5 sm:pb-7">
                   <div className="flex items-baseline gap-3">
-                    <span className="font-display font-black text-6xl xs:text-7xl sm:text-8xl md:text-9xl text-text-primary tracking-tighter leading-none select-none drop-shadow-[0_0_20px_rgba(255,255,255,0.12)]">
-                      {isMounted ? days : "014"}
+                    <span 
+                      suppressHydrationWarning
+                      className="font-display font-black text-6xl xs:text-7xl sm:text-8xl md:text-9xl text-text-primary tracking-tighter leading-none select-none drop-shadow-[0_0_20px_rgba(255,255,255,0.12)] tabular-nums"
+                    >
+                      {days}
                     </span>
                     <span className="font-mono font-bold text-xs sm:text-sm text-brand-magenta tracking-[0.2em] uppercase">
                       DAYS
@@ -105,8 +108,11 @@ export function CountdownSection() {
                   
                   {/* Hours */}
                   <div className="flex flex-col items-start">
-                    <span className="font-display font-extrabold text-3xl xs:text-4xl sm:text-5xl md:text-6xl text-text-primary tracking-tight tabular-nums select-none">
-                      {isMounted ? hours : "00"}
+                    <span 
+                      suppressHydrationWarning
+                      className="font-display font-extrabold text-3xl xs:text-4xl sm:text-5xl md:text-6xl text-text-primary tracking-tight tabular-nums select-none"
+                    >
+                      {hours}
                     </span>
                     <span className="font-mono text-[11px] sm:text-xs font-bold text-text-muted tracking-wider uppercase mt-1">
                       HOURS
@@ -115,8 +121,11 @@ export function CountdownSection() {
 
                   {/* Minutes */}
                   <div className="flex flex-col items-start border-l border-white/10 pl-4 sm:pl-8">
-                    <span className="font-display font-extrabold text-3xl xs:text-4xl sm:text-5xl md:text-6xl text-text-primary tracking-tight tabular-nums select-none">
-                      {isMounted ? minutes : "00"}
+                    <span 
+                      suppressHydrationWarning
+                      className="font-display font-extrabold text-3xl xs:text-4xl sm:text-5xl md:text-6xl text-text-primary tracking-tight tabular-nums select-none"
+                    >
+                      {minutes}
                     </span>
                     <span className="font-mono text-[11px] sm:text-xs font-bold text-text-muted tracking-wider uppercase mt-1">
                       MINUTES
@@ -125,8 +134,11 @@ export function CountdownSection() {
 
                   {/* Seconds (Kinetic active accent) */}
                   <div className="flex flex-col items-start border-l border-white/10 pl-4 sm:pl-8">
-                    <span className="font-display font-extrabold text-3xl xs:text-4xl sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-amber tracking-tight tabular-nums select-none">
-                      {isMounted ? seconds : "00"}
+                    <span 
+                      suppressHydrationWarning
+                      className="font-display font-extrabold text-3xl xs:text-4xl sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-amber tracking-tight tabular-nums select-none"
+                    >
+                      {seconds}
                     </span>
                     <span className="font-mono text-[11px] sm:text-xs font-bold text-brand-orange tracking-wider uppercase mt-1">
                       SECONDS

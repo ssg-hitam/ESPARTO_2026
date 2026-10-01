@@ -21,7 +21,7 @@ export function calculateTimeRemaining(targetIso: string): Omit<CountdownState, 
 
   if (totalMsRemaining <= 0 || isNaN(totalMsRemaining)) {
     return {
-      days: "000",
+      days: "00",
       hours: "00",
       minutes: "00",
       seconds: "00",

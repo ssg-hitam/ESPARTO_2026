@@ -133,7 +133,7 @@ export function HeroSection() {
                   <span className="text-text-primary font-bold tracking-wider text-xs sm:text-sm md:text-[15px]">
                     OCTOBER 09 — 10
                   </span>
-                  <span className="text-text-muted text-xs">2026</span>
+                  <span className="text-text-muted text-xs">2026 · FROM 9:30 AM</span>
                 </div>
               </div>
 

@@ -48,7 +48,7 @@ export default function RegisterPage() {
   }, [selectedCategory, searchQuery]);
 
   return (
-    <main className="min-h-screen pt-28 pb-24 bg-[#03010b] relative overflow-hidden text-text-primary">
+    <main className="min-h-screen pt-6 sm:pt-8 pb-24 bg-[#03010b] relative overflow-hidden text-text-primary">
       
       {/* Background Atmosphere Lighting */}
       <div 

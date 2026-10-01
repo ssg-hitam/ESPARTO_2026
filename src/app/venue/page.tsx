@@ -234,7 +234,7 @@ function CampusAutoCarousel() {
 
 export default function VenuePage() {
   return (
-    <main className="min-h-screen pt-32 pb-24 bg-[#040210] relative overflow-hidden">
+    <main className="min-h-screen pt-6 sm:pt-8 pb-24 bg-[#040210] relative overflow-hidden">
       {/* Ambient background glows */}
       <div
         className="absolute top-1/4 left-0 w-[550px] h-[550px] rounded-full bg-brand-orange/10 blur-[180px] pointer-events-none"
@@ -249,7 +249,7 @@ export default function VenuePage() {
         <FadeUp delay={0}>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-white transition-colors mb-6 group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-brand-orange" />
             <span>BACK TO HOME</span>
