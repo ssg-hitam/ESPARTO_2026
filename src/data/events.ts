@@ -49,7 +49,7 @@ export interface FestEventItem {
 }
 
 export const GOOGLE_APPS_SCRIPT_REGISTRATION_URL =
-  "https://script.google.com/macros/s/AKfycbzQhqX0aT0W66m4HHIlvO6Iv4GhqU4cFKuQXKrjLRmlsxQhYrXc8DFzhqKTk09ppngV/exec";
+  "https://script.google.com/a/macros/hitam.org/s/AKfycbzQhqX0aT0W66m4HHIlvO6Iv4GhqU4cFKuQXKrjLRmlsxQhYrXc8DFzhqKTk09ppngV/exec";
 
 export function getEventRegisterUrl(event: FestEventItem): string {
   // Direct redirect for IEEE National Ideathon official form
