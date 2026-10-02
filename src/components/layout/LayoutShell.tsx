@@ -3,6 +3,7 @@
 import React from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { VersionSwitcher } from "@/components/common/VersionSwitcher";
 import { useIntro } from "@/context/IntroContext";
 
 /**
@@ -37,6 +38,9 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
       <main id="main-content" className="flex-grow flex flex-col">
         {children}
       </main>
+
+      {/* Floating Version Switcher */}
+      <VersionSwitcher />
 
       {/* Footer — hidden while intro plays */}
       <div

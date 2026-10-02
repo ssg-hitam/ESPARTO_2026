@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/ui/FadeUp";
-import { FEST_EVENTS, EventCategoryType } from "@/data/events";
+import { FEST_EVENTS, EventCategoryType, getEventRegisterUrl } from "@/data/events";
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -295,18 +295,18 @@ function RegisterContent() {
                       </div>
                       <div className="flex items-center gap-1.5 col-span-2 text-brand-orange font-bold">
                         <Trophy className="w-3.5 h-3.5 shrink-0" />
-                        <span>Prize: {event.prizePool}</span>
+                        <span>🏆 Prize Pool: {event.prizePool}</span>
                       </div>
                     </div>
 
                     {/* Registration Fee Breakdown */}
                     <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 text-[11px] font-mono text-text-muted mb-4 space-y-1">
                       <div className="flex items-center justify-between">
-                        <span className="text-white/60">HITAM Students:</span>
+                        <span className="text-white/60">🎟️ HITAM Students:</span>
                         <span className="text-emerald-400 font-semibold">{event.registrationFee.hitam}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-white/60">Other Colleges:</span>
+                        <span className="text-white/60">🎟️ Other Colleges:</span>
                         <span className="text-brand-orange font-semibold">{event.registrationFee.nonHitam}</span>
                       </div>
                     </div>
@@ -314,29 +314,31 @@ function RegisterContent() {
 
                   {/* Action Buttons */}
                   <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
-                    {event.unstopUrl ? (
+                    <a
+                      href={getEventRegisterUrl(event)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,94,0,0.25)]"
+                    >
+                      <span>🎟️ REGISTER NOW</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
+
+                    {event.unstopUrl && (
                       <a
                         href={event.unstopUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,94,0,0.25)]"
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl font-mono text-[11px] uppercase tracking-wider text-text-secondary hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
                       >
-                        <span>REGISTER ON UNSTOP</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
+                        <span>REGISTER VIA UNSTOP</span>
+                        <ArrowUpRight className="w-3 h-3" />
                       </a>
-                    ) : (
-                      <Link
-                        href={`/events?event=${event.slug}`}
-                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,94,0,0.25)]"
-                      >
-                        <span>VIEW EVENT DETAILS &amp; REGISTER</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </Link>
                     )}
 
                     <Link
                       href={`/events?event=${event.slug}`}
-                      className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl font-mono text-[11px] uppercase tracking-wider text-text-secondary hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
+                      className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl font-mono text-[11px] uppercase tracking-wider text-text-secondary hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-center"
                     >
                       <span>VIEW FULL ROUNDS &amp; RULES</span>
                       <ChevronRight className="w-3 h-3" />

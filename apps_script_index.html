@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ESPARTO 2026 — Official Festival Portal & Registrations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #ff5e00;
+      --primary-dark: #cc4b00;
+      --accent-glow: rgba(255, 94, 0, 0.2);
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-inner: #f1f5f9;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --hitam-navy: #002855;
+      --hitam-blue: #00629B;
+      --success: #059669;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER STRIPE: EXACT TO REFERENCE BRANDING ── */
+    .header-stripe {
+      background: #ffffff;
+      border-bottom: 3px solid var(--primary);
+      padding: 20px 16px;
+      box-shadow: 0 4px 20px rgba(0, 40, 85, 0.06);
+    }
+
+    .header-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* Left & Right Logo Boxes */
+    .logo-box {
+      width: 96px;
+      height: 96px;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border: 1.5px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .logo-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .header-center {
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .college-tag {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .esparto-header-logo {
+      height: 48px;
+      max-width: 220px;
+      object-fit: contain;
+      margin: 2px 0;
+    }
+
+    .event-main-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hitam-navy);
+      letter-spacing: -0.5px;
+    }
+
+    .event-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 700px;
+    }
+
+    .meta-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .pill {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--hitam-navy);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill.chapter {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: var(--hitam-blue);
+      font-weight: 700;
+    }
+
+    @media (max-width: 800px) {
+      .header-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 14px;
+      }
+
+      .event-main-title {
+        font-size: 20px;
+      }
+
+      .logo-box {
+        width: 72px;
+        height: 72px;
+      }
+    }
+
+    .main-wrapper {
+      max-width: 1140px;
+      margin: 28px auto 48px;
+      padding: 0 16px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* ── STEPPER ── */
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      background: #ffffff;
+      padding: 14px 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    .step-item.active {
+      color: var(--hitam-navy);
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f1f5f9;
+      border: 1.5px solid var(--border);
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .step-item.active .step-num {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* ── VIEW 1: DIRECTORY OF 14 EVENTS ── */
+    .hero-banner {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+    }
+
+    .filter-pill {
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: 0.2s;
+    }
+
+    .filter-pill.active {
+      background: var(--hitam-navy);
+      color: #fff;
+      border-color: var(--hitam-navy);
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 20px;
+    }
+
+    .event-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .event-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .card-category {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #fff7ed;
+      color: #ea580c;
+      border: 1px solid #ffedd5;
+    }
+
+    .card-prize-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-prize-breakup {
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .card-club-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: #0284c7;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--hitam-navy);
+      margin: 6px 0;
+    }
+
+    .card-desc {
+      font-size: 12.5px;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .card-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .spec-label {
+      color: #64748b;
+      text-transform: uppercase;
+      font-size: 9.5px;
+      font-weight: 700;
+    }
+
+    .spec-val {
+      color: var(--hitam-navy);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .btn-register-card {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: 0.2s;
+      text-align: center;
+    }
+
+    .btn-register-card:hover {
+      opacity: 0.95;
+    }
+
+    /* ── STEP 1: REGISTRATION DETAILS FORM ── */
+    #formStep1,
+    #paymentStep2 {
+      display: none;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      color: var(--hitam-navy);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .back-btn:hover {
+      background: #f1f5f9;
+    }
+
+    .form-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 880px) {
+      .form-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 26px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    }
+
+    .form-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--hitam-navy);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    label .req {
+      color: #e11d48;
+      margin-left: 2px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      font-size: 13.5px;
+      font-family: inherit;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      color: #0f172a;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .toggle-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .toggle-btn {
+      flex: 1;
+      padding: 11px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .toggle-btn.active {
+      background: #002855;
+      border-color: #002855;
+      color: #fff;
+    }
+
+    .member-block {
+      background: #f8fafc;
+      border: 1.5px dashed var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .member-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--hitam-navy);
+      margin-bottom: 10px;
+    }
+
+    /* Sticky Registration Summary Card */
+    .summary-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      position: sticky;
+      top: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    }
+
+    .summary-header {
+      background: var(--hitam-navy);
+      color: #fff;
+      padding: 14px 18px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .summary-body {
+      padding: 18px;
+    }
+
+    .total-box {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      margin: 14px 0;
+    }
+
+    .total-amt {
+      font-size: 32px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--hitam-navy);
+    }
+
+    .btn-proceed {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(255, 94, 0, 0.25);
+      transition: 0.2s;
+    }
+
+    .btn-proceed:hover {
+      opacity: 0.95;
+    }
+
+    /* ── STEP 2: UPI PAYMENT VIEW (MATCHES SCREENSHOT) ── */
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    @media (max-width: 820px) {
+      .payment-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .upi-box {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .upi-recipient {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--hitam-navy);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .qr-frame {
+      width: 220px;
+      height: 220px;
+      margin: 12px auto;
+      background: #fff;
+      padding: 8px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+    }
+
+    .qr-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .upi-id-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--hitam-navy);
+      background: #e2e8f0;
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .upi-amount {
+      font-size: 38px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--hitam-navy);
+      margin-bottom: 4px;
+    }
+
+    .file-input-box {
+      border: 1.5px dashed #cbd5e1;
+      background: #f8fafc;
+      padding: 14px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12px;
+      color: #475569;
+      margin: 16px 0;
+      line-height: 1.4;
+    }
+
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--primary);
+    }
+
+    .btn-submit-verify {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: none;
+      background: #002855;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-submit-verify:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-back-team {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* ── FOOTER: ORGANIZED BY SSG & CONTACTS ── */
+    .footer {
+      background: #ffffff;
+      border-top: 1.5px solid var(--border);
+      padding: 28px 16px;
+      margin-top: auto;
+    }
+
+    .footer-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 13px;
+    }
+
+    .footer-ssg-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ssg-logo-img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .footer-contacts {
+      display: flex;
+      gap: 24px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    @media (max-width: 720px) {
+      .footer-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-contacts {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+
+    /* ── PARTICIPATING CLUBS STRIP ── */
+    .clubs-showcase-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    }
+
+    .clubs-showcase-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .clubs-showcase-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .club-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--hitam-navy);
+      transition: all 0.2s ease;
+    }
+
+    .club-chip:hover {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .club-chip img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── HEADER STRIPE ── -->
+  <header class="header-stripe">
+    <div class="header-container">
+
+      <!-- Left: Dynamic Club / Chapter Logo -->
+      <div class="logo-box" id="headerClubBox" title="Organizing Chapter">
+        <img id="headerClubLogo" src="https://lh3.googleusercontent.com/d/16hNwt5Io4Io4zUitUPH9aRCIAQcgpDan"
+          alt="Club Logo">
+      </div>
+
+      <!-- Center: ESPARTO Official Seal & Event Titles -->
+      <div class="header-center">
+        <div class="college-tag">Hyderabad Institute of Technology and Management</div>
+        <img src="https://lh3.googleusercontent.com/d/16hNwt5Io4Io4zUitUPH9aRCIAQcgpDan" alt="ESPARTO 2026"
+          class="esparto-header-logo" onerror="this.style.display='none'">
+        <h1 class="event-main-title" id="eventTitle">ESPARTO 2026 Festival Events</h1>
+        <div class="event-subtitle" id="eventSubtitle">Intercollegiate Technical Festival • Ideas → Innovation → Impact
+        </div>
+        <div class="meta-badges">
+          <span class="pill chapter" id="badgeChapter">🏛️ SSG Autonomous</span>
+          <span class="pill">📅 9–10 October 2026</span>
+          <span class="pill">📍 HITAM Campus, Medchal</span>
+          <span class="pill" id="badgeTeamLimit">👥 Technical Competitions</span>
+        </div>
+      </div>
+
+      <!-- Right: HITAM Autonomous Logo -->
+      <div class="logo-box" title="HITAM Autonomous">
+        <img src="https://lh3.googleusercontent.com/d/1cxKayHq-LZbKKtrTSR-WSe57dkJ3tMB4" alt="HITAM Logo"
+          onerror="this.src='https://hitam.org/wp-content/uploads/2023/06/hitam-logo.png'">
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-wrapper">
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- VIEW 1: DIRECTORY OF ALL 14 FESTIVAL EVENTS                -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div id="eventsDirectoryPage">
+      <div class="hero-banner">
+        <h2 style="font-size: 20px; font-weight: 800; color: var(--hitam-navy); margin-bottom: 4px;">Choose an Event to
+          Register</h2>
+        <p style="font-size: 13px; color: #64748b;">Select any event below. Fill in participant details in Step 1,
+          verify fees, and complete verification in Step 2.</p>
+      </div>
+
+
+      <!-- ── PARTICIPATING CLUBS & CHAPTERS STRIP ── -->
+      <div class="clubs-showcase-card">
+        <div class="clubs-showcase-title">ORGANIZING CHAPTERS &amp; PARTICIPATING CLUBS</div>
+        <div class="clubs-showcase-row">
+          <div class="club-chip" title="CSI Student Chapter HITAM">
+            <img
+              src="https://raw.githubusercontent.com/ssg-hitam/ESPARTO_2026/main/public/images/chapters/csi-hitam.png"
+              alt="CSI" onerror="this.style.display='none'">
+            <span>CSI HITAM</span>
+          </div>
+          <div class="club-chip" title="Coding Club HITAM">
+            <img src="https://lh3.googleusercontent.com/d/1sMv9w-2o4nz0m9b09ooUJub9mfs7Ilb8" alt="Coding Club"
+              onerror="this.style.display='none'">
+            <span>Coding Club</span>
+          </div>
+          <div class="club-chip" title="Google Developer Groups on Campus">
+            <img src="https://lh3.googleusercontent.com/d/1MmrrYmqkJMuhY6IqgCLFWEVQp-ZQ4GVb" alt="GDG"
+              onerror="this.style.display='none'">
+            <span>GDG on Campus</span>
+          </div>
+          <div class="club-chip" title="HITAM Hackathon Club">
+            <img src="https://lh3.googleusercontent.com/d/1XJC1jJO6B1RlEcLVGf1LDhSr9sJbSKtb" alt="HHC"
+              onerror="this.style.display='none'">
+            <span>HHC</span>
+          </div>
+          <div class="club-chip" title="HITAM AI Club">
+            <img src="https://lh3.googleusercontent.com/d/1qaE7UjQ0vJhPtk0Qqaa_oCjs1Z9YC2Ge" alt="AI Club"
+              onerror="this.style.display='none'">
+            <span>AI Club</span>
+          </div>
+          <div class="club-chip" title="TorqueX Motorsports">
+            <img src="https://lh3.googleusercontent.com/d/1jlM87ixUisgvfDQGEXT9KGgg8VPWgHID" alt="TorqueX"
+              onerror="this.style.display='none'">
+            <span>TorqueX</span>
+          </div>
+          <div class="club-chip" title="MINDS Club HITAM">
+            <img src="https://lh3.googleusercontent.com/d/1CRrgFKuMVdj1LFxVR5bAPo2llRxmwz0v" alt="MINDS"
+              onerror="this.style.display='none'">
+            <span>MINDS</span>
+          </div>
+          <div class="club-chip" title="IUCEE-EWB Chapter">
+            <img src="https://lh3.googleusercontent.com/d/17BMng7rBlOPt3km9GE3PH-84zuGssB-C" alt="IUCEE"
+              onerror="this.style.display='none'">
+            <span>IUCEE-EWB</span>
+          </div>
+          <div class="club-chip" title="ISAMPE Chapter">
+            <img src="https://lh3.googleusercontent.com/d/1DdgxXYGIWeoZFDKzTVd2bWq99dHL_aOF" alt="ISAMPE"
+              onerror="this.style.display='none'">
+            <span>ISAMPE</span>
+          </div>
+          <div class="club-chip" title="IEOM HITAM Chapter">
+            <img src="https://lh3.googleusercontent.com/d/1IkAe5Ouo1gz5YayLghQL1I7knQc5uEDx" alt="IEOM"
+              onerror="this.style.display='none'">
+            <span>IEOM</span>
+          </div>
+          <div class="club-chip" title="IEEE Student Branch HITAM">
+            <img src="https://lh3.googleusercontent.com/d/16hNwt5Io4Io4zUitUPH9aRCIAQcgpDan" alt="IEEE"
+              onerror="this.style.display='none'">
+            <span>IEEE HITAM</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-pill active" onclick="filterEvents('All')">All Events (14)</button>
+        <button class="filter-pill" onclick="filterEvents('Hackathon')">Hackathons</button>
+        <button class="filter-pill" onclick="filterEvents('Ideathon')">Ideathons</button>
+        <button class="filter-pill" onclick="filterEvents('Workshop')">Workshops</button>
+        <button class="filter-pill" onclick="filterEvents('Challenge')">Challenges</button>
+        <button class="filter-pill" onclick="filterEvents('Gaming & Coding')">Gaming &amp; Coding</button>
+      </div>
+
+      <div class="events-grid" id="eventsGridContainer"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- VIEW 2: STEP 1 — PARTICIPANT & TEAM DETAILS                -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div id="formStep1">
+      <button class="back-btn" onclick="showEventsDirectory()">
+        ← Back to All Events (14)
+      </button>
+
+      <div class="stepper">
+        <div class="step-item active">
+          <div class="step-num">1</div>
+          <span>Participant &amp; Team Details</span>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <span>UPI Payment &amp; UTR</span>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <span>Confirmed E-Ticket</span>
+        </div>
+      </div>
+
+      <form id="step1Form" onsubmit="validateStep1AndProceed(event)">
+        <div class="form-layout">
+
+          <div>
+            <!-- Section 1 -->
+            <div class="form-card">
+              <div class="form-title">1. Institution &amp; Team Setup</div>
+
+              <label>Select Institution Category <span class="req">*</span></label>
+              <div class="toggle-box">
+                <button type="button" class="toggle-btn active" id="btnHitam" onclick="setCollegeType(true)">HITAM
+                  Student</button>
+                <button type="button" class="toggle-btn" id="btnOther" onclick="setCollegeType(false)">Other College /
+                  University</button>
+              </div>
+
+              <div class="form-group" id="otherCollegeGroup" style="display: none;">
+                <label>College / University Name <span class="req">*</span></label>
+                <input type="text" id="collegeName" placeholder="e.g. VNR VJIET / CBIT / Vasavi / JNTUH">
+              </div>
+
+              <div id="teamSetupGroup" style="display: none;">
+                <div class="grid-2">
+                  <div class="form-group">
+                    <label>Official Team Name <span class="req">*</span></label>
+                    <input type="text" id="teamName" placeholder="e.g. NeuralKnights">
+                  </div>
+                  <div class="form-group">
+                    <label>Total Team Size <span class="req">*</span></label>
+                    <select id="teamSizeSelect" onchange="renderDynamicMembers()"></select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="form-card">
+              <div class="form-title" id="leadCardHeading">2. Team Lead Details</div>
+
+              <div class="grid-2">
+                <div class="form-group">
+                  <label>Full Name <span class="req">*</span></label>
+                  <input type="text" id="leadName" required placeholder="Enter full name">
+                </div>
+                <div class="form-group">
+                  <label>Email Address <span class="req">*</span></label>
+                  <input type="email" id="leadEmail" required placeholder="name@domain.com">
+                </div>
+              </div>
+
+              <div class="grid-2">
+                <div class="form-group">
+                  <label>WhatsApp Number <span class="req">*</span></label>
+                  <input type="tel" id="leadPhone" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+                </div>
+                <div class="form-group">
+                  <label>Roll Number / Student ID <span class="req">*</span></label>
+                  <input type="text" id="leadRoll" required placeholder="e.g. 22XX1A05XX">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Branch &amp; Year <span class="req">*</span></label>
+                <input type="text" id="leadBranchYear" required placeholder="e.g. CSE (AI & ML) - 3rd Year">
+              </div>
+
+              <div id="dynamicMembersContainer"></div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="form-card" id="eventQuestionsCard" style="display: none;">
+              <div class="form-title">3. Event-Specific Technical Details</div>
+              <div id="dynamicQuestionsContainer"></div>
+            </div>
+          </div>
+
+          <!-- Right Sidebar Summary -->
+          <aside>
+            <div class="summary-card">
+              <div class="summary-header">REGISTRATION SUMMARY</div>
+              <div class="summary-body">
+                <div style="font-size: 12px; color: #64748b;">Selected Tier:</div>
+                <div id="sideTier"
+                  style="font-size: 14px; font-weight: 700; color: var(--hitam-navy); margin-bottom: 12px;">HITAM
+                  Student</div>
+
+                <div class="total-box">
+                  <div style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: #64748b;">Total
+                    Amount</div>
+                  <div class="total-amt" id="sideTotalFee">₹0</div>
+                  <div id="sideFeeBreakdown" style="font-size: 11px; color: #64748b; margin-top: 4px;">Per Team Entry
+                  </div>
+                </div>
+
+                <button type="submit" class="btn-proceed">
+                  Proceed to Payment →
+                </button>
+                <div style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 8px;">
+                  🔒 Payment gateway unlocks after Step 1 is verified.
+                </div>
+              </div>
+            </div>
+
+            <!-- Event Coordinators Card -->
+            <div class="summary-card" id="sideCoordinatorsCard" style="margin-top: 16px;">
+              <div class="summary-header" style="background: #0f172a; font-size: 11px;">📞 EVENT COORDINATORS</div>
+              <div class="summary-body" style="font-size: 11.5px; line-height: 1.5; color: #334155;">
+                <div id="sideStudentCoord" style="margin-bottom: 8px;"></div>
+                <div id="sideFacultyCoord" style="margin-bottom: 8px;"></div>
+                <div id="sideClubEmail" style="font-weight: 600; color: #0284c7;"></div>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </form>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- VIEW 3: STEP 2 — PAY BY UPI (MATCHES SCREENSHOT EXACTLY)   -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div id="paymentStep2">
+      <div style="margin-bottom: 20px;">
+        <h2 style="font-size: 24px; font-weight: 800; color: var(--hitam-navy);">Step 2: Pay by UPI</h2>
+        <p style="font-size: 13.5px; color: #64748b;">Make one payment for the whole team. Check the recipient name in
+          your UPI app before paying.</p>
+      </div>
+
+      <div class="payment-grid">
+
+        <!-- Left UPI Card -->
+        <div class="upi-box">
+          <div class="upi-recipient" id="upiRecipientName">GOTTUMUKKALA DANUSH SAI PANINDRA VARMA</div>
+
+          <div style="font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 10px;">Pay using any UPI app
+            (GPay, PhonePe, Paytm, Navi)</div>
+
+          <div class="qr-frame">
+            <img id="dynamicUpiQr" src="" alt="UPI Payment QR">
+          </div>
+
+          <div style="font-size: 12px; font-weight: 700; color: var(--hitam-navy); margin-bottom: 4px;">GOTTUMUKKALA
+            DANUSH SAI PANINDRA VARMA</div>
+          <div style="font-size: 12px; color: #64748b; margin-bottom: 10px;">UPI ID : 7093324151@naviaxis</div>
+
+          <div class="upi-id-badge">7093324151@naviaxis</div>
+
+          <div class="upi-amount" id="displayUpiAmount">₹0</div>
+
+          <div style="font-size: 11px; color: #64748b; line-height: 1.4;">
+            Scan with another device, or save the QR and choose it from your UPI app's gallery. Enter the exact amount
+            shown.
+          </div>
+
+          <div style="font-size: 12px; font-weight: 700; color: #0284c7; margin-top: 8px;" id="feeCalculationBreakdown">
+            Calculating fee...
+          </div>
+        </div>
+
+        <!-- Right Verification Card -->
+        <form class="submit-pay-card" onsubmit="handleFinalPaymentSubmission(event)">
+          <div>
+            <div class="form-group">
+              <label>UPI UTR / bank reference <span class="req">*</span></label>
+              <input type="text" id="payUtrNumber" required pattern="[0-9]{8,16}" placeholder="12-digit UPI reference">
+              <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Find this in your completed payment's
+                transaction details.</div>
+            </div>
+
+            <div class="form-group">
+              <label>Payment screenshot <span class="req">*</span></label>
+              <div class="file-input-box">
+                <input type="file" id="payScreenshot" accept="image/*" required
+                  onchange="handleScreenshotUpload(event)">
+              </div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 4px;">PNG or JPG, maximum 2 MB. Show the
+                successful payment, amount, recipient, and UTR.</div>
+            </div>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="payAgreement" required>
+              <label for="payAgreement">I understand that payment and membership documents will be reviewed by the
+                organizers before registration is confirmed.</label>
+            </div>
+
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 16px;">
+              Uploads are stored for organizer verification and are not publicly shared.
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" class="btn-submit-verify" id="finalSubmitBtn">
+              Submit payment for verification
+            </button>
+            <button type="button" class="btn-back-team" onclick="backToStep1()">
+              Back to team details
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- VIEW 4: SUCCESS E-TICKET                                   -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div id="successPage"
+      style="display:none; max-width:660px; margin:0 auto; background:#fff; border:2px solid var(--success); border-radius:16px; overflow:hidden;">
+      <div
+        style="background:linear-gradient(135deg, #065f46 0%, var(--success) 100%); color:#fff; padding:28px; text-align:center;">
+        <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 4px;">🎉 REGISTRATION SUBMITTED</h2>
+        <p style="font-size: 13px; opacity: 0.9;">Your technical fest participation pass has been recorded.</p>
+      </div>
+
+      <div style="padding: 24px;">
+        <div
+          style="background: rgba(16, 185, 129, 0.1); border: 2px dashed var(--success); border-radius: 12px; padding: 18px; text-align: center; margin-bottom: 20px;">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--success);">Official
+            Registration ID</div>
+          <div style="font-size: 30px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #047857;"
+            id="ticketRegId">ESP-E00-00000</div>
+        </div>
+
+        <div
+          style="background: #f8fafc; border: 1px solid var(--border); padding: 16px; border-radius: 10px; margin-bottom: 20px; font-size: 13.5px;">
+          <div style="margin-bottom: 8px;"><strong>Event:</strong> <span id="ticketEvent">-</span></div>
+          <div style="margin-bottom: 8px;"><strong>Team / Participant:</strong> <span id="ticketTeam">-</span></div>
+          <div style="margin-bottom: 8px;"><strong>Total Paid:</strong> <span id="ticketFee">-</span></div>
+          <div><strong>Status:</strong> <span style="color: #0284c7; font-weight:700;">Pending Verification at Campus
+              Desk</span></div>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-submit-verify" onclick="window.print()" style="background: #002855;">PRINT RECEIPT
+            (PDF)</button>
+          <button class="btn-back-team" onclick="showEventsDirectory()" style="margin:0;">EXPLORE OTHER EVENTS</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER: ORGANIZED BY SSG & CONTACTS ── -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-ssg-box">
+        <img src="https://lh3.googleusercontent.com/d/16hNwt5Io4Io4zUitUPH9aRCIAQcgpDan" alt="SSG Logo"
+          class="ssg-logo-img" onerror="this.src='https://placehold.co/90x90/002855/ffffff?text=SSG'">
+        <div>
+          <div style="font-weight: 800; color: var(--hitam-navy);">Event Organized by Student Support Group (SSG)</div>
+          <div style="font-size: 12px; color: #64748b;">HITAM Autonomous • Hyderabad, Telangana</div>
+        </div>
+      </div>
+
+      <div class="footer-contacts">
+        <div>📞 Contact: <strong>Tejal (+91 90591 11595)</strong></div>
+        <div>✉️ Email: <strong>ssg@hitam.org</strong></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ════════════════════════════════════════════════════════════
+    // 14 FESTIVAL EVENTS DATASET WITH LOGOS, THEMES & CONTACTS
+    // ════════════════════════════════════════════════════════════
+    var ALL_EVENTS = [
+      {
+        id: "E01", slug: "ieee-ideathon", title: "IEEE National Ideathon",
+        club: "IEEE Student Branch HITAM", category: "Ideathon", teamMin: 3, teamMax: 4,
+        feeHitam: 200, feeOther: 300, feeModel: "Per Team",
+        prizePool: "₹30,000",
+        prizeBreakup: "🥇 1st, 🥈 2nd & 🥉 3rd Stage Awards (₹30,000 Mega Pool)",
+        logo: "https://lh3.googleusercontent.com/d/16hNwt5Io4Io4zUitUPH9aRCIAQcgpDan",
+        themeColor: "#00629B",
+        externalLink: "https://script.google.com/a/macros/hitam.org/s/AKfycbwoVAJO1VLPibThDX3h5Sewj3HVaZkgGAenKgqiOb8SlhyhJgT6GRzjp4cx2aWlOXK41A/exec",
+        desc: "Flagship innovation stage on both days (Oct 9–10) to pitch transformative engineering concepts across clean energy, computing, healthcare, and robotics.",
+        studentContact: "Sai Sampada (+91 88793 41306, ieeesb@hitam.org)",
+        facultyContact: "Bindu Madhavi (+91 91603 08130, bindumadhavi.t@ieee.org)",
+        clubEmail: "ieeesb@hitam.org"
+      },
+      {
+        id: "E02", slug: "reverse-hackathon", title: "Reverse Hackathon",
+        club: "HHC × IUCEE-EWB", category: "Hackathon", teamMin: 2, teamMax: 3,
+        feeHitam: 550, feeOther: 600, feeModel: "Per Team",
+        prizePool: "₹10,000",
+        prizeBreakup: "🥇 1st: ₹5,000 | 🥈 2nd: ₹3,000 | 🥉 3rd: ₹2,000",
+        logo: "https://lh3.googleusercontent.com/d/1XJC1jJO6B1RlEcLVGf1LDhSr9sJbSKtb", // HHC Logo
+        themeColor: "#7c3aed",
+        desc: "High-intensity reverse engineering battle on Day 1 (Oct 9). Deconstruct complex production software/hardware stacks, identify bottlenecks, and rebuild solutions.",
+        studentContact: "Ameena (9966864664), Kanishka (9494753922), Alankrusha (9063412373)",
+        facultyContact: "Santosh Naik (+91 99802 99366, santoshn.mech@hitam.org)",
+        clubEmail: "iucee@hitam.org",
+        questions: [
+          { label: "Primary Programming Language", key: "primaryLang", type: "dropdown", required: true, options: "C/C++, Python, Java, Rust, Go, JavaScript" },
+          { label: "System Focus Area", key: "focusArea", type: "dropdown", required: true, options: "Low-Level & Memory, Web Backend, Network Protocols, Firmware" },
+          { label: "Team GitHub / Portfolio URL", key: "githubUrl", type: "text", required: true, placeholder: "https://github.com/..." }
+        ]
+      },
+      {
+        id: "E03", slug: "agentic-ai-workshop-hackathon", title: "Agentic AI Workshop & Hackathon",
+        club: "Google Developer Groups on Campus – HITAM", category: "Hackathon", teamMin: 1, teamMax: 4,
+        feeHitam: 150, feeOther: 150, feeModel: "Per Person",
+        prizePool: "₹10,000",
+        prizeBreakup: "🥇 1st: ₹5,000 | 🥈 2nd: ₹3,000 | 🥉 3rd: ₹2,000",
+        logo: "https://lh3.googleusercontent.com/d/1MmrrYmqkJMuhY6IqgCLFWEVQp-ZQ4GVb", // GDG Logo
+        themeColor: "#1a73e8",
+        desc: "2-Day Flagship: Day 1 Hands-on Workshop (9:30 AM–3:00 PM) + Day 2 Autonomous Agent Hackathon (Submission Oct 10 12:00 PM). Single ₹150 registration covers BOTH events! ₹10,000 prize pool.",
+        studentContact: "Manik Manohar (9100834381), Dhanudeep (7569956911), Y Shamsmitha (7396933363)",
+        facultyContact: "D. Harikrishna (+91 94904 25130, associatedean.mdp@hitam.org)",
+        clubEmail: "gdgoncampus@hitam.org",
+        questions: [
+          { label: "AI Agent Architecture Concept / Project Title", key: "agentConcept", type: "text", required: false, placeholder: "e.g. Multi-Agent Customer Support, Automated Research Analyst" },
+          { label: "Prior AI / Python Experience Level", key: "expLevel", type: "dropdown", required: true, options: "Beginner, Intermediate Python, Familiar with LLM APIs" },
+          { label: "Will you bring your own Laptop?", key: "hasLaptop", type: "dropdown", required: true, options: "Yes, No" }
+        ]
+      },
+      {
+        id: "E04", slug: "programmers-got-talent", title: "Programmers Got Talent",
+        club: "HHC × IUCEE-EWB", category: "Gaming & Coding", teamMin: 1, teamMax: 1,
+        feeHitam: 150, feeOther: 150, feeModel: "Per Person",
+        prizePool: "₹5,000",
+        prizeBreakup: "🥇 1st: ₹3,000 | 🥈 2nd: ₹2,000",
+        logo: "https://lh3.googleusercontent.com/d/1XJC1jJO6B1RlEcLVGf1LDhSr9sJbSKtb", // HHC Logo
+        themeColor: "#7c3aed",
+        desc: "High-speed coding battle: blind syntax rounds, obscure runtime bug hunts, algorithmic sprints on Day 2 (Oct 10). ₹5,000 cash pool for solo programmers.",
+        studentContact: "Ameena (9966864664), Kanishka (9494753922), Alankrusha (9063412373)",
+        facultyContact: "Santosh Naik (+91 99802 99366, santoshn.mech@hitam.org)",
+        clubEmail: "hhc@hitam.org",
+        questions: [
+          { label: "Preferred Coding Language", key: "prefLang", type: "dropdown", required: true, options: "C++, Java, Python" },
+          { label: "Codeforces / LeetCode Profile", key: "cpProfile", type: "text", required: false, placeholder: "Profile link for tournament seeding" }
+        ]
+      },
+      {
+        id: "E05", slug: "smart-manufacturing-challenge", title: "Smart Manufacturing: Industry Insights & Innovation Challenge",
+        club: "IEOM HITAM Chapter", category: "Challenge", teamMin: 4, teamMax: 4,
+        feeHitam: 99, feeOther: 149, feeModel: "Per Team",
+        prizePool: "₹5,700",
+        prizeBreakup: "🥇 1st: ₹2,500 | 🥈 2nd: ₹2,000 | 🥉 3rd: ₹1,200",
+        logo: "https://lh3.googleusercontent.com/d/1IkAe5Ouo1gz5YayLghQL1I7knQc5uEDx", // IEOM Logo
+        themeColor: "#0284c7",
+        desc: "Industry 4.0 simulation, factory optimization, and IoT automation on Day 1 (Oct 9). ₹5,700 prize pool (₹11,400 across both days). Teams of 4.",
+        studentContact: "Rishitha (+91 91210 14558, 24e51a66e1@hitam.org)",
+        facultyContact: "Praveen (+91 89190 46164, praveenp.mech@hitam.org)",
+        clubEmail: "ieom.hitam@gmail.com",
+        questions: [
+          { label: "Specialization Track", key: "track", type: "dropdown", required: true, options: "Robotics & Automation, IoT Telemetry, Lean Production" }
+        ]
+      },
+      {
+        id: "E06", slug: "ieom-startup-pitch", title: "IEOM Startup Pitch Challenge",
+        club: "IEOM HITAM Chapter", category: "Ideathon", teamMin: 1, teamMax: 4,
+        feeHitam: 149, feeOther: 199, feeModel: "Per Team",
+        prizePool: "₹5,700",
+        prizeBreakup: "🥇 1st: ₹2,500 | 🥈 2nd: ₹2,000 | 🥉 3rd: ₹1,200",
+        logo: "https://lh3.googleusercontent.com/d/1IkAe5Ouo1gz5YayLghQL1I7knQc5uEDx", // IEOM Logo
+        themeColor: "#0284c7",
+        desc: "Pitch sustainable engineering ventures and prototypes before investor judges on Day 2 (Oct 10). ₹5,700 prize pool (₹11,400 both days). Team: ₹149/₹199, Solo: ₹79/₹99.",
+        studentContact: "Rishitha (+91 91210 14558, 24e51a66e1@hitam.org)",
+        facultyContact: "Praveen (+91 89190 46164, praveenp.mech@hitam.org)",
+        clubEmail: "ieom.hitam@gmail.com",
+        questions: [
+          { label: "Startup / Venture Name", key: "startupName", type: "text", required: true, placeholder: "Working name of startup" },
+          { label: "Current Development Stage", key: "stage", type: "dropdown", required: true, options: "Idea / Concept, Prototype / MVP, Early Traction" }
+        ]
+      },
+      {
+        id: "E07", slug: "dataquest-kaggle", title: "DataQuest – Kaggle Data Science Challenge",
+        club: "HITAM AI Club", category: "Challenge", teamMin: 2, teamMax: 2,
+        feeHitam: 300, feeOther: 300, feeModel: "Per Team",
+        prizePool: "₹5,000",
+        prizeBreakup: "🥇 1st: ₹2,500 | 🥈 2nd: ₹1,500 | 🥉 3rd: ₹1,000",
+        logo: "https://lh3.googleusercontent.com/d/1qaE7UjQ0vJhPtk0Qqaa_oCjs1Z9YC2Ge", // AI Club
+        themeColor: "#059669",
+        desc: "Live private Kaggle hackathon on Day 1 (Oct 9). Feature engineering duel and ML model optimization. ₹5,000 prize pool (₹300/team of 2).",
+        studentContact: "MD Arif (+91 93902 19103, 23e51a6671@hitam.org)",
+        facultyContact: "Dr. M. Rajeshwar (+91 92487 11181, rajeshwarm.cse@hitam.org)",
+        clubEmail: "aiclub@hitam.org",
+        questions: [
+          { label: "Kaggle Username(s)", key: "kaggleUser", type: "text", required: true, placeholder: "@username" }
+        ]
+      },
+      {
+        id: "E08", slug: "n8n-automation-challenge", title: "n8n Automation Challenge",
+        club: "HITAM AI Club", category: "Challenge", teamMin: 2, teamMax: 2,
+        feeHitam: 300, feeOther: 300, feeModel: "Per Team",
+        prizePool: "₹5,000",
+        prizeBreakup: "🥇 1st: ₹2,500 | 🥈 2nd: ₹1,500 | 🥉 3rd: ₹1,000",
+        logo: "https://lh3.googleusercontent.com/d/1qaE7UjQ0vJhPtk0Qqaa_oCjs1Z9YC2Ge", // AI Club
+        themeColor: "#059669",
+        desc: "Event-driven workflow and AI agent integration hack on Day 2 (Oct 10). Build autonomous triggers with n8n. ₹5,000 prize pool (₹300/team of 2).",
+        studentContact: "MD Arif (+91 93902 19103, 23e51a6671@hitam.org)",
+        facultyContact: "Dr. M. Rajeshwar (+91 92487 11181, rajeshwarm.cse@hitam.org)",
+        clubEmail: "aiclub@hitam.org",
+        questions: [
+          { label: "Prior Automation Experience", key: "automationExp", type: "dropdown", required: true, options: "None, Familiar with Zapier/n8n, Built active workflows" }
+        ]
+      },
+      {
+        id: "E09", slug: "data-heist-datathon", title: "DATA HEIST – Datathon",
+        club: "MINDS Club", category: "Challenge", teamMin: 2, teamMax: 4,
+        feeHitam: 200, feeOther: 300, feeModel: "Per Team",
+        prizePool: "₹3,000",
+        prizeBreakup: "🥇 1st: ₹1,500 | 🥈 2nd: ₹1,000 | 🥉 3rd: ₹500",
+        logo: "https://lh3.googleusercontent.com/d/1CRrgFKuMVdj1LFxVR5bAPo2llRxmwz0v", // MINDS Logo
+        themeColor: "#4f46e5",
+        desc: "Investigative data science thriller on Day 1 (Oct 9). Analyze fragmented database dumps, decrypt corrupted logs, and crack the case. ₹3,000 prize pool.",
+        studentContact: "Arutla Sai Prasanna (+91 81061 10146, 23e51a6711@hitam.org)",
+        facultyContact: "Richa Tiwari (+91 91315 39794, richatiwari.cse@hitam.org)",
+        clubEmail: "minds.datascience@hitam.org",
+        questions: [
+          { label: "Preferred Analytics Tools", key: "tools", type: "text", required: true, placeholder: "Python, Pandas, SQL, Wireshark" }
+        ]
+      },
+      {
+        id: "E10", slug: "data-dossier", title: "DATA DOSSIER Case Study",
+        club: "MINDS Club", category: "Challenge", teamMin: 2, teamMax: 4,
+        feeHitam: 100, feeOther: 200, feeModel: "Per Team",
+        prizePool: "₹3,000",
+        prizeBreakup: "🥇 1st: ₹1,500 | 🥈 2nd: ₹1,000 | 🥉 3rd: ₹500",
+        logo: "https://lh3.googleusercontent.com/d/1CRrgFKuMVdj1LFxVR5bAPo2llRxmwz0v", // MINDS Logo
+        themeColor: "#4f46e5",
+        desc: "Examine sealed mystery dossiers, analyze technical anomalies, and present an irrefutable deduction on Day 2 (Oct 10). ₹3,000 prize pool.",
+        studentContact: "Arutla Sai Prasanna (+91 81061 10146, 23e51a6711@hitam.org)",
+        facultyContact: "Richa Tiwari (+91 91315 39794, richatiwari.cse@hitam.org)",
+        clubEmail: "minds.datascience@hitam.org",
+        questions: [
+          { label: "Presentation Medium", key: "medium", type: "dropdown", required: true, options: "Slide Deck, Interactive Dashboard, Video Forensic Summary" }
+        ]
+      },
+      {
+        id: "E11", slug: "torquex-motorsport", title: "TorqueX – From Garage to Grid & Kart Reveal",
+        club: "TorqueX Motorsports", category: "Challenge", teamMin: 1, teamMax: 4,
+        feeHitam: 50, feeOther: 70, feeModel: "Per Person",
+        prizePool: "₹5,000",
+        prizeBreakup: "🥇 1st: ₹1,500 | 🥈 2nd: ₹1,000 | 🥉 3rd: ₹500",
+        logo: "https://lh3.googleusercontent.com/d/1jlM87ixUisgvfDQGEXT9KGgg8VPWgHID", // TorqueX Logo
+        themeColor: "#dc2626",
+        desc: "Grand unveiling of HITAM's custom racing kart on Day 2 (Oct 10). Telemetry design sprints and vehicle dynamics challenges. ₹5,000 prize pool.",
+        studentContact: "TorqueX Student Lead (+91 90591 11595)",
+        facultyContact: "TorqueX Faculty Incharge (ssg@hitam.org)",
+        clubEmail: "torquex@hitam.org",
+        questions: [
+          { label: "CAD / Simulation Software Experience", key: "cadTools", type: "text", required: true, placeholder: "SolidWorks, ANSYS, Fusion360" }
+        ]
+      },
+      {
+        id: "E12", slug: "build-first-robot", title: "Build Your First Robot",
+        club: "ISAMPE Chapter", category: "Workshop", teamMin: 2, teamMax: 4,
+        feeHitam: 200, feeOther: 200, feeModel: "Per Team",
+        prizePool: "₹5,000",
+        prizeBreakup: "🥇 1st: ₹1,500 | 🥈 2nd: ₹1,000 | 🥉 3rd: ₹500",
+        logo: "https://lh3.googleusercontent.com/d/1DdgxXYGIWeoZFDKzTVd2bWq99dHL_aOF", // ISAMPE Logo
+        themeColor: "#0d9488",
+        desc: "Assemble an autonomous obstacle-avoiding bot from scratch on Day 1 (Oct 9). Learn DC geared motors, Arduino Uno, sensors, and race in the arena. ₹5,000 prize pool (₹200/team).",
+        studentContact: "ISAMPE Student Lead (+91 90591 11595)",
+        facultyContact: "ISAMPE Faculty Incharge (ssg@hitam.org)",
+        clubEmail: "isampe@hitam.org",
+        questions: [
+          { label: "Kit Requirement", key: "kitChoice", type: "dropdown", required: true, options: "Using Lab Kit (Returnable), Purchasing Personal Kit" }
+        ]
+      },
+      {
+        id: "E13", slug: "code-casino", title: "Code Casino",
+        club: "CSI Student Chapter", category: "Gaming & Coding", teamMin: 2, teamMax: 3,
+        feeHitam: 50, feeOther: 60, feeModel: "Per Person",
+        prizePool: "₹10,000",
+        prizeBreakup: "🥇 1st: ₹5,000 | 🥈 2nd: ₹3,000 | 🥉 3rd: ₹2,000",
+        logo: "https://raw.githubusercontent.com/ssg-hitam/ESPARTO_2026/main/public/images/chapters/csi-hitam.png",
+        themeColor: "#ca8a04",
+        desc: "High-stakes competitive coding game on Day 2 (Oct 10) organized by CSI Student Chapter. Strategic chip wagers on code optimization and logic duels. Total ₹10,000 prize pool!",
+        studentContact: "CSI Student Lead (+91 90591 11595)",
+        facultyContact: "CSI Faculty Incharge (ssg@hitam.org)",
+        clubEmail: "csi@hitam.org",
+        questions: [
+          { label: "Primary Programming Language", key: "primaryLang", type: "dropdown", required: true, options: "C++, Java, Python" }
+        ]
+      },
+      {
+        id: "E14", slug: "technical-tambola", title: "Technical Tambola",
+        club: "CSI Student Chapter", category: "Gaming & Coding", teamMin: 1, teamMax: 1,
+        feeHitam: 50, feeOther: 60, feeModel: "Per Person",
+        prizePool: "₹1,200",
+        prizeBreakup: "🥇 1st: ₹600 | 🥈 2nd: ₹400 | 🥉 3rd: ₹200",
+        logo: "https://raw.githubusercontent.com/ssg-hitam/ESPARTO_2026/main/public/images/chapters/csi-hitam.png",
+        themeColor: "#ca8a04",
+        desc: "Classic Tambola electrified with computer science trivia & code clues on Day 1 (Oct 9) organized by CSI Student Chapter. Solo participation. ₹1,200 prize pool.",
+        studentContact: "CSI Student Lead (+91 90591 11595)",
+        facultyContact: "CSI Faculty Incharge (ssg@hitam.org)",
+        clubEmail: "csi@hitam.org",
+        questions: [
+          { label: "Year & Branch", key: "yearBranch", type: "text", required: true, placeholder: "e.g. 2nd Year CSE" }
+        ]
+      }
+    ];
+
+    // Current State
+    var currentEvent = null;
+    var isHitam = true;
+    var validatedStep1Data = null;
+    var uploadedScreenshotBase64 = null;
+    var uploadedScreenshotName = null;
+
+    // Render View 1 (All Events (14))
+    function renderEventsDirectory(filterCat) {
+      var container = document.getElementById('eventsGridContainer');
+      container.innerHTML = '';
+
+      ALL_EVENTS.forEach(function (ev) {
+        if (filterCat && filterCat !== 'All' && ev.category !== filterCat) return;
+
+        var teamFormat = ev.teamMax > 1 ? '👥 ' + ev.teamMin + '–' + ev.teamMax + ' Members' : '👤 Solo';
+        var prizeBadge = ev.prizePool ? '<span class="card-prize-badge">🏆 ' + ev.prizePool + '</span>' : '';
+        var prizeBreakupHtml = ev.prizeBreakup ? '<div class="card-prize-breakup">' + ev.prizeBreakup + '</div>' : '';
+
+        var card = document.createElement('div');
+        card.className = 'event-card';
+
+        var contactsHtml = '';
+        if (ev.studentContact || ev.facultyContact || ev.clubEmail) {
+          contactsHtml = '<div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed rgba(255,255,255,0.08); font-size: 11px; line-height: 1.4;">' +
+            (ev.studentContact ? '<div style="color: #cbd5e1; margin-bottom: 3px;"><strong style="color: #f97316;">👨‍🎓 Student:</strong> ' + ev.studentContact + '</div>' : '') +
+            (ev.facultyContact ? '<div style="color: #cbd5e1; margin-bottom: 3px;"><strong style="color: #ec4899;">👩‍🏫 Faculty:</strong> ' + ev.facultyContact + '</div>' : '') +
+            (ev.clubEmail ? '<div style="color: #94a3b8;"><strong style="color: #38bdf8;">✉️ Official Mail:</strong> ' + ev.clubEmail + '</div>' : '') +
+            '</div>';
+        }
+
+        card.innerHTML =
+          '<div>' +
+          '<div class="card-top-row">' +
+          '<span class="card-category">' + ev.category + '</span>' +
+          prizeBadge +
+          '</div>' +
+          '<div style="margin-bottom: 6px;"><span class="card-club-tag">🏛️ ' + ev.club + '</span></div>' +
+          '<h3 class="card-title">' + ev.title + '</h3>' +
+          '<p class="card-desc">' + ev.desc + '</p>' +
+          prizeBreakupHtml +
+          '</div>' +
+          '<div>' +
+          '<div class="card-specs">' +
+          '<div><div class="spec-label">TEAM STRUCTURE</div><div class="spec-val">' + teamFormat + '</div></div>' +
+          '<div><div class="spec-label">ENTRY FEE</div><div class="spec-val">🎟️ ₹' + ev.feeHitam + ' / ₹' + ev.feeOther + '</div></div>' +
+          '</div>' +
+          contactsHtml +
+          '<button class="btn-register-card" onclick="handleEventSelection(\'' + ev.slug + '\')">🎟️ REGISTER FOR THIS EVENT →</button>' +
+          '</div>';
+        container.appendChild(card);
+      });
+    }
+
+    function filterEvents(cat) {
+      document.querySelectorAll('.filter-pill').forEach(function (btn) {
+        btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === 'All' && btn.innerText.includes('All')));
+      });
+      renderEventsDirectory(cat);
+    }
+
+    // ── CLICK ON EVENT: SPECIAL IEEE REDIRECT OR OPEN DYNAMIC FORM ──
+    function handleEventSelection(eventSlug) {
+      if (eventSlug === 'agentic-ai-hackathon' || eventSlug === 'agentic-ai-workshop') {
+        eventSlug = 'agentic-ai-workshop-hackathon';
+      }
+      var ev = ALL_EVENTS.find(function (e) { return e.slug === eventSlug || e.id === eventSlug; });
+      if (!ev) return;
+
+      // Special IEEE Redirect Check
+      if (ev.externalLink) {
+        window.open(ev.externalLink, '_blank');
+        return;
+      }
+
+      openEventStep1(ev);
+    }
+
+    // ── STEP 1: OPEN EVENT DETAILS (PAYMENT IS HIDDEN) ──
+    function openEventStep1(ev) {
+      currentEvent = ev;
+
+      // Inject Dynamic Club Theme Colors
+      document.documentElement.style.setProperty('--primary', currentEvent.themeColor);
+      document.documentElement.style.setProperty('--accent-glow', currentEvent.themeColor + '33');
+
+      // Update Header with Chapter Logo & Titles
+      document.getElementById('headerClubLogo').src = currentEvent.logo;
+      document.getElementById('eventTitle').innerText = currentEvent.title;
+      document.getElementById('badgeChapter').innerText = "🏛️ " + currentEvent.club;
+      document.getElementById('badgeTeamLimit').innerText = currentEvent.teamMax > 1 ? "👥 " + currentEvent.teamMin + "–" + currentEvent.teamMax + " Members" : "👤 Solo Event";
+
+      document.getElementById('eventsDirectoryPage').style.display = 'none';
+      document.getElementById('paymentStep2').style.display = 'none';
+      document.getElementById('successPage').style.display = 'none';
+      document.getElementById('formStep1').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      var isTeam = currentEvent.teamMax > 1;
+      document.getElementById('teamSetupGroup').style.display = isTeam ? 'block' : 'none';
+      document.getElementById('leadCardHeading').innerText = isTeam ? "2. Team Lead Details" : "2. Participant Information";
+
+      if (isTeam) {
+        var sel = document.getElementById('teamSizeSelect');
+        sel.innerHTML = '';
+        for (var s = currentEvent.teamMin; s <= currentEvent.teamMax; s++) {
+          var opt = document.createElement('option');
+          opt.value = s;
+          opt.innerText = s + " Members";
+          sel.appendChild(opt);
+        }
+      }
+
+      // Render Dynamic Event-Specific Questions
+      var qBox = document.getElementById('dynamicQuestionsContainer');
+      var qCard = document.getElementById('eventQuestionsCard');
+      qBox.innerHTML = '';
+      if (currentEvent.questions && currentEvent.questions.length > 0) {
+        qCard.style.display = 'block';
+        currentEvent.questions.forEach(function (q) {
+          var div = document.createElement('div');
+          div.className = 'form-group';
+          var lbl = document.createElement('label');
+          lbl.innerHTML = q.label + (q.required ? ' <span class="req">*</span>' : '');
+          div.appendChild(lbl);
+
+          if (q.type === 'dropdown') {
+            var select = document.createElement('select');
+            select.id = 'dyn_' + q.key;
+            if (q.required) select.required = true;
+            q.options.split(',').forEach(function (op) {
+              var o = document.createElement('option');
+              o.value = op.trim();
+              o.innerText = op.trim();
+              select.appendChild(o);
+            });
+            div.appendChild(select);
+          } else if (q.type === 'textarea') {
+            var ta = document.createElement('textarea');
+            ta.id = 'dyn_' + q.key;
+            ta.rows = 3;
+            ta.placeholder = q.placeholder || '';
+            if (q.required) ta.required = true;
+            div.appendChild(ta);
+          } else {
+            var inp = document.createElement('input');
+            inp.type = q.type || 'text';
+            inp.id = 'dyn_' + q.key;
+            inp.placeholder = q.placeholder || '';
+            if (q.required) inp.required = true;
+            div.appendChild(inp);
+          }
+          qBox.appendChild(div);
+        });
+      } else {
+        qCard.style.display = 'none';
+      }
+
+      renderDynamicMembers();
+      updateSidebarFee();
+
+      // Populate Coordinators & Support in Sidebar
+      var scEl = document.getElementById('sideStudentCoord');
+      var fcEl = document.getElementById('sideFacultyCoord');
+      var emEl = document.getElementById('sideClubEmail');
+      var sideCard = document.getElementById('sideCoordinatorsCard');
+      if (sideCard) {
+        if (currentEvent.studentContact || currentEvent.facultyContact || currentEvent.clubEmail) {
+          sideCard.style.display = 'block';
+          if (scEl) scEl.innerHTML = currentEvent.studentContact ? '<strong style="color: #ea580c;">👨‍🎓 Student Coordinator:</strong><br>' + currentEvent.studentContact : '';
+          if (fcEl) fcEl.innerHTML = currentEvent.facultyContact ? '<strong style="color: #db2777;">👩‍🏫 Faculty Coordinator:</strong><br>' + currentEvent.facultyContact : '';
+          if (emEl) emEl.innerHTML = currentEvent.clubEmail ? '<strong style="color: #0284c7;">✉️ Official Club Email:</strong><br><a href="mailto:' + currentEvent.clubEmail + '" style="color:#0284c7; text-decoration: underline;">' + currentEvent.clubEmail + '</a>' : '';
+        } else {
+          sideCard.style.display = 'none';
+        }
+      }
+    }
+
+    function showEventsDirectory() {
+      // Reset Default Theme
+      document.documentElement.style.setProperty('--primary', '#ff5e00');
+      document.getElementById('headerClubLogo').src = 'https://lh3.googleusercontent.com/d/16hNwt5Io4Io4zUitUPH9aRCIAQcgpDan';
+      document.getElementById('eventTitle').innerText = 'ESPARTO 2026 Festival Events';
+      document.getElementById('badgeChapter').innerText = '🏛️ SSG';
+      document.getElementById('badgeTeamLimit').innerText = '👥 Technical Competitions';
+
+      document.getElementById('formStep1').style.display = 'none';
+      document.getElementById('paymentStep2').style.display = 'none';
+      document.getElementById('successPage').style.display = 'none';
+      document.getElementById('eventsDirectoryPage').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setCollegeType(hitam) {
+      isHitam = hitam;
+      document.getElementById('btnHitam').className = 'toggle-btn ' + (hitam ? 'active' : '');
+      document.getElementById('btnOther').className = 'toggle-btn ' + (!hitam ? 'active' : '');
+      document.getElementById('otherCollegeGroup').style.display = hitam ? 'none' : 'block';
+      document.getElementById('sideTier').innerText = hitam ? "HITAM Student" : "Other College";
+      var colInput = document.getElementById('collegeName');
+      if (!hitam) colInput.setAttribute('required', 'required');
+      else colInput.removeAttribute('required');
+      updateSidebarFee();
+    }
+
+    function renderDynamicMembers() {
+      var container = document.getElementById('dynamicMembersContainer');
+      container.innerHTML = '';
+      if (!currentEvent || currentEvent.teamMax <= 1) return;
+
+      var teamCount = Number(document.getElementById('teamSizeSelect').value);
+      for (var i = 2; i <= teamCount; i++) {
+        var blk = document.createElement('div');
+        blk.className = 'member-block';
+        blk.innerHTML =
+          '<div class="member-title">👤 Teammate ' + i + ' Details</div>' +
+          '<div class="grid-2">' +
+          '<div class="form-group"><label>Full Name <span class="req">*</span></label><input type="text" id="mName_' + i + '" required placeholder="Teammate ' + i + ' Name"></div>' +
+          '<div class="form-group"><label>Email Address</label><input type="email" id="mEmail_' + i + '" placeholder="teammate' + i + '@domain.com"></div>' +
+          '</div>' +
+          '<div class="grid-2">' +
+          '<div class="form-group"><label>WhatsApp Number</label><input type="tel" id="mPhone_' + i + '" placeholder="10-digit mobile number"></div>' +
+          '<div class="form-group"><label>Roll Number / ID</label><input type="text" id="mRoll_' + i + '" placeholder="College ID"></div>' +
+          '</div>';
+        container.appendChild(blk);
+      }
+      updateSidebarFee();
+    }
+
+    function updateSidebarFee() {
+      if (!currentEvent) return;
+      var unitFee = isHitam ? currentEvent.feeHitam : currentEvent.feeOther;
+      var total = unitFee;
+      var breakdown = "";
+
+      if (currentEvent.feeModel === "Per Person") {
+        var count = currentEvent.teamMax > 1 ? Number(document.getElementById('teamSizeSelect').value) : 1;
+        total = unitFee * count;
+        breakdown = count + " Participant(s) × ₹" + unitFee;
+      } else {
+        breakdown = "1 Team × ₹" + unitFee + " (" + (isHitam ? "HITAM Entry" : "Other College Entry") + ")";
+      }
+
+      document.getElementById('sideTotalFee').innerText = total === 0 ? "FREE" : "₹" + total;
+      document.getElementById('sideFeeBreakdown').innerText = breakdown;
+    }
+
+    // ── STEP 1 VALIDATION & PROCEED TO STEP 2 ──
+    function validateStep1AndProceed(e) {
+      e.preventDefault();
+
+      var customAnswers = {};
+      if (currentEvent.questions) {
+        currentEvent.questions.forEach(function (q) {
+          var el = document.getElementById('dyn_' + q.key);
+          if (el) customAnswers[q.key] = el.value;
+        });
+      }
+
+      var members = [];
+      if (currentEvent.teamMax > 1) {
+        var count = Number(document.getElementById('teamSizeSelect').value);
+        for (var k = 2; k <= count; k++) {
+          members.push({
+            name: document.getElementById('mName_' + k).value,
+            email: document.getElementById('mEmail_' + k).value,
+            phone: document.getElementById('mPhone_' + k).value,
+            rollNo: document.getElementById('mRoll_' + k).value,
+            college: isHitam ? "HITAM" : document.getElementById('collegeName').value
+          });
+        }
+      }
+
+      var unitFee = isHitam ? currentEvent.feeHitam : currentEvent.feeOther;
+      var total = unitFee;
+      var breakdownText = "";
+
+      if (currentEvent.feeModel === "Per Person") {
+        var teamCount = currentEvent.teamMax > 1 ? Number(document.getElementById('teamSizeSelect').value) : 1;
+        total = unitFee * teamCount;
+        breakdownText = teamCount + " Participant(s) × ₹" + unitFee + " (" + (isHitam ? "HITAM" : "Non-HITAM") + ")";
+      } else {
+        breakdownText = "1 Team × ₹" + unitFee + " (" + (isHitam ? "HITAM Entry" : "Other College") + ")";
+      }
+
+      validatedStep1Data = {
+        eventId: currentEvent.id,
+        eventSlug: currentEvent.slug,
+        eventTitle: currentEvent.title,
+        isHitam: isHitam,
+        teamName: currentEvent.teamMax > 1 ? document.getElementById('teamName').value : "Individual",
+        teamSize: currentEvent.teamMax > 1 ? Number(document.getElementById('teamSizeSelect').value) : 1,
+        lead: {
+          name: document.getElementById('leadName').value,
+          email: document.getElementById('leadEmail').value,
+          phone: document.getElementById('leadPhone').value,
+          rollNo: document.getElementById('leadRoll').value,
+          branchYear: document.getElementById('leadBranchYear').value,
+          college: isHitam ? "Hyderabad Institute of Technology and Management (HITAM)" : document.getElementById('collegeName').value
+        },
+        members: members,
+        customAnswers: customAnswers,
+        totalFee: total
+      };
+
+      // Unhide Step 2 (UPI Payment Screen)
+      document.getElementById('formStep1').style.display = 'none';
+      document.getElementById('paymentStep2').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Populate Step 2
+      document.getElementById('displayUpiAmount').innerText = "₹" + total;
+      document.getElementById('feeCalculationBreakdown').innerText = breakdownText;
+
+      // Encode dynamic UPI URL
+      var upiUrl = 'upi://pay?pa=7093324151@naviaxis&pn=GOTTUMUKKALA%20DANUSH%20SAI%20PANINDRA%20VARMA&am=' + total + '&tn=ESP-' + currentEvent.id;
+      document.getElementById('dynamicUpiQr').src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(upiUrl);
+    }
+
+    function backToStep1() {
+      document.getElementById('paymentStep2').style.display = 'none';
+      document.getElementById('formStep1').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleScreenshotUpload(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 2.5 * 1024 * 1024) {
+        alert("File size exceeds 2 MB limit. Please compress or choose a smaller image.");
+        e.target.value = "";
+        return;
+      }
+      uploadedScreenshotName = file.name;
+      var reader = new FileReader();
+      reader.onload = function (evt) {
+        uploadedScreenshotBase64 = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ── FINAL SUBMISSION TO GOOGLE SHEETS ──
+    function handleFinalPaymentSubmission(e) {
+      e.preventDefault();
+      var utr = document.getElementById('payUtrNumber').value.trim();
+      if (utr.length < 8) {
+        alert("Please enter a valid 12-digit UPI reference number (UTR).");
+        return;
+      }
+
+      var btn = document.getElementById('finalSubmitBtn');
+      btn.innerText = "SUBMITTING FOR VERIFICATION...";
+      btn.disabled = true;
+
+      validatedStep1Data.utrNumber = utr;
+      validatedStep1Data.screenshotBase64 = uploadedScreenshotBase64;
+      validatedStep1Data.screenshotName = uploadedScreenshotName;
+
+      google.script.run
+        .withSuccessHandler(function (res) {
+          if (res.success) {
+            document.getElementById('paymentStep2').style.display = 'none';
+            document.getElementById('ticketRegId').innerText = res.regId;
+            document.getElementById('ticketEvent').innerText = validatedStep1Data.eventTitle;
+            document.getElementById('ticketTeam').innerText = validatedStep1Data.teamName;
+            document.getElementById('ticketFee').innerText = "₹" + validatedStep1Data.totalFee;
+            document.getElementById('successPage').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            alert("Error: " + res.message);
+            btn.innerText = "Submit payment for verification";
+            btn.disabled = false;
+          }
+        })
+        .withFailureHandler(function (err) {
+          alert("Submission failed: " + err.message);
+          btn.innerText = "Submit payment for verification";
+          btn.disabled = false;
+        })
+        .submitRegistration(validatedStep1Data);
+    }
+
+    // Initial Load
+    renderEventsDirectory('All');
+
+    var preselected = "<?= initialEvent ?>";
+    if (preselected) {
+      var found = ALL_EVENTS.find(function (e) { return e.slug === preselected || e.id === preselected; });
+      if (found) handleEventSelection(found.slug);
+    }
+  </script>
+</body>
+
+</html>
