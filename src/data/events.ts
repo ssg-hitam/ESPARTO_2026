@@ -49,7 +49,7 @@ export interface FestEventItem {
 }
 
 export const GOOGLE_APPS_SCRIPT_REGISTRATION_URL =
-  "https://script.google.com/a/macros/hitam.org/s/AKfycbzQhqX0aT0W66m4HHIlvO6Iv4GhqU4cFKuQXKrjLRmlsxQhYrXc8DFzhqKTk09ppngV/exec";
+  "https://script.google.com/macros/s/AKfycbyWW19qSK95FeVO35V-aX5Lr2ySIE-ZMLLqem_y6bIFRXLcVEzVtU4qooHetePr09dbHQ/exec";
 
 export function getEventRegisterUrl(event: FestEventItem): string {
   // Direct redirect for IEEE National Ideathon official form
@@ -603,4 +603,3 @@ export const EVENT_TRACKS: EventTrack[] = [
     highlights: ["Agentic AI Workshop", "Smart Manufacturing Lab", "Interactive Mentorship"],
   },
 ];
-

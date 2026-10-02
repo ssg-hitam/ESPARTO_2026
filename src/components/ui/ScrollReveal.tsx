@@ -32,6 +32,11 @@ export function ScrollReveal({
     const el = ref.current;
     if (!el) return;
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -39,7 +44,7 @@ export function ScrollReveal({
           observer.disconnect(); // animate once only
         }
       },
-      { threshold }
+      { threshold: Math.min(threshold, (window.innerHeight / Math.max(el.offsetHeight, 1)) * threshold) }
     );
 
     observer.observe(el);

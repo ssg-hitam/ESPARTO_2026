@@ -11,10 +11,8 @@ import {
   ArrowLeft, 
   ArrowRight, 
   ArrowUpRight, 
-  CheckCircle2, 
   Trophy, 
   Calendar, 
-  Clock, 
   Users, 
   Search, 
   ShieldCheck, 
@@ -80,7 +78,7 @@ function RegisterContent() {
         {/* Page Header */}
         <FadeUp delay={0.06} distance={20}>
           <div className="max-w-3xl mb-8">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
               <span className="px-2.5 py-0.5 rounded-full bg-brand-orange/10 border border-brand-orange/30 text-brand-orange font-mono font-bold text-[11px] uppercase tracking-wider">
                 OFFICIAL REGISTRATION PORTAL
               </span>
@@ -230,6 +228,7 @@ function RegisterContent() {
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
               <input
                 type="text"
+                aria-label="Search registrations"
                 placeholder="Search event, club, category..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

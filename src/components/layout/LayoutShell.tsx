@@ -22,6 +22,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
     <div className="relative z-10 flex flex-col min-h-screen" suppressHydrationWarning>
       {/* Navbar — hidden while intro plays */}
       <div
+        className="sticky top-0 z-40"
         style={{
           visibility: introComplete ? "visible" : "hidden",
           opacity: introComplete ? 1 : 0,

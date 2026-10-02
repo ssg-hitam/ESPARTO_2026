@@ -290,7 +290,9 @@ export function ShapeGrid({
     let isVisible = false;
     let isPageVisible = !document.hidden;
 
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const tryStart = () => {
+      if (reducedMotion) { drawGrid(); return; }
       if (isVisible && isPageVisible && !requestRef.current) {
         lastFrameTime = performance.now();
         requestRef.current = requestAnimationFrame(updateAnimation);

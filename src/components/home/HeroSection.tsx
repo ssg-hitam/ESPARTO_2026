@@ -108,7 +108,7 @@ export function HeroSection() {
             </div>
 
             {/* 4. Sub-Tagline: IDEAS -> INNOVATION -> IMPACT */}
-            <div className="flex items-center justify-center lg:justify-start gap-2.5 sm:gap-4 font-mono text-xs sm:text-sm md:text-[15px] font-bold tracking-[0.25em] text-text-primary mb-6 sm:mb-7 uppercase">
+            <div className="flex items-center justify-center lg:justify-start gap-1.5 sm:gap-4 font-mono text-[10px] sm:text-sm sm:text-sm md:text-[15px] font-bold tracking-[0.1em] sm:tracking-[0.25em] text-text-primary mb-6 sm:mb-7 uppercase">
               <span>IDEAS</span>
               <span className="text-brand-magenta font-black text-sm sm:text-base" aria-hidden="true">→</span>
               <span>INNOVATION</span>

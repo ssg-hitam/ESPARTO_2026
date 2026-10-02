@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ESPARTO 2026 — Event Registration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff5e00;
+      --hitam-navy: #002855;
+      --hitam-blue: #00629b;
+      --success: #059669;
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --display: 'Playfair Display',Georgia,serif;
+      --body: 'Plus Jakarta Sans',system-ui,sans-serif;
+      --mono: 'JetBrains Mono',monospace;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html {
+      background: var(--bg);
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      font-family: var(--body);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    button,input,select,textarea {
+      font: inherit;
+    }
+    button,a,input,select,textarea {
+      -webkit-tap-highlight-color: transparent;
+    }
+    button {
+      cursor: pointer;
+    }
+    button:disabled {
+      cursor: wait;
+      opacity: .65;
+    }
+    a {
+      color: var(--hitam-blue);
+      text-underline-offset: 3px;
+    }
+    img {
+      max-width: 100%;
+      object-fit: contain;
+    }
+    h1,h2,h3,p {
+      margin: 0;
+    }
+    h1,h2,h3 {
+      line-height: 1.2;
+    }
+    h1,h2 {
+      font-family: var(--display);
+    }
+    h1 {
+      font-size: clamp(2rem,4.5vw,3.35rem);
+      letter-spacing: -.025em;
+    }
+    h2 {
+      font-size: clamp(1.6rem,3vw,2.15rem);
+    }
+    h3 {
+      font-size: 1.17rem;
+    }
+    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible {
+      outline: 3px solid var(--hitam-blue);
+      outline-offset: 3px;
+    }
+    [hidden] {
+      display: none!important;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .skip-link {
+      position: fixed;
+      top: 8px;
+      left: 8px;
+      transform: translateY(-160%);
+      z-index: 100;
+      background: #fff;
+      padding: 10px 20px;
+    }
+    .skip-link:focus {
+      transform: none;
+    }
+    .container {
+      width: min(1180px,100%);
+      margin: auto;
+      padding: 0 24px;
+    }
+    .muted {
+      color: var(--text-muted);
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--primary);
+    }
+    .mono {
+      font-family: var(--mono);
+    }
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+    .small {
+      font-size: 13px;
+    }
+    .wrap {
+      overflow-wrap: anywhere;
+    }
+    .btn {
+      min-height: 46px;
+      padding: 12px 20px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.5;
+      text-decoration: none;
+      transition: background .15s,transform .15s;
+    }
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+    .btn-primary {
+      background: var(--hitam-navy);
+      color: #fff;
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: #004077;
+    }
+    .btn-secondary {
+      border-color: var(--border);
+      background: #fff;
+      color: var(--hitam-navy);
+    }
+    .btn-text {
+      color: var(--hitam-navy);
+      background: transparent;
+      padding-left: 0;
+    }
+    .btn-full {
+      width: 100%;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      font-size: 11px;
+      line-height: 1.6;
+      font-weight: 700;
+    }
+    .spinner {
+      width: 17px;
+      height: 17px;
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .status {
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      font-size: 13px;
+      color: #9a3412;
+      overflow-wrap: anywhere;
+    }
+    .status-error {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+    .status-info {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: var(--hitam-navy);
+    }
+    .topline {
+      background: var(--hitam-navy);
+      color: #fff;
+      padding: 7px 0;
+      font-size: 11px;
+      letter-spacing: .04em;
+    }
+    .topline .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .topline a {
+      color: #fff;
+    }
+    .header {
+      background: #fff;
+      border-bottom: 3px solid var(--primary);
+    }
+    .header-grid {
+      display: grid;
+      grid-template-columns: 160px minmax(0,1fr) 160px;
+      align-items: center;
+      gap: 28px;
+      padding: 32px 0 28px;
+    }
+    .side-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+    }
+    .side-logo img {
+      height: 118px;
+      width: 140px;
+      object-fit: contain;
+    }
+    .image-fallback {
+      display: none;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--hitam-navy);
+    }
+    .logo-failed .image-fallback {
+      display: block;
+    }
+    .brand {
+      display: contents;
+      align-items: center;
+      justify-content: center;
+      gap: 17px;
+      min-width: 0;
+    }
+    .brand-image {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: center;
+      width: 180px;
+      height: 125px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .brand-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .brand-copy {
+      min-width: 0;
+      grid-column: 1/-1;
+      grid-row: 2;
+      text-align: center;
+    }
+    .institution-title {
+      max-width: 800px;
+      margin: 0 auto 12px;
+      color: var(--hitam-navy);
+      font-size: clamp(19px,3vw,32px);
+      font-weight: 800;
+      line-height: 1.3;
+    }
+    .brand-copy h2 {
+      font-family: var(--display);
+      font-size: clamp(24px,3vw,34px);
+      letter-spacing: -.04em;
+      overflow-wrap: anywhere;
+    }
+    .brand-copy p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .brand-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 9px;
+    }
+    .brand-pills .pill {
+      font-size: 10px;
+    }
+    .brand-pills .accent {
+      background: #fff7ed;
+      color: #9a3412;
+      border-color: #ffedd5;
+    }
+    .portal-main {
+      padding-top: 36px;
+      padding-bottom: 65px;
+      min-height: 65vh;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      align-items: end;
+      gap: 24px;
+      margin: 15px 0 28px;
+    }
+    .hero p {
+      max-width: 650px;
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .hero-aside {
+      text-align: right;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .hero-aside strong {
+      color: var(--hitam-navy);
+      display: block;
+      font-family: var(--mono);
+      font-size: 20px;
+    }
+    .chapter-panel {
+      padding: 19px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 28px;
+    }
+    .chapter-panel h2 {
+      font-family: var(--body);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      margin-bottom: 17px;
+    }
+    .chapters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(125px,1fr));
+      gap: 24px 16px;
+    }
+    .chapter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      min-width: 0;
+    }
+    .chapter img {
+      width: 96px;
+      height: 88px;
+      object-fit: contain;
+    }
+    .chapter span {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+    .directory-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filters {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+    .filter {
+      min-height: 44px;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .filter[aria-pressed=true] {
+      background: var(--hitam-navy);
+      color: #fff;
+      border-color: var(--hitam-navy);
+    }
+    .directory-search {
+      min-height: 44px;
+      width: 220px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 10px 16px;
+      background: #fff;
+      font-size: 12px;
+    }
+    .event-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 22px;
+    }
+    .event-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      box-shadow: 0 4px 20px rgba(0,40,85,.035);
+    }
+    .card-top {
+      border-top: 4px solid var(--event-color);
+      padding: 22px 23px 0;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .club-identity {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+    .club-identity img {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+    }
+    .club-identity span {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+    .category {
+      font-size: 10px;
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 6px;
+      line-height: 1.4;
+      max-width: 100px;
+      flex-shrink: 0;
+      color: var(--hitam-navy);
+    }
+    .prize {
+      display: inline-flex;
+      gap: 7px;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #92400e;
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      padding: 5px 9px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .event-card h3 {
+      font-family: var(--display);
+      font-size: 23px;
+      letter-spacing: -.025em;
+      margin-bottom: 10px;
+    }
+    .card-description {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      overflow: hidden;
+    }
+    .prize-breakup {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+    .card-bottom {
+      padding: 20px 23px 23px;
+      margin-top: auto;
+    }
+    .team-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 13px;
+    }
+    .team-line strong {
+      color: var(--hitam-navy);
+    }
+    .fee-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .fee-pair div {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .fee-pair strong {
+      font-family: var(--mono);
+      font-size: 19px;
+      color: var(--text);
+      display: block;
+    }
+    .fee-model {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .empty {
+      grid-column: 1/-1;
+      text-align: center;
+      background: #fff;
+      padding: 45px;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+    }
+    .view-heading {
+      margin-bottom: 26px;
+    }
+    .view-heading p {
+      margin-top: 10px;
+      max-width: 680px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .stepper {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin: 18px 0 28px;
+      padding-bottom: 5px;
+      overflow-x: auto;
+      max-width: 100%;
+      list-style: none;
+    }
+    .stepper li {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .stepper li:not(:last-child):after {
+      content: '';
+      width: 26px;
+      height: 1px;
+      background: var(--border);
+      margin-left: 5px;
+    }
+    .step-circle {
+      width: 29px;
+      height: 29px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+    .stepper [aria-current=step] {
+      font-weight: 800;
+      color: var(--hitam-navy);
+    }
+    .stepper [aria-current=step] .step-circle {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 330px;
+      gap: 26px;
+      align-items: start;
+    }
+    .panel {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
+      min-width: 0;
+    }
+    .panel-heading {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 23px;
+    }
+    .panel-heading .number {
+      width: 29px;
+      height: 29px;
+      border-radius: 8px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--hitam-navy);
+      flex-shrink: 0;
+    }
+    .panel-heading h2,.panel-heading h3 {
+      font-family: var(--body);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+    .panel-heading p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .form-fields {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 18px;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-width: 0;
+    }
+    .field-full {
+      grid-column: 1/-1;
+    }
+    .field label {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .required {
+      color: #b91c1c;
+    }
+    .field input,.field select,.field textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 11px 12px;
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .field input::placeholder,.field textarea::placeholder {
+      color: #94a3b8;
+    }
+    .field small {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    fieldset {
+      padding: 0;
+      border: 0;
+      margin: 0;
+      min-width: 0;
+    }
+    legend {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .institution-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .institution-option {
+      position: relative;
+      min-width: 0;
+    }
+    .institution-option input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+    .institution-option span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 13px 8px;
+      min-height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .institution-option input:checked+span {
+      background: #eff6ff;
+      border-color: var(--hitam-blue);
+      color: var(--hitam-navy);
+      font-weight: 800;
+    }
+    .institution-option input:focus-visible+span {
+      outline: 3px solid var(--hitam-blue);
+      outline-offset: 3px;
+    }
+    .sidebar {
+      position: sticky;
+      top: 24px;
+      display: grid;
+      gap: 18px;
+    }
+    .summary-title {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .summary-event {
+      font-family: var(--display);
+      font-size: 21px;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+      padding: 7px 0;
+    }
+    .summary-line span {
+      color: var(--text-muted);
+    }
+    .summary-line strong {
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+    .summary-total {
+      padding-top: 18px;
+      margin-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .summary-total span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .summary-total strong {
+      font-family: var(--mono);
+      font-size: 30px;
+      color: var(--hitam-navy);
+    }
+    .summary .btn {
+      margin-top: 19px;
+    }
+    .summary-foot {
+      margin-top: 12px;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .contacts h3 {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .contact-group {
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+    .contact-group+.contact-group {
+      padding-top: 14px;
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .contact-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 5px;
+    }
+    .contacts a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+    }
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      align-items: start;
+    }
+    .payment-recipient {
+      padding: 17px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-bottom: 23px;
+      overflow-wrap: anywhere;
+    }
+    .payment-recipient strong {
+      display: block;
+      color: var(--hitam-navy);
+      font-size: 13px;
+      margin-top: 5px;
+    }
+    .qr-wrap {
+      text-align: center;
+    }
+    .qr-wrap img {
+      width: 220px;
+      height: 220px;
+      padding: 9px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+    }
+    .qr-placeholder {
+      padding: 25px;
+      background: #f1f5f9;
+      border-radius: 12px;
+    }
+    .payment-amount {
+      font-family: var(--mono);
+      font-size: 34px;
+      color: var(--hitam-navy);
+      margin: 15px 0 5px;
+    }
+    .upi-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .upi-row code {
+      font-family: var(--mono);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+    .copy-btn {
+      min-height: 44px;
+      min-width: 44px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 8px;
+      color: var(--hitam-navy);
+      font-size: 11px;
+      padding: 6px 10px;
+    }
+    .payment-steps {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 23px 0 0;
+      padding-left: 22px;
+    }
+    .payment-steps li {
+      padding-bottom: 8px;
+    }
+    .payment-steps strong {
+      color: var(--text);
+    }
+    .upload {
+      border: 1px dashed #94a3b8;
+      padding: 16px;
+      background: #f8fafc;
+      border-radius: 10px;
+    }
+    .upload input {
+      border: 0;
+      padding: 0;
+      font-size: 12px;
+      min-height: 44px;
+      background: transparent;
+    }
+    .proof-preview {
+      margin-top: 12px;
+      text-align: center;
+    }
+    .proof-preview img {
+      max-height: 160px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .proof-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 7px;
+      overflow-wrap: anywhere;
+    }
+    .agreement {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12px;
+      cursor: pointer;
+      min-height: 44px;
+    }
+    .agreement input {
+      width: 19px;
+      height: 19px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      accent-color: var(--hitam-navy);
+    }
+    .payment-card .btn {
+      margin-top: 4px;
+    }
+    .payment-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+    .mobile-bar {
+      display: none;
+    }
+    .footer {
+      border-top: 1px solid var(--border);
+      background: #fff;
+      padding: 26px 0;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+    .footer .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer a {
+      display: inline-block;
+      min-height: 32px;
+    }
+    .loading {
+      padding: 60px 0;
+      text-align: center;
+    }
+    .loading h1 {
+      font-size: 27px;
+      margin: 18px 0 10px;
+    }
+    .loading .spinner {
+      width: 29px;
+      height: 29px;
+      color: var(--primary);
+    }
+    .loading p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .loading .btn {
+      margin-top: 20px;
+    }
+    .ticket {
+      max-width: 710px;
+      margin: 12px auto;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 14px 45px rgba(0,40,85,.06);
+    }
+    .ticket-top {
+      padding: 34px;
+      text-align: center;
+      background: var(--hitam-navy);
+      color: #fff;
+    }
+    .ticket-check {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 17px;
+      font-size: 27px;
+      font-weight: 800;
+    }
+    .ticket-top h1 {
+      font-size: 31px;
+    }
+    .ticket-top p {
+      font-size: 12px;
+      opacity: .8;
+      margin-top: 9px;
+    }
+    .ticket-body {
+      padding: 32px;
+    }
+    .ticket-id {
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      background: #f8fafc;
+      margin-bottom: 22px;
+    }
+    .ticket-id p {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+    }
+    .ticket-id strong {
+      display: block;
+      font-family: var(--mono);
+      font-size: clamp(18px,3vw,27px);
+      margin-top: 7px;
+      overflow-wrap: anywhere;
+      color: var(--hitam-navy);
+    }
+    .ticket-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .ticket-details dt {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .ticket-details dd {
+      margin: 5px 0 0;
+      font-size: 13px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+    .ticket-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+    .ticket-note {
+      margin-top: 23px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .pending {
+      color: #92400e;
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(0,25,55,.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      backdrop-filter: blur(3px);
+    }
+    .modal-card {
+      width: min(760px,100%);
+      max-height: 90dvh;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 20px 80px rgba(0,0,0,.2);
+      padding: 28px;
+    }
+    .modal-heading {
+      margin-bottom: 20px;
+    }
+    .modal-heading p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+    .review-section {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+    .review-section h3 {
+      font-size: 12px;
+      color: var(--hitam-navy);
+      margin-bottom: 12px;
+    }
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 0;
+    }
+    .review-grid dt {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .review-grid dd {
+      font-size: 12px;
+      margin: 3px 0 0;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+    .review-proof img {
+      max-height: 130px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      margin-top: 25px;
+      position: sticky;
+      bottom: -28px;
+      padding: 16px 0;
+      background: #fff;
+    }
+    .external-panel {
+      max-width: 680px;
+      margin: 24px auto;
+      padding: 34px;
+      text-align: center;
+    }
+    .external-panel img {
+      width: 65px;
+      height: 65px;
+      margin-bottom: 20px;
+    }
+    .external-panel p {
+      margin-top: 15px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .external-panel .btn {
+      margin-top: 23px;
+    }
+    .external-panel .contacts {
+      text-align: left;
+      margin-top: 26px;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    @media(max-width:1050px) {
+      .event-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+      .chapters {
+        grid-template-columns: repeat(auto-fit,minmax(110px,1fr));
+      }
+      .form-grid {
+        grid-template-columns: minmax(0,1fr) 290px;
+      }
+      .panel {
+        padding: 22px;
+      }
+    }
+    @media(max-width:800px) {
+      .form-grid,.payment-grid {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: static;
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero-aside {
+        display: none;
+      }
+      .brand-pills .pill:last-child {
+        display: none;
+      }
+    }
+    @media(max-width:600px) {
+      .container {
+        padding: 0 16px;
+      }
+      .header-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding: 16px 0;
+      }
+      .side-logo {
+        grid-row: 1;
+      }
+      .side-logo:first-child {
+        justify-content: flex-start;
+      }
+      .side-logo:last-child {
+        grid-column: 2;
+        justify-content: flex-end;
+      }
+      .side-logo img {
+        height: 72px;
+        width: 92px;
+      }
+      .brand {
+        grid-column: 1/-1;
+        grid-row: 2;
+        text-align: center;
+        gap: 12px;
+      }
+      .brand-image {
+        grid-column: 1/-1;
+        grid-row: 2;
+        width: 150px;
+        height: 100px;
+      }
+      .brand-image img {
+        max-height: 100px;
+      }
+      .brand-copy {
+        grid-row: 3;
+      }
+      .brand-copy p {
+        font-size: 10px;
+      }
+      .brand-pills {
+        justify-content: center;
+      }
+      .portal-main {
+        padding-top: 22px;
+      }
+      .hero {
+        margin-top: 5px;
+      }
+      .hero p {
+        font-size: 12px;
+      }
+      .event-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .directory-search {
+        width: 100%;
+      }
+      .directory-tools {
+        gap: 12px;
+      }
+      .filter {
+        padding: 9px 12px;
+        font-size: 11px;
+      }
+      .chapters {
+        grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 18px 12px;
+      }
+      .chapter-panel {
+        padding: 17px;
+      }
+      .chapter img {
+        width: 72px;
+        height: 68px;
+      }
+      .form-fields {
+        grid-template-columns: 1fr;
+      }
+      .field-full {
+        grid-column: auto;
+      }
+      .panel {
+        padding: 20px;
+      }
+      .sidebar {
+        grid-template-columns: 1fr;
+      }
+      .summary-total strong {
+        font-size: 27px;
+      }
+      .mobile-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 30;
+        background: #fff;
+        border-top: 1px solid var(--border);
+        padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        box-shadow: 0 -6px 25px rgba(0,40,85,.07);
+      }
+      .mobile-bar .btn {
+        padding: 11px 14px;
+        max-width: 65%;
+        font-size: 11px;
+      }
+      .mobile-bar small {
+        display: block;
+        font-size: 9px;
+        color: var(--text-muted);
+      }
+      .mobile-bar strong {
+        font-family: var(--mono);
+        font-size: 21px;
+        color: var(--hitam-navy);
+      }
+      body.has-mobile-cta {
+        padding-bottom: 95px;
+      }
+      .view-heading h1 {
+        font-size: 30px;
+      }
+      .stepper {
+        gap: 8px;
+      }
+      .stepper li {
+        font-size: 10px;
+        gap: 6px;
+      }
+      .stepper li:not(:last-child):after {
+        width: 15px;
+        margin-left: 0;
+      }
+      .step-circle {
+        width: 26px;
+        height: 26px;
+      }
+      .modal {
+        padding: 12px;
+      }
+      .modal-card {
+        padding: 20px;
+        max-height: 92dvh;
+      }
+      .modal-actions {
+        bottom: -20px;
+        justify-content: stretch;
+      }
+      .modal-actions .btn {
+        flex: 1;
+      }
+      .review-grid,.ticket-details {
+        grid-template-columns: 1fr;
+      }
+      .ticket-top,.ticket-body {
+        padding: 25px;
+      }
+      .ticket-actions .btn {
+        width: 100%;
+      }
+      .topline {
+        font-size: 10px;
+      }
+      .topline a {
+        display: none;
+      }
+      .qr-wrap img {
+        width: 210px;
+        height: 210px;
+      }
+      .footer .container {
+        display: block;
+      }
+      .footer p+p {
+        margin-top: 8px;
+      }
+      .external-panel {
+        padding: 24px;
+      }
+      .empty {
+        padding: 30px 18px;
+      }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *,*::before,*::after {
+        transition: none!important;
+      }
+      .spinner {
+        animation: none;
+        border-style: dotted;
+      }
+      .btn:hover:not(:disabled) {
+        transform: none;
+      }
+    }
+    @media print {
+      body {
+        background: #fff;
+        padding: 0!important;
+        font-size: 12px;
+      }
+      .topline,.header,.footer,.mobile-bar,.ticket-actions,.skip-link {
+        display: none!important;
+      }
+      .portal-main,.container {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        max-width: none;
+      }
+      .ticket {
+        border: 1px solid #bbb;
+        box-shadow: none;
+        margin: 0 auto;
+        break-inside: avoid;
+      }
+      .ticket-top {
+        background: #fff;
+        color: #002855;
+        border-bottom: 2px solid #002855;
+      }
+      .ticket-top p {
+        opacity: 1;
+      }
+      .ticket-check {
+        border: 1px solid #059669;
+      }
+      .ticket-details {
+        grid-template-columns: 1fr 1fr;
+      }
+      .ticket-top,.ticket-body {
+        padding: 25px;
+      }
+      .ticket-id {
+        background: #fff;
+      }
+      .ticket-note {
+        color: #333;
+      }
+    }
+    @media (max-width: 600px) {
+      .field input, .field select, .field textarea, .directory-search, .upload input {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#portalMain">Skip to registration content</a>
+  <div id="appContent">
+    <div class="topline"><div class="container"><span>SSG presents · HITAM Annual Technical Festival</span><span>9–10 October 2026 · <a href="mailto:ssg@hitam.org">ssg@hitam.org</a></span></div></div>
+    <header class="header">
+      <div class="container"><div class="header-grid">
+        <div class="side-logo"><img id="ssgLogo" alt="SSG"><span class="image-fallback">SSG HITAM</span></div>
+        <div class="brand"><div class="brand-image"><img id="brandLogo" alt="ESPARTO"><span class="image-fallback">ESPARTO</span></div><div class="brand-copy"><div class="institution-title">HYDERABAD INSTITUTE OF<br>TECHNOLOGY AND MANAGEMENT</div><h2 id="brandTitle">ESPARTO 2026</h2><p id="brandSubtitle">Official event registration portal</p><div class="brand-pills"><span class="pill accent">9–10 OCT 2026</span><span class="pill">HITAM · HYDERABAD</span><span class="pill">IDEAS → IMPACT</span></div></div></div>
+        <div class="side-logo"><img id="hitamLogo" alt="Hyderabad Institute of Technology and Management"><span class="image-fallback">HITAM</span></div>
+      </div></div>
+    </header>
+    <main id="portalMain" class="portal-main container" tabindex="-1">
+      <div id="loadingView" class="loading" aria-live="polite"><span class="spinner" aria-hidden="true"></span><h1>Choose your next challenge.</h1><p id="loadingText">Loading the official event directory…</p><button id="retryLoad" type="button" class="btn btn-secondary" hidden>Try loading again</button></div>
+      <div id="pageMessage" class="status status-info" role="status" hidden></div>
+      <section id="directoryView" hidden aria-labelledby="directoryTitle">
+        <div class="hero"><div><p class="eyebrow" style="margin:0 0 12px;color:var(--primary)">Fourteen events. One shared ambition.</p><h1 id="directoryTitle" tabindex="-1">Ideas become impact<br>when you show up.</h1><p>Choose your event, bring your team, and make your mark at ESPARTO 2026. Your registration starts here.</p></div><div class="hero-aside"><strong>09—10 OCT</strong><span>HITAM Campus, Medchal<br>Hyderabad, Telangana</span></div></div>
+        <section class="chapter-panel" aria-labelledby="chaptersTitle"><h2 id="chaptersTitle">Brought to you by our technical chapters</h2><div id="chapterStrip" class="chapters"></div></section>
+        <div class="directory-tools"><div id="filters" class="filters" role="group" aria-label="Filter events by category"></div><label class="sr-only" for="eventSearch">Search events or chapters</label><input id="eventSearch" class="directory-search" type="search" placeholder="Search events or chapters" maxlength="100"></div>
+        <p id="eventCount" class="event-count" aria-live="polite"></p><div id="eventGrid" class="event-grid"></div>
+      </section>
+      <section id="detailsView" hidden aria-labelledby="detailsTitle">
+        <button id="backDirectory" type="button" class="btn btn-text">← Event directory</button>
+        <div id="externalPanel" class="panel external-panel" hidden></div>
+        <div id="localDetails">
+          <ol class="stepper" aria-label="Registration progress"><li aria-current="step"><span class="step-circle">1</span>Participant details</li><li><span class="step-circle">2</span>UPI payment</li><li><span class="step-circle">3</span>E-ticket</li></ol>
+          <div class="view-heading"><p class="eyebrow">Step 01 / Registration</p><h1 id="detailsTitle" tabindex="-1">Build your registration.</h1><p id="detailsIntro"></p></div>
+          <form id="detailsForm">
+            <div class="form-grid"><div class="stack">
+              <section class="panel"><div class="panel-heading"><span class="number" aria-hidden="true">01</span><div><h2>Institution &amp; team</h2><p>Choose your college tier and participant count.</p></div></div>
+                <fieldset><legend>Institution <span class="required" aria-hidden="true">*</span></legend><div class="institution-toggle"><label class="institution-option"><input type="radio" name="institution" value="HITAM" checked required><span>HITAM Student</span></label><label class="institution-option"><input type="radio" name="institution" value="Other" required><span>Other College</span></label></div></fieldset>
+                <div class="form-fields"><div id="collegeField" class="field field-full" hidden><label for="collegeName">College name <span class="required" aria-hidden="true">*</span></label><input id="collegeName" name="college" type="text" maxlength="160" autocomplete="organization" placeholder="Full institution name"></div><div id="teamNameField" class="field"><label for="teamName">Team name <span class="required" aria-hidden="true">*</span></label><input id="teamName" name="teamName" type="text" maxlength="120" placeholder="Your team name" autocomplete="off"></div><div class="field"><label for="teamSize">Number of participants <span class="required" aria-hidden="true">*</span></label><select id="teamSize" name="teamSize" required></select><small id="teamHelp"></small></div></div>
+              </section>
+              <section class="panel"><div class="panel-heading"><span class="number" aria-hidden="true">02</span><div><h2 id="leadHeading">Team lead details</h2><p>Required fields are marked *. Teammate contacts are optional.</p></div></div><div id="leadFields" class="form-fields"></div></section>
+              <div id="teammateFields" class="stack"></div>
+              <section class="panel"><div class="field"><label for="customDetails">Additional details (optional)</label><input id="customDetails" name="customDetails" type="text" maxlength="1000" placeholder="Anything the event coordinators should know" autocomplete="off"></div></section>
+              <div id="detailsError" class="status status-error" role="alert" hidden></div>
+            </div><aside class="sidebar" aria-label="Registration summary and contacts"><section id="detailsSummary" class="panel summary"></section><section id="detailsContacts" class="panel contacts"></section></aside></div>
+          </form>
+        </div>
+      </section>
+      <section id="paymentView" hidden aria-labelledby="paymentTitle">
+        <button id="paymentBack" type="button" class="btn btn-text">← Edit participant details</button>
+        <ol class="stepper" aria-label="Registration progress"><li><span class="step-circle">✓</span>Participant details</li><li aria-current="step"><span class="step-circle">2</span>UPI payment</li><li><span class="step-circle">3</span>E-ticket</li></ol>
+        <div class="view-heading"><p class="eyebrow">Step 02 / Payment</p><h1 id="paymentTitle" tabindex="-1">One last step.</h1><p id="paymentIntro">Pay the exact amount below. Your registration will be recorded after you submit the transaction reference and payment screenshot.</p></div>
+        <form id="paymentForm"><div class="payment-grid">
+          <section class="panel"><div class="panel-heading"><span class="number" aria-hidden="true">UPI</span><div><h2>Complete your UPI payment</h2><p>GPay · PhonePe · Paytm · Navi</p></div></div><div class="payment-recipient"><span class="eyebrow" style="color:var(--text-muted)">Pay to</span><strong id="payeeName"></strong></div><div class="qr-wrap"><img id="paymentQr" alt="UPI payment QR code"><p id="qrError" class="qr-placeholder small" hidden>The QR code could not load. Pay using the UPI ID and exact amount below.</p><p id="paymentAmount" class="payment-amount"></p><div class="upi-row"><code id="upiId"></code><button id="copyUpi" class="copy-btn" type="button">Copy UPI ID</button></div><a id="openUpi" class="btn btn-secondary" style="margin-top:15px" target="_top" href="#">Open your UPI app ↗</a><p id="copyStatus" class="small muted" role="status"></p></div><ol class="payment-steps"><li>Check the recipient name, then pay <strong id="instructionAmount"></strong>.</li><li>Find the UTR / transaction reference in your payment app.</li><li>Upload your payment screenshot and review all details before submitting.</li><li>Keep your proof until the chapter verifies the payment.</li></ol></section>
+          <section class="panel payment-card"><div class="panel-heading"><span class="number" aria-hidden="true">03</span><div><h2>Submit your payment proof</h2><p id="paymentTeamSummary"></p></div></div><div class="stack"><div class="field"><label for="utrNumber">UPI transaction reference (UTR) <span class="required" aria-hidden="true">*</span></label><input id="utrNumber" name="utrNumber" type="text" inputmode="numeric" pattern="[0-9]{8,16}" minlength="8" maxlength="16" autocomplete="off" required placeholder="8–16 digits from your payment app"><small>Enter the reference exactly as shown. Do not use your phone number.</small></div><div class="field"><label for="proofFile">Payment screenshot <span class="required" aria-hidden="true">*</span></label><div class="upload"><input id="proofFile" name="proofFile" type="file" accept="image/png,image/jpeg,image/webp" required aria-describedby="proofHelp"><p id="proofHelp" class="small muted">PNG, JPG, or WebP · Maximum 2 MB</p><div id="proofPreview" class="proof-preview" hidden><img id="proofImage" alt="Selected payment screenshot"><p id="proofMeta" class="proof-meta"></p></div></div></div><label class="agreement"><input id="agreement" name="agreement" type="checkbox" required><span>I confirm these participant details and payment proof are correct. I understand payment and entry are subject to organizer verification, and the proof will be shared with anyone who has its link.</span></label><div id="paymentError" class="status status-error" role="alert" hidden></div><button id="paymentReview" class="btn btn-primary btn-full" type="submit">Review registration →</button></div><p class="payment-note">Nothing is submitted until you confirm the next screen. Need help? <a href="mailto:ssg@hitam.org">ssg@hitam.org</a> · <a href="tel:+919059111595">+91 90591 11595</a></p></section>
+        </div></form>
+      </section>
+      <section id="ticketView" hidden aria-labelledby="ticketTitle"><div class="ticket"><div class="ticket-top"><span class="ticket-check" aria-hidden="true">✓</span><h1 id="ticketTitle" tabindex="-1">You're on the list.</h1><p>Your registration has been received. Keep this e-ticket for your records.</p></div><div class="ticket-body"><div class="ticket-id"><p>Registration reference</p><strong id="ticketRegId"></strong></div><dl id="ticketDetails" class="ticket-details"></dl><div class="ticket-actions"><button id="printTicket" type="button" class="btn btn-primary">Print / Save e-ticket</button><button id="exploreEvents" type="button" class="btn btn-secondary">Explore other events →</button></div><p class="ticket-note">Payment is pending verification by the event organizers. This e-ticket records your submission and does not confirm bank settlement. Festival: 9–10 October 2026 · HITAM Campus, Medchal, Hyderabad.<br>Queries: <a href="mailto:ssg@hitam.org">ssg@hitam.org</a> · <a href="tel:+919059111595">+91 90591 11595</a></p></div></div></section>
+    </main>
+    <footer class="footer"><div class="container"><p>ESPARTO 2026 · Organized by SSG, HITAM</p><p>Registration support: <a href="tel:+919059111595">Tejal · +91 90591 11595</a> · <a href="mailto:ssg@hitam.org">ssg@hitam.org</a></p></div></footer>
+    <div id="mobileBar" class="mobile-bar" hidden><div><small id="mobileAmountLabel">REGISTRATION TOTAL</small><strong id="mobileAmount"></strong></div><button id="mobileCta" class="btn btn-primary" type="submit" form="detailsForm">Proceed to payment →</button></div>
+  </div>
+  <div id="confirmation" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" hidden><div class="modal-card"><div class="modal-heading"><p class="eyebrow">Check before you submit</p><h2 id="confirmTitle" tabindex="-1">Your registration, at a glance.</h2><p>Review every participant and payment detail. Your e-ticket will initially show Pending Verification.</p></div><div id="confirmationBody"></div><div id="submitStatus" class="status status-info" role="status" style="margin-top:18px" hidden></div><div id="submitError" class="status status-error" role="alert" style="margin-top:18px" hidden></div><div class="modal-actions"><button id="confirmCancel" type="button" class="btn btn-secondary">Edit details</button><button id="confirmSubmit" type="button" class="btn btn-primary">Submit for verification</button></div></div></div>
+  <script>
+    // Apps Script printing scriptlets are contextually escaped. The backend only
+    // supplies a known catalog slug, never arbitrary URL input.
+    var preselected = "<?= initialEvent ?>";
+    var portal = null;
+    var events = [];
+    var selectedEvent = null;
+    var activeCategory = 'All';
+    var currentView = 'loading';
+    var draft = null;
+    var memberDrafts = {};
+    var proof = null;
+    var proofReadVersion = 0;
+    var requestId = '';
+    var pendingPayload = null;
+    var inFlight = false;
+    var slowTimer = null;
+    var modalPreviousFocus = null;
+    var modalPreviousOverflow = '';
+    var loadInFlight = false;
+    var categories = [['All', 'All events'], ['Hackathon', 'Hackathons'], ['Ideathon', 'Ideathons'], ['Workshop', 'Workshops'], ['Challenge', 'Challenges'], ['Gaming & Coding', 'Gaming & Coding']];
+    function byId(id) { return document.getElementById(id); }
+    function escapeHtml(value) { return String(value === undefined || value === null ? '' : value).replace(/[&<>"']/g, function (character) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]; }); }
+    function money(amount) { return '₹' + Number(amount).toLocaleString('en-IN'); }
+    function teamLabel(event) { return event.maxTeam === 1 ? 'Solo' : event.minTeam === event.maxTeam ? event.minTeam + ' participants' : event.minTeam + '–' + event.maxTeam + ' participants'; }
+    function setMessage(id, message) { var target = byId(id); target.textContent = message || ''; target.hidden = !message; }
+    function setImage(id, url, alt) { var image = byId(id); image.hidden = false; image.parentElement.classList.remove('logo-failed'); image.removeAttribute('data-cdn-retried'); image.removeAttribute('data-drive-retried'); image.src = url; if (alt)
+        image.alt = alt; }
+    function showView(name, focusId) {
+        ['loading', 'directory', 'details', 'payment', 'ticket'].forEach(function (view) { byId(view + 'View').hidden = view !== name; });
+        currentView = name;
+        var showCta = (name === 'details' && selectedEvent && selectedEvent.id !== 'E01') || name === 'payment';
+        byId('mobileBar').hidden = !showCta;
+        document.body.classList.toggle('has-mobile-cta', showCta);
+        byId('mobileCta').setAttribute('form', name === 'payment' ? 'paymentForm' : 'detailsForm');
+        byId('mobileCta').textContent = name === 'payment' ? 'Review registration →' : 'Proceed to payment →';
+        if (focusId) {
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            byId(focusId).focus({ preventScroll: true });
+        }
+    }
+    function updateHeader(event) {
+        document.documentElement.style.setProperty('--primary', event ? event.themeColor : '#ff5e00');
+        setImage('ssgLogo', event ? event.logo : portal.logos.ssg, event ? event.club : 'SSG HITAM');
+        byId('ssgLogo').nextElementSibling.textContent = event ? event.club : 'SSG HITAM';
+        setImage('brandLogo', portal.logos.esparto, 'ESPARTO 2026');
+        byId('brandTitle').textContent = event ? event.title : 'ESPARTO 2026';
+        byId('brandSubtitle').textContent = event ? event.club + ' · ESPARTO 2026' : 'Official event registration portal';
+    }
+    function loadPortal() {
+        if (loadInFlight)
+            return;
+        loadInFlight = true;
+        byId('loadingView').querySelector('.spinner').hidden = false;
+        byId('retryLoad').hidden = true;
+        byId('loadingText').textContent = 'Loading the official event directory…';
+        if (typeof google === 'undefined' || !google.script || !google.script.run) {
+            loadFailed();
+            return;
+        }
+        google.script.run.withSuccessHandler(function (data) {
+            loadInFlight = false;
+            if (!data || !Array.isArray(data.events) || data.events.length !== 14) {
+                loadFailed();
+                return;
+            }
+            portal = data;
+            events = data.events;
+            setImage('ssgLogo', data.logos.ssg);
+            setImage('hitamLogo', data.logos.hitam);
+            updateHeader(null);
+            byId('chapterStrip').innerHTML = data.chapters.map(function (chapter) { return '<div class="chapter"><img src="' + escapeHtml(chapter.logo) + '" alt=""><span>' + escapeHtml(chapter.name) + '</span></div>'; }).join('');
+            byId('filters').innerHTML = categories.map(function (category) { return '<button class="filter" type="button" data-category="' + escapeHtml(category[0]) + '" aria-pressed="' + (category[0] === activeCategory) + '">' + escapeHtml(category[1]) + '</button>'; }).join('');
+            renderEvents();
+            showView('directory');
+            setMessage('pageMessage', data.registrationAvailable ? '' : 'Local registrations are temporarily unavailable. Please contact SSG; the separate IEEE form remains accessible.');
+            var event = events.filter(function (item) { return item.slug === preselected; })[0];
+            if (event)
+                handleEventSelection(event.slug);
+        }).withFailureHandler(loadFailed).getPortalData();
+    }
+    function loadFailed() { loadInFlight = false; byId('loadingView').querySelector('.spinner').hidden = true; byId('loadingText').textContent = 'The directory could not load. Please try again or contact ssg@hitam.org.'; byId('retryLoad').hidden = false; }
+    function renderEvents() {
+        var query = byId('eventSearch').value.trim().toLowerCase();
+        var matches = events.filter(function (event) { return (activeCategory === 'All' || event.category === activeCategory) && (!query || (event.title + ' ' + event.club + ' ' + event.description).toLowerCase().indexOf(query) !== -1); });
+        byId('eventCount').textContent = matches.length + (matches.length === 1 ? ' event' : ' events') + ' · Fees shown in INR';
+        byId('eventGrid').innerHTML = matches.length ? matches.map(function (event) {
+            var breakup = Object.keys(event.prizeBreakup || {}).map(function (key) { return escapeHtml(key.charAt(0).toUpperCase() + key.slice(1)) + ': ' + escapeHtml(event.prizeBreakup[key]); }).join(' · ');
+            var action = event.id === 'E01' ? '<a class="btn btn-primary btn-full" href="' + escapeHtml(portal.ieeeUrl) + '" target="_blank" rel="noopener noreferrer">Register on IEEE form ↗</a>' : '<button class="btn btn-primary btn-full" type="button" data-event="' + escapeHtml(event.slug) + '"' + (portal.registrationAvailable ? '' : ' disabled') + '>' + (portal.registrationAvailable ? 'Register for event →' : 'Registration unavailable') + '</button>';
+            return '<article class="event-card" style="--event-color:' + escapeHtml(event.themeColor) + '"><div class="card-top"><div class="card-meta"><div class="club-identity"><img src="' + escapeHtml(event.logo) + '" alt=""><span>' + escapeHtml(event.club) + '</span></div><span class="category">' + escapeHtml(event.category) + '</span></div><span class="prize">★ ' + money(event.prize) + ' prize pool</span><h3>' + escapeHtml(event.title) + '</h3><p class="card-description">' + escapeHtml(event.description) + '</p><p class="prize-breakup">' + (breakup || 'Prize breakup: contact the chapter for details.') + '</p></div><div class="card-bottom"><div class="team-line"><span>Team format</span><strong>' + teamLabel(event) + '</strong></div><div class="fee-pair"><div>HITAM students<strong>' + money(event.hitamFee) + '</strong></div><div>Other colleges<strong>' + money(event.otherFee) + '</strong></div></div><p class="fee-model">' + (event.feeModel === 'team' ? 'Per team · one flat fee' : 'Per person · multiplied by participant count') + '</p>' + action + '</div></article>';
+        }).join('') : '<div class="empty"><h2>No matching events</h2><p class="muted small" style="margin-top:12px">Try another category or search term.</p><button type="button" id="resetDirectory" class="btn btn-secondary" style="margin-top:20px">Reset filters</button></div>';
+    }
+    function newRequestId() { var bytes = new Uint8Array(16); window.crypto.getRandomValues(bytes); return Array.prototype.map.call(bytes, function (byte) { return ('0' + byte.toString(16)).slice(-2); }).join(''); }
+    function fieldsHtml(prefix, required, values) {
+        var rows = [['Name', 'Full name', 'text', 120, 'name'], ['Email', 'Email address', 'email', 254, 'email'], ['Phone', 'WhatsApp number', 'tel', 24, 'tel'], ['Roll', 'Roll number', 'text', 60, 'off'], ['Branch', 'Branch & year', 'text', 100, 'off']];
+        return rows.map(function (row) {
+            var key = { Name: 'name', Email: 'email', Phone: 'phone', Roll: 'rollNo', Branch: 'branchYear' }[row[0]];
+            var isRequired = required || row[0] === 'Name';
+            var id = prefix + row[0];
+            var example = row[0] === 'Phone' ? '10-digit number or +91…' : row[0] === 'Branch' ? 'e.g. CSE · 2nd year' : row[1];
+            return '<div class="field' + (row[0] === 'Name' ? ' field-full' : '') + '"><label for="' + id + '">' + row[1] + (isRequired ? ' <span class="required" aria-hidden="true">*</span>' : ' <span class="muted small">(optional)</span>') + '</label><input id="' + id + '" name="' + id + '" type="' + row[2] + '" maxlength="' + row[3] + '" autocomplete="' + (prefix === 'lead' ? row[4] : 'off') + '"' + (isRequired ? ' required' : '') + (row[0] === 'Phone' ? ' inputmode="tel"' : '') + ' placeholder="' + escapeHtml(example) + '" value="' + escapeHtml(values && values[key] || '') + '"></div>';
+        }).join('');
+    }
+    function contactLinks(text) {
+        var regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|(?:\+91[\s-]*)?[6-9](?:[\s-]*\d){9}/gi;
+        var output = '', position = 0, match;
+        while ((match = regex.exec(String(text || '')))) {
+            output += escapeHtml(text.slice(position, match.index));
+            var isEmail = match[0].indexOf('@') !== -1;
+            var digits = match[0].replace(/\D/g, '');
+            var href = isEmail ? 'mailto:' + match[0] : 'tel:+' + (digits.length === 10 ? '91' : '') + digits;
+            output += '<a href="' + escapeHtml(href) + '">' + escapeHtml(match[0]) + '</a>';
+            position = regex.lastIndex;
+        }
+        return output + escapeHtml(String(text || '').slice(position));
+    }
+    function contactsHtml(event) { return '<h3>Event coordinators</h3><div class="contact-group"><span class="contact-label">Student coordinators</span>' + contactLinks(event.studentContact) + '</div><div class="contact-group"><span class="contact-label">Faculty</span>' + contactLinks(event.facultyContact) + '</div>' + (event.clubEmail ? '<div class="contact-group"><span class="contact-label">Chapter email</span>' + contactLinks(event.clubEmail) + '</div>' : '') + '<div class="contact-group"><span class="contact-label">SSG support</span>' + contactLinks(portal.support) + '</div>'; }
+    function handleEventSelection(slug) {
+        if (inFlight)
+            return;
+        var event = events.filter(function (item) { return item.slug === slug; })[0];
+        if (!event) {
+            returnDirectory();
+            return;
+        }
+        if (event.id !== 'E01' && !portal.registrationAvailable) {
+            returnDirectory();
+            setMessage('pageMessage', 'Local registrations are temporarily unavailable. Please contact SSG before making a payment.');
+            return;
+        }
+        selectedEvent = event;
+        draft = null;
+        memberDrafts = {};
+        proof = null;
+        proofReadVersion++;
+        pendingPayload = null;
+        try {
+            requestId = newRequestId();
+        }
+        catch (error) {
+            setMessage('pageMessage', 'Your browser could not create a secure submission reference. Please use a current browser.');
+            return;
+        }
+        setMessage('pageMessage', '');
+        setMessage('detailsError', '');
+        setMessage('paymentError', '');
+        byId('detailsForm').reset();
+        byId('paymentForm').reset();
+        byId('proofPreview').hidden = true;
+        updateHeader(event);
+        byId('externalPanel').hidden = event.id !== 'E01';
+        byId('localDetails').hidden = event.id === 'E01';
+        if (event.id === 'E01') {
+            byId('externalPanel').innerHTML = '<img src="' + escapeHtml(event.logo) + '" alt="IEEE"><h1 id="externalTitle" tabindex="-1">IEEE National Ideathon</h1><p>This event uses its own official registration form. Continue there to enter participant details and complete payment.</p><a class="btn btn-primary" href="' + escapeHtml(portal.ieeeUrl) + '" target="_blank" rel="noopener noreferrer">Open official IEEE form ↗</a><div class="contacts">' + contactsHtml(event) + '</div>';
+            showView('details', 'externalTitle');
+            return;
+        }
+        byId('detailsIntro').textContent = event.title + ' · ' + teamLabel(event) + ' · ' + (event.feeModel === 'team' ? 'Per-team pricing' : 'Per-person pricing');
+        byId('teamSize').innerHTML = '';
+        for (var size = event.minTeam; size <= event.maxTeam; size++) {
+            var option = document.createElement('option');
+            option.value = String(size);
+            option.textContent = size + (size === 1 ? ' participant' : ' participants');
+            byId('teamSize').appendChild(option);
+        }
+        byId('teamSize').disabled = event.minTeam === event.maxTeam;
+        byId('teamHelp').textContent = 'Allowed: ' + teamLabel(event) + '. The lead is included in the count.';
+        byId('teamNameField').hidden = event.maxTeam === 1;
+        byId('teamName').required = event.maxTeam > 1;
+        byId('leadHeading').textContent = event.maxTeam === 1 ? 'Participant details' : 'Team lead details';
+        byId('leadFields').innerHTML = fieldsHtml('lead', true, {});
+        byId('detailsContacts').innerHTML = contactsHtml(event);
+        updateInstitution();
+        renderTeammates();
+        updateSummary();
+        showView('details', 'detailsTitle');
+    }
+    function readMember(prefix) { function value(suffix) { var element = byId(prefix + suffix); return element ? element.value.trim() : ''; } return { name: value('Name'), email: value('Email'), phone: value('Phone'), rollNo: value('Roll'), branchYear: value('Branch') }; }
+    function renderTeammates() {
+        var previousBlocks = byId('teammateFields').querySelectorAll('[data-member-index]');
+        Array.prototype.forEach.call(previousBlocks, function (block) { var index = Number(block.getAttribute('data-member-index')); memberDrafts[index] = readMember('member' + index); });
+        var html = '';
+        for (var index = 2; index <= Number(byId('teamSize').value); index++) {
+            html += '<section class="panel" data-member-index="' + index + '"><div class="panel-heading"><span class="number" aria-hidden="true">' + ('0' + (index + 1)).slice(-2) + '</span><div><h2>Teammate ' + index + '</h2><p>Name is required. Add contact details where available.</p></div></div><div class="form-fields">' + fieldsHtml('member' + index, false, memberDrafts[index]) + '</div></section>';
+        }
+        byId('teammateFields').innerHTML = html;
+        updateSummary();
+    }
+    function institutionValue() { return byId('detailsForm').querySelector('input[name="institution"]:checked').value; }
+    function updateInstitution() { var other = institutionValue() === 'Other'; byId('collegeField').hidden = !other; byId('collegeName').required = other; updateSummary(); }
+    function calculateAmount() { var unit = institutionValue() === 'HITAM' ? selectedEvent.hitamFee : selectedEvent.otherFee; return { unit: unit, size: Number(byId('teamSize').value), total: unit * (selectedEvent.feeModel === 'person' ? Number(byId('teamSize').value) : 1) }; }
+    function updateSummary() {
+        if (!selectedEvent || selectedEvent.id === 'E01')
+            return;
+        var fee = calculateAmount(), person = selectedEvent.feeModel === 'person';
+        byId('detailsSummary').innerHTML = '<p class="summary-title">Registration summary</p><h2 class="summary-event">' + escapeHtml(selectedEvent.title) + '</h2><div class="summary-line"><span>College tier</span><strong>' + (institutionValue() === 'HITAM' ? 'HITAM Student' : 'Other College') + '</strong></div><div class="summary-line"><span>Participants</span><strong>' + fee.size + '</strong></div><div class="summary-line"><span>Pricing</span><strong>' + (person ? 'Per Person' : 'Per Team') + '</strong></div><div class="summary-line"><span>Fee breakdown</span><strong>' + money(fee.unit) + ' × ' + (person ? fee.size + ' people' : '1 team') + '</strong></div><div class="summary-total"><span>Total due</span><strong>' + money(fee.total) + '</strong></div><button class="btn btn-primary btn-full" type="submit">Proceed to payment →</button><p class="summary-foot">Pay on the next step. Your details will be reviewed before they are submitted.</p>';
+        byId('mobileAmount').textContent = money(fee.total);
+    }
+    function validateDetailsForm() {
+        var form = byId('detailsForm');
+        Array.prototype.forEach.call(form.querySelectorAll('input[type="text"],input[type="email"],input[type="tel"]'), function (input) {
+            input.setCustomValidity('');
+            if (input.required && !input.value.trim())
+                input.setCustomValidity('Please complete this field.');
+            if (input.type === 'tel' && input.value.trim()) {
+                var digits = input.value.replace(/\D/g, '');
+                if (digits.length === 12 && digits.indexOf('91') === 0)
+                    digits = digits.slice(2);
+                if (!/^\+?[\d ()-]+$/.test(input.value.trim()) || !/^[6-9]\d{9}$/.test(digits))
+                    input.setCustomValidity('Enter a 10-digit Indian WhatsApp number, optionally starting with +91.');
+            }
+        });
+        return form.reportValidity();
+    }
+    function proceedToPayment(event) {
+        event.preventDefault();
+        if (inFlight || !validateDetailsForm())
+            return;
+        var fee = calculateAmount(), members = [];
+        for (var index = 2; index <= fee.size; index++)
+            members.push(readMember('member' + index));
+        draft = { eventId: selectedEvent.id, eventSlug: selectedEvent.slug, institution: institutionValue(), college: institutionValue() === 'HITAM' ? 'Hyderabad Institute of Technology and Management (HITAM)' : byId('collegeName').value.trim(), teamName: selectedEvent.maxTeam === 1 ? byId('leadName').value.trim() : byId('teamName').value.trim(), teamSize: fee.size, lead: readMember('lead'), members: members, customDetails: byId('customDetails').value.trim(), totalFee: fee.total };
+        byId('payeeName').textContent = portal.payee;
+        byId('upiId').textContent = portal.upiId;
+        byId('paymentAmount').textContent = money(fee.total);
+        byId('instructionAmount').textContent = money(fee.total);
+        byId('mobileAmount').textContent = money(fee.total);
+        byId('paymentTeamSummary').textContent = draft.teamName + ' · ' + fee.size + (fee.size === 1 ? ' participant' : ' participants');
+        var upi = 'upi://pay?pa=' + encodeURIComponent(portal.upiId) + '&pn=' + encodeURIComponent(portal.payee) + '&am=' + fee.total + '&cu=INR&tn=' + encodeURIComponent('ESP-' + selectedEvent.id);
+        byId('qrError').hidden = true;
+        byId('paymentQr').hidden = false;
+        byId('paymentQr').src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(upi);
+        byId('paymentQr').alt = 'Scan to pay ' + money(fee.total) + ' to ' + portal.payee;
+        byId('openUpi').href = upi;
+        setMessage('copyStatus', '');
+        showView('payment', 'paymentTitle');
+    }
+    function readProof() {
+        var version = ++proofReadVersion;
+        proof = null;
+        byId('proofPreview').hidden = true;
+        setMessage('paymentError', '');
+        var file = byId('proofFile').files[0];
+        byId('proofFile').setCustomValidity('');
+        if (!file)
+            return;
+        if (['image/png', 'image/jpeg', 'image/webp'].indexOf(file.type) === -1 || file.size > 2 * 1024 * 1024 || file.size === 0) {
+            byId('proofFile').value = '';
+            setMessage('paymentError', 'Choose a PNG, JPG, or WebP image no larger than 2 MB.');
+            return;
+        }
+        setMessage('paymentError', 'Reading your screenshot…');
+        var reader = new FileReader();
+        reader.onload = function () { if (version !== proofReadVersion)
+            return; proof = { dataUrl: String(reader.result), name: file.name, size: file.size, mime: file.type }; byId('proofImage').src = proof.dataUrl; byId('proofMeta').textContent = file.name + ' · ' + Math.ceil(file.size / 1024) + ' KB'; byId('proofPreview').hidden = false; setMessage('paymentError', ''); };
+        reader.onerror = function () { if (version !== proofReadVersion)
+            return; byId('proofFile').value = ''; setMessage('paymentError', 'The screenshot could not be read. Select it again.'); };
+        reader.readAsDataURL(file);
+    }
+    function reviewRows(rows) { return '<dl class="review-grid">' + rows.map(function (row) { return '<div><dt>' + escapeHtml(row[0]) + '</dt><dd>' + escapeHtml(row[1] || '—') + '</dd></div>'; }).join('') + '</dl>'; }
+    function memberReview(member, index) { return '<section class="review-section"><h3>' + (index === 0 ? (draft.teamSize === 1 ? 'Participant' : 'Team lead') : 'Teammate ' + (index + 1)) + '</h3>' + reviewRows([['Full name', member.name], ['Email', member.email], ['WhatsApp', member.phone], ['Roll number', member.rollNo], ['Branch & year', member.branchYear]]) + '</section>'; }
+    function openConfirmation(event) {
+        event.preventDefault();
+        if (inFlight || !draft)
+            return;
+        if (!byId('paymentForm').reportValidity())
+            return;
+        if (!proof) {
+            setMessage('paymentError', 'Wait for the screenshot to finish loading, then review your registration.');
+            return;
+        }
+        pendingPayload = Object.assign({}, draft, { requestId: requestId, utrNumber: byId('utrNumber').value.trim(), screenshotBase64: proof.dataUrl, agreement: byId('agreement').checked });
+        byId('confirmationBody').innerHTML = reviewRows([['Event', selectedEvent.title], ['Chapter', selectedEvent.club], ['Institution', draft.institution === 'HITAM' ? 'HITAM Student' : 'Other College'], ['College', draft.college], ['Team / participant', draft.teamName], ['Participant count', String(draft.teamSize)], ['Fee model', selectedEvent.feeModel === 'person' ? 'Per Person' : 'Per Team'], ['Total amount', money(draft.totalFee)], ['Additional details', draft.customDetails]]) + [draft.lead].concat(draft.members).map(memberReview).join('') + '<section class="review-section"><h3>Payment & consent</h3>' + reviewRows([['UTR', pendingPayload.utrNumber], ['Payee', portal.payee], ['UPI ID', portal.upiId], ['Amount submitted', money(draft.totalFee)], ['Screenshot', proof.name + ' · ' + Math.ceil(proof.size / 1024) + ' KB'], ['Consent', 'Participant details and payment proof confirmed; proof link sharing accepted.']]) + '<div class="review-proof"><img src="' + escapeHtml(proof.dataUrl) + '" alt="Payment screenshot being submitted"></div></section>';
+        setMessage('submitError', '');
+        setMessage('submitStatus', '');
+        byId('confirmSubmit').textContent = 'Submit for verification';
+        modalPreviousFocus = document.activeElement;
+        modalPreviousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        byId('confirmation').hidden = false;
+        byId('appContent').inert = true;
+        byId('confirmTitle').focus();
+    }
+    function closeConfirmation() { if (inFlight)
+        return; byId('confirmation').hidden = true; byId('appContent').inert = false; document.body.style.overflow = modalPreviousOverflow; if (modalPreviousFocus)
+        modalPreviousFocus.focus(); }
+    function setBusy(busy) { inFlight = busy; ['confirmSubmit', 'confirmCancel', 'paymentReview', 'mobileCta', 'paymentBack'].forEach(function (id) { byId(id).disabled = busy; }); byId('confirmation').setAttribute('aria-busy', String(busy)); byId('confirmSubmit').innerHTML = busy ? '<span class="spinner" aria-hidden="true"></span>Saving registration…' : 'Submit for verification'; }
+    function submitRegistration() {
+        if (inFlight || !pendingPayload)
+            return;
+        setBusy(true);
+        setMessage('submitError', '');
+        setMessage('submitStatus', 'Saving your registration and payment proof. Please keep this page open.');
+        slowTimer = window.setTimeout(function () { setMessage('submitStatus', 'Your registration is still saving. Please wait; do not make another payment. Support reference: ' + requestId); }, 30000);
+        google.script.run.withSuccessHandler(function (result) {
+            window.clearTimeout(slowTimer);
+            setBusy(false);
+            setMessage('submitStatus', '');
+            if (!result || !result.success || !result.receipt) {
+                setMessage('submitError', (result && result.message ? result.message : 'We could not confirm the save. Retry with the same details and payment reference; do not pay again.') + ' Support reference: ' + requestId);
+                if (result && result.code === 'RECONCILIATION_REQUIRED')
+                    byId('confirmSubmit').textContent = 'Check saved registration';
+                return;
+            }
+            closeConfirmation();
+            showTicket(result.receipt);
+        }).withFailureHandler(function () { window.clearTimeout(slowTimer); setBusy(false); setMessage('submitStatus', ''); setMessage('submitError', 'The connection was interrupted. Retry this same submission to recover it without duplicate rows. Do not pay again. Support reference: ' + requestId); byId('confirmSubmit').textContent = 'Retry / recover registration'; }).submitRegistration(pendingPayload);
+    }
+    function showTicket(receipt) {
+        byId('ticketRegId').textContent = receipt.regId;
+        var rows = [['Event', receipt.eventTitle], ['Chapter', receipt.chapter], ['Team / participant', receipt.teamName || draft.teamName], ['Participants', String(receipt.teamSize || draft.teamSize)], ['Team lead / participant', receipt.leadName], ['Amount paid (submitted)', money(receipt.amount)], ['Transaction reference', receipt.utr], ['Status', receipt.status || 'Pending Verification']];
+        byId('ticketDetails').innerHTML = rows.map(function (row) { return '<div><dt>' + escapeHtml(row[0]) + '</dt><dd>' + (row[0] === 'Status' ? '<span class="pill pending">' + escapeHtml(row[1]) + '</span>' : escapeHtml(row[1])) + '</dd></div>'; }).join('');
+        // Proof remains in Drive; release the base64 from browser memory after success.
+        proof = null;
+        pendingPayload = null;
+        byId('proofImage').removeAttribute('src');
+        byId('confirmationBody').innerHTML = '';
+        byId('proofFile').value = '';
+        showView('ticket', 'ticketTitle');
+    }
+    function returnDirectory() { if (inFlight)
+        return; selectedEvent = null; updateHeader(null); setMessage('pageMessage', ''); showView('directory', 'directoryTitle'); }
+    function copyUpi() {
+        if (navigator.clipboard && navigator.clipboard.writeText)
+            navigator.clipboard.writeText(portal.upiId).then(function () { setMessage('copyStatus', 'UPI ID copied.'); }, function () { fallbackCopy(); });
+        else
+            fallbackCopy();
+    }
+    function fallbackCopy() {
+        var input = document.createElement('textarea');
+        input.value = portal.upiId;
+        input.style.position = 'fixed';
+        input.style.left = '0';
+        input.style.top = '0';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        var copied = false;
+        try {
+            copied = document.execCommand('copy');
+        }
+        catch (error) {
+            copied = false;
+        }
+        input.remove();
+        byId('copyUpi').focus();
+        setMessage('copyStatus', copied ? 'UPI ID copied.' : 'Copy the UPI ID shown above manually.');
+    }
+    document.addEventListener('error', function (event) { if (event.target.tagName !== 'IMG')
+        return;
+        var failedImage = event.target;
+        if (portal && portal.logoFallbacks && portal.logoFallbacks[failedImage.src] && !failedImage.hasAttribute('data-drive-retried')) {
+            failedImage.setAttribute('data-drive-retried', 'true');
+            failedImage.src = portal.logoFallbacks[failedImage.src];
+            return;
+        }
+        if (failedImage.src.indexOf('https://cdn.jsdelivr.net/') === 0 && !failedImage.hasAttribute('data-cdn-retried')) {
+            failedImage.setAttribute('data-cdn-retried', 'true');
+            failedImage.src = failedImage.src.replace('https://cdn.jsdelivr.net/', 'https://fastly.jsdelivr.net/');
+            return;
+        }
+        event.target.hidden = true; if (event.target.id === 'paymentQr')
+        byId('qrError').hidden = false;
+    else
+        event.target.parentElement.classList.add('logo-failed'); }, true);
+    document.addEventListener('keydown', function (event) {
+        if (byId('confirmation').hidden)
+            return;
+        if (event.key === 'Escape' && !inFlight) {
+            event.preventDefault();
+            closeConfirmation();
+            return;
+        }
+        if (event.key !== 'Tab')
+            return;
+        var focusable = byId('confirmation').querySelectorAll('button:not([disabled]),a[href]');
+        if (!focusable.length) {
+            event.preventDefault();
+            byId('confirmTitle').focus();
+            return;
+        }
+        var first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && (document.activeElement === first || document.activeElement === byId('confirmTitle'))) {
+            event.preventDefault();
+            last.focus();
+        }
+        else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    });
+    byId('retryLoad').addEventListener('click', loadPortal);
+    byId('filters').addEventListener('click', function (event) { var button = event.target.closest('[data-category]'); if (!button)
+        return; activeCategory = button.getAttribute('data-category'); Array.prototype.forEach.call(byId('filters').querySelectorAll('button'), function (item) { item.setAttribute('aria-pressed', String(item === button)); }); renderEvents(); });
+    byId('eventGrid').addEventListener('click', function (event) { var button = event.target.closest('[data-event]'); if (button)
+        handleEventSelection(button.getAttribute('data-event')); if (event.target.closest('#resetDirectory')) {
+        activeCategory = 'All';
+        byId('eventSearch').value = '';
+        Array.prototype.forEach.call(byId('filters').querySelectorAll('button'), function (item) { item.setAttribute('aria-pressed', String(item.getAttribute('data-category') === 'All')); });
+        renderEvents();
+    } });
+    byId('eventSearch').addEventListener('input', renderEvents);
+    byId('backDirectory').addEventListener('click', returnDirectory);
+    byId('teamSize').addEventListener('change', renderTeammates);
+    byId('detailsForm').addEventListener('change', function (event) { if (event.target.name === 'institution')
+        updateInstitution(); });
+    byId('detailsForm').addEventListener('input', function (event) { if (event.target.setCustomValidity)
+        event.target.setCustomValidity(''); });
+    byId('detailsForm').addEventListener('submit', proceedToPayment);
+    byId('paymentBack').addEventListener('click', function () { if (!inFlight)
+        showView('details', 'detailsTitle'); });
+    byId('proofFile').addEventListener('change', readProof);
+    byId('paymentForm').addEventListener('submit', openConfirmation);
+    byId('confirmCancel').addEventListener('click', closeConfirmation);
+    byId('confirmSubmit').addEventListener('click', submitRegistration);
+    byId('copyUpi').addEventListener('click', copyUpi);
+    byId('printTicket').addEventListener('click', function () { window.print(); });
+    byId('exploreEvents').addEventListener('click', returnDirectory);
+    loadPortal();
+  </script>
+</body>
+</html>

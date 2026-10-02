@@ -43,7 +43,7 @@ export default function Home() {
 
   // STATE 2 — Homepage
   return (
-    <motion.main
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -78,6 +78,6 @@ export default function Home() {
       <ScrollReveal threshold={0.1} direction="up">
         <RegisterCtaSection />
       </ScrollReveal>
-    </motion.main>
+    </motion.div>
   );
 }

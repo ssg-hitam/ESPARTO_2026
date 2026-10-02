@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
@@ -47,6 +47,30 @@ export default function EventsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeModalEvent, setActiveModalEvent] = useState<FestEventItem | null>(null);
+
+  const modalRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!activeModalEvent) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    modalRef.current?.querySelector<HTMLElement>("button")?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActiveModalEvent(null);
+      if (event.key !== "Tab") return;
+      const elements = modalRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+      if (!elements?.length) return;
+      const first = elements[0], last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+      previousFocus?.focus();
+    };
+  }, [activeModalEvent]);
 
   // Dynamic counts for categories
   const categoryCounts = useMemo(() => {
@@ -119,7 +143,7 @@ export default function EventsPage() {
   const hasActiveFilters = selectedCategory !== "All" || selectedDay !== "all" || searchQuery.trim() !== "";
 
   return (
-    <main className="min-h-screen pt-4 sm:pt-6 pb-20 bg-[#040210] relative text-text-primary">
+    <main className="min-h-screen pt-4 sm:pt-6 pb-20 bg-[#040210] relative overflow-x-clip text-text-primary">
       
       {/* ESPARTO Brand Atmosphere */}
       <div 
@@ -283,7 +307,7 @@ export default function EventsPage() {
           </aside>
 
           {/* ── RIGHT MAIN AREA: SEARCH & 2-COLUMN EVENT CARDS ───────────────── */}
-          <div className="lg:col-span-8 xl:col-span-9 space-y-6">
+          <div className="min-w-0 lg:col-span-8 xl:col-span-9 space-y-6">
             
             {/* Top Search & Filter Status Row */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-3 rounded-2xl bg-[#08041d]/90 border border-white/10">
@@ -293,6 +317,7 @@ export default function EventsPage() {
                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                 <input
                   type="text"
+                  aria-label="Search events"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search events by title, chapter (e.g. IEEE, GDG, HHC, Torque X)..."
@@ -341,13 +366,13 @@ export default function EventsPage() {
                   return (
                     <div
                       key={event.id}
-                      className="group relative flex flex-col justify-between rounded-2xl border border-white/10 bg-[#08041d]/90 backdrop-blur-md overflow-hidden hover:border-brand-violet/40 hover:shadow-[0_0_25px_rgba(121,80,242,0.15)] transition-all duration-200"
+                      className="group relative min-w-0 flex flex-col justify-between rounded-2xl border border-white/10 bg-[#08041d]/90 backdrop-blur-md overflow-hidden hover:border-brand-violet/40 hover:shadow-[0_0_25px_rgba(121,80,242,0.15)] transition-all duration-200"
                     >
                       {/* Card Content Wrapper */}
                       <div className="p-4 sm:p-5">
                         
                         {/* Top Meta Bar: TRACK #XXX & Category Badge */}
-                        <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-white/10">
+                        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-white/10">
                           <span className="font-mono text-xs font-bold tracking-wider text-brand-orange">
                             {trackCode}
                           </span>
@@ -357,10 +382,10 @@ export default function EventsPage() {
                         </div>
 
                         {/* Event Visual Banner Box */}
-                        <div className="relative w-full h-36 rounded-xl overflow-hidden mb-4 border border-white/10 bg-gradient-to-br from-black/80 via-[#0e0a2b] to-[#1a0e38] flex flex-col justify-between p-3.5 group-hover:border-white/20 transition-all">
+                        <div className="relative w-full min-h-36 rounded-xl overflow-hidden mb-4 border border-white/10 bg-gradient-to-br from-black/80 via-[#0e0a2b] to-[#1a0e38] flex flex-col justify-between p-3.5 group-hover:border-white/20 transition-all">
                           
                           {/* Banner Top Row: Organizing Chapter */}
-                          <div className="flex items-center justify-between gap-2 z-10">
+                          <div className="flex flex-wrap items-center justify-between gap-2 z-10">
                             <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
                               <div className="relative w-4 h-4 rounded-full overflow-hidden bg-white shrink-0">
                                 <Image
@@ -548,13 +573,14 @@ export default function EventsPage() {
           aria-label={activeModalEvent.title}
         >
           <div 
-            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 rounded-3xl border border-brand-violet/30 bg-[#08041d] shadow-[0_12px_60px_rgba(0,0,0,0.85)] text-left"
+            ref={modalRef}
+            className="relative w-full max-w-2xl max-h-[90dvh] overflow-y-auto p-6 sm:p-8 rounded-3xl border border-brand-violet/30 bg-[#08041d] shadow-[0_12px_60px_rgba(0,0,0,0.85)] text-left"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
             <div className="flex items-start justify-between gap-4 mb-4 pb-4 border-b border-white/10">
               <div>
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex flex-wrap items-center gap-2 mb-2">
                   <span className="text-[11px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-magenta/15 border border-brand-magenta/30 text-brand-magenta">
                     {activeModalEvent.category}
                   </span>
@@ -582,7 +608,7 @@ export default function EventsPage() {
             {/* Prize Pool Breakdown (if declared) */}
             {activeModalEvent.prizePool && (
               <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-brand-orange/15 to-transparent border border-amber-500/30 mb-6">
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex flex-wrap items-center gap-2 mb-2">
                   <Trophy className="w-5 h-5 text-amber-400 shrink-0" />
                   <span className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold">
                     🏆 Official Prize Pool: {activeModalEvent.prizePool}
@@ -763,7 +789,7 @@ export default function EventsPage() {
             )}
 
             {/* Modal Actions */}
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+            <div className="flex flex-wrap items-center justify-end gap-3 pt-4 border-t border-white/10">
               <button
                 onClick={() => setActiveModalEvent(null)}
                 className="px-5 py-2.5 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-xs font-display font-bold text-text-secondary hover:text-white transition-all"

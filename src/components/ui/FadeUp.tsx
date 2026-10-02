@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 interface FadeUpProps {
   children: React.ReactNode;
@@ -37,6 +37,7 @@ export function FadeUp({
   className = "",
   repeat = false,
 }: FadeUpProps) {
+  const reducedMotion = useReducedMotion();
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, {
     once: !repeat,
@@ -46,8 +47,8 @@ export function FadeUp({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: distance }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: distance }}
+      initial={reducedMotion ? false : { opacity: 0, y: distance }}
+      animate={reducedMotion || isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: distance }}
       transition={{
         duration: 0.75,
         delay,
@@ -85,6 +86,7 @@ export function FadeUpGroup({
   distance = 40,
   className = "",
 }: FadeUpGroupProps) {
+  const reducedMotion = useReducedMotion();
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: threshold });
 
@@ -93,9 +95,9 @@ export function FadeUpGroup({
       {React.Children.map(children, (child, i) => (
         <motion.div
           key={i}
-          initial={{ opacity: 0, y: distance }}
+          initial={reducedMotion ? false : { opacity: 0, y: distance }}
           animate={
-            isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: distance }
+            reducedMotion || isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: distance }
           }
           transition={{
             duration: 0.75,

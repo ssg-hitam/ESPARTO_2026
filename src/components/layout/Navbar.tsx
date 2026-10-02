@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS } from "@/lib/nav";
@@ -16,6 +16,7 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("about");
   const pathname = usePathname();
+  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), []);
 
   // Scroll listener for top transparency vs scrolled blur transition
   useEffect(() => {
@@ -143,7 +144,7 @@ export function Navbar() {
       {/* Accessible Mobile Menu Drawer */}
       <MobileMenu
         isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
+        onClose={closeMobileMenu}
         activeSection={activeSection}
       />
     </>

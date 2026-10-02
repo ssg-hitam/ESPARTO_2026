@@ -172,7 +172,9 @@ export function IntroVideoOverlay({ onComplete }: IntroVideoOverlayProps) {
             onLoadedMetadata={() => setVideoDuration(videoRef.current?.duration ?? 0)}
             onTimeUpdate={handleTimeUpdate}
             onEnded={triggerExit}
-            className="w-[65vw] h-[60vh] max-w-2xl md:max-w-3xl lg:max-w-4xl object-contain select-none pointer-events-none relative z-10"
+            onError={triggerExit}
+            onCanPlay={() => { videoRef.current?.play().catch(triggerExit); }}
+            className="w-[90vw] sm:w-[65vw] h-[60svh] max-w-2xl md:max-w-3xl lg:max-w-4xl object-contain select-none pointer-events-none relative z-10"
             style={{
               rotateX,           // 01 independent transform — no wrapper
               rotateY,           // 01 independent transform
@@ -199,7 +201,7 @@ export function IntroVideoOverlay({ onComplete }: IntroVideoOverlayProps) {
           <motion.button
             type="button"
             onClick={triggerExit}
-            className="absolute bottom-6 right-8 z-20 flex items-center gap-2 text-white/40 font-mono text-xs tracking-widest uppercase font-light select-none focus:outline-none"
+            className="absolute bottom-6 right-8 z-20 flex items-center gap-2 min-h-11 px-3 rounded-md text-white/80 focus-visible:ring-2 focus-visible:ring-brand-violet font-mono text-xs tracking-widest uppercase font-light select-none focus:outline-none"
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{
