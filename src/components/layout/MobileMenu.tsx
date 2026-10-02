@@ -122,7 +122,7 @@ export function MobileMenu({
 
         {/* Bottom CTA & Attribution */}
         <div className="pt-6 border-t border-border-glass space-y-4">
-          <RegisterButton size="lg" className="w-full justify-center" />
+          <RegisterButton size="lg" className="w-full justify-center" onClick={onClose} />
           <p className="text-center text-xs font-mono text-text-muted">
             ESPARTO 2026 • HITAM HYDERABAD
           </p>

@@ -4,7 +4,6 @@ import { getButtonClasses } from "@/components/ui/Button";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-import { GOOGLE_APPS_SCRIPT_REGISTRATION_URL } from "@/data/events";
 
 export interface RegisterButtonProps {
   registrationUrl?: string;
@@ -12,20 +11,21 @@ export interface RegisterButtonProps {
   showIcon?: boolean;
   size?: "sm" | "md" | "lg";
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 /**
  * Reusable Registration Call To Action Button
  *
- * Redirects directly to the official Google Apps Script central registration engine
- * or event-specific direct link.
+ * Opens the registration page, or an explicitly supplied destination, in the same tab.
  */
 export function RegisterButton({
-  registrationUrl = GOOGLE_APPS_SCRIPT_REGISTRATION_URL,
+  registrationUrl = "/register",
   label,
   showIcon = true,
   size = "md",
   className,
+  onClick,
 }: RegisterButtonProps) {
   const isExternal = registrationUrl.startsWith("http");
 
@@ -33,8 +33,7 @@ export function RegisterButton({
     return (
       <a
         href={registrationUrl}
-        target="_blank"
-        rel="noopener noreferrer"
+        onClick={onClick}
         aria-label={label || "Register for ESPARTO 2026 events"}
         className={cn(
           "group inline-flex items-center justify-center select-none font-display font-bold tracking-wider uppercase transition-all duration-200",
@@ -52,6 +51,7 @@ export function RegisterButton({
   return (
     <Link
       href={registrationUrl}
+      onClick={onClick}
       aria-label={label || "Register for ESPARTO 2026 events"}
       className={cn(
         "group inline-flex items-center justify-center select-none font-display font-bold tracking-wider uppercase transition-all duration-200",
@@ -65,4 +65,3 @@ export function RegisterButton({
     </Link>
   );
 }
-

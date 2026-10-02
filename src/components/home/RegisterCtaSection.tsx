@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { ArrowRight } from "lucide-react";
 
-import { GOOGLE_APPS_SCRIPT_REGISTRATION_URL } from "@/data/events";
 
 /**
  * RegisterCtaSection Component — Final Homepage CTA
@@ -47,15 +46,13 @@ export function RegisterCtaSection() {
 
         {/* Primary Action Button */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href={GOOGLE_APPS_SCRIPT_REGISTRATION_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/register"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full font-display font-black text-sm sm:text-base tracking-widest uppercase text-white bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple shadow-[0_0_30px_rgba(255,94,0,0.4)] hover:shadow-[0_0_45px_rgba(255,0,122,0.6)] hover:scale-105 active:scale-95 transition-all duration-300"
           >
             <span>REGISTER NOW</span>
             <ArrowRight className="w-5 h-5" />
-          </a>
+          </Link>
           <Link
             href="/events"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-5 rounded-full font-display font-bold text-sm tracking-wider uppercase text-text-secondary hover:text-white border border-white/10 hover:border-brand-violet/50 bg-white/5 hover:bg-brand-purple/20 transition-all"

@@ -24,7 +24,7 @@ const fontMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://esparto-2026.vercel.app"),
+  metadataBase: new URL("https://esparto.hitam.org"),
   title: {
     default: "ESPARTO 2026 | HITAM Technical Fest",
     template: "%s | ESPARTO 2026",

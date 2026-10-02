@@ -478,8 +478,6 @@ export default function EventsPage() {
                       {/* ── CARD BOTTOM ACTION: SOLID "REGISTER HERE ▶" BUTTON ── */}
                       <a
                         href={getEventRegisterUrl(event)}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         className="w-full py-3 px-4 font-mono font-black text-xs uppercase tracking-widest text-center text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-[0_-2px_10px_rgba(0,0,0,0.4)]"
                       >
                         <span>🎟️</span>
@@ -798,8 +796,6 @@ export default function EventsPage() {
               </button>
               <a
                 href={getEventRegisterUrl(activeModalEvent)}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple hover:brightness-110 text-xs font-display font-bold text-white transition-all inline-flex items-center gap-2 shadow-[0_0_24px_rgba(255,94,0,0.4)]"
               >
                 <span>🎟️ Register for this Event</span>
