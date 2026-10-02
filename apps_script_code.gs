@@ -124,12 +124,21 @@ var EVENT_CATALOG = [
 ];
 
 function doGet(e) {
-  var template = HtmlService.createTemplateFromFile("index");
-  template.initialEvent = (e && e.parameter && e.parameter.event) ? e.parameter.event : "";
-  return template.evaluate()
-    .setTitle("ESPARTO 2026 | Festival Portal & Registrations")
-    .addMetaTag("viewport", "width=device-width, initial-scale=1")
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  try {
+    var template = HtmlService.createTemplateFromFile("index");
+    var eventParam = (e && e.parameter && e.parameter.event) ? e.parameter.event : "";
+    template.initialEvent = String(eventParam);
+    return template.evaluate()
+      .setTitle("ESPARTO 2026 | Festival Portal & Registrations")
+      .addMetaTag("viewport", "width=device-width, initial-scale=1")
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  } catch (err) {
+    return HtmlService.createHtmlOutput(
+      '<h2 style="font-family:sans-serif;padding:20px;color:#b91c1c">ESPARTO 2026 — Loading Error</h2>' +
+      '<p style="font-family:sans-serif;padding:0 20px;color:#64748b">Error: ' + err.toString() + '</p>' +
+      '<p style="font-family:sans-serif;padding:0 20px"><a href="https://script.google.com/a/macros/hitam.org/s/AKfycbzQhqX0aT0W66m4HHIlvO6Iv4GhqU4cFKuQXKrjLRmlsxQhYrXc8DFzhqKTk09ppngV/exec">Try reloading</a></p>'
+    ).setTitle("ESPARTO 2026");
+  }
 }
 
 /**
