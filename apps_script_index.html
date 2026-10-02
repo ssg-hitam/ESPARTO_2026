@@ -60,25 +60,28 @@
       gap: 20px;
     }
 
-    /* Left & Right Logo Boxes */
+    /* Left & Right Logo Boxes: Clean, borderless, seamless blend */
     .logo-box {
-      width: 96px;
-      height: 96px;
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 6px;
+      width: auto;
+      min-width: 90px;
+      height: 84px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      border: 1.5px solid var(--border);
       flex-shrink: 0;
     }
 
     .logo-box img {
       max-width: 100%;
-      max-height: 100%;
+      max-height: 84px;
+      width: auto;
+      height: auto;
       object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.05));
     }
 
     .header-center {
@@ -99,10 +102,11 @@
     }
 
     .esparto-header-logo {
-      height: 48px;
-      max-width: 220px;
+      height: 58px;
+      max-width: 280px;
       object-fit: contain;
-      margin: 2px 0;
+      margin: 2px 0 4px;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.06));
     }
 
     .event-main-title {
@@ -158,8 +162,12 @@
       }
 
       .logo-box {
-        width: 72px;
-        height: 72px;
+        min-width: 72px;
+        height: 64px;
+      }
+
+      .logo-box img {
+        max-height: 64px;
       }
     }
 
@@ -835,10 +843,10 @@
   <header class="header-stripe">
     <div class="header-container">
 
-      <!-- Left: Dynamic Club / Chapter Logo -->
-      <div class="logo-box" id="headerClubBox" title="Organizing Chapter">
-        <img id="headerClubLogo" src="https://lh3.googleusercontent.com/d/16hNwt5Io4Io4zUitUPH9aRCIAQcgpDan"
-          alt="Club Logo">
+      <!-- Left: SSG Logo (Default) / Dynamic Club Logo (On Event Details) -->
+      <div class="logo-box" id="headerClubBox" title="Student Support Group (SSG)">
+        <img id="headerClubLogo" src="https://raw.githubusercontent.com/ssg-hitam/ESPARTO_2026/main/public/images/brand/ssg-logo.png"
+          alt="SSG Logo" onerror="this.src='https://lh3.googleusercontent.com/d/10_oh0BP0xp8NZj-xzPjKZxUulxhS9qpi'">
       </div>
 
       <!-- Center: ESPARTO Official Seal & Event Titles -->
@@ -1225,8 +1233,8 @@
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-ssg-box">
-        <img src="https://lh3.googleusercontent.com/d/16hNwt5Io4Io4zUitUPH9aRCIAQcgpDan" alt="SSG Logo"
-          class="ssg-logo-img" onerror="this.src='https://placehold.co/90x90/002855/ffffff?text=SSG'">
+        <img src="https://raw.githubusercontent.com/ssg-hitam/ESPARTO_2026/main/public/images/brand/ssg-logo.png" alt="SSG Logo"
+          class="ssg-logo-img" onerror="this.src='https://lh3.googleusercontent.com/d/10_oh0BP0xp8NZj-xzPjKZxUulxhS9qpi'">
         <div>
           <div style="font-weight: 800; color: var(--hitam-navy);">Event Organized by Student Support Group (SSG)</div>
           <div style="font-size: 12px; color: #64748b;">HITAM Autonomous • Hyderabad, Telangana</div>
@@ -1656,7 +1664,7 @@
     function showEventsDirectory() {
       // Reset Default Theme
       document.documentElement.style.setProperty('--primary', '#ff5e00');
-      document.getElementById('headerClubLogo').src = 'https://lh3.googleusercontent.com/d/16hNwt5Io4Io4zUitUPH9aRCIAQcgpDan';
+      document.getElementById('headerClubLogo').src = 'https://raw.githubusercontent.com/ssg-hitam/ESPARTO_2026/main/public/images/brand/ssg-logo.png';
       document.getElementById('eventTitle').innerText = 'ESPARTO 2026 Festival Events';
       document.getElementById('badgeChapter').innerText = '🏛️ SSG';
       document.getElementById('badgeTeamLimit').innerText = '👥 Technical Competitions';
