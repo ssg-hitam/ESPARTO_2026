@@ -8,27 +8,81 @@ export const facultyCoordinators: Organizer[] = [
   {
     id: "dr-bindu-madhavi",
     name: "Dr. Bindu Madhavi",
-    role: "Associate Professor",
+    role: "Faculty Coordinator (IEEE)",
     department: "Electronics & Communication Engineering (ECE)",
     teamDomain: "faculty-coordinator",
-    contact: "+91 91 6030 813 0",
+    contact: "+91 91603 08130",
     image: "/images/team/faculties/bindumam.png",
     highlight: true,
     socials: {
-      email: "bindum.ece@hitam.org",
+      email: "bindumadhavi.t@ieee.org",
       phone: "+919160308130"
     }
   },
   {
     id: "mr-p-praveen",
     name: "Mr. P. Praveen",
-    role: "Associate Professor",
+    role: "Faculty Coordinator (IEOM)",
     department: "Mechanical Engineering (MECH)",
     teamDomain: "faculty-coordinator",
+    contact: "+91 89190 46164",
     image: "/images/team/faculties/praveensir.png",
     highlight: true,
     socials: {
-      email: "praveenp.mech@hitam.org"
+      email: "praveenp.mech@hitam.org",
+      phone: "+918919046164"
+    }
+  },
+  {
+    id: "dr-m-rajeshwar",
+    name: "Dr. M. Rajeshwar",
+    role: "Faculty Coordinator (HITAM AI Club)",
+    department: "Computer Science & Engineering (CSE)",
+    teamDomain: "faculty-coordinator",
+    contact: "+91 92487 11181",
+    highlight: true,
+    socials: {
+      email: "rajeshwarm.cse@hitam.org",
+      phone: "+919248711181"
+    }
+  },
+  {
+    id: "mr-d-harikrishna",
+    name: "Mr. D. Harikrishna",
+    role: "Associate Dean MDP & Faculty Coordinator (GDGoC HITAM)",
+    department: "Management Development & ECE",
+    teamDomain: "faculty-coordinator",
+    contact: "+91 94904 25130",
+    highlight: true,
+    socials: {
+      email: "associatedean.mdp@hitam.org",
+      phone: "+919490425130"
+    }
+  },
+  {
+    id: "ms-richa-tiwari",
+    name: "Ms. Richa Tiwari",
+    role: "Faculty Coordinator (MINDS Club)",
+    department: "Computer Science & Engineering (Data Science)",
+    teamDomain: "faculty-coordinator",
+    contact: "+91 91315 39794",
+    highlight: true,
+    socials: {
+      email: "richatiwari.cse@hitam.org",
+      phone: "+919131539794"
+    }
+  },
+  {
+    id: "mr-santosh-naik",
+    name: "Mr. Santosh Naik",
+    role: "Faculty Coordinator (IUCEE-EWB × HHC)",
+    department: "Mechanical Engineering (MECH)",
+    teamDomain: "faculty-coordinator",
+    contact: "+91 99802 99366",
+    highlight: true,
+    socials: {
+      email: "santoshn.mech@hitam.org",
+      phone: "+919980299366"
     }
   }
 ];

@@ -51,14 +51,12 @@ var EVENT_CATALOG = [
   { 
     id: "E01", club: "IEEE Student Branch HITAM", name: "IEEE National Ideathon", cat: "Ideathon", team: "3–4 Members", fee: "₹200 / ₹300 (Team)",
     studentCoord: "Sai Sampada (8879341306, ieeesb@hitam.org)",
-    facultyCoord: "Bindu Madhavi (9160308130, bindumadhavi.t@ieee.org)",
-    clubEmail: "ieeesb@hitam.org"
+    facultyCoord: "Bindu Madhavi (9160308130, bindumadhavi.t@ieee.org)"
   },
   { 
     id: "E02", club: "HHC × IUCEE-EWB", name: "Reverse Hackathon", cat: "Hackathon", team: "2–3 Members", fee: "₹550 / ₹600 (Team)",
     studentCoord: "Ameena (9966864664), Kanishka (9494753922), Alankrusha (9063412373)",
-    facultyCoord: "Santosh Naik (9980299366, santoshn.mech@hitam.org)",
-    clubEmail: "iucee@hitam.org"
+    facultyCoord: "Santosh Naik (9980299366, santoshn.mech@hitam.org)"
   },
   { 
     id: "E03", club: "Google Developer Groups on Campus – HITAM", name: "Agentic AI Workshop & Hackathon", cat: "Hackathon & Workshop", team: "1–4 Members", fee: "₹150 / person (Covers Both)",
@@ -69,20 +67,17 @@ var EVENT_CATALOG = [
   { 
     id: "E04", club: "HHC × IUCEE-EWB", name: "Programmers Got Talent", cat: "Gaming & Coding", team: "Solo", fee: "₹150 / person",
     studentCoord: "Ameena (9966864664), Kanishka (9494753922), Alankrusha (9063412373)",
-    facultyCoord: "Santosh Naik (9980299366, santoshn.mech@hitam.org)",
-    clubEmail: "hhc@hitam.org"
+    facultyCoord: "Santosh Naik (9980299366, santoshn.mech@hitam.org)"
   },
   { 
     id: "E05", club: "IEOM HITAM Chapter", name: "Smart Manufacturing: Industry Insights & Innovation Challenge", cat: "Challenge", team: "Team of 4", fee: "₹99 / ₹149 (Team)",
     studentCoord: "Rishitha (9121014558, 24e51a66e1@hitam.org)",
-    facultyCoord: "Praveen (8919046164, praveenp.mech@hitam.org)",
-    clubEmail: "ieom.hitam@gmail.com"
+    facultyCoord: "Praveen (8919046164, praveenp.mech@hitam.org)"
   },
   { 
     id: "E06", club: "IEOM HITAM Chapter", name: "IEOM Startup Pitch Challenge", cat: "Ideathon", team: "Solo or Team (1-4)", fee: "₹79-₹149 / ₹99-₹199",
     studentCoord: "Rishitha (9121014558, 24e51a66e1@hitam.org)",
-    facultyCoord: "Praveen (8919046164, praveenp.mech@hitam.org)",
-    clubEmail: "ieom.hitam@gmail.com"
+    facultyCoord: "Praveen (8919046164, praveenp.mech@hitam.org)"
   },
   { 
     id: "E07", club: "HITAM AI Club", name: "DataQuest – Kaggle Data Science Challenge", cat: "Challenge", team: "Team of 2", fee: "₹300 / team",
@@ -99,38 +94,32 @@ var EVENT_CATALOG = [
   { 
     id: "E09", club: "MINDS Club", name: "DATA HEIST – Datathon", cat: "Challenge", team: "2–4 Members", fee: "₹200 / ₹300 (Team)",
     studentCoord: "Arutla Sai Prasanna (8106110146, 23e51a6711@hitam.org)",
-    facultyCoord: "Richa Tiwari (9131539794, richatiwari.cse@hitam.org)",
-    clubEmail: "minds.datascience@hitam.org"
+    facultyCoord: "Richa Tiwari (9131539794, richatiwari.cse@hitam.org)"
   },
   { 
     id: "E10", club: "MINDS Club", name: "DATA DOSSIER Case Study", cat: "Challenge", team: "2–4 Members", fee: "₹100 / ₹200 (Team)",
     studentCoord: "Arutla Sai Prasanna (8106110146, 23e51a6711@hitam.org)",
-    facultyCoord: "Richa Tiwari (9131539794, richatiwari.cse@hitam.org)",
-    clubEmail: "minds.datascience@hitam.org"
+    facultyCoord: "Richa Tiwari (9131539794, richatiwari.cse@hitam.org)"
   },
   { 
     id: "E11", club: "TorqueX Motorsports", name: "TorqueX – From Garage to Grid & Kart Reveal", cat: "Challenge", team: "Solo or Team (1-4)", fee: "₹50-₹100 / ₹70-₹140",
     studentCoord: "TorqueX Student Lead (+91 90591 11595)",
-    facultyCoord: "TorqueX Faculty Incharge (ssg@hitam.org)",
-    clubEmail: "torquex@hitam.org"
+    facultyCoord: "TorqueX Faculty Incharge (ssg@hitam.org)"
   },
   { 
     id: "E12", club: "ISAMPE Chapter", name: "Build Your First Robot", cat: "Workshop", team: "2–4 Members", fee: "₹200 / team",
     studentCoord: "ISAMPE Student Lead (+91 90591 11595)",
-    facultyCoord: "ISAMPE Faculty Incharge (ssg@hitam.org)",
-    clubEmail: "isampe@hitam.org"
+    facultyCoord: "ISAMPE Faculty Incharge (ssg@hitam.org)"
   },
   { 
     id: "E13", club: "CSI Student Chapter", name: "Code Casino", cat: "Gaming & Coding", team: "2–3 Members", fee: "₹50 / ₹60 (Person)",
     studentCoord: "CSI Student Lead (+91 90591 11595)",
-    facultyCoord: "CSI Faculty Incharge (ssg@hitam.org)",
-    clubEmail: "csi@hitam.org"
+    facultyCoord: "CSI Faculty Incharge (ssg@hitam.org)"
   },
   { 
     id: "E14", club: "CSI Student Chapter", name: "Technical Tambola", cat: "Gaming & Coding", team: "Solo", fee: "₹50 / ₹60 (Person)",
     studentCoord: "CSI Student Lead (+91 90591 11595)",
-    facultyCoord: "CSI Faculty Incharge (ssg@hitam.org)",
-    clubEmail: "csi@hitam.org"
+    facultyCoord: "CSI Faculty Incharge (ssg@hitam.org)"
   }
 ];
 
@@ -166,6 +155,7 @@ function setupDatabase() {
   dashHeaderRange.setBackground("#002855")
                  .setFontColor("#ffffff")
                  .setFontWeight("bold")
+                 .setFontFamily("Roboto")
                  .setHorizontalAlignment("center");
   dashSheet.setFrozenRows(1);
 
@@ -271,6 +261,7 @@ function createOrFormatSheet(ss, sheetName, headers, headerColor, isEventTab) {
     headerRange.setBackground(headerColor)
                .setFontColor("#ffffff")
                .setFontWeight("bold")
+               .setFontFamily("Roboto")
                .setHorizontalAlignment("center");
     sheet.setFrozenRows(1);
 

@@ -52,27 +52,13 @@ export const GOOGLE_APPS_SCRIPT_REGISTRATION_URL =
   "https://script.google.com/macros/s/AKfycbzQhqX0aT0W66m4HHIlvO6Iv4GhqU4cFKuQXKrjLRmlsxQhYrXc8DFzhqKTk09ppngV/exec";
 
 export function getEventRegisterUrl(event: FestEventItem): string {
-  const hitamRaw = event.registrationFee.hitam || "0";
-  const nonHitamRaw = event.registrationFee.nonHitam || "150";
+  // Direct redirect for IEEE National Ideathon official form
+  if (event.slug === "ieee-ideathon" || event.id === "ieee-ideathon") {
+    return "https://script.google.com/a/macros/hitam.org/s/AKfycbwoVAJO1VLPibThDX3h5Sewj3HVaZkgGAenKgqiOb8SlhyhJgT6GRzjp4cx2aWlOXK41A/exec";
+  }
 
-  const hitamNum = hitamRaw.toLowerCase().includes("free")
-    ? "0"
-    : (hitamRaw.match(/\d+/) ? hitamRaw.match(/\d+/)![0] : "0");
-
-  const nonHitamNum = nonHitamRaw.toLowerCase().includes("free")
-    ? "0"
-    : (nonHitamRaw.match(/\d+/) ? nonHitamRaw.match(/\d+/)![0] : "150");
-
-  const params = new URLSearchParams({
-    event: event.slug,
-    title: event.title,
-    category: event.category,
-    hitam: hitamNum,
-    nonHitam: nonHitamNum,
-    team: event.teamSize || "1-4",
-  });
-
-  return `${GOOGLE_APPS_SCRIPT_REGISTRATION_URL}?${params.toString()}`;
+  // Pre-select the specific event in Google Apps Script registration engine
+  return `${GOOGLE_APPS_SCRIPT_REGISTRATION_URL}?event=${encodeURIComponent(event.slug || event.id)}`;
 }
 
 export const FEST_EVENTS: FestEventItem[] = [
@@ -103,7 +89,6 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "Sai Sampada", phone: "8879341306", email: "ieeesb@hitam.org" }],
       faculty: { name: "Dr. Bindu Madhavi", phone: "9160308130", email: "bindumadhavi.t@ieee.org" },
-      clubEmail: "ieeesb@hitam.org",
     },
   },
   {
@@ -112,7 +97,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     title: "Reverse Hackathon",
     club: "HHC × IUCEE-EWB",
     clubId: "hhc",
-    clubLogo: "/images/chapters/HHC.jpg",
+    clubLogo: "https://lh3.googleusercontent.com/d/1qfbIItT-hgAV__7LBu8vxS0KOQu16byE",
     category: "Hackathon",
     tagline: "Deconstruct, debug, and rebuild systems in reverse",
     description: "A high-intensity reverse engineering battle. Teams deconstruct complex production software/hardware stacks, identify critical performance bottlenecks, and architect superior re-engineered solutions.",
@@ -142,7 +127,6 @@ export const FEST_EVENTS: FestEventItem[] = [
         { name: "Alankrusha", phone: "9063412373", email: "24e51a6628@gmail.com" }
       ],
       faculty: { name: "Mr. Santosh Naik", phone: "9980299366", email: "santoshn.mech@hitam.org" },
-      clubEmail: "ssg@hitam.org",
     },
   },
   {
@@ -226,7 +210,6 @@ export const FEST_EVENTS: FestEventItem[] = [
         { name: "Alankrusha", phone: "9063412373", email: "24e51a6628@gmail.com" }
       ],
       faculty: { name: "Mr. Santosh Naik", phone: "9980299366", email: "santoshn.mech@hitam.org" },
-      clubEmail: "ssg@hitam.org",
     },
   },
   {
@@ -260,7 +243,6 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "Rishitha", phone: "9121014558", email: "24e51a66e1@hitam.org" }],
       faculty: { name: "Mr. P. Praveen", phone: "8919046164", email: "praveenp.mech@hitam.org" },
-      clubEmail: "ieom.hitam@gmail.com",
     },
   },
   {
@@ -294,7 +276,6 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "Rishitha", phone: "9121014558", email: "24e51a66e1@hitam.org" }],
       faculty: { name: "Mr. P. Praveen", phone: "8919046164", email: "praveenp.mech@hitam.org" },
-      clubEmail: "ieom.hitam@gmail.com",
     },
   },
   {
@@ -396,7 +377,6 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "Arutla Sai Prasanna", phone: "8106110146", email: "23e51a6711@hitam.org" }],
       faculty: { name: "Ms. Richa Tiwari", phone: "9131539794", email: "richatiwari.cse@hitam.org" },
-      clubEmail: "minds.datascience@hitam.org",
     },
   },
   {
@@ -430,7 +410,6 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "Arutla Sai Prasanna", phone: "8106110146", email: "23e51a6711@hitam.org" }],
       faculty: { name: "Ms. Richa Tiwari", phone: "9131539794", email: "richatiwari.cse@hitam.org" },
-      clubEmail: "minds.datascience@hitam.org",
     },
   },
   {
@@ -464,7 +443,6 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "TorqueX Student Lead", phone: "9059111595", email: "ssg@hitam.org" }],
       faculty: { name: "Faculty Advisor (TorqueX)", phone: "9059111595", email: "ssg@hitam.org" },
-      clubEmail: "ssg@hitam.org",
     },
   },
   {
@@ -498,7 +476,6 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "ISAMPE Student Lead", phone: "9059111595", email: "ssg@hitam.org" }],
       faculty: { name: "Faculty Advisor (ISAMPE)", phone: "9059111595", email: "ssg@hitam.org" },
-      clubEmail: "ssg@hitam.org",
     },
   },
   {
@@ -532,7 +509,6 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "CSI Student Lead", phone: "9059111595", email: "ssg@hitam.org" }],
       faculty: { name: "Faculty Advisor (CSI)", phone: "9059111595", email: "ssg@hitam.org" },
-      clubEmail: "ssg@hitam.org",
     },
   },
   {
@@ -566,7 +542,6 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "CSI Student Lead", phone: "9059111595", email: "ssg@hitam.org" }],
       faculty: { name: "Faculty Advisor (CSI)", phone: "9059111595", email: "ssg@hitam.org" },
-      clubEmail: "ssg@hitam.org",
     },
   },
 ];

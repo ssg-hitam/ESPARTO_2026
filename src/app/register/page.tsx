@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/ui/FadeUp";
-import { FEST_EVENTS, EventCategoryType, getEventRegisterUrl } from "@/data/events";
+import { FEST_EVENTS, EventCategoryType, getEventRegisterUrl, GOOGLE_APPS_SCRIPT_REGISTRATION_URL } from "@/data/events";
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -97,10 +97,20 @@ function RegisterContent() {
               </span>
             </h1>
             
-            <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed max-w-2xl">
+            <p className="text-text-secondary text-sm sm:text-base font-body leading-relaxed max-w-2xl mb-4">
               Secure your entry for Hyderabad Institute of Technology and Management&apos;s annual flagship technical fest.
               Register directly for individual hackathons, workshops, competitions, and technical challenges below.
             </p>
+
+            <a
+              href={GOOGLE_APPS_SCRIPT_REGISTRATION_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider text-white bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple hover:brightness-110 transition-all shadow-[0_0_20px_rgba(255,94,0,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <span>🏛️ OPEN CENTRAL REGISTRATION PORTAL</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
           </div>
         </FadeUp>
 
