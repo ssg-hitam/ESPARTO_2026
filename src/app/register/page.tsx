@@ -66,6 +66,29 @@ export default function RegisterPage() {
           </div>
         </FadeUp>
 
+
+        <FadeUp delay={0.12} distance={20}>
+          <section aria-labelledby="explore-events-title" className="max-w-3xl mt-12 sm:mt-16 rounded-2xl border border-brand-violet/20 bg-white/[0.03] p-6 sm:p-8">
+            <p className="font-mono text-[11px] uppercase tracking-widest text-brand-orange mb-3">
+              FIND YOUR NEXT CHALLENGE
+            </p>
+            <h2 id="explore-events-title" className="font-display font-bold text-2xl sm:text-3xl text-white uppercase tracking-tight mb-4">
+              Explore before you register
+            </h2>
+            <p className="font-body text-sm sm:text-base leading-relaxed text-text-secondary mb-6">
+              Discover the hackathons, workshops, ideathons, and technical challenges at ESPARTO 2026.
+              Browse event schedules, participation formats, rules, and coordinator contacts to find the right event for you and your team.
+            </p>
+            <Link
+              href="/events"
+              className="inline-flex min-h-11 items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider text-text-secondary hover:text-white border border-white/10 hover:border-brand-violet/50 bg-white/5 hover:bg-brand-purple/20 transition-all"
+            >
+              <span>EXPLORE EVENTS</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </section>
+        </FadeUp>
+
       </Container>
     </div>
   );
