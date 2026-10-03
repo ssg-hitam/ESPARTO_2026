@@ -441,8 +441,8 @@ export const FEST_EVENTS: FestEventItem[] = [
     },
     highlights: ["🏆 ₹5,000 Prize Pool", "🥇 1st: ₹1,500 | 🥈 2nd: ₹1,000 | 🥉 3rd: ₹500", "👤 Solo or 👥 Team Entry", "Official Custom Kart Reveal", "Vehicle Telemetry Challenge"],
     coordinators: {
-      students: [{ name: "TorqueX Student Lead", phone: "9059111595", email: "ssg@hitam.org" }],
-      faculty: { name: "Faculty Advisor (TorqueX)", phone: "9059111595", email: "ssg@hitam.org" },
+      students: [{ name: "G. Sri Harshika", phone: "9052693939", email: "24e51a0311@hitam.org" }],
+      faculty: { name: "Ruchir Shrivastava", phone: "903958390", email: "programhead.mech@hitam.org" },
     },
   },
   {

@@ -14,15 +14,15 @@ var screenshotDir = process.env.AUDIT_SCREENSHOT_DIR || '/private/tmp/esparto-re
 fs.mkdirSync(screenshotDir, { recursive: true });
 function session(options) { var id = String(++serial); var state = { harness: mocks.createHarness(options), calls: [], dropNext: false }; sessions.set(id, state); return { id: id, state: state }; }
 function stub(id) {
-  return '<script>(function(){var sessionId=' + JSON.stringify(id) + ';function call(method,payload,ok,fail){fetch("/rpc",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sessionId:sessionId,method:method,payload:payload})}).then(function(response){if(!response.ok)throw Error("Transport failure");return response.json();}).then(function(result){if(ok)ok(result);}).catch(function(error){if(fail)fail(error);});}function runner(ok,fail){return {withSuccessHandler:function(fn){return runner(fn,fail);},withFailureHandler:function(fn){return runner(ok,fn);},getPortalData:function(){call("getPortalData",null,ok,fail);},submitRegistration:function(payload){call("submitRegistration",payload,ok,fail);}};}window.google={script:{run:runner()}};})();</script>';
+  return '<script>(function(){var sessionId=' + JSON.stringify(id) + ';function call(method,payload,ok,fail){fetch("/rpc",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sessionId:sessionId,method:method,payload:payload})}).then(function(response){if(!response.ok)throw Error("Transport failure");return response.json();}).then(function(result){if(ok)ok(result);}).catch(function(error){if(fail)fail(error);});}function runner(ok,fail){return {withSuccessHandler:function(fn){return runner(fn,fail);},withFailureHandler:function(fn){return runner(ok,fn);},getPortalData:function(){call("getPortalData",null,ok,fail);},getRegistrationStatus:function(regId,requestId){call("getRegistrationStatus",{regId:regId,requestId:requestId},ok,fail);},submitRegistration:function(payload){call("submitRegistration",payload,ok,fail);}};}window.google={script:{run:runner()}};})();</script>';
 }
 var server = http.createServer(async function(req,res) {
   try {
     if (req.method === 'POST' && req.url === '/rpc') {
       var body = ''; for await (var chunk of req) { body += chunk; if (body.length > 3000000) throw Error('Oversized test payload'); }
       var message = JSON.parse(body), state = sessions.get(message.sessionId);
-      if (!state || ['getPortalData','submitRegistration'].indexOf(message.method) === -1) { res.writeHead(400); res.end(); return; }
-      state.calls.push(message.method); var result = state.harness.scope[message.method](message.payload);
+      if (!state || ['getPortalData','submitRegistration','getRegistrationStatus'].indexOf(message.method) === -1) { res.writeHead(400); res.end(); return; }
+      state.calls.push(message.method); var result = message.method === 'getRegistrationStatus' ? state.harness.scope.getRegistrationStatus(message.payload.regId,message.payload.requestId) : state.harness.scope[message.method](message.payload);
       if (message.method === 'submitRegistration') await new Promise(function(resolve){setTimeout(resolve,200);});
       if (message.method === 'submitRegistration' && state.dropNext) { state.dropNext = false; res.writeHead(503); res.end(); return; }
       res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify(result));return;
@@ -38,7 +38,7 @@ var server = http.createServer(async function(req,res) {
 function listen() { return new Promise(function(resolve) { server.listen(0,'127.0.0.1',function(){resolve('http://127.0.0.1:'+server.address().port);}); }); }
 function close() { return new Promise(function(resolve) { server.close(resolve); }); }
 async function routeAssets(page) {
-  await page.route('https://drive.google.com/thumbnail?**',function(route){return route.abort();});
+  await page.route('https://drive.google.com/thumbnail?**',function(route){if(route.request().url().includes('1WWKBVMZlGpDm5s9Rh7hOH5cdaTJ8Msuz'))return route.fulfill({body:Buffer.from(mocks.PNG.split(',')[1],'base64'),contentType:'image/png'});return route.abort();});
   await page.route('https://cdn.jsdelivr.net/**',function(route) { var pathname = new URL(route.request().url()).pathname;var match = pathname.match(/\/public\/(.+)$/);var local = match && path.join(__dirname,'../public',match[1]); if (local && fs.existsSync(local)) return route.fulfill({path:local});return route.abort(); });
   await page.route('https://api.qrserver.com/**',function(route){return route.fulfill({body:Buffer.from(mocks.PNG.split(',')[1],'base64'),contentType:'image/png'});});
   // Font/network availability must never block the registration flow.
@@ -74,7 +74,7 @@ async function viewportMatrix(browser,base,engineName) {
     await page.locator('#teamSize').selectOption('2');await page.locator('#teamSize').selectOption('4');assert.equal(await page.locator('#member4Name').inputValue(),'Test Teammate 4');
     if(viewport.width===390)await page.screenshot({path:path.join(screenshotDir,engineName+'-mobile-details.png'),fullPage:true});
     await goPayment(page,viewport.width);await noOverflow(page,engineName+' payment '+viewport.width);
-    var qr=new URL(await page.locator('#paymentQr').getAttribute('src'));var upi=new URL(qr.searchParams.get('data'));assert.equal(upi.searchParams.get('am'),'600');assert.equal(upi.searchParams.get('pa'),'7093324151@naviaxis');assert.equal(upi.searchParams.get('tn'),'ESP-E03');assert.equal(upi.searchParams.get('pn'),'GOTTUMUKKALA DANUSH SAI PANINDRA VARMA');
+    assert.equal(await page.locator('#paymentQr').getAttribute('src'),'https://drive.google.com/thumbnail?id=1WWKBVMZlGpDm5s9Rh7hOH5cdaTJ8Msuz&sz=w1000');var upi=new URL(await page.locator('#openUpi').getAttribute('href'));assert.equal(upi.searchParams.get('am'),'600');assert.equal(upi.searchParams.get('pa'),'qr.hitam@sib');assert.equal(upi.searchParams.get('tn'),'ESP-E03');assert.equal(upi.searchParams.get('pn'),'HYDERABAD INSTITUTE OF TECHNOLOGY AND MANAGEMENT');
     await readyToConfirm(page,viewport.width);assert.ok((await page.locator('#confirmationBody').textContent()).includes('Test Teammate 4'));await noOverflow(page,engineName+' confirmation '+viewport.width);
     await page.keyboard.press('Shift+Tab');assert.equal(await page.evaluate(function(){return document.activeElement.id;}),'confirmSubmit');
     await page.keyboard.press('Escape');assert.equal(await page.locator('#confirmation').isVisible(),false);assert.equal(await page.locator('#appContent').evaluate(function(el){return el.inert;}),false);
@@ -83,6 +83,22 @@ async function viewportMatrix(browser,base,engineName) {
     await page.locator('#ticketTitle').waitFor({state:'visible'});await noOverflow(page,engineName+' ticket '+viewport.width);
     assert.match(await page.locator('#ticketRegId').textContent(),/^ESP26-E03-\d{4}$/);assert.ok((await page.locator('#ticketDetails').textContent()).includes('Pending Verification'));
     assert.equal(entry.state.harness.batches.length,1);assert.equal(entry.state.calls.filter(function(call){return call==='submitRegistration';}).length,1);assert.equal(entry.state.harness.sheets.ALL_MEMBERS_ROSTER.rows.length,5);
+    await page.locator('#checkPayment').waitFor({state:'visible'});
+    await page.waitForFunction(function(){return !document.getElementById('checkPayment').disabled;});
+    assert.equal(await page.locator('#eventGroupLink').getAttribute('href'),null);
+    assert.equal(await page.locator('#eventGroupLink').isVisible(),false);
+    entry.state.harness.store.WHATSAPP_GROUP_E03='https://chat.whatsapp.com/TestVerifiedGroup';
+    entry.state.harness.sheets.ALL_PAYMENTS_COLLECTION.rows[1][11]='Verified';
+    entry.state.harness.sheets.ALL_REGISTRATIONS.rows[1][17]='Verified';
+    await page.locator('#checkPayment').click();await page.locator('#eventGroupLink').waitFor({state:'visible'});
+    assert.equal(await page.locator('#eventGroupLink').getAttribute('href'),'https://chat.whatsapp.com/TestVerifiedGroup');
+    // Cached tickets never cache invitations; a reload must check server status.
+    entry.state.harness.sheets.ALL_PAYMENTS_COLLECTION.rows[1][11]='Rejected';
+    await page.reload();await page.locator('#loadingView').waitFor({state:'hidden'});
+    await page.locator('#restoreTicket').click();
+    await page.waitForFunction(function(){return !document.getElementById('checkPayment').disabled;});
+    assert.equal(await page.locator('#eventGroupLink').getAttribute('href'),null);
+    assert.equal(await page.locator('#eventGroupLink').isVisible(),false);
     await page.emulateMedia({media:'print'});assert.equal(await page.locator('.header').isVisible(),false);assert.equal(await page.locator('#ticketRegId').isVisible(),true);await page.emulateMedia({media:'screen'});
     await page.locator('#exploreEvents').click();assert.equal(await page.locator('#directoryView').isVisible(),true);assert.deepEqual(page.errors,[]);
     console.log('PASS',engineName,viewport.width+'x'+viewport.height,'directory → details → payment → confirmation → ticket; four-tab storage');await page.close();

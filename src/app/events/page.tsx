@@ -387,12 +387,12 @@ export default function EventsPage() {
                           {/* Banner Top Row: Organizing Chapter */}
                           <div className="flex flex-wrap items-center justify-between gap-2 z-10">
                             <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
-                              <div className="relative w-4 h-4 rounded-full overflow-hidden bg-white shrink-0">
+                              <div className={`relative overflow-hidden bg-white shrink-0 ${event.clubId === "hhc" ? "w-20 h-10 rounded-md" : "w-4 h-4 rounded-full"}`}>
                                 <Image
                                   src={event.clubLogo}
                                   alt={event.club}
                                   fill
-                                  sizes="16px"
+                                  sizes={event.clubId === "hhc" ? "80px" : "16px"}
                                   className="object-contain p-0.5"
                                 />
                               </div>

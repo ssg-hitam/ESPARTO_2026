@@ -289,8 +289,8 @@ var EVENT_CATALOG = [
     "themeColor": "#c2410c",
     "description": "Be part of the grand unveiling of HITAM's custom-engineered racing kart. Participate in telemetry design sprints, chassis aerodynamic challenges, and EV powertrain teardown sessions.",
     "prizeBreakup": {},
-    "studentContact": "TorqueX Student Lead (+91 90591 11595)",
-    "facultyContact": "ssg@hitam.org",
+    "studentContact": "G. Sri Harshika (9052693939, 24e51a0311@hitam.org)",
+    "facultyContact": "Ruchir Shrivastava (903958390, programhead.mech@hitam.org)",
     "clubEmail": ""
   },
   {
@@ -422,8 +422,9 @@ function getPortalData() {
       return copy;
     }),
     ieeeUrl: IEEE_URL,
-    upiId: "7093324151@naviaxis",
-    payee: "GOTTUMUKKALA DANUSH SAI PANINDRA VARMA",
+    upiId: "qr.hitam@sib",
+    paymentQrUrl: "https://drive.google.com/thumbnail?id=1WWKBVMZlGpDm5s9Rh7hOH5cdaTJ8Msuz&sz=w1000",
+    payee: "HYDERABAD INSTITUTE OF TECHNOLOGY AND MANAGEMENT",
     support: "Tejal (+91 90591 11595), ssg@hitam.org",
     logos: {
       ssg: driveLogo_(CDN_BASE + "images/brand/ssg-logo.png"),
@@ -766,6 +767,42 @@ function existingResult_(row, requestId, fingerprint) {
 
 function receipt_(regId, data) {
   return { regId: regId, eventId: data.event.id, eventTitle: data.event.title, chapter: data.event.club, teamName: data.teamName, teamSize: data.teamSize, leadName: data.lead.name, amount: data.amount, status: "Pending Verification", utr: data.utr };
+}
+
+// The private submission token proves possession of this registration. Neither
+// the public catalog nor a registration ID/UTR alone can disclose group links.
+function getRegistrationStatus(regId, requestId) {
+  try {
+    if (!/^ESP26-E\d{2}-\d{4}$/.test(String(regId || "")) || !/^[a-f0-9]{32}$/.test(String(requestId || ""))) {
+      return failure_("NOT_FOUND", "Unable to find this saved registration. Contact SSG for assistance.", false);
+    }
+    var spreadsheet = database_();
+    var payments = spreadsheet.getSheetByName("ALL_PAYMENTS_COLLECTION");
+    assertHeaders_(payments, HEADERS.ALL_PAYMENTS_COLLECTION);
+    var payment = findSubmission_(payments, requestId, "");
+    var notes = payment && parseNotes_(payment[12]);
+    if (!payment || payment[1] !== regId || !notes || notes.requestId !== requestId) {
+      return failure_("NOT_FOUND", "Unable to find this saved registration. Contact SSG for assistance.", false);
+    }
+    var master = spreadsheet.getSheetByName("ALL_REGISTRATIONS");
+    assertHeaders_(master, HEADERS.ALL_REGISTRATIONS);
+    var match = master.getLastRow() > 1 && master.getRange(2, 2, master.getLastRow() - 1, 1).createTextFinder(regId).matchEntireCell(true).findNext();
+    if (!match) return failure_("NOT_FOUND", "Unable to find this saved registration. Contact SSG for assistance.", false);
+    var registration = master.getRange(match.getRow(), 1, 1, 20).getDisplayValues()[0];
+    var event = findEvent_(registration[2]);
+    if (!event || event.title !== payment[2] || Number(registration[15]) !== Number(payment[6])) {
+      return failure_("STATUS_UNAVAILABLE", "Payment status is temporarily unavailable. Please contact SSG.", true);
+    }
+    var verified = payment[11] === "Verified" && registration[17] === "Verified";
+    var result = { success: true, verified: verified, status: verified ? "Verified" : "Awaiting payment verification" };
+    if (verified) {
+      var link = PropertiesService.getScriptProperties().getProperty("WHATSAPP_GROUP_" + event.id);
+      if (link && /^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9]+(?:\?[^\s]*)?$/.test(link)) result.whatsappUrl = link;
+    }
+    return result;
+  } catch (error) {
+    return failure_("STATUS_UNAVAILABLE", "Payment status is temporarily unavailable. Please try again or contact SSG.", true);
+  }
 }
 
 function newRegId_(master, eventId) {

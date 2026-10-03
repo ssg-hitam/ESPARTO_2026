@@ -74,7 +74,7 @@ The local tests below use mocked Google services. Complete these checks on an is
 
 1. Open the `/exec` URL signed out, on an iPhone and an Android phone; open it again as an external-college Google account. Confirm the directory loads without requesting script-editor access.
 2. Test IEEE handoff and all supported local `?event=SLUG` links.
-3. For a per-team event, compare HITAM/Other totals and change team size: total stays flat. For a per-person event, change participant count: total changes correctly. Compare the displayed amount with the encoded/scannable QR and opened UPI intent.
+3. For a per-team event, compare HITAM/Other totals and change team size: total stays flat. For a per-person event, change participant count: total changes correctly. Check that the UPI app link includes the displayed amount. The official bank QR is static: participants must enter that exact amount after scanning.
 4. Submit an organizer-authorized test payment/proof into the isolated database. Confirm exactly one matching RegID exists in all four tabs, roster row count equals selected team size, text UTR is intact, proof URL is viewable with its link, and every payment status is pending.
 5. Retry the same attempt after an interrupted browser response. Confirm no extra registration, payment, roster, event row, or screenshot is added. A new request using that UTR must show a friendly duplicate message.
 6. Verify/reject the test payment manually and check dashboard counts, submitted amounts, and verified amounts. Test print/save from the e-ticket screen.
@@ -98,6 +98,18 @@ BROWSER_ENGINES=chromium,webkit,firefox node tests/apps-script-browser.cjs
 
 An existing system Chrome can instead be supplied through `CHROME_EXECUTABLE`. An externally provided Playwright module can be supplied through `PLAYWRIGHT_MODULE`; use `PLAYWRIGHT_BROWSERS_PATH` for a temporary browser cache. The harness hosts the actual HTML and backend on an ephemeral loopback port with mocked Sheets and Drive, closes the server after testing, and writes screenshots to `/private/tmp/esparto-registration-review` by default (override with `AUDIT_SCREENSHOT_DIR`). It creates no real registrations or Drive files.
 
-The browser matrix covers directory filters/search, all 14 deep links, participant details, draft preservation, dynamic amounts/QR payloads, screenshot upload, confirmation focus and Escape, double-submit prevention, pending e-ticket, print styles, interrupted-response recovery, and atomic failure messages. Viewports are 320×740, 390×844, 600×900, 768×1024, 1024×768, 1440×900, and 844×390 landscape. Drive loading is deliberately blocked to exercise fallback; local logos serve the CDN paths; QR images and external fonts are mocked/blocked so the flow also exercises network-independent behavior. There are no real bank transfers and no scanner/UPI app is launched.
+The browser matrix covers directory filters/search, all 14 deep links, participant details, draft preservation, dynamic amounts/UPI app payloads, screenshot upload, confirmation focus and Escape, double-submit prevention, pending e-ticket, print styles, interrupted-response recovery, and atomic failure messages. Viewports are 320×740, 390×844, 600×900, 768×1024, 1024×768, 1440×900, and 844×390 landscape. Drive logo loading is deliberately blocked to exercise fallback; local logos serve the CDN paths; QR images and external fonts are mocked/blocked so the flow also exercises network-independent behavior. There are no real bank transfers and no scanner/UPI app is launched.
 
 WebKit testing helps check the Safari engine, but it is not certification on physical iOS hardware. Real Google services, Workspace access/sharing policies, bank settlement, native UPI-app routing, mobile keyboards, font/CDN availability, and production traffic capacity still require the deployment smoke checks above.
+
+## Private post-payment WhatsApp access
+
+See [POST_PAYMENT_GROUPS.md](POST_PAYMENT_GROUPS.md) for private Script Property configuration, event mappings, organizer verification, and participant status checks. Group invitation URLs are intentionally excluded from repository files and public portal data.
+
+## Official payment setup
+
+The supplied South Indian Bank QR decodes to `qr.hitam@sib` for `HYDERABAD INSTITUTE OF TECHNOLOGY AND MANAGEMENT`. The portal displays the original bank QR from Drive file `1WWKBVMZlGpDm5s9Rh7hOH5cdaTJ8Msuz`; scanning requires entering the exact displayed registration fee. The UPI app link includes that fee automatically. Keep this image publicly viewable. Update both Apps Script files and deploy a new version of the existing deployment. Verify the recipient and scan on a real phone before collecting registrations.
+
+## Current registration deployment
+
+Version 4 was deployed on October 3, 2026. The website uses the existing web app URL: [ESPARTO registration portal](https://script.google.com/macros/s/AKfycbyWW19qSK95FeVO35V-aX5Lr2ySIE-ZMLLqem_y6bIFRXLcVEzVtU4qooHetePr09dbHQ/exec). Updating this deployment keeps the same URL. IEEE retains its separate official form.

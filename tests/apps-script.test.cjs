@@ -4,6 +4,40 @@ var assert = require('node:assert/strict');
 var mocks = require('./apps-script-mocks.cjs');
 function plain(value) { return JSON.parse(JSON.stringify(value)); }
 function rowCount(harness, name) { return harness.sheets[name].rows.length - 1; }
+test('group links stay private until both payment records are verified, with possession of the submission token', function () {
+  ['E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08'].forEach(function (id) {
+    var h = mocks.createHarness(), payload = mocks.payloadFor(h, id);
+    var privateLink = 'https://chat.whatsapp.com/PrivateGroup' + id;
+    h.store['WHATSAPP_GROUP_' + id] = privateLink;
+    var saved = h.scope.submitRegistration(payload);
+    assert.equal(saved.success, true);
+    assert.ok(!JSON.stringify(h.scope.getPortalData()).includes(privateLink));
+    assert.ok(!JSON.stringify(saved).includes(privateLink));
+    var regId = saved.receipt.regId;
+    assert.equal(h.scope.getRegistrationStatus(regId, payload.requestId).whatsappUrl, undefined);
+    h.sheets.ALL_PAYMENTS_COLLECTION.rows[1][11] = 'Verified';
+    assert.equal(h.scope.getRegistrationStatus(regId, payload.requestId).whatsappUrl, undefined);
+    h.sheets.ALL_REGISTRATIONS.rows[1][17] = 'Verified';
+    assert.equal(h.scope.getRegistrationStatus(regId, payload.requestId).whatsappUrl, privateLink);
+    assert.equal(h.scope.getRegistrationStatus(regId, 'f'.repeat(32)).success, false);
+    assert.equal(h.scope.getRegistrationStatus('ESP26-E02-0000', payload.requestId).success, false);
+    h.sheets.ALL_PAYMENTS_COLLECTION.rows[1][11] = 'Rejected';
+    assert.equal(h.scope.getRegistrationStatus(regId, payload.requestId).whatsappUrl, undefined);
+  });
+});
+test('group access fails closed for invalid URLs, mismatched records, or backend errors', function () {
+  var h = mocks.createHarness(), payload = mocks.payloadFor(h, 'E02');
+  var saved = h.scope.submitRegistration(payload);
+  h.sheets.ALL_PAYMENTS_COLLECTION.rows[1][11] = 'Verified';
+  h.sheets.ALL_REGISTRATIONS.rows[1][17] = 'Verified';
+  h.store.WHATSAPP_GROUP_E02 = 'javascript:alert(1)';
+  assert.equal(h.scope.getRegistrationStatus(saved.receipt.regId, payload.requestId).whatsappUrl, undefined);
+  h.sheets.ALL_REGISTRATIONS.rows[1][15] = 1;
+  assert.equal(h.scope.getRegistrationStatus(saved.receipt.regId, payload.requestId).success, false);
+  h.sheets.ALL_REGISTRATIONS.rows[1][15] = saved.receipt.amount;
+  delete h.scope.Sheets;
+  assert.equal(h.scope.getRegistrationStatus(saved.receipt.regId, payload.requestId).success, false);
+});
 test('catalog has the exact 14 IDs, slugs, fees, models, team bounds, prizes, and chapter contacts', function () {
   var h = mocks.createHarness(), catalog = h.scope.EVENT_CATALOG;
   var expected = [

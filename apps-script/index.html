@@ -249,6 +249,9 @@
       width: 140px;
       object-fit: contain;
     }
+    .side-logo.combined-logo img {
+      width: 160px;
+    }
     .image-fallback {
       display: none;
       font-size: 12px;
@@ -467,6 +470,11 @@
       width: 38px;
       height: 38px;
       flex-shrink: 0;
+    }
+    .club-identity img.combined-logo {
+      width: 84px;
+      height: 50px;
+      object-fit: contain;
     }
     .club-identity span {
       font-size: 10px;
@@ -862,8 +870,9 @@
       text-align: center;
     }
     .qr-wrap img {
-      width: 220px;
-      height: 220px;
+      width: 360px;
+      max-width: 100%;
+      height: auto;
       padding: 9px;
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -1252,6 +1261,10 @@
         height: 72px;
         width: 92px;
       }
+      .side-logo.combined-logo img {
+        width: 136px;
+        height: 76px;
+      }
       .brand {
         grid-column: 1/-1;
         grid-row: 2;
@@ -1406,8 +1419,8 @@
         display: none;
       }
       .qr-wrap img {
-        width: 210px;
-        height: 210px;
+        width: 320px;
+        height: auto;
       }
       .footer .container {
         display: block;
@@ -1505,7 +1518,7 @@
       <div id="pageMessage" class="status status-info" role="status" hidden></div>
       <section id="directoryView" hidden aria-labelledby="directoryTitle">
         <div class="hero"><div><p class="eyebrow" style="margin:0 0 12px;color:var(--primary)">Fourteen events. One shared ambition.</p><h1 id="directoryTitle" tabindex="-1">Ideas become impact<br>when you show up.</h1><p>Choose your event, bring your team, and make your mark at ESPARTO 2026. Your registration starts here.</p></div><div class="hero-aside"><strong>09—10 OCT</strong><span>HITAM Campus, Medchal<br>Hyderabad, Telangana</span></div></div>
-        <section class="chapter-panel" aria-labelledby="chaptersTitle"><h2 id="chaptersTitle">Brought to you by our technical chapters</h2><div id="chapterStrip" class="chapters"></div></section>
+        <section class="chapter-panel" aria-labelledby="chaptersTitle"><h2 id="chaptersTitle">Brought to you by our technical chapters</h2><div id="chapterStrip" class="chapters"></div></section><button id="restoreTicket" type="button" class="btn btn-secondary" style="margin-bottom:20px" hidden>Check my saved registration</button>
         <div class="directory-tools"><div id="filters" class="filters" role="group" aria-label="Filter events by category"></div><label class="sr-only" for="eventSearch">Search events or chapters</label><input id="eventSearch" class="directory-search" type="search" placeholder="Search events or chapters" maxlength="100"></div>
         <p id="eventCount" class="event-count" aria-live="polite"></p><div id="eventGrid" class="event-grid"></div>
       </section>
@@ -1534,11 +1547,11 @@
         <ol class="stepper" aria-label="Registration progress"><li><span class="step-circle">✓</span>Participant details</li><li aria-current="step"><span class="step-circle">2</span>UPI payment</li><li><span class="step-circle">3</span>E-ticket</li></ol>
         <div class="view-heading"><p class="eyebrow">Step 02 / Payment</p><h1 id="paymentTitle" tabindex="-1">One last step.</h1><p id="paymentIntro">Pay the exact amount below. Your registration will be recorded after you submit the transaction reference and payment screenshot.</p></div>
         <form id="paymentForm"><div class="payment-grid">
-          <section class="panel"><div class="panel-heading"><span class="number" aria-hidden="true">UPI</span><div><h2>Complete your UPI payment</h2><p>GPay · PhonePe · Paytm · Navi</p></div></div><div class="payment-recipient"><span class="eyebrow" style="color:var(--text-muted)">Pay to</span><strong id="payeeName"></strong></div><div class="qr-wrap"><img id="paymentQr" alt="UPI payment QR code"><p id="qrError" class="qr-placeholder small" hidden>The QR code could not load. Pay using the UPI ID and exact amount below.</p><p id="paymentAmount" class="payment-amount"></p><div class="upi-row"><code id="upiId"></code><button id="copyUpi" class="copy-btn" type="button">Copy UPI ID</button></div><a id="openUpi" class="btn btn-secondary" style="margin-top:15px" target="_top" href="#">Open your UPI app ↗</a><p id="copyStatus" class="small muted" role="status"></p></div><ol class="payment-steps"><li>Check the recipient name, then pay <strong id="instructionAmount"></strong>.</li><li>Find the UTR / transaction reference in your payment app.</li><li>Upload your payment screenshot and review all details before submitting.</li><li>Keep your proof until the chapter verifies the payment.</li></ol></section>
+          <section class="panel"><div class="panel-heading"><span class="number" aria-hidden="true">UPI</span><div><h2>Complete your UPI payment</h2><p>GPay · PhonePe · Paytm · Navi</p></div></div><div class="payment-recipient"><span class="eyebrow" style="color:var(--text-muted)">Pay to</span><strong id="payeeName"></strong></div><div class="qr-wrap"><img id="paymentQr" alt="UPI payment QR code"><p id="qrError" class="qr-placeholder small" hidden>The QR code could not load. Pay using the UPI ID and exact amount below.</p><p id="paymentAmount" class="payment-amount"></p><div class="upi-row"><code id="upiId"></code><button id="copyUpi" class="copy-btn" type="button">Copy UPI ID</button></div><a id="openUpi" class="btn btn-secondary" style="margin-top:15px" target="_top" href="#">Open your UPI app ↗</a><p id="copyStatus" class="small muted" role="status"></p></div><ol class="payment-steps"><li>Check the recipient name, then pay <strong id="instructionAmount"></strong>. When scanning the bank QR, enter this exact amount in your payment app.</li><li>Find the UTR / transaction reference in your payment app.</li><li>Upload your payment screenshot and review all details before submitting.</li><li>Keep your proof until the chapter verifies the payment.</li></ol></section>
           <section class="panel payment-card"><div class="panel-heading"><span class="number" aria-hidden="true">03</span><div><h2>Submit your payment proof</h2><p id="paymentTeamSummary"></p></div></div><div class="stack"><div class="field"><label for="utrNumber">UPI transaction reference (UTR) <span class="required" aria-hidden="true">*</span></label><input id="utrNumber" name="utrNumber" type="text" inputmode="numeric" pattern="[0-9]{8,16}" minlength="8" maxlength="16" autocomplete="off" required placeholder="8–16 digits from your payment app"><small>Enter the reference exactly as shown. Do not use your phone number.</small></div><div class="field"><label for="proofFile">Payment screenshot <span class="required" aria-hidden="true">*</span></label><div class="upload"><input id="proofFile" name="proofFile" type="file" accept="image/png,image/jpeg,image/webp" required aria-describedby="proofHelp"><p id="proofHelp" class="small muted">PNG, JPG, or WebP · Maximum 2 MB</p><div id="proofPreview" class="proof-preview" hidden><img id="proofImage" alt="Selected payment screenshot"><p id="proofMeta" class="proof-meta"></p></div></div></div><label class="agreement"><input id="agreement" name="agreement" type="checkbox" required><span>I confirm these participant details and payment proof are correct. I understand payment and entry are subject to organizer verification, and the proof will be shared with anyone who has its link.</span></label><div id="paymentError" class="status status-error" role="alert" hidden></div><button id="paymentReview" class="btn btn-primary btn-full" type="submit">Review registration →</button></div><p class="payment-note">Nothing is submitted until you confirm the next screen. Need help? <a href="mailto:ssg@hitam.org">ssg@hitam.org</a> · <a href="tel:+919059111595">+91 90591 11595</a></p></section>
         </div></form>
       </section>
-      <section id="ticketView" hidden aria-labelledby="ticketTitle"><div class="ticket"><div class="ticket-top"><span class="ticket-check" aria-hidden="true">✓</span><h1 id="ticketTitle" tabindex="-1">You're on the list.</h1><p>Your registration has been received. Keep this e-ticket for your records.</p></div><div class="ticket-body"><div class="ticket-id"><p>Registration reference</p><strong id="ticketRegId"></strong></div><dl id="ticketDetails" class="ticket-details"></dl><div class="ticket-actions"><button id="printTicket" type="button" class="btn btn-primary">Print / Save e-ticket</button><button id="exploreEvents" type="button" class="btn btn-secondary">Explore other events →</button></div><p class="ticket-note">Payment is pending verification by the event organizers. This e-ticket records your submission and does not confirm bank settlement. Festival: 9–10 October 2026 · HITAM Campus, Medchal, Hyderabad.<br>Queries: <a href="mailto:ssg@hitam.org">ssg@hitam.org</a> · <a href="tel:+919059111595">+91 90591 11595</a></p></div></div></section>
+      <section id="ticketView" hidden aria-labelledby="ticketTitle"><div class="ticket"><div class="ticket-top"><span class="ticket-check" aria-hidden="true">✓</span><h1 id="ticketTitle" tabindex="-1">You're on the list.</h1><p>Your registration has been received. Keep this e-ticket for your records.</p></div><div class="ticket-body"><div class="ticket-id"><p>Registration reference</p><strong id="ticketRegId"></strong></div><dl id="ticketDetails" class="ticket-details"></dl><div id="groupAccess" style="margin-top:20px"><p id="groupStatus" class="small muted" role="status">Event group access becomes available after organizer payment verification.</p><button id="checkPayment" type="button" class="btn btn-secondary" style="margin-top:12px">Check payment status</button><a id="eventGroupLink" class="btn btn-primary" style="margin-top:12px" hidden>Join event WhatsApp group</a></div><div class="ticket-actions"><button id="printTicket" type="button" class="btn btn-primary">Print / Save e-ticket</button><button id="exploreEvents" type="button" class="btn btn-secondary">Explore other events →</button></div><p class="ticket-note"><span id="ticketPaymentNote">Payment is pending verification by the event organizers. This e-ticket records your submission and does not confirm bank settlement.</span> Festival: 9–10 October 2026 · HITAM Campus, Medchal, Hyderabad.<br>Queries: <a href="mailto:ssg@hitam.org">ssg@hitam.org</a> · <a href="tel:+919059111595">+91 90591 11595</a></p></div></div></section>
     </main>
     <footer class="footer"><div class="container"><p>ESPARTO 2026 · Organized by SSG, HITAM</p><p>Registration support: <a href="tel:+919059111595">Tejal · +91 90591 11595</a> · <a href="mailto:ssg@hitam.org">ssg@hitam.org</a></p></div></footer>
     <div id="mobileBar" class="mobile-bar" hidden><div><small id="mobileAmountLabel">REGISTRATION TOTAL</small><strong id="mobileAmount"></strong></div><button id="mobileCta" class="btn btn-primary" type="submit" form="detailsForm">Proceed to payment →</button></div>
@@ -1558,6 +1571,8 @@
     var proof = null;
     var proofReadVersion = 0;
     var requestId = '';
+    var ticketAccess = null;
+    var checkingPayment = false;
     var pendingPayload = null;
     var inFlight = false;
     var slowTimer = null;
@@ -1587,6 +1602,7 @@
     }
     function updateHeader(event) {
         document.documentElement.style.setProperty('--primary', event ? event.themeColor : '#ff5e00');
+        byId('ssgLogo').parentElement.classList.toggle('combined-logo', !!event && (event.id === 'E02' || event.id === 'E04'));
         setImage('ssgLogo', event ? event.logo : portal.logos.ssg, event ? event.club : 'SSG HITAM');
         byId('ssgLogo').nextElementSibling.textContent = event ? event.club : 'SSG HITAM';
         setImage('brandLogo', portal.logos.esparto, 'ESPARTO 2026');
@@ -1618,6 +1634,7 @@
             byId('chapterStrip').innerHTML = data.chapters.map(function (chapter) { return '<div class="chapter"><img src="' + escapeHtml(chapter.logo) + '" alt=""><span>' + escapeHtml(chapter.name) + '</span></div>'; }).join('');
             byId('filters').innerHTML = categories.map(function (category) { return '<button class="filter" type="button" data-category="' + escapeHtml(category[0]) + '" aria-pressed="' + (category[0] === activeCategory) + '">' + escapeHtml(category[1]) + '</button>'; }).join('');
             renderEvents();
+            try { var storedTicket = JSON.parse(localStorage.getItem('espartoSavedTicket') || 'null'); if (storedTicket && storedTicket.receipt && /^[a-f0-9]{32}$/.test(storedTicket.requestId)) { ticketAccess = storedTicket; byId('restoreTicket').hidden = false; } } catch (storageError) {}
             showView('directory');
             setMessage('pageMessage', data.registrationAvailable ? '' : 'Local registrations are temporarily unavailable. Please contact SSG; the separate IEEE form remains accessible.');
             var event = events.filter(function (item) { return item.slug === preselected; })[0];
@@ -1633,7 +1650,7 @@
         byId('eventGrid').innerHTML = matches.length ? matches.map(function (event) {
             var breakup = Object.keys(event.prizeBreakup || {}).map(function (key) { return escapeHtml(key.charAt(0).toUpperCase() + key.slice(1)) + ': ' + escapeHtml(event.prizeBreakup[key]); }).join(' · ');
             var action = event.id === 'E01' ? '<a class="btn btn-primary btn-full" href="' + escapeHtml(portal.ieeeUrl) + '" target="_blank" rel="noopener noreferrer">Register on IEEE form ↗</a>' : '<button class="btn btn-primary btn-full" type="button" data-event="' + escapeHtml(event.slug) + '"' + (portal.registrationAvailable ? '' : ' disabled') + '>' + (portal.registrationAvailable ? 'Register for event →' : 'Registration unavailable') + '</button>';
-            return '<article class="event-card" style="--event-color:' + escapeHtml(event.themeColor) + '"><div class="card-top"><div class="card-meta"><div class="club-identity"><img src="' + escapeHtml(event.logo) + '" alt=""><span>' + escapeHtml(event.club) + '</span></div><span class="category">' + escapeHtml(event.category) + '</span></div><span class="prize">★ ' + money(event.prize) + ' prize pool</span><h3>' + escapeHtml(event.title) + '</h3><p class="card-description">' + escapeHtml(event.description) + '</p><p class="prize-breakup">' + (breakup || 'Prize breakup: contact the chapter for details.') + '</p></div><div class="card-bottom"><div class="team-line"><span>Team format</span><strong>' + teamLabel(event) + '</strong></div><div class="fee-pair"><div>HITAM students<strong>' + money(event.hitamFee) + '</strong></div><div>Other colleges<strong>' + money(event.otherFee) + '</strong></div></div><p class="fee-model">' + (event.feeModel === 'team' ? 'Per team · one flat fee' : 'Per person · multiplied by participant count') + '</p>' + action + '</div></article>';
+            return '<article class="event-card" style="--event-color:' + escapeHtml(event.themeColor) + '"><div class="card-top"><div class="card-meta"><div class="club-identity"><img class="' + (event.id === 'E02' || event.id === 'E04' ? 'combined-logo' : '') + '" src="' + escapeHtml(event.logo) + '" alt=""><span>' + escapeHtml(event.club) + '</span></div><span class="category">' + escapeHtml(event.category) + '</span></div><span class="prize">★ ' + money(event.prize) + ' prize pool</span><h3>' + escapeHtml(event.title) + '</h3><p class="card-description">' + escapeHtml(event.description) + '</p><p class="prize-breakup">' + (breakup || 'Prize breakup: contact the chapter for details.') + '</p></div><div class="card-bottom"><div class="team-line"><span>Team format</span><strong>' + teamLabel(event) + '</strong></div><div class="fee-pair"><div>HITAM students<strong>' + money(event.hitamFee) + '</strong></div><div>Other colleges<strong>' + money(event.otherFee) + '</strong></div></div><p class="fee-model">' + (event.feeModel === 'team' ? 'Per team · one flat fee' : 'Per person · multiplied by participant count') + '</p>' + action + '</div></article>';
         }).join('') : '<div class="empty"><h2>No matching events</h2><p class="muted small" style="margin-top:12px">Try another category or search term.</p><button type="button" id="resetDirectory" class="btn btn-secondary" style="margin-top:20px">Reset filters</button></div>';
     }
     function newRequestId() { var bytes = new Uint8Array(16); window.crypto.getRandomValues(bytes); return Array.prototype.map.call(bytes, function (byte) { return ('0' + byte.toString(16)).slice(-2); }).join(''); }
@@ -1775,7 +1792,7 @@
         var upi = 'upi://pay?pa=' + encodeURIComponent(portal.upiId) + '&pn=' + encodeURIComponent(portal.payee) + '&am=' + fee.total + '&cu=INR&tn=' + encodeURIComponent('ESP-' + selectedEvent.id);
         byId('qrError').hidden = true;
         byId('paymentQr').hidden = false;
-        byId('paymentQr').src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(upi);
+        byId('paymentQr').src = portal.paymentQrUrl || 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(upi);
         byId('paymentQr').alt = 'Scan to pay ' + money(fee.total) + ' to ' + portal.payee;
         byId('openUpi').href = upi;
         setMessage('copyStatus', '');
@@ -1853,9 +1870,15 @@
         }).withFailureHandler(function () { window.clearTimeout(slowTimer); setBusy(false); setMessage('submitStatus', ''); setMessage('submitError', 'The connection was interrupted. Retry this same submission to recover it without duplicate rows. Do not pay again. Support reference: ' + requestId); byId('confirmSubmit').textContent = 'Retry / recover registration'; }).submitRegistration(pendingPayload);
     }
     function showTicket(receipt) {
+        receipt.teamName = receipt.teamName || (draft && draft.teamName) || '';
+        receipt.teamSize = receipt.teamSize || (draft && draft.teamSize) || '';
+        ticketAccess = { receipt: receipt, requestId: requestId };
+        try { localStorage.setItem('espartoSavedTicket', JSON.stringify(ticketAccess)); byId('restoreTicket').hidden = false; } catch (storageError) {}
+        clearGroupAccess();
+        byId('ticketPaymentNote').textContent = 'Payment is pending verification by the event organizers. This e-ticket records your submission and does not confirm bank settlement.';
         byId('ticketRegId').textContent = receipt.regId;
-        var rows = [['Event', receipt.eventTitle], ['Chapter', receipt.chapter], ['Team / participant', receipt.teamName || draft.teamName], ['Participants', String(receipt.teamSize || draft.teamSize)], ['Team lead / participant', receipt.leadName], ['Amount paid (submitted)', money(receipt.amount)], ['Transaction reference', receipt.utr], ['Status', receipt.status || 'Pending Verification']];
-        byId('ticketDetails').innerHTML = rows.map(function (row) { return '<div><dt>' + escapeHtml(row[0]) + '</dt><dd>' + (row[0] === 'Status' ? '<span class="pill pending">' + escapeHtml(row[1]) + '</span>' : escapeHtml(row[1])) + '</dd></div>'; }).join('');
+        var rows = [['Event', receipt.eventTitle], ['Chapter', receipt.chapter], ['Team / participant', receipt.teamName], ['Participants', String(receipt.teamSize)], ['Team lead / participant', receipt.leadName], ['Amount paid (submitted)', money(receipt.amount)], ['Transaction reference', receipt.utr], ['Status', receipt.status || 'Pending Verification']];
+        byId('ticketDetails').innerHTML = rows.map(function (row) { return '<div><dt>' + escapeHtml(row[0]) + '</dt><dd>' + (row[0] === 'Status' ? '<span id="ticketPaymentStatus" class="pill pending">' + escapeHtml(row[1]) + '</span>' : escapeHtml(row[1])) + '</dd></div>'; }).join('');
         // Proof remains in Drive; release the base64 from browser memory after success.
         proof = null;
         pendingPayload = null;
@@ -1863,6 +1886,40 @@
         byId('confirmationBody').innerHTML = '';
         byId('proofFile').value = '';
         showView('ticket', 'ticketTitle');
+        checkPaymentStatus();
+    }
+    function clearGroupAccess() {
+        byId('eventGroupLink').hidden = true;
+        byId('eventGroupLink').removeAttribute('href');
+        byId('groupStatus').textContent = 'Event group access becomes available after organizer payment verification.';
+    }
+    function checkPaymentStatus() {
+        if (checkingPayment || !ticketAccess) return;
+        clearGroupAccess();
+        checkingPayment = true;
+        byId('checkPayment').disabled = true;
+        byId('groupStatus').textContent = 'Checking payment verification…';
+        var access = ticketAccess;
+        google.script.run.withSuccessHandler(function (result) {
+            checkingPayment = false;
+            byId('checkPayment').disabled = false;
+            if (ticketAccess !== access) return;
+            var verified = result && result.success && result.verified === true;
+            byId('ticketPaymentStatus').textContent = verified ? 'Verified' : 'Pending Verification';
+            byId('ticketPaymentNote').textContent = verified ? 'Payment has been verified by the event organizers.' : 'Payment is awaiting organizer verification. Submission alone does not confirm payment.';
+            byId('groupStatus').textContent = verified ? 'Your payment is verified. The event group is available below.' : (result && result.message ? result.message : 'Payment is not yet verified. Check again after the organizers confirm it.');
+            if (verified && /^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9]+(?:\?[^\s]*)?$/.test(result.whatsappUrl || '')) {
+                byId('eventGroupLink').href = result.whatsappUrl;
+                byId('eventGroupLink').hidden = false;
+            } else if (verified) {
+                byId('groupStatus').textContent = 'Your payment is verified. Contact the event coordinator for group access.';
+            }
+        }).withFailureHandler(function () {
+            checkingPayment = false;
+            byId('checkPayment').disabled = false;
+            clearGroupAccess();
+            byId('groupStatus').textContent = 'Unable to check payment status. Please try again or contact SSG.';
+        }).getRegistrationStatus(access.receipt.regId, access.requestId);
     }
     function returnDirectory() { if (inFlight)
         return; selectedEvent = null; updateHeader(null); setMessage('pageMessage', ''); showView('directory', 'directoryTitle'); }
@@ -1960,6 +2017,8 @@
     byId('confirmCancel').addEventListener('click', closeConfirmation);
     byId('confirmSubmit').addEventListener('click', submitRegistration);
     byId('copyUpi').addEventListener('click', copyUpi);
+    byId('checkPayment').addEventListener('click', checkPaymentStatus);
+    byId('restoreTicket').addEventListener('click', function () { if (!ticketAccess) return; var saved = ticketAccess; requestId = saved.requestId; selectedEvent = events.filter(function (event) { return event.id === saved.receipt.eventId || event.title === saved.receipt.eventTitle; })[0] || null; updateHeader(selectedEvent); showTicket(saved.receipt); });
     byId('printTicket').addEventListener('click', function () { window.print(); });
     byId('exploreEvents').addEventListener('click', returnDirectory);
     loadPortal();
