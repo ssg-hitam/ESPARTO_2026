@@ -1495,7 +1495,7 @@
     // ════════════════════════════════════════════════════════════
     var ALL_EVENTS = [
       {
-        id: "E01", slug: "ieee-ideathon", title: "IEEE National Ideathon",
+        id: "E01", slug: "ieee-ideathon", title: "INNOVISION (IEEE National Ideathon)",
         club: "IEEE Student Branch HITAM", category: "Ideathon", teamMin: 3, teamMax: 4,
         feeHitam: 200, feeOther: 300, feeModel: "Per Team",
         prizePool: "₹30,000",
@@ -1632,15 +1632,15 @@
       },
       {
         id: "E12", slug: "build-first-robot", title: "Build Your First Robot",
-        club: "ISAMPE Chapter", category: "Workshop", teamMin: 2, teamMax: 4,
-        feeHitam: 200, feeOther: 200, feeModel: "Per Team",
+        club: "ISNT × ISAMPE Student Chapter", category: "Workshop", teamMin: 1, teamMax: 4,
+        feeHitam: 250, feeOther: 250, feeModel: "Per Team",
         prizePool: "₹5,000",
-        prizeBreakup: "🥇 1st: ₹1,500 | 🥈 2nd: ₹1,000 | 🥉 3rd: ₹500",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ISAMPE.png",
+        prizeBreakup: "🥇 1st: ₹1,000 | 🥈 2nd: ₹800 | 🥉 3rd: ₹500",
+        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/isnt-isampe.png",
         themeColor: "#0d9488",
-        desc: "Assemble an autonomous obstacle-avoiding bot from scratch on Day 1 (Oct 9). Learn DC geared motors, Arduino Uno, sensors, and race in the arena. ₹5,000 prize pool (₹200/team).",
-        studentContact: "ISAMPE Student Lead (+91 90591 11595)",
-        facultyContact: "ISAMPE Faculty Incharge (ssg@hitam.org)"
+        desc: "Assemble an autonomous obstacle-avoiding bot from scratch on Day 1 (Oct 9). Learn DC geared motors, Arduino Uno, sensors, and race in the arena. ₹5,000 prize pool (₹120 solo / ₹250 team).",
+        studentContact: "Bipul Kumar Yadav (+91 70933 46820) / Narendra Reddy (+91 79814 27446)",
+        facultyContact: "Mr. Deepak Kumar Singh (+91 89829 30521) / Mr. P. Bhaskar Rao (+91 97054 82627)"
       },
       {
         id: "E13", slug: "code-casino", title: "Code Casino",
@@ -1914,7 +1914,16 @@
       var total = unitFee;
       var breakdownText = "";
 
-      if (currentEvent.feeModel === "Per Person") {
+      if (currentEvent.id === "E12") {
+        var teamCount = Number(document.getElementById('teamSizeSelect').value);
+        if (teamCount === 1) {
+          total = 120;
+          breakdownText = "1 Individual Participant · ₹120";
+        } else {
+          total = 250;
+          breakdownText = "Team of " + teamCount + " Participants · ₹250";
+        }
+      } else if (currentEvent.feeModel === "Per Person") {
         var teamCount = currentEvent.teamMax > 1 ? Number(document.getElementById('teamSizeSelect').value) : 1;
         total = unitFee * teamCount;
         breakdownText = teamCount + " Participant(s) × ₹" + unitFee + " (" + (isHitam ? "HITAM" : "Non-HITAM") + ")";

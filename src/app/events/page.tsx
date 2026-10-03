@@ -11,17 +11,26 @@ import {
   ArrowUpRight, 
   Search, 
   Trophy, 
-  CheckCircle2, 
   X, 
-  Ticket,
-  ChevronLeft,
-  ChevronRight,
   Info,
   Phone,
   Mail,
-  UserCheck,
-  GraduationCap
+  User,
+  GraduationCap,
+  Calendar,
+  Clock,
+  Users,
+  MapPin,
+  CreditCard,
+  Sparkles
 } from "lucide-react";
+
+function cleanString(str?: string): string {
+  if (!str) return "";
+  return str
+    .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}\u{FE00}-\u{FE0F}]/gu, "")
+    .trim();
+}
 
 const CATEGORIES: { label: string; value: EventCategoryType }[] = [
   { label: "ALL", value: "All" },
@@ -39,13 +48,10 @@ const DAYS = [
   { label: "BOTH DAYS", value: "both" },
 ];
 
-const ITEMS_PER_PAGE = 6;
-
 export default function EventsPage() {
   const [selectedCategory, setSelectedCategory] = useState<EventCategoryType>("All");
   const [selectedDay, setSelectedDay] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeModalEvent, setActiveModalEvent] = useState<FestEventItem | null>(null);
 
   const modalRef = useRef<HTMLDivElement>(null);
@@ -128,18 +134,6 @@ export default function EventsPage() {
     });
   }, [selectedCategory, selectedDay, searchQuery]);
 
-  // Reset to first page whenever filter or search query changes
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedCategory, selectedDay, searchQuery]);
-
-  // Pagination calculation
-  const totalPages = Math.max(1, Math.ceil(filteredEvents.length / ITEMS_PER_PAGE));
-  const paginatedEvents = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredEvents.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [filteredEvents, currentPage]);
-
   const hasActiveFilters = selectedCategory !== "All" || selectedDay !== "all" || searchQuery.trim() !== "";
 
   return (
@@ -188,8 +182,21 @@ export default function EventsPage() {
         {/* ── MASTER 2-COLUMN LAYOUT: SIDEBAR + MAIN CONTENT ──────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
+          <div className="lg:hidden sticky top-24 z-30 grid grid-cols-2 gap-3 p-3 rounded-2xl border border-white/10 bg-[#08041d]/95 backdrop-blur-md" aria-label="Event filters">
+            <label className="min-w-0 text-xs font-mono uppercase tracking-wider">Categories
+              <select aria-label="Categories" value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value as EventCategoryType)} className="mt-2 w-full min-h-11 rounded-lg border border-white/20 bg-[#08041d] px-2 text-xs text-white">
+                {CATEGORIES.map((category) => <option key={category.value} value={category.value}>{category.label} ({categoryCounts[category.value] || 0})</option>)}
+              </select>
+            </label>
+            <label className="min-w-0 text-xs font-mono uppercase tracking-wider">Schedule
+              <select aria-label="Schedule" value={selectedDay} onChange={(event) => setSelectedDay(event.target.value)} className="mt-2 w-full min-h-11 rounded-lg border border-white/20 bg-[#08041d] px-2 text-xs text-white">
+                {DAYS.map((day) => <option key={day.value} value={day.value}>{day.label} ({dayCounts[day.value as keyof typeof dayCounts]})</option>)}
+              </select>
+            </label>
+          </div>
+
           {/* ── LEFT SIDEBAR: CATEGORIES & CONTROLS ───────────────────────────── */}
-          <aside className="lg:col-span-4 xl:col-span-3 lg:sticky lg:top-28 space-y-6">
+          <aside className="hidden lg:block lg:col-span-4 xl:col-span-3 sticky top-28 max-h-[calc(100dvh-8rem)] overflow-y-auto space-y-6">
             
             {/* Category Index Card */}
             <div className="rounded-2xl border border-white/10 bg-[#08041d]/90 backdrop-blur-md overflow-hidden shadow-lg">
@@ -281,29 +288,6 @@ export default function EventsPage() {
 
             </div>
 
-            {/* ESPARTO Event Registrations Box */}
-            <div className="p-4 rounded-2xl border border-brand-magenta/30 bg-gradient-to-br from-brand-magenta/15 via-[#08041d] to-[#08041d] text-xs font-mono space-y-2.5">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-brand-magenta font-bold uppercase text-[11px] tracking-wider">
-                  <Ticket className="w-3.5 h-3.5" />
-                  <span>REGISTRATIONS</span>
-                </div>
-                <span className="px-1.5 py-0.5 rounded text-[9px] bg-brand-magenta/20 text-brand-magenta font-mono">
-                  OPEN NOW
-                </span>
-              </div>
-              <p className="text-text-secondary font-body text-[11px] leading-relaxed">
-                Register for hackathons, workshops, and competitions individually on Unstop.
-              </p>
-              <Link
-                href="/register"
-                className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-brand-orange to-brand-magenta text-white font-display font-bold text-[11px] uppercase tracking-wider hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,94,0,0.3)]"
-              >
-                <span>REGISTER FOR EVENTS</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-
           </aside>
 
           {/* ── RIGHT MAIN AREA: SEARCH & 2-COLUMN EVENT CARDS ───────────────── */}
@@ -356,11 +340,11 @@ export default function EventsPage() {
             </div>
 
             {/* ── 2-COLUMN EVENT CARDS GRID (AS IN REFERENCE DESIGN) ──────────── */}
-            {paginatedEvents.length > 0 ? (
+            {filteredEvents.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {paginatedEvents.map((event, idx) => {
+                {filteredEvents.map((event, idx) => {
                   // Calculate actual 1-based index in the filtered list
-                  const globalIdx = (currentPage - 1) * ITEMS_PER_PAGE + idx + 1;
+                  const globalIdx = idx + 1;
                   const trackCode = `TRACK #${globalIdx.toString().padStart(3, "0")}`;
 
                   return (
@@ -382,86 +366,113 @@ export default function EventsPage() {
                         </div>
 
                         {/* Event Visual Banner Box */}
-                        <div className="relative w-full min-h-36 rounded-xl overflow-hidden mb-4 border border-white/10 bg-gradient-to-br from-black/80 via-[#0e0a2b] to-[#1a0e38] flex flex-col justify-between p-3.5 group-hover:border-white/20 transition-all">
-                          
-                          {/* Banner Top Row: Organizing Chapter */}
-                          <div className="flex flex-wrap items-center justify-between gap-2 z-10">
-                            <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
-                              <div className={`relative overflow-hidden bg-white shrink-0 ${event.clubId === "hhc" ? "w-20 h-10 rounded-md" : "w-4 h-4 rounded-full"}`}>
-                                <Image
-                                  src={event.clubLogo}
-                                  alt={event.club}
-                                  fill
-                                  sizes={event.clubId === "hhc" ? "80px" : "16px"}
-                                  className="object-contain p-0.5"
-                                />
-                              </div>
-                              <span className="font-mono text-[10px] text-text-secondary font-medium truncate max-w-[140px]">
-                                {event.club}
-                              </span>
-                            </div>
+                        <div className="relative w-full h-40 sm:h-44 rounded-xl overflow-hidden mb-4 border border-white/10 bg-gradient-to-br from-black/80 via-[#0e0a2b] to-[#1a0e38] flex flex-col justify-between p-3.5 group-hover:border-white/20 transition-all">
+                          {event.bannerImage ? (
+                            <>
+                              <Image
+                                src={event.bannerImage}
+                                alt={event.title}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 450px"
+                                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                priority
+                              />
+                              {/* Soft gradient overlay so badges pop and contrast against bright banners */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/50 pointer-events-none" />
+                            </>
+                          ) : (
+                            /* Subtle Graphic Grid Accent for cards without custom banner */
+                            <div
+                              className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none"
+                              aria-hidden="true"
+                            />
+                          )}
 
-                            {/* Prize Badge if cash prize declared */}
+                          {/* Banner Top Row: Prize Badge (Pinned to Right) */}
+                          <div className="flex items-center justify-end gap-2 z-10">
                             {event.prizePool && event.prizePool !== "Certifications & GDG Kits" && (
-                              <div className="flex items-center gap-1.5 bg-gradient-to-r from-amber-500/25 to-amber-600/15 border border-amber-400/40 px-2.5 py-1 rounded-full text-amber-300 font-mono font-bold text-[10px] shrink-0 shadow-[0_0_12px_rgba(251,191,36,0.25)]">
-                                <Trophy className="w-3.5 h-3.5 text-amber-400 animate-pulse shrink-0" />
-                                <span>🏆 {event.prizePool}</span>
+                              <div className="flex items-center gap-1.5 bg-black/80 backdrop-blur-md border border-amber-400/30 px-2.5 py-1 rounded-full text-amber-300 font-mono font-semibold text-[10px] shrink-0 shadow-[0_0_12px_rgba(251,191,36,0.2)]">
+                                <Trophy className="w-3 h-3 text-amber-400 shrink-0" />
+                                <span>{cleanString(event.prizePool)}</span>
                               </div>
                             )}
                           </div>
 
-                          {/* Banner Center: Distinct Title Representation */}
-                          <div className="z-10 mt-auto">
-                            <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider block">
-                              {event.date}
-                            </span>
-                            <h3 className="font-display font-black text-lg text-white leading-tight drop-shadow-md truncate">
-                              {event.title}
-                            </h3>
-                          </div>
-
-                          {/* Subtle Graphic Grid Accent */}
-                          <div 
-                            className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none"
-                            aria-hidden="true"
-                          />
+                          {/* Banner Bottom: Distinct Title Representation (Only when no banner image) */}
+                          {!event.bannerImage && (
+                            <div className="z-10 mt-auto">
+                              <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider block">
+                                {cleanString(event.date)}
+                              </span>
+                              <h3 className="font-display font-black text-lg text-white leading-tight drop-shadow-md truncate">
+                                {event.title}
+                              </h3>
+                            </div>
+                          )}
                         </div>
 
-                        {/* Title and Short Overview */}
+                        {/* Title, Organizing Chapter & Overview */}
                         <div className="mb-4">
-                          <h2 className="font-display font-bold text-lg text-text-primary tracking-tight group-hover:text-white transition-colors mb-1.5">
-                            {event.title}
-                          </h2>
-                          <p className="text-xs text-text-secondary font-body line-clamp-2 leading-relaxed">
-                            {event.description}
-                          </p>
-                        </div>
+                            <div className="flex items-center justify-between gap-2 mb-2">
+                              <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-magenta/15 border border-brand-magenta/30 text-brand-magenta">
+                                {event.category}
+                              </span>
+                              <span className="text-[10px] font-mono text-text-muted">
+                                {cleanString(event.date)}
+                              </span>
+                            </div>
+
+                            <h2 className="font-display font-bold text-lg text-text-primary tracking-tight group-hover:text-white transition-colors mb-1.5">
+                              {event.title}
+                            </h2>
+
+                            {/* Organizing Chapter with official logo in description */}
+                            <div className="flex items-center gap-2 mb-2.5">
+                              <div className={`relative overflow-hidden bg-white shrink-0 rounded-sm ${event.clubId === "hhc" || event.clubId === "isnt-isampe" ? "w-6 h-3.5" : "w-4 h-4 rounded-full"}`}>
+                                <Image
+                                  src={event.clubLogo}
+                                  alt={event.club}
+                                  fill
+                                  sizes="20px"
+                                  className="object-contain p-0.5"
+                                />
+                              </div>
+                              <span className="text-[11px] font-mono text-text-secondary truncate">
+                                Organized by <span className="text-white font-medium">{event.club}</span>
+                              </span>
+                            </div>
+
+                            <p className="text-xs text-text-secondary font-body line-clamp-2 leading-relaxed">
+                              {event.description}
+                            </p>
+                          </div>
 
                         {/* Registration Specs (Date, Time, Team Size, Fee) */}
                         <div className="grid grid-cols-2 gap-2 text-[11px] font-mono p-2.5 rounded-xl bg-black/40 border border-white/5 mb-3">
                           <div>
-                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1">
-                              <span>📅</span> SCHEDULE
+                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1.5 tracking-wider font-semibold">
+                              <Calendar className="w-3 h-3 text-text-muted shrink-0" /> SCHEDULE
                             </span>
-                            <span className="text-white font-medium truncate block">{event.date}</span>
+                            <span className="text-white font-medium truncate block">{cleanString(event.date)}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1">
-                              <span>⏰</span> TIMINGS
+                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1.5 tracking-wider font-semibold">
+                              <Clock className="w-3 h-3 text-text-muted shrink-0" /> TIMINGS
                             </span>
-                            <span className="text-white font-medium truncate block">{event.timings}</span>
+                            <span className="text-white font-medium truncate block">{cleanString(event.timings)}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1">
-                              <span>{event.teamSize.includes("Solo") && !event.teamSize.includes("Team") ? "👤" : "👥"}</span> PARTICIPATION
+                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1.5 tracking-wider font-semibold">
+                              <Users className="w-3 h-3 text-text-muted shrink-0" /> TEAM FORMAT
                             </span>
-                            <span className="text-white font-medium truncate block">{event.teamSize}</span>
+                            <span className="text-white font-medium truncate block">{cleanString(event.teamSize)}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1">
-                              <span>🎟️</span> ENTRY FEE
+                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1.5 tracking-wider font-semibold">
+                              <CreditCard className="w-3 h-3 text-text-muted shrink-0" /> ENTRY FEE
                             </span>
-                            <span className="text-brand-orange font-bold truncate block">{event.registrationFee.hitam}</span>
+                            <span className={`text-brand-orange font-bold block ${event.clubId === "ieee" ? "whitespace-normal" : "truncate"}`}>{cleanString(event.registrationFee.hitam)}</span>
+                            {event.clubId === "ieee" && <span className="text-brand-magenta font-bold block mt-1">{cleanString(event.registrationFee.nonHitam)}</span>}
                           </div>
                         </div>
 
@@ -475,14 +486,13 @@ export default function EventsPage() {
 
                       </div>
 
-                      {/* ── CARD BOTTOM ACTION: SOLID "REGISTER HERE ▶" BUTTON ── */}
+                      {/* ── CARD BOTTOM ACTION BUTTON ── */}
                       <a
                         href={getEventRegisterUrl(event)}
-                        className="w-full py-3 px-4 font-mono font-black text-xs uppercase tracking-widest text-center text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-[0_-2px_10px_rgba(0,0,0,0.4)]"
+                        className="w-full py-3 px-4 font-mono font-bold text-xs uppercase tracking-wider text-center text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-[0_-2px_10px_rgba(0,0,0,0.4)]"
                       >
-                        <span>🎟️</span>
-                        <span>REGISTER HERE</span>
-                        <span>▶</span>
+                        <span>Register for Event</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
                       </a>
 
                     </div>
@@ -510,50 +520,6 @@ export default function EventsPage() {
               </div>
             )}
 
-            {/* ── PAGINATION CONTROLS (AS SHOWN IN REFERENCE DESIGN) ──────────── */}
-            {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-1.5 p-3 rounded-2xl bg-[#08041d]/90 border border-white/10 font-mono text-xs">
-                
-                {/* Previous Button */}
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-40 disabled:pointer-events-none text-text-secondary hover:text-white transition-all flex items-center gap-1"
-                >
-                  <ChevronLeft className="w-3.5 h-3.5" />
-                  <span>PREV</span>
-                </button>
-
-                {/* Page Number Buttons */}
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
-                  const isActive = currentPage === pageNum;
-                  return (
-                    <button
-                      key={pageNum}
-                      onClick={() => setCurrentPage(pageNum)}
-                      className={`w-8 h-8 rounded-lg font-bold transition-all ${
-                        isActive
-                          ? "bg-brand-orange text-white shadow-[0_0_12px_rgba(255,94,0,0.4)]"
-                          : "border border-white/10 bg-white/5 text-text-secondary hover:text-white hover:bg-white/10"
-                      }`}
-                    >
-                      {pageNum.toString().padStart(2, "0")}
-                    </button>
-                  );
-                })}
-
-                {/* Next Button */}
-                <button
-                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={currentPage === totalPages}
-                  className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-40 disabled:pointer-events-none text-text-secondary hover:text-white transition-all flex items-center gap-1"
-                >
-                  <span>NEXT</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-
-              </div>
-            )}
 
           </div>
 
@@ -589,9 +555,20 @@ export default function EventsPage() {
                 <h3 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight leading-tight">
                   {activeModalEvent.title}
                 </h3>
-                <p className="text-xs font-mono text-text-muted mt-1">
-                  Organized by <strong className="text-text-primary">{activeModalEvent.club}</strong>
-                </p>
+                <div className="flex items-center gap-2 mt-1.5">
+                  <div className={`relative overflow-hidden bg-white shrink-0 rounded-sm ${activeModalEvent.clubId === "hhc" || activeModalEvent.clubId === "isnt-isampe" ? "w-6 h-3.5" : "w-4 h-4 rounded-full"}`}>
+                    <Image
+                      src={activeModalEvent.clubLogo}
+                      alt={activeModalEvent.club}
+                      fill
+                      sizes="20px"
+                      className="object-contain p-0.5"
+                    />
+                  </div>
+                  <p className="text-xs font-mono text-text-muted">
+                    Organized by <strong className="text-text-primary">{activeModalEvent.club}</strong>
+                  </p>
+                </div>
               </div>
 
               <button
@@ -603,34 +580,53 @@ export default function EventsPage() {
               </button>
             </div>
 
+            {/* Event Official Banner */}
+            {activeModalEvent.bannerImage && (
+              <div className="relative w-full aspect-[8/3] rounded-2xl overflow-hidden mb-6 border border-white/15 bg-white/5 shadow-2xl group">
+                <Image
+                  src={activeModalEvent.bannerImage}
+                  alt={`${activeModalEvent.title} Official Banner`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 700px"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            )}
+
             {/* Prize Pool Breakdown (if declared) */}
             {activeModalEvent.prizePool && (
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-brand-orange/15 to-transparent border border-amber-500/30 mb-6">
-                <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <Trophy className="w-5 h-5 text-amber-400 shrink-0" />
-                  <span className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold">
-                    🏆 Official Prize Pool: {activeModalEvent.prizePool}
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 via-brand-orange/5 to-transparent border border-amber-500/20 mb-6">
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <div className="flex items-center gap-2">
+                    <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold">
+                      Prize Pool
+                    </span>
+                  </div>
+                  <span className="font-display font-extrabold text-white text-base tracking-tight">
+                    {cleanString(activeModalEvent.prizePool)}
                   </span>
                 </div>
 
                 {activeModalEvent.prizeBreakup && (
-                  <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-amber-500/20 text-xs font-mono">
+                  <div className="grid grid-cols-3 gap-2 pt-3 border-t border-amber-500/15 text-xs font-mono">
                     {activeModalEvent.prizeBreakup.first && (
-                      <div className="p-2.5 rounded-xl bg-amber-500/15 border border-amber-400/40 text-center shadow-[0_0_12px_rgba(251,191,36,0.15)]">
-                        <span className="text-amber-300 font-bold text-[10px] block mb-0.5">🥇 1st Prize</span>
-                        <strong className="text-white text-sm font-display tracking-tight">{activeModalEvent.prizeBreakup.first}</strong>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-amber-400/20 text-center">
+                        <span className="text-amber-400 font-bold text-[10px] block mb-0.5 uppercase tracking-wider">1st Place</span>
+                        <strong className="text-white text-sm font-display tracking-tight">{cleanString(activeModalEvent.prizeBreakup.first)}</strong>
                       </div>
                     )}
                     {activeModalEvent.prizeBreakup.second && (
-                      <div className="p-2.5 rounded-xl bg-slate-400/15 border border-slate-300/40 text-center shadow-[0_0_12px_rgba(203,213,225,0.15)]">
-                        <span className="text-slate-300 font-bold text-[10px] block mb-0.5">🥈 2nd Prize</span>
-                        <strong className="text-white text-sm font-display tracking-tight">{activeModalEvent.prizeBreakup.second}</strong>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-slate-300/20 text-center">
+                        <span className="text-slate-300 font-bold text-[10px] block mb-0.5 uppercase tracking-wider">2nd Place</span>
+                        <strong className="text-white text-sm font-display tracking-tight">{cleanString(activeModalEvent.prizeBreakup.second)}</strong>
                       </div>
                     )}
                     {activeModalEvent.prizeBreakup.third && (
-                      <div className="p-2.5 rounded-xl bg-amber-900/25 border border-amber-600/40 text-center shadow-[0_0_12px_rgba(217,119,6,0.15)]">
-                        <span className="text-amber-400 font-bold text-[10px] block mb-0.5">🥉 3rd Prize</span>
-                        <strong className="text-white text-sm font-display tracking-tight">{activeModalEvent.prizeBreakup.third}</strong>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-amber-600/20 text-center">
+                        <span className="text-amber-500 font-bold text-[10px] block mb-0.5 uppercase tracking-wider">3rd Place</span>
+                        <strong className="text-white text-sm font-display tracking-tight">{cleanString(activeModalEvent.prizeBreakup.third)}</strong>
                       </div>
                     )}
                   </div>
@@ -640,68 +636,94 @@ export default function EventsPage() {
 
             {/* Track Overview */}
             <div className="mb-6">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-text-muted mb-2">Track Overview</h4>
+              <h4 className="text-[11px] font-mono uppercase tracking-wider text-text-muted mb-2 font-bold">
+                Track Overview
+              </h4>
               <p className="text-sm font-body text-text-secondary leading-relaxed">
                 {activeModalEvent.description}
               </p>
             </div>
 
-            {/* Essential Registration Details */}
-            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 mb-6 space-y-3 text-xs font-mono">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-3 border-b border-white/5">
-                <div>
-                  <span className="text-text-muted block text-[10px] uppercase font-bold">📅 EVENT DATE</span>
-                  <span className="text-text-primary font-semibold">{activeModalEvent.date}</span>
+            {/* Essential Event Specifications Grid */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 mb-6 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-3.5 border-b border-white/5 font-mono text-xs">
+                <div className="flex items-start gap-2.5">
+                  <div className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-brand-orange mt-0.5">
+                    <Calendar className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <span className="text-text-muted block text-[10px] uppercase font-bold tracking-wider">Event Date</span>
+                    <span className="text-white font-medium">{cleanString(activeModalEvent.date)}</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-text-muted block text-[10px] uppercase font-bold">⏰ TIMINGS &amp; SCHEDULE</span>
-                  <span className="text-text-primary font-semibold">{activeModalEvent.timings}</span>
+
+                <div className="flex items-start gap-2.5">
+                  <div className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-brand-orange mt-0.5">
+                    <Clock className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <span className="text-text-muted block text-[10px] uppercase font-bold tracking-wider">Schedule &amp; Timings</span>
+                    <span className="text-white font-medium">{cleanString(activeModalEvent.timings)}</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-text-muted block text-[10px] uppercase font-bold">
-                    {activeModalEvent.teamSize.includes("Solo") && !activeModalEvent.teamSize.includes("Team") ? "👤 PARTICIPATION" : "👥 TEAM STRUCTURE"}
-                  </span>
-                  <span className="text-text-primary font-semibold">{activeModalEvent.teamSize}</span>
+
+                <div className="flex items-start gap-2.5">
+                  <div className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-brand-magenta mt-0.5">
+                    <Users className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <span className="text-text-muted block text-[10px] uppercase font-bold tracking-wider">Participation Format</span>
+                    <span className="text-white font-medium">{cleanString(activeModalEvent.teamSize)}</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-text-muted block text-[10px] uppercase font-bold">📍 VENUE LOCATION</span>
-                  <span className="text-text-primary font-semibold">{activeModalEvent.venue || "HITAM Campus, Hyderabad"}</span>
+
+                <div className="flex items-start gap-2.5">
+                  <div className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-brand-magenta mt-0.5">
+                    <MapPin className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <span className="text-text-muted block text-[10px] uppercase font-bold tracking-wider">Venue Location</span>
+                    <span className="text-white font-medium">{cleanString(activeModalEvent.venue) || "HITAM Campus, Hyderabad"}</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Registration Fee Breakdown Ticket */}
+              {/* Registration Fees Section */}
               <div>
-                <span className="text-text-muted block text-[10px] mb-1.5 uppercase font-bold tracking-wider flex items-center gap-1.5">
-                  <span>🎟️</span> REGISTRATION FEES
+                <span className="text-text-muted block text-[10px] uppercase font-bold tracking-wider mb-2 font-mono flex items-center gap-1.5">
+                  <CreditCard className="w-3.5 h-3.5 text-text-muted" /> Registration Fees
                 </span>
-                <div className="flex flex-wrap items-center justify-between gap-3 bg-black/40 p-3 rounded-xl border border-white/5">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-text-secondary text-[11px]">🎟️ HITAM Student:</span>
-                    <span className="text-brand-orange font-bold text-sm">{activeModalEvent.registrationFee.hitam}</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="p-3 rounded-xl bg-black/40 border border-white/5 font-mono text-xs">
+                    <span className="text-text-muted text-[10px] block uppercase font-bold tracking-wider mb-1">{activeModalEvent.clubId === "ieee" ? "IEEE Members" : "HITAM Students"}</span>
+                    <span className="text-brand-orange font-bold text-sm block">{cleanString(activeModalEvent.registrationFee.hitam)}</span>
                   </div>
                   {activeModalEvent.registrationFee.nonHitam && (
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-text-secondary text-[11px]">🎟️ Outside College:</span>
-                      <span className="text-brand-magenta font-bold text-sm">{activeModalEvent.registrationFee.nonHitam}</span>
+                    <div className="p-3 rounded-xl bg-black/40 border border-white/5 font-mono text-xs">
+                      <span className="text-text-muted text-[10px] block uppercase font-bold tracking-wider mb-1">{activeModalEvent.clubId === "ieee" ? "Non-IEEE / Other Colleges" : "Other Colleges"}</span>
+                      <span className="text-brand-magenta font-bold text-sm block">{cleanString(activeModalEvent.registrationFee.nonHitam)}</span>
                     </div>
                   )}
                 </div>
                 {activeModalEvent.registrationFee.note && (
-                  <p className="text-[10px] text-text-muted mt-1.5 italic font-body">
-                    ℹ️ {activeModalEvent.registrationFee.note}
-                  </p>
+                  <div className="flex items-start gap-1.5 text-[11px] text-text-muted mt-2 font-body">
+                    <Info className="w-3.5 h-3.5 text-text-muted shrink-0 mt-0.5" />
+                    <span>{cleanString(activeModalEvent.registrationFee.note)}</span>
+                  </div>
                 )}
               </div>
             </div>
 
-            {/* Key Highlights */}
+            {/* Key Highlights & Inclusions */}
             <div className="mb-6">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-text-muted mb-3">Key Highlights &amp; Inclusions</h4>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {activeModalEvent.highlights.map((h) => (
-                  <li key={h} className="flex items-center gap-2 text-xs font-body text-text-secondary">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>{h}</span>
+              <h4 className="text-[11px] font-mono uppercase tracking-wider text-text-muted mb-3 font-bold flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-text-muted" /> Key Highlights &amp; Inclusions
+              </h4>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {activeModalEvent.highlights.map((h, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-xs font-body text-text-secondary">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-orange mt-1.5 shrink-0" />
+                    <span>{cleanString(h)}</span>
                   </li>
                 ))}
               </ul>
@@ -711,8 +733,8 @@ export default function EventsPage() {
             {activeModalEvent.coordinators && (
               <div className="mb-8 p-4 rounded-2xl border border-white/10 bg-white/[0.02]">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-text-muted flex items-center gap-1.5">
-                    <span>📞 Event Coordinators &amp; Inquiries</span>
+                  <h4 className="text-[11px] font-mono uppercase tracking-wider text-text-muted font-bold flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5 text-text-muted" /> Event Coordinators &amp; Inquiries
                   </h4>
                   {activeModalEvent.coordinators.clubEmail && (
                     <a 
@@ -730,16 +752,16 @@ export default function EventsPage() {
                   {activeModalEvent.coordinators.students && activeModalEvent.coordinators.students.length > 0 && (
                     <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-2">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-brand-orange font-bold flex items-center gap-1.5">
-                        <UserCheck className="w-3.5 h-3.5 text-brand-orange" />
+                        <User className="w-3 h-3 text-brand-orange" />
                         <span>Student Coordinator{activeModalEvent.coordinators.students.length > 1 ? "s" : ""}</span>
                       </span>
                       <div className="space-y-1.5">
                         {activeModalEvent.coordinators.students.map((student, idx) => (
                           <div key={idx} className="flex flex-wrap items-center justify-between gap-1 text-[11px] text-text-secondary border-b border-white/5 pb-1.5 last:border-0 last:pb-0">
                             <span className="font-semibold text-white">{student.name}</span>
-                            <div className="flex items-center gap-2 font-mono">
+                            <div className="flex items-center gap-2.5 font-mono">
                               {student.phone && (
-                                <a href={`tel:${student.phone.replace(/[^0-9+]/g, '')}`} className="text-brand-orange hover:underline inline-flex items-center gap-0.5">
+                                <a href={`tel:${student.phone.replace(/[^0-9+]/g, '')}`} className="text-brand-orange hover:underline inline-flex items-center gap-1">
                                   <Phone className="w-3 h-3" />
                                   <span>{student.phone}</span>
                                 </a>
@@ -760,10 +782,10 @@ export default function EventsPage() {
                   {activeModalEvent.coordinators.faculty && (
                     <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-2">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-brand-magenta font-bold flex items-center gap-1.5">
-                        <GraduationCap className="w-3.5 h-3.5 text-brand-magenta" />
+                        <GraduationCap className="w-3 h-3 text-brand-magenta" />
                         <span>Faculty Coordinator</span>
                       </span>
-                      <div className="text-[11px] text-text-secondary space-y-1">
+                      <div className="text-[11px] text-text-secondary space-y-1.5">
                         <div className="font-semibold text-white">{activeModalEvent.coordinators.faculty.name}</div>
                         <div className="flex flex-wrap items-center gap-3 font-mono">
                           {activeModalEvent.coordinators.faculty.phone && (
@@ -798,7 +820,7 @@ export default function EventsPage() {
                 href={getEventRegisterUrl(activeModalEvent)}
                 className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple hover:brightness-110 text-xs font-display font-bold text-white transition-all inline-flex items-center gap-2 shadow-[0_0_24px_rgba(255,94,0,0.4)]"
               >
-                <span>🎟️ Register for this Event</span>
+                <span>Register for Event</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>

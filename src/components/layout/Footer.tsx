@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { FEST_INFO } from "@/lib/constants";
-import { Calendar, MapPin, Globe, Instagram, Linkedin, Youtube, Github } from "lucide-react";
+import { Calendar, MapPin, Globe, Instagram, Linkedin, Youtube } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -23,7 +23,6 @@ export function Footer() {
     { name: "SSG HITAM Instagram", icon: Instagram, url: FEST_INFO.officialLinks.ssgInstagram },
     { name: "HITAM LinkedIn", icon: Linkedin, url: FEST_INFO.officialLinks.linkedin },
     { name: "HITAM YouTube", icon: Youtube, url: FEST_INFO.officialLinks.youtube },
-    { name: "GitHub Repository", icon: Github, url: FEST_INFO.officialLinks.github },
   ];
 
   return (

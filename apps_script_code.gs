@@ -107,9 +107,9 @@ var EVENT_CATALOG = [
     facultyCoord: "TorqueX Faculty Incharge (ssg@hitam.org)"
   },
   { 
-    id: "E12", club: "ISAMPE Chapter", name: "Build Your First Robot", cat: "Workshop", team: "2–4 Members", fee: "₹200 / team",
-    studentCoord: "ISAMPE Student Lead (+91 90591 11595)",
-    facultyCoord: "ISAMPE Faculty Incharge (ssg@hitam.org)"
+    id: "E12", club: "ISNT × ISAMPE Student Chapter", name: "Build Your First Robot", cat: "Workshop", team: "Solo or Team (1–4)", fee: "₹120 / ₹250 (Team)",
+    studentCoord: "Bipul Kumar Yadav (7093346820, 23e51a0301@hitam.org) & Narendra Reddy (7981427446, 24e55a0325@hitam.org)",
+    facultyCoord: "Mr. Deepak Kumar Singh (8982930521) & Mr. P. Bhaskar Rao (9705482627)"
   },
   { 
     id: "E13", club: "CSI Student Chapter", name: "Code Casino", cat: "Gaming & Coding", team: "2–3 Members", fee: "₹50 / ₹60 (Person)",
@@ -488,7 +488,7 @@ function getChapterName(id, slug) {
     "data-heist-datathon": "MINDS Club",
     "data-dossier": "MINDS Club",
     "torquex-motorsport": "TorqueX Motorsports",
-    "build-first-robot": "ISAMPE Chapter",
+    "build-first-robot": "ISNT × ISAMPE Student Chapter",
     "code-casino": "CSI Student Chapter",
     "technical-tambola": "CSI Student Chapter"
   };

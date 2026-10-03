@@ -30,7 +30,7 @@ var EVENT_CATALOG = [
   {
     "id": "E01",
     "slug": "ieee-ideathon",
-    "title": "IEEE National Ideathon",
+    "title": "INNOVISION (IEEE National Ideathon)",
     "club": "IEEE Student Branch HITAM",
     "category": "Ideathon",
     "minTeam": 3,
@@ -297,22 +297,26 @@ var EVENT_CATALOG = [
     "id": "E12",
     "slug": "build-first-robot",
     "title": "Build Your First Robot",
-    "club": "ISAMPE Chapter",
+    "club": "ISNT × ISAMPE Student Chapter",
     "category": "Workshop",
-    "minTeam": 2,
+    "minTeam": 1,
     "maxTeam": 4,
-    "hitamFee": 200,
-    "otherFee": 200,
+    "hitamFee": 250,
+    "otherFee": 250,
     "feeModel": "team",
     "prize": 5000,
-    "logo": "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ISAMPE.png",
+    "logo": "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/isnt-isampe.png",
     "sheetName": "[ISAMPE] Build Your First Robot",
     "themeColor": "#047857",
     "description": "Assemble an autonomous obstacle-avoiding bot from scratch. Learn DC geared motors, motor drivers, Arduino Uno microcontrollers, ultrasonic sensors, and race in the custom obstacle arena.",
-    "prizeBreakup": {},
-    "studentContact": "ISAMPE Student Lead (+91 90591 11595)",
-    "facultyContact": "ssg@hitam.org",
-    "clubEmail": ""
+    "prizeBreakup": {
+      "first": "₹1,000",
+      "second": "₹800",
+      "third": "₹500"
+    },
+    "studentContact": "Bipul Kumar Yadav (+91 70933 46820) / Narendra Reddy (+91 79814 27446)",
+    "facultyContact": "Mr. Deepak Kumar Singh (+91 89829 30521) / Mr. P. Bhaskar Rao (+91 97054 82627)",
+    "clubEmail": "23e51a0301@hitam.org"
   },
   {
     "id": "E13",
@@ -666,7 +670,7 @@ function validatePayload_(payload) {
   var college = institution === "HITAM" ? "Hyderabad Institute of Technology and Management (HITAM)" : text_(payload.college, "College name", 160, true);
   var teamName = event.maxTeam === 1 ? lead.name : text_(payload.teamName, "Team name", 120, true);
   var unitFee = institution === "HITAM" ? event.hitamFee : event.otherFee;
-  var amount = unitFee * (event.feeModel === "person" ? teamSize : 1);
+  var amount = event.id === "E12" ? (teamSize === 1 ? 120 : 250) : (unitFee * (event.feeModel === "person" ? teamSize : 1));
   if (typeof payload.totalFee !== "number" || payload.totalFee !== amount) throw publicError_("FEE_CHANGED", "The displayed amount does not match the event fee. Return to participant details and check the payment amount.");
   var utr = String(payload.utrNumber || "").trim();
   if (!/^\d{8,16}$/.test(utr)) throw publicError_("INVALID_UTR", "Enter the 8–16 digit UPI transaction reference from your payment app.");

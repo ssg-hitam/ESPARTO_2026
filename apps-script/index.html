@@ -1655,7 +1655,7 @@
         byId('eventGrid').innerHTML = matches.length ? matches.map(function (event) {
             var breakup = Object.keys(event.prizeBreakup || {}).map(function (key) { return escapeHtml(key.charAt(0).toUpperCase() + key.slice(1)) + ': ' + escapeHtml(event.prizeBreakup[key]); }).join(' · ');
             var action = event.id === 'E01' ? '<a class="btn btn-primary btn-full" href="' + escapeHtml(portal.ieeeUrl) + '" target="_blank" rel="noopener noreferrer">Register on IEEE form ↗</a>' : '<button class="btn btn-primary btn-full" type="button" data-event="' + escapeHtml(event.slug) + '"' + (portal.registrationAvailable ? '' : ' disabled') + '>' + (portal.registrationAvailable ? 'Register for event →' : 'Registration unavailable') + '</button>';
-            return '<article class="event-card" style="--event-color:' + escapeHtml(event.themeColor) + '"><div class="card-top"><div class="card-meta"><div class="club-identity"><img class="' + (event.id === 'E02' || event.id === 'E04' ? 'combined-logo' : '') + '" src="' + escapeHtml(event.logo) + '" alt=""><span>' + escapeHtml(event.club) + '</span></div><span class="category">' + escapeHtml(event.category) + '</span></div><span class="prize">★ ' + money(event.prize) + ' prize pool</span><h3>' + escapeHtml(event.title) + '</h3><p class="card-description">' + escapeHtml(event.description) + '</p><p class="prize-breakup">' + (breakup || 'Prize breakup: contact the chapter for details.') + '</p></div><div class="card-bottom"><div class="team-line"><span>Team format</span><strong>' + teamLabel(event) + '</strong></div><div class="fee-pair"><div>HITAM students<strong>' + money(event.hitamFee) + '</strong></div><div>Other colleges<strong>' + money(event.otherFee) + '</strong></div></div><p class="fee-model">' + (event.feeModel === 'team' ? 'Per team · one flat fee' : 'Per person · multiplied by participant count') + '</p>' + action + '</div></article>';
+            return '<article class="event-card" style="--event-color:' + escapeHtml(event.themeColor) + '"><div class="card-top"><div class="card-meta"><div class="club-identity"><img class="' + (event.id === 'E02' || event.id === 'E04' || event.id === 'E12' ? 'combined-logo' : '') + '" src="' + escapeHtml(event.logo) + '" alt=""><span>' + escapeHtml(event.club) + '</span></div><span class="category">' + escapeHtml(event.category) + '</span></div><span class="prize">★ ' + money(event.prize) + ' prize pool</span><h3>' + escapeHtml(event.title) + '</h3><p class="card-description">' + escapeHtml(event.description) + '</p><p class="prize-breakup">' + (breakup || 'Prize breakup: contact the chapter for details.') + '</p></div><div class="card-bottom"><div class="team-line"><span>Team format</span><strong>' + teamLabel(event) + '</strong></div><div class="fee-pair"><div>HITAM students<strong>' + money(event.hitamFee) + '</strong></div><div>Other colleges<strong>' + money(event.otherFee) + '</strong></div></div><p class="fee-model">' + (event.feeModel === 'team' ? 'Per team · one flat fee' : 'Per person · multiplied by participant count') + '</p>' + action + '</div></article>';
         }).join('') : '<div class="empty"><h2>No matching events</h2><p class="muted small" style="margin-top:12px">Try another category or search term.</p><button type="button" id="resetDirectory" class="btn btn-secondary" style="margin-top:20px">Reset filters</button></div>';
     }
     function newRequestId() { var bytes = new Uint8Array(16); window.crypto.getRandomValues(bytes); return Array.prototype.map.call(bytes, function (byte) { return ('0' + byte.toString(16)).slice(-2); }).join(''); }
@@ -1719,7 +1719,7 @@
         byId('externalPanel').hidden = event.id !== 'E01';
         byId('localDetails').hidden = event.id === 'E01';
         if (event.id === 'E01') {
-            byId('externalPanel').innerHTML = '<img src="' + escapeHtml(event.logo) + '" alt="IEEE"><h1 id="externalTitle" tabindex="-1">IEEE National Ideathon</h1><p>This event uses its own official registration form. Continue there to enter participant details and complete payment.</p><a class="btn btn-primary" href="' + escapeHtml(portal.ieeeUrl) + '" target="_blank" rel="noopener noreferrer">Open official IEEE form ↗</a><div class="contacts">' + contactsHtml(event) + '</div>';
+            byId('externalPanel').innerHTML = '<img src="' + escapeHtml(event.logo) + '" alt="IEEE"><h1 id="externalTitle" tabindex="-1">INNOVISION (IEEE National Ideathon)</h1><p>This event uses its own official registration form. Continue there to enter participant details and complete payment.</p><a class="btn btn-primary" href="' + escapeHtml(portal.ieeeUrl) + '" target="_blank" rel="noopener noreferrer">Open official IEEE form ↗</a><div class="contacts">' + contactsHtml(event) + '</div>';
             showView('details', 'externalTitle');
             return;
         }
@@ -1770,12 +1770,22 @@
     }
     function institutionValue() { return byId('detailsForm').querySelector('input[name="institution"]:checked').value; }
     function updateInstitution() { var other = institutionValue() === 'Other'; byId('collegeField').hidden = !other; byId('collegeName').required = other; updateSummary(); }
-    function calculateAmount() { var unit = institutionValue() === 'HITAM' ? selectedEvent.hitamFee : selectedEvent.otherFee; return { unit: unit, size: Number(byId('teamSize').value), total: unit * (selectedEvent.feeModel === 'person' ? Number(byId('teamSize').value) : 1) }; }
+    function calculateAmount() {
+        var size = Number(byId('teamSize').value);
+        if (selectedEvent.id === 'E12') {
+            var total = size === 1 ? 120 : 250;
+            return { unit: total, size: size, total: total };
+        }
+        var unit = institutionValue() === 'HITAM' ? selectedEvent.hitamFee : selectedEvent.otherFee;
+        return { unit: unit, size: size, total: unit * (selectedEvent.feeModel === 'person' ? size : 1) };
+    }
     function updateSummary() {
         if (!selectedEvent || selectedEvent.id === 'E01')
             return;
         var fee = calculateAmount(), person = selectedEvent.feeModel === 'person';
-        byId('detailsSummary').innerHTML = '<p class="summary-title">Registration summary</p><h2 class="summary-event">' + escapeHtml(selectedEvent.title) + '</h2><div class="summary-line"><span>College tier</span><strong>' + (institutionValue() === 'HITAM' ? 'HITAM Student' : 'Other College') + '</strong></div><div class="summary-line"><span>Participants</span><strong>' + fee.size + '</strong></div><div class="summary-line"><span>Pricing</span><strong>' + (person ? 'Per Person' : 'Per Team') + '</strong></div><div class="summary-line"><span>Fee breakdown</span><strong>' + money(fee.unit) + ' × ' + (person ? fee.size + ' people' : '1 team') + '</strong></div><div class="summary-total"><span>Total due</span><strong>' + money(fee.total) + '</strong></div><button class="btn btn-primary btn-full" type="submit">Proceed to payment →</button><p class="summary-foot">Pay on the next step. Your details will be reviewed before they are submitted.</p>';
+        var pricingType = selectedEvent.id === 'E12' ? (fee.size === 1 ? 'Individual' : 'Per Team') : (person ? 'Per Person' : 'Per Team');
+        var breakdown = selectedEvent.id === 'E12' ? (fee.size === 1 ? 'Individual entry · ₹120' : 'Team entry (' + fee.size + ' people) · ₹250') : (money(fee.unit) + ' × ' + (person ? fee.size + ' people' : '1 team'));
+        byId('detailsSummary').innerHTML = '<p class="summary-title">Registration summary</p><h2 class="summary-event">' + escapeHtml(selectedEvent.title) + '</h2><div class="summary-line"><span>College tier</span><strong>' + (institutionValue() === 'HITAM' ? 'HITAM Student' : 'Other College') + '</strong></div><div class="summary-line"><span>Participants</span><strong>' + fee.size + '</strong></div><div class="summary-line"><span>Pricing</span><strong>' + pricingType + '</strong></div><div class="summary-line"><span>Fee breakdown</span><strong>' + breakdown + '</strong></div><div class="summary-total"><span>Total due</span><strong>' + money(fee.total) + '</strong></div><button class="btn btn-primary btn-full" type="submit">Proceed to payment →</button><p class="summary-foot">Pay on the next step. Your details will be reviewed before they are submitted.</p>';
         byId('mobileAmount').textContent = money(fee.total);
     }
     function validateDetailsForm() {
