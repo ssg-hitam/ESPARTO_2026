@@ -112,4 +112,10 @@ The supplied South Indian Bank QR decodes to `qr.hitam@sib` for `HYDERABAD INSTI
 
 ## Current registration deployment
 
-Version 4 was deployed on October 3, 2026. The website uses the existing web app URL: [ESPARTO registration portal](https://script.google.com/macros/s/AKfycbyWW19qSK95FeVO35V-aX5Lr2ySIE-ZMLLqem_y6bIFRXLcVEzVtU4qooHetePr09dbHQ/exec). Updating this deployment keeps the same URL. IEEE retains its separate official form.
+Version 5 was deployed on October 3, 2026, including the event-specific HHC forms. The website uses the existing web app URL: [ESPARTO registration portal](https://script.google.com/macros/s/AKfycbyWW19qSK95FeVO35V-aX5Lr2ySIE-ZMLLqem_y6bIFRXLcVEzVtU4qooHetePr09dbHQ/exec). Updating this deployment keeps the same URL. IEEE retains its separate official form.
+
+## Event-specific HHC registration forms
+
+Reverse Hackathon (E02) has a mystery-product introduction, Diagnosis / Rebuild / Pitch format, 2–3 total participants, required teammate email and year/department, and three required rules/consent statements. Programmers Got Talent (E04) has a solo live-showcase introduction, a required technical category, and four required rules/consent statements. The backend validates these answers and stores the category and accepted rule text in the existing CustomDetails / CustomAnswers cells. No sheet schema changes or database setup rerun are needed. Other event forms, fees, payment proof limits and verified-payment group access are unchanged. These are portal forms; separate Google Forms are not edited.
+
+The pasted Ameena contact `99668646647` has eleven digits; the existing `9966864664` is retained pending clarification. The portal retains the established 2 MB image proof limit instead of the pasted Google Forms 100 MB limit.

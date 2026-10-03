@@ -86,7 +86,7 @@ test('invalid payload cases are rejected before any mutation',function(){
 });
 test('IEEE cannot register in this database and unknown events are rejected',function(){var h=mocks.createHarness();assert.equal(h.scope.submitRegistration(mocks.payloadFor(h,'E01')).code,'EXTERNAL_EVENT');var p=mocks.payloadFor(h);p.eventId='E99';assert.equal(h.scope.submitRegistration(p).code,'INVALID_EVENT');assert.equal(h.files.length,0);});
 test('optional teammate fields, solo identity, and +91 phones normalize correctly',function(){
-  var h=mocks.createHarness(),p=mocks.payloadFor(h);p.members=[{name:'Teammate',email:'',phone:'',rollNo:'',branchYear:''}];assert.equal(h.scope.submitRegistration(p).success,true);assert.equal(h.sheets.ALL_MEMBERS_ROSTER.rows[2][8],'');
+  var h=mocks.createHarness(),p=mocks.payloadFor(h,'E03','HITAM',2);p.members=[{name:'Teammate',email:'',phone:'',rollNo:'',branchYear:''}];assert.equal(h.scope.submitRegistration(p).success,true);assert.equal(h.sheets.ALL_MEMBERS_ROSTER.rows[2][8],'');
   h=mocks.createHarness();p=mocks.payloadFor(h,'E14');p.teamName='Ignored';var result=h.scope.submitRegistration(p);assert.equal(result.receipt.teamName,p.lead.name);assert.equal(h.sheets.ALL_MEMBERS_ROSTER.rows[1][4],'Participant');
 });
 test('busy lock, missing schema and sharing/upload failures leave no sheet rows',function(){
@@ -122,3 +122,19 @@ test('the delivered frontend parses, uses the required string scriptlet, and onl
 });
 
 test('an unconfigured backend marks local registration unavailable until setup completes',function(){var h=mocks.createHarness({emptyDatabase:true,properties:{ESPARTO_SPREADSHEET_ID:null,ESPARTO_PROOF_FOLDER_ID:null}});assert.equal(h.scope.getPortalData().registrationAvailable,false);h.scope.setupDatabase();assert.equal(h.scope.getPortalData().registrationAvailable,true);});
+
+test('event forms enforce category, teammate details and every consent on the server and persist answers', function () {
+  ['E02','E04'].forEach(function(id){
+    var h=mocks.createHarness(), p=mocks.payloadFor(h,id);
+    p.eventAnswers.consents[0]=false;
+    assert.equal(h.scope.submitRegistration(p).success,false);
+    assert.equal(h.batches.length,0);
+    p.eventAnswers.consents[0]=true;
+    if(id==='E04'){p.eventAnswers.category='Invalid';assert.equal(h.scope.submitRegistration(p).success,false);p.eventAnswers.category='Software';}
+    else {p.members[0].email='';assert.equal(h.scope.submitRegistration(p).success,false);p.members[0].email='member2@example.org';}
+    assert.equal(h.scope.submitRegistration(p).success,true);
+    var stored=JSON.parse(h.sheets.ALL_REGISTRATIONS.rows[1][14]);
+    assert.deepEqual(stored.acceptedRules,plain(h.scope.EVENT_FORM_CONFIG[id].rules));
+    if(id==='E04')assert.equal(stored.category,'Software');
+  });
+});

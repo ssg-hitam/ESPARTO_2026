@@ -46,10 +46,10 @@ async function routeAssets(page) {
 }
 async function noOverflow(page,label) { var dimensions = await page.evaluate(function(){return {viewport:innerWidth,html:document.documentElement.scrollWidth,body:document.body.scrollWidth};});assert.ok(dimensions.html<=dimensions.viewport && dimensions.body<=dimensions.viewport,label+' horizontal overflow: '+JSON.stringify(dimensions)); }
 async function fillLead(page) { await page.locator('#leadName').fill('Test Team Lead');await page.locator('#leadEmail').fill('test.lead@example.org');await page.locator('#leadPhone').fill('+91 98765 43211');await page.locator('#leadRoll').fill('TEST-001');await page.locator('#leadBranch').fill('CSE · Year 2'); }
-async function completeDetails(page,size) { await page.locator('#teamSize').selectOption(String(size));await page.getByText('Other College',{exact:true}).click();await page.locator('#collegeName').fill('Test Institute of Technology');await page.locator('#teamName').fill('Team Orbit');await fillLead(page);for(var i=2;i<=size;i++)await page.locator('#member'+i+'Name').fill('Test Teammate '+i); }
+async function completeDetails(page,size) { if(await page.locator('#teamSize').isEnabled())await page.locator('#teamSize').selectOption(String(size));await page.getByText('Other College',{exact:true}).click();await page.locator('#collegeName').fill('Test Institute of Technology');if(await page.locator('#teamName').isVisible())await page.locator('#teamName').fill('Team Orbit');await fillLead(page);for(var i=2;i<=size;i++){await page.locator('#member'+i+'Name').fill('Test Teammate '+i);if(await page.locator('#member'+i+'Email').getAttribute('required')!==null){await page.locator('#member'+i+'Email').fill('teammate'+i+'@example.org');await page.locator('#member'+i+'Branch').fill('CSE · Year 2');}}if(await page.locator('#eventCategoryPanel').isVisible())await page.locator('#eventCategory').selectOption('Software'); }
 async function goPayment(page,width) { await page.locator(width<=600?'#mobileCta':'#detailsSummary button').click();await page.locator('#paymentTitle').waitFor({state:'visible'}); }
 async function uploadProof(page) { await page.locator('#proofFile').setInputFiles({name:'payment-proof.png',mimeType:'image/png',buffer:Buffer.from(mocks.PNG.split(',')[1],'base64')});await page.waitForFunction(function(){return !!proof;}); }
-async function readyToConfirm(page,width) { await page.locator('#utrNumber').fill('000012345678');await uploadProof(page);await page.locator('#agreement').check();await page.locator(width<=600?'#mobileCta':'#paymentReview').click();await page.locator('#confirmation').waitFor({state:'visible'}); }
+async function readyToConfirm(page,width) { await page.locator('#utrNumber').fill('000012345678');await uploadProof(page);await page.locator('#agreement').check();var rules=page.locator('#eventRuleFields input');for(var i=0;i<await rules.count();i++)await rules.nth(i).check();await page.locator(width<=600?'#mobileCta':'#paymentReview').click();await page.locator('#confirmation').waitFor({state:'visible'}); }
 async function newPage(browser,base,entry,viewport,slug) { var page=await browser.newPage({viewport:viewport});page.errors=[];page.on('pageerror',function(error){page.errors.push(error.message);});await routeAssets(page);await page.goto(base+'/?session='+entry.id+(slug?'&event='+encodeURIComponent(slug):''));await page.locator('#loadingView').waitFor({state:'hidden'});return page; }
 async function viewportMatrix(browser,base,engineName) {
   var viewports=[{width:320,height:740},{width:390,height:844},{width:600,height:900},{width:768,height:1024},{width:1024,height:768},{width:1440,height:900},{width:844,height:390}];
@@ -112,6 +112,15 @@ async function edgeCases(browser,base,engineName) {
     else {assert.equal(await page.locator('#detailsView').isVisible(),true);assert.equal(Number(await page.locator('#teamSize').inputValue()),event.minTeam);assert.equal(await page.locator('#mobileAmount').textContent(),'₹'+(event.hitamFee*(event.feeModel==='person'?event.minTeam:1)).toLocaleString('en-IN'));}
     await noOverflow(page,engineName+' deep link '+event.id);assert.deepEqual(page.errors,[]);await page.close();
   }
+  var showcase=session(),showcasePage=await newPage(browser,base,showcase,{width:320,height:740},'programmers-got-talent');
+  assert.equal(await showcasePage.locator('#eventCategory').getAttribute('required'),'');
+  await completeDetails(showcasePage,1);await goPayment(showcasePage,320);
+  await showcasePage.locator('#utrNumber').fill('000012345678');await uploadProof(showcasePage);await showcasePage.locator('#agreement').check();
+  await showcasePage.locator('#mobileCta').click();assert.equal(await showcasePage.locator('#confirmation').isVisible(),false);
+  await readyToConfirm(showcasePage,320);assert.ok((await showcasePage.locator('#confirmationBody').textContent()).includes('Software'));
+  await showcasePage.locator('#confirmSubmit').click();await showcasePage.locator('#ticketTitle').waitFor({state:'visible'});assert.equal(showcase.state.harness.batches.length,1);
+  assert.equal(JSON.parse(showcase.state.harness.sheets.ALL_REGISTRATIONS.rows[1][14]).category,'Software');
+  await noOverflow(showcasePage,engineName+' showcase ticket');await showcasePage.close();
   var entry=session(),page=await newPage(browser,base,entry,{width:390,height:844},'reverse-hackathon');
   await page.locator('#mobileCta').click();assert.equal(await page.locator('#detailsView').isVisible(),true);assert.equal(entry.state.harness.batches.length,0);
   await completeDetails(page,2);await goPayment(page,390);

@@ -403,6 +403,22 @@ function driveLogo_(original) {
   return DRIVE_LOGO_IDS[filename] ? "https://drive.google.com/thumbnail?id=" + DRIVE_LOGO_IDS[filename] + "&sz=w600" : original;
 }
 
+var EVENT_FORM_CONFIG = {
+  E02: {
+    tagline: "Build What Wasn’t Built Before!",
+    intro: "Work backwards from a mystery product revealed at the opening ceremony: discover who needs it, diagnose what is broken, and design an original replacement.",
+    highlights: ["October 9, 2026 · HITAM Campus", "Zero eliminations: every team completes Diagnosis, Rebuild and Pitch.", "Strictly no AI: original, human problem-solving at every stage.", "Teams of 2–3 participants, including the team leader."],
+    rules: ["I confirm my team will not use AI tools (ChatGPT, Copilot, image/text generators, or similar) at any stage of the competition.", "I have read and agree to the Reverse Hackathon rules and understand that violations lead to disqualification.", "I consent to photography/video during the event."]
+  },
+  E04: {
+    tagline: "Your Code. Your Build. Center Stage.",
+    intro: "Bring software, hardware, robotics, electronics or competitive coding to life in front of a live audience and judges. Enter solo and showcase your technical depth and stage presence.",
+    highlights: ["October 10, 2026 · HITAM Campus", "Zero eliminations: every act performs in all three rounds through the Grand Finale.", "A live 3-minute spotlight, a surprise Twist Challenge and a finale with audience voting.", "Any technical, working live demonstration belongs on stage."],
+    categories: ["Software", "Hardware", "Robotics", "Electronics", "Competitive coding", "Other technical demonstration"],
+    rules: ["I confirm this build/performance is my own original work.", "I understand a live, working demo is required and pre-recorded footage may only be used as brief supporting b-roll.", "I agree to strict time limits and understand my slot will be cut off at the buzzer.", "I consent to photography/video during the event."]
+  }
+};
+
 function getPortalData() {
   var properties = PropertiesService.getScriptProperties();
   var ready = typeof Sheets !== "undefined" && !!(SPREADSHEET_ID || properties.getProperty("ESPARTO_SPREADSHEET_ID")) && !!properties.getProperty("ESPARTO_PROOF_FOLDER_ID");
@@ -417,6 +433,7 @@ function getPortalData() {
     registrationAvailable: ready,
     events: EVENT_CATALOG.map(function (event) {
       var copy = Object.assign({}, event);
+      copy.registrationForm = EVENT_FORM_CONFIG[event.id] || null;
       copy.fallbackLogo = event.logo;
       copy.logo = driveLogo_(event.logo);
       return copy;
@@ -655,8 +672,17 @@ function validatePayload_(payload) {
   if (!/^\d{8,16}$/.test(utr)) throw publicError_("INVALID_UTR", "Enter the 8–16 digit UPI transaction reference from your payment app.");
   if (payload.agreement !== true) throw publicError_("AGREEMENT_REQUIRED", "Confirm the registration and payment details before submitting.");
   var customDetails = text_(payload.customDetails, "Additional details", 1000, false);
+  var formConfig = EVENT_FORM_CONFIG[event.id], eventAnswers = null;
+  if (formConfig) {
+    if (!payload.eventAnswers || !Array.isArray(payload.eventAnswers.consents) || payload.eventAnswers.consents.length !== formConfig.rules.length || !payload.eventAnswers.consents.every(function (answer) { return answer === true; })) throw publicError_("EVENT_CONSENT_REQUIRED", "Accept every event rule and consent statement before submitting.");
+    var category = formConfig.categories ? text_(payload.eventAnswers.category, "Showcase category", 80, true) : "";
+    if (formConfig.categories && formConfig.categories.indexOf(category) === -1) throw publicError_("INVALID_CATEGORY", "Choose a valid showcase category.");
+    if (event.id === "E02") members.forEach(function (member) { if (!member.email || !member.branchYear) throw publicError_("INVALID_MEMBER", "Enter each teammate’s email and year / department."); });
+    eventAnswers = { category: category, consents: formConfig.rules.map(function () { return true; }) };
+    customDetails = JSON.stringify({ category: category, acceptedRules: formConfig.rules, additionalDetails: customDetails });
+  }
   var proof = decodeProof_(payload.screenshotBase64);
-  var normalized = { eventId: event.id, eventSlug: event.slug, institution: institution, college: college, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, agreement: true };
+  var normalized = { eventId: event.id, eventSlug: event.slug, institution: institution, college: college, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, eventAnswers: eventAnswers, agreement: true };
   return { event: event, requestId: requestId, institution: institution, college: college, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, proof: proof, normalized: normalized };
 }
 
