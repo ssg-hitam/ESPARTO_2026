@@ -20,7 +20,7 @@ export const facultyCoordinators: Organizer[] = [
     ],
     teamDomain: "faculty-coordinator",
     contact: "+91 89190 46164",
-    image: "/images/team/faculties/praveensir.png",
+    image: "/images/team/faculties/praveen-cutout.png",
     highlight: true,
     socials: {
       email: "praveenp.mech@hitam.org",
