@@ -67,6 +67,8 @@ export default function RegisterPage() {
         </FadeUp>
 
 
+        <Link href="/payment-status" className="inline-flex min-h-11 items-center text-brand-orange hover:text-white font-semibold mt-2">Check your payment status →</Link>
+
         <FadeUp delay={0.12} distance={20}>
           <section aria-labelledby="explore-events-title" className="max-w-3xl mt-12 sm:mt-16 rounded-2xl border border-brand-violet/20 bg-white/[0.03] p-6 sm:p-8">
             <p className="font-mono text-[11px] uppercase tracking-widest text-brand-orange mb-3">

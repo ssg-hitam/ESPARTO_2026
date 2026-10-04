@@ -35,18 +35,25 @@ var EVENT_CATALOG = [
     "category": "Ideathon",
     "minTeam": 3,
     "maxTeam": 4,
-    "hitamFee": 200,
-    "otherFee": 300,
-    "feeModel": "team",
+    "hitamFee": 199,
+    "otherFee": 249,
+    "feeModel": "person",
     "prize": 30000,
     "logo": "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ieee-hitam.png",
     "sheetName": "[IEEE] IEEE National Ideathon",
     "themeColor": "#002855",
     "description": "Pitch transformative engineering concepts across clean energy, computing systems, healthcare, and robotics before an esteemed jury of industry practitioners and researchers.",
-    "prizeBreakup": {},
+    "prizeBreakup": {
+      "first": "₹15,000",
+      "second": "₹10,000",
+      "third": "₹5,000"
+    },
     "studentContact": "Sai Sampada (+91 88793 41306, ieeesb@hitam.org)",
     "facultyContact": "Bindu Madhavi (+91 91603 08130, bindumadhavi.t@ieee.org)",
-    "clubEmail": ""
+    "clubEmail": "",
+    "date": "Both Days (Oct 9–10)",
+    "timings": "9:30 AM – 4:30 PM",
+    "venue": "HITAM, Gowdavelly"
   },
   {
     "id": "E02",
@@ -69,9 +76,12 @@ var EVENT_CATALOG = [
       "second": "₹3,000",
       "third": "₹2,000"
     },
-    "studentContact": "Ameena (9966864664), Kanishka (9494753922), Alankrusha (9063412373)",
-    "facultyContact": "Santosh Naik (+91 99802 99366, santoshn.mech@hitam.org)",
-    "clubEmail": ""
+    "studentContact": "Ameena (9966864664, 24e51a6612@gmail.com), Kanishka (9494753922, 24e51a05b4@gmail.com), Alankrusha (9063412373, 24e51a6628@gmail.com), Charvitha (7675041666, 24e51a05k5@gmail.com)",
+    "facultyContact": "D. Harikrishna (9490425130, associatedean.mdp@hitam.org), Santosh Naik (9980299366, santoshn.mech@hitam.org)",
+    "clubEmail": "ewb@hitam.org",
+    "date": "Day 1 (Oct 9)",
+    "timings": "9:30 AM – 4:30 PM",
+    "venue": "HITAM Campus"
   },
   {
     "id": "E03",
@@ -88,15 +98,33 @@ var EVENT_CATALOG = [
     "logo": "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/gdg-hitam.png",
     "sheetName": "[GDG] Agentic AI Workshop & Hackathon",
     "themeColor": "#00629b",
-    "description": "Organized by GDGoC HITAM as a 2-day technical flagship. Day 1 (Oct 9) features an interactive masterclass on Agentic AI fundamentals, reasoning loops, and autonomous tool use. Day 2 (Oct 10) is the high-stakes Agentic AI Hackathon where teams architect and submit real-world agent solutions. A single ₹150 registration covers both the workshop and the hackathon!",
+    "description": "One two-day Agentic AI event by Google Developer Groups on Campus – HITAM. On October 9, learn AI agent fundamentals, reasoning, tool usage and multi-step workflows in an interactive, hands-on workshop. After the workshop, receive the problem statement and apply your learning by building a practical Agentic AI solution in a team of 2–4. Final submissions are due at noon on October 10, followed by evaluation and results. One ₹150 registration per participant includes both the workshop and hackathon.",
     "prizeBreakup": {
       "first": "₹5,000",
       "second": "₹3,000",
       "third": "₹2,000"
     },
-    "studentContact": "Manik Manohar (9100834381), Dhanudeep (7569956911), Y Shamsmitha (7396933363)",
+    "studentContact": "Manik Manohar (9100834381, manikmanohar0@gmail.com), Dhanudeep (7569956911, kdhanudeep@gmail.com), Y Shamsmitha (7396933363, yshamsmitha@gmail.com)",
     "facultyContact": "D. Harikrishna (+91 94904 25130, associatedean.mdp@hitam.org)",
-    "clubEmail": "gdgoncampus@hitam.org"
+    "clubEmail": "gdgoncampus@hitam.org",
+    "participationNote": "Individual registration for the workshop; hackathon teams of 2–4 are formed for the combined event. ₹150 per participant covers both days.",
+    "venue": "Activity Block – 2nd/3rd Floor Classroom",
+    "agenda": [
+      {
+        "label": "Day 1 · October 9",
+        "detail": "9:30 AM–3:00 PM: interactive, hands-on Agentic AI workshop."
+      },
+      {
+        "label": "Problem statement & development",
+        "detail": "Problem statement released 3:00–4:00 PM on October 9; solution development starts after the workshop and continues until noon on October 10."
+      },
+      {
+        "label": "Day 2 · October 10",
+        "detail": "Final submission: 12:00 PM. Evaluation: 12:00–1:30 PM. Results & recognition: 2:30–3:30 PM."
+      }
+    ],
+    "date": "Both Days (Oct 9–10)",
+    "timings": "Oct 9: Workshop 9:30 AM–3:00 PM; development continues until Oct 10 noon • Evaluation 12:00–1:30 PM • Results 2:30–3:30 PM"
   },
   {
     "id": "E04",
@@ -118,9 +146,12 @@ var EVENT_CATALOG = [
       "first": "₹3,000",
       "second": "₹2,000"
     },
-    "studentContact": "Ameena (9966864664), Kanishka (9494753922), Alankrusha (9063412373)",
-    "facultyContact": "Santosh Naik (+91 99802 99366, santoshn.mech@hitam.org)",
-    "clubEmail": ""
+    "studentContact": "Ameena (9966864664, 24e51a6612@gmail.com), Kanishka (9494753922, 24e51a05b4@gmail.com), Alankrusha (9063412373, 24e51a6628@gmail.com), Charvitha (7675041666, 24e51a05k5@gmail.com)",
+    "facultyContact": "D. Harikrishna (9490425130, associatedean.mdp@hitam.org), Santosh Naik (9980299366, santoshn.mech@hitam.org)",
+    "clubEmail": "ewb@hitam.org",
+    "date": "Day 2 (Oct 10)",
+    "timings": "10:00 AM – 1:30 PM",
+    "venue": "HITAM Campus"
   },
   {
     "id": "E05",
@@ -133,22 +164,28 @@ var EVENT_CATALOG = [
     "hitamFee": 200,
     "otherFee": 300,
     "feeModel": "team",
-    "allowedTeamSizes": [1, 4],
+    "allowedTeamSizes": [
+      1,
+      4
+    ],
     "soloHitamFee": 100,
     "soloOtherFee": 150,
-    "prize": 5700,
+    "prize": 5000,
     "logo": "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ieom-hitam.png",
     "sheetName": "[IEOM] Smart Manufacturing Challenge",
     "themeColor": "#0f766e",
     "description": "Dive into smart factory operations, digital twins, IoT automation, and supply chain telemetry. Solve authentic industrial production bottlenecks under real operational constraints.",
     "prizeBreakup": {
       "first": "₹2,500",
-      "second": "₹2,000",
-      "third": "₹1,200"
+      "second": "₹1,500",
+      "third": "₹1,000"
     },
     "studentContact": "Rishitha (+91 91210 14558, 24e51a66e1@hitam.org)",
     "facultyContact": "Praveen (+91 89190 46164, praveenp.mech@hitam.org)",
-    "clubEmail": ""
+    "clubEmail": "ieom.hitam@gmail.com",
+    "date": "Day 1 (Oct 9)",
+    "timings": "10:00 AM – 4:00 PM",
+    "venue": "HITAM Campus"
   },
   {
     "id": "E06",
@@ -161,22 +198,28 @@ var EVENT_CATALOG = [
     "hitamFee": 200,
     "otherFee": 300,
     "feeModel": "team",
-    "allowedTeamSizes": [1, 4],
+    "allowedTeamSizes": [
+      1,
+      4
+    ],
     "soloHitamFee": 100,
     "soloOtherFee": 150,
-    "prize": 5700,
+    "prize": 5000,
     "logo": "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ieom-hitam.png",
     "sheetName": "[IEOM] Startup Pitch Challenge",
     "themeColor": "#0f766e",
     "description": "Pitch viable hardware, software, or manufacturing startups before investor judges. Showcase unit economics, operational prototypes, and commercial viability roadmaps.",
     "prizeBreakup": {
       "first": "₹2,500",
-      "second": "₹2,000",
-      "third": "₹1,200"
+      "second": "₹1,500",
+      "third": "₹1,000"
     },
     "studentContact": "Rishitha (+91 91210 14558, 24e51a66e1@hitam.org)",
     "facultyContact": "Praveen (+91 89190 46164, praveenp.mech@hitam.org)",
-    "clubEmail": ""
+    "clubEmail": "ieom.hitam@gmail.com",
+    "date": "Day 2 (Oct 10)",
+    "timings": "10:00 AM – 3:30 PM",
+    "venue": "HITAM Campus"
   },
   {
     "id": "E07",
@@ -201,7 +244,10 @@ var EVENT_CATALOG = [
     },
     "studentContact": "MD Arif (+91 93902 19103, 23e51a6671@hitam.org)",
     "facultyContact": "Dr. M. Rajeshwar (+91 92487 11181, rajeshwarm.cse@hitam.org)",
-    "clubEmail": "aiclub@hitam.org"
+    "clubEmail": "aiclub@hitam.org",
+    "date": "Day 1 (Oct 9)",
+    "timings": "10:00 AM – 4:00 PM",
+    "venue": "HITAM Campus"
   },
   {
     "id": "E08",
@@ -226,7 +272,10 @@ var EVENT_CATALOG = [
     },
     "studentContact": "MD Arif (+91 93902 19103, 23e51a6671@hitam.org)",
     "facultyContact": "Dr. M. Rajeshwar (+91 92487 11181, rajeshwarm.cse@hitam.org)",
-    "clubEmail": "aiclub@hitam.org"
+    "clubEmail": "aiclub@hitam.org",
+    "date": "Day 2 (Oct 10)",
+    "timings": "10:00 AM – 4:00 PM",
+    "venue": "HITAM Campus"
   },
   {
     "id": "E09",
@@ -251,7 +300,10 @@ var EVENT_CATALOG = [
     },
     "studentContact": "Arutla Sai Prasanna (+91 81061 10146, 23e51a6711@hitam.org)",
     "facultyContact": "Richa Tiwari (+91 91315 39794, richatiwari.cse@hitam.org)",
-    "clubEmail": ""
+    "clubEmail": "minds.datascience@hitam.org",
+    "date": "Day 1 (Oct 9)",
+    "timings": "9:30 AM – 4:00 PM",
+    "venue": "HITAM Campus"
   },
   {
     "id": "E10",
@@ -276,7 +328,10 @@ var EVENT_CATALOG = [
     },
     "studentContact": "Arutla Sai Prasanna (+91 81061 10146, 23e51a6711@hitam.org)",
     "facultyContact": "Richa Tiwari (+91 91315 39794, richatiwari.cse@hitam.org)",
-    "clubEmail": ""
+    "clubEmail": "minds.datascience@hitam.org",
+    "date": "Day 2 (Oct 10)",
+    "timings": "9:30 AM – 4:00 PM",
+    "venue": "HITAM Campus"
   },
   {
     "id": "E11",
@@ -294,10 +349,19 @@ var EVENT_CATALOG = [
     "sheetName": "[TorqueX] Garage to Grid",
     "themeColor": "#c2410c",
     "description": "Be part of the grand unveiling of HITAM's custom-engineered racing kart. Participate in telemetry design sprints, chassis aerodynamic challenges, and EV powertrain teardown sessions.",
-    "prizeBreakup": {},
+    "prizeBreakup": {
+      "first": "₹1,500",
+      "second": "₹1,000",
+      "third": "₹500"
+    },
     "studentContact": "G. Sri Harshika (9052693939, 24e51a0311@hitam.org)",
     "facultyContact": "Ruchir Shrivastava (903958390, programhead.mech@hitam.org)",
-    "clubEmail": ""
+    "clubEmail": "torquex.hitam@gmail.com",
+    "teamHitamFee": 100,
+    "teamOtherFee": 140,
+    "date": "Day 2 (Oct 10)",
+    "timings": "10:00 AM – 4:00 PM",
+    "venue": "HITAM Campus"
   },
   {
     "id": "E12",
@@ -320,9 +384,12 @@ var EVENT_CATALOG = [
       "second": "₹800",
       "third": "₹500"
     },
-    "studentContact": "Bipul Kumar Yadav (+91 70933 46820) / Narendra Reddy (+91 79814 27446)",
+    "studentContact": "Bipul Kumar Yadav (7093346820, 23e51a0301@hitam.org), Narendra Reddy (7981427446, 24e55a0325@hitam.org)",
     "facultyContact": "Mr. Deepak Kumar Singh (+91 89829 30521) / Mr. P. Bhaskar Rao (+91 97054 82627)",
-    "clubEmail": "23e51a0301@hitam.org"
+    "clubEmail": "",
+    "date": "Day 1 (Oct 9)",
+    "timings": "10:00 AM – 4:00 PM",
+    "venue": "HITAM Campus"
   },
   {
     "id": "E13",
@@ -346,8 +413,11 @@ var EVENT_CATALOG = [
       "third": "₹200"
     },
     "studentContact": "K. Manivenkat — Student HOD, CSE (+91 80088 19830, 24e51a05b5@hitam.org)",
-    "facultyContact": "",
-    "clubEmail": ""
+    "facultyContact": "Preeti C M (+91 99850 68108, preethicm.cse@hitam.org)",
+    "clubEmail": "",
+    "date": "Day 2 (Oct 10)",
+    "timings": "10:30 AM – 3:30 PM",
+    "venue": "HITAM Campus, Gowdavelly"
   },
   {
     "id": "E14",
@@ -371,13 +441,19 @@ var EVENT_CATALOG = [
       "third": "₹200"
     },
     "studentContact": "K. Manivenkat — Student HOD, CSE (+91 80088 19830, 24e51a05b5@hitam.org)",
-    "facultyContact": "",
-    "clubEmail": ""
+    "facultyContact": "Preeti C M (+91 99850 68108, preethicm.cse@hitam.org)",
+    "clubEmail": "",
+    "date": "Day 1 (Oct 9)",
+    "timings": "11:00 AM – 2:00 PM",
+    "venue": "HITAM Campus, Gowdavelly"
   }
 ];
 
 function doGet(e) {
   try {
+    if (e && e.parameter && e.parameter.action === "payment-status") {
+      return ContentService.createTextOutput(JSON.stringify(publicPaymentStatus_(e.parameter.ticketId))).setMimeType(ContentService.MimeType.JSON);
+    }
     var template = HtmlService.createTemplateFromFile("index");
     var eventParam = e && e.parameter ? e.parameter.event : "";
     var event = findEvent_(String(eventParam || ""));
@@ -675,10 +751,11 @@ function validatePayload_(payload) {
     if (roll) rolls[roll] = true;
   });
   var college = institution === "HITAM" ? "Hyderabad Institute of Technology and Management (HITAM)" : text_(payload.college, "College name", 160, true);
-  var teamName = event.maxTeam === 1 || (event.allowedTeamSizes && teamSize === 1) ? lead.name : text_(payload.teamName, "Team name", 120, true);
+  var teamName = event.maxTeam === 1 || ((event.allowedTeamSizes || event.id === "E03") && teamSize === 1) ? lead.name : text_(payload.teamName, "Team name", 120, true);
   var unitFee = institution === "HITAM" ? event.hitamFee : event.otherFee;
   if (event.allowedTeamSizes && teamSize === 1) unitFee = institution === "HITAM" ? event.soloHitamFee : event.soloOtherFee;
-  var amount = event.id === "E12" ? (teamSize === 1 ? 120 : 250) : (unitFee * (event.feeModel === "person" ? teamSize : 1));
+  if (event.teamHitamFee && teamSize > 1) unitFee = institution === "HITAM" ? event.teamHitamFee : event.teamOtherFee;
+  var amount = event.id === "E12" ? (teamSize === 1 ? 120 : 250) : (unitFee * (event.feeModel === "person" && !event.teamHitamFee ? teamSize : 1));
   if (typeof payload.totalFee !== "number" || payload.totalFee !== amount) throw publicError_("FEE_CHANGED", "The displayed amount does not match the event fee. Return to participant details and check the payment amount.");
   var utr = String(payload.utrNumber || "").trim();
   if (!/^\d{8,16}$/.test(utr)) throw publicError_("INVALID_UTR", "Enter the 8–16 digit UPI transaction reference from your payment app.");
@@ -807,6 +884,30 @@ function receipt_(regId, data) {
   return { regId: regId, eventId: data.event.id, eventTitle: data.event.title, chapter: data.event.club, teamName: data.teamName, teamSize: data.teamSize, leadName: data.lead.name, amount: data.amount, status: "Pending Verification", utr: data.utr };
 }
 
+// Public website lookup discloses status only. Never return personal data,
+// UTRs, proof URLs, submission tokens or private group invites here.
+function publicPaymentStatus_(ticketId) {
+  var id = String(ticketId || "").trim().toUpperCase();
+  if (!/^ESP26-E(?:0[1-9]|1[0-4])-\d{4}$/.test(id)) return { status: "Not Found" };
+  try {
+    var db = database_(), master = db.getSheetByName("ALL_REGISTRATIONS"), finance = db.getSheetByName("ALL_PAYMENTS_COLLECTION");
+    assertHeaders_(master, HEADERS.ALL_REGISTRATIONS);
+    assertHeaders_(finance, HEADERS.ALL_PAYMENTS_COLLECTION);
+    var match = master.getLastRow() > 1 && master.getRange(2, 2, master.getLastRow() - 1, 1).createTextFinder(id).matchEntireCell(true).findNext();
+    if (!match) return { status: "Not Found" };
+    var registration = master.getRange(match.getRow(), 1, 1, 20).getDisplayValues()[0];
+    var paymentMatch = finance.getLastRow() > 1 && finance.getRange(2, 2, finance.getLastRow() - 1, 1).createTextFinder(id).matchEntireCell(true).findNext();
+    if (!paymentMatch) return { status: "Pending Verification" };
+    var payment = finance.getRange(paymentMatch.getRow(), 1, 1, 13).getDisplayValues()[0];
+    var event = findEvent_(registration[2]);
+    if (!event || event.title !== payment[2] || Number(registration[15]) !== Number(payment[6]) || registration[18] !== payment[8]) return { status: "Pending Verification" };
+    if (registration[17] === "Rejected" || payment[11] === "Rejected") return { status: "Rejected" };
+    return { status: registration[17] === "Verified" && payment[11] === "Verified" ? "Verified" : "Pending Verification" };
+  } catch (error) {
+    return { error: "STATUS_UNAVAILABLE" };
+  }
+}
+
 // The private submission token proves possession of this registration. Neither
 // the public catalog nor a registration ID/UTR alone can disclose group links.
 function getRegistrationStatus(regId, requestId) {
@@ -870,4 +971,121 @@ function requireOwner_() {
   var active = Session.getActiveUser().getEmail();
   var effective = Session.getEffectiveUser().getEmail();
   if (!active || active !== effective) throw new Error("Run this administrative function manually as the script owner.");
+}
+
+// Organizer-only email automation. Trailing underscores prevent invocation via
+// google.script.run. Run setupVerifiedTicketEmails_ in the editor as Elysian.
+var TICKET_EMAIL_SENDER = "elysian@hitam.org";
+var EMAIL_HEADERS = ["RegID", "Recipient", "State", "AttemptedAt", "SentAt", "Notes"];
+function requireTicketSender_() {
+  if (String(Session.getEffectiveUser().getEmail()).toLowerCase() !== TICKET_EMAIL_SENDER) {
+    throw new Error("Authorize ticket email automation while signed in as elysian@hitam.org.");
+  }
+}
+// Visible editor entry point. An anonymous web-app caller must not be able to
+// enable email automation using the deployment owner's effective identity.
+function setupVerifiedTicketEmails() {
+  if (String(Session.getActiveUser().getEmail()).toLowerCase() !== TICKET_EMAIL_SENDER) {
+    throw new Error("Run this setup from the Apps Script editor while signed in as elysian@hitam.org.");
+  }
+  return setupVerifiedTicketEmails_();
+}
+function setupVerifiedTicketEmails_() {
+  requireTicketSender_();
+  var database = database_(), queue = database.getSheetByName("TICKET_EMAIL_DELIVERY");
+  if (!queue) {
+    queue = database.insertSheet("TICKET_EMAIL_DELIVERY");
+    queue.getRange(1, 1, 1, EMAIL_HEADERS.length).setValues([EMAIL_HEADERS]);
+    queue.setFrozenRows(1);
+  }
+  assertHeaders_(queue, EMAIL_HEADERS);
+  var existing = ScriptApp.getProjectTriggers().some(function (trigger) {
+    return trigger.getHandlerFunction() === "processVerifiedTicketEmails_";
+  });
+  if (!existing) ScriptApp.newTrigger("processVerifiedTicketEmails_").timeBased().everyMinutes(5).create();
+  PropertiesService.getScriptProperties().setProperty("ESPARTO_TICKET_EMAIL_ENABLED", "true");
+  return "Ticket emails enabled. Verified registrations with configured event groups will be processed every five minutes.";
+}
+function emailEscape_(value) {
+  return String(value || "").replace(/[&<>"']/g, function (character) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character];
+  });
+}
+function ticketEmailCandidate_(registration, payment, properties) {
+  var event = findEvent_(registration[2]);
+  if (!/^ESP26-E\d{2}-\d{4}$/.test(String(registration[1] || "")) || !event || event.id === "E01" || !payment || registration[17] !== "Verified" || payment[11] !== "Verified") return null;
+  if (String(registration[1]).indexOf("ESP26-" + event.id + "-") !== 0 || registration[1] !== payment[1] || event.title !== payment[2] || registration[18] !== payment[8] || Number(registration[15]) !== Number(payment[6])) return null;
+  var email = String(registration[10] || "").trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return null;
+  var group = properties.getProperty("WHATSAPP_GROUP_" + event.id);
+  if (!group || !/^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9]+(?:\?[^\s]*)?$/.test(group)) return null;
+  return { regId: registration[1], email: email, name: registration[7], team: registration[5], size: registration[6], amount: Number(registration[15]), event: event, group: group };
+}
+function composeTicketEmail_(ticket, qrBlob) {
+  var event = ticket.event;
+  var schedule = event.agenda ? event.agenda.map(function (item) { return item.label + ": " + item.detail; }).join("\n") : event.date + " · " + event.timings;
+  var venue = event.venue || "HITAM Campus, Gowdavelly, Hyderabad";
+  var body = "Thank you for registering for " + event.title + ".\n\nYour payment has been verified.\nRegistration ID: " + ticket.regId + "\nParticipant: " + ticket.name + "\nTeam / participant: " + ticket.team + "\nParticipants: " + ticket.size + "\nAmount verified: ₹" + ticket.amount + "\nVenue: " + venue + "\n\n" + schedule + "\n\nJoin your event WhatsApp group for communication: " + ticket.group + "\n\nYour event ticket is included in this email and your ticket QR is attached. Present them at the event desk. The QR identifies your registration; organizers must check the verified registration record.\n\nESPARTO 2026\n" + TICKET_EMAIL_SENDER;
+  var html = '<div style="font-family:Arial,sans-serif;max-width:640px;margin:auto;color:#0f172a"><h1>ESPARTO 2026</h1><h2>' + emailEscape_(event.title) + '</h2><p>Thank you for registering for this event. Your payment has been verified.</p><section style="border:1px solid #e2e8f0;padding:24px;border-radius:12px"><h3>Your confirmed event ticket</h3><p><strong>' + emailEscape_(ticket.regId) + '</strong></p><p>Participant: ' + emailEscape_(ticket.name) + '<br>Team / participant: ' + emailEscape_(ticket.team) + '<br>Participants: ' + emailEscape_(ticket.size) + '<br>Amount verified: ₹' + ticket.amount + '<br>Venue: ' + emailEscape_(venue) + '</p><img src="cid:ticketQr" width="220" height="220" alt="Event ticket QR code"><p>Present this ticket and QR at the event desk. Organizer verification is required.</p></section><p style="white-space:pre-line">' + emailEscape_(schedule) + '</p><p>Join your event group for updates and communication:</p><p><a href="' + emailEscape_(ticket.group) + '">Join event WhatsApp group</a></p><p>Questions? <a href="mailto:' + TICKET_EMAIL_SENDER + '">' + TICKET_EMAIL_SENDER + '</a></p></div>';
+  return { to: ticket.email, subject: "ESPARTO 2026 · Confirmed ticket · " + event.title + " · " + ticket.regId, body: body, htmlBody: html, name: "ESPARTO 2026", replyTo: TICKET_EMAIL_SENDER, inlineImages: { ticketQr: qrBlob }, attachments: [qrBlob] };
+}
+function processVerifiedTicketEmails_() {
+  requireTicketSender_();
+  var properties = PropertiesService.getScriptProperties();
+  if (properties.getProperty("ESPARTO_TICKET_EMAIL_ENABLED") !== "true") return;
+  // A separate user lock avoids holding the registration writer's script lock
+  // while contacting the QR/email services.
+  var lock = LockService.getUserLock();
+  if (!lock.tryLock(1000)) return;
+  try {
+    var database = database_(), master = database.getSheetByName("ALL_REGISTRATIONS"), finance = database.getSheetByName("ALL_PAYMENTS_COLLECTION"), queue = database.getSheetByName("TICKET_EMAIL_DELIVERY");
+    assertHeaders_(master, HEADERS.ALL_REGISTRATIONS); assertHeaders_(finance, HEADERS.ALL_PAYMENTS_COLLECTION); assertHeaders_(queue, EMAIL_HEADERS);
+    var payments = {}, delivery = {};
+    if (finance.getLastRow() > 1) finance.getRange(2, 1, finance.getLastRow() - 1, 13).getDisplayValues().forEach(function (row, index) {
+      // Duplicate registration references fail closed instead of guessing.
+      payments[row[1]] = payments[row[1]] ? { duplicate: true } : { row: row, index: index + 2 };
+    });
+    if (queue.getLastRow() > 1) queue.getRange(2, 1, queue.getLastRow() - 1, EMAIL_HEADERS.length).getDisplayValues().forEach(function (row, index) { delivery[row[0]] = { state: row[2], index: index + 2 }; });
+    var rows = master.getLastRow() > 1 ? master.getRange(2, 1, master.getLastRow() - 1, 20).getDisplayValues() : [];
+    var started = Date.now(), sent = 0, quota = MailApp.getRemainingDailyQuota();
+    for (var index = 0; index < rows.length && sent < 20 && sent < quota && Date.now() - started < 120000; index++) {
+      var registration = rows[index], existing = delivery[registration[1]], payment = payments[registration[1]];
+      if (existing && existing.state !== "Pending") continue;
+      if (!payment || payment.duplicate) continue;
+      // Read current records again immediately before preparing a ticket.
+      var freshMaster = master.getRange(index + 2, 1, 1, 20).getDisplayValues()[0];
+      var freshPayment = finance.getRange(payment.index, 1, 1, 13).getDisplayValues()[0];
+      var ticket = ticketEmailCandidate_(freshMaster, freshPayment, properties);
+      if (!ticket) continue;
+      var queueRow = existing ? existing.index : queue.getLastRow() + 1;
+      if (!existing) { queue.getRange(queueRow, 1, 1, EMAIL_HEADERS.length).setValues([[ticket.regId, "'" + ticket.email, "Pending", "", "", ""]]); delivery[ticket.regId] = { state: "Pending", index: queueRow }; }
+      var qrBlob;
+      try {
+        // Only event/registration identifiers reach the QR provider: no name,
+        // email, phone, payment proof, group invitation or private access token.
+        var qrText = "ESPARTO 2026|" + ticket.regId + "|" + ticket.event.id;
+        var qr = UrlFetchApp.fetch("https://api.qrserver.com/v1/create-qr-code/?size=300x300&format=png&data=" + encodeURIComponent(qrText), { muteHttpExceptions: true });
+        if (qr.getResponseCode() !== 200) continue;
+        qrBlob = qr.getBlob();
+        if (qrBlob.getContentType() !== "image/png") continue;
+        qrBlob.setName(ticket.regId + "-ticket-qr.png");
+      } catch (qrError) { continue; } // No mail attempted: safe to retry later.
+      var latestTicket = ticketEmailCandidate_(master.getRange(index + 2, 1, 1, 20).getDisplayValues()[0], finance.getRange(payment.index, 1, 1, 13).getDisplayValues()[0], properties);
+      if (!latestTicket || latestTicket.regId !== ticket.regId || latestTicket.email !== ticket.email) continue;
+      ticket = latestTicket;
+      queue.getRange(queueRow, 2, 1, 5).setValues([["'" + ticket.email, "Sending", new Date(), "", ""]]);
+      SpreadsheetApp.flush();
+      try {
+        MailApp.sendEmail(composeTicketEmail_(ticket, qrBlob));
+        // If this acknowledgement fails, leave Sending for manual review. Never
+        // automatically resend an email whose delivery may already have happened.
+        queue.getRange(queueRow, 3, 1, 4).setValues([["Sent", new Date(), new Date(), "Accepted by email service; inbox delivery is not guaranteed."]]);
+        delivery[ticket.regId].state = "Sent"; sent++;
+      } catch (mailError) {
+        queue.getRange(queueRow, 3, 1, 4).setValues([["ReviewRequired", new Date(), "", "Email outcome uncertain. Check sender mail before setting Pending to retry."]]);
+        delivery[ticket.regId].state = "ReviewRequired";
+        break;
+      }
+    }
+  } finally { lock.releaseLock(); }
 }

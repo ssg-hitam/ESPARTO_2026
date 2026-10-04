@@ -24,6 +24,7 @@ export interface FestEventItem {
   date: "Day 1 (Oct 9)" | "Day 2 (Oct 10)" | "Both Days (Oct 9–10)";
   dayNumber: 1 | 2 | 0; // 0 for both days
   timings: string;
+  agenda?: { label: string; detail: string }[];
   venue: string;
   prizePool: string;
   prizeBreakup?: {
@@ -45,6 +46,7 @@ export interface FestEventItem {
   coordinators?: {
     students: { name: string; phone?: string; email?: string }[];
     faculty?: { name: string; phone?: string; email?: string };
+    additionalFaculty?: { name: string; phone?: string; email?: string }[];
     clubEmail?: string;
   };
 }
@@ -79,6 +81,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     timings: "9:30 AM – 4:30 PM",
     venue: "HITAM, Gowdavelly",
     prizePool: "₹30,000",
+    prizeBreakup: { first: "₹15,000", second: "₹10,000", third: "₹5,000" },
     teamSize: "3–4 Members",
     registrationFee: {
       hitam: "₹199 / participant (IEEE member)",
@@ -127,9 +130,12 @@ export const FEST_EVENTS: FestEventItem[] = [
       students: [
         { name: "Ameena", phone: "9966864664", email: "24e51a6612@gmail.com" },
         { name: "Kanishka", phone: "9494753922", email: "24e51a05b4@gmail.com" },
-        { name: "Alankrusha", phone: "9063412373", email: "24e51a6628@gmail.com" }
+        { name: "Alankrusha", phone: "9063412373", email: "24e51a6628@gmail.com" },
+        { name: "Charvitha", phone: "7675041666", email: "24e51a05k5@gmail.com" }
       ],
       faculty: { name: "Mr. Santosh Naik", phone: "9980299366", email: "santoshn.mech@hitam.org" },
+      additionalFaculty: [{ name: "D. Harikrishna", phone: "9490425130", email: "associatedean.mdp@hitam.org" }],
+      clubEmail: "ewb@hitam.org",
     },
   },
   {
@@ -141,11 +147,12 @@ export const FEST_EVENTS: FestEventItem[] = [
     clubLogo: "/images/chapters/gdg-hitam.png",
     category: "Hackathon",
     tagline: "From learning to building — explore the power of Agentic AI.",
-    description: "Organized by GDGoC HITAM as a 2-day technical flagship. Day 1 (Oct 9) features an interactive masterclass on Agentic AI fundamentals, reasoning loops, and autonomous tool use. Day 2 (Oct 10) is the high-stakes Agentic AI Hackathon where teams architect and submit real-world agent solutions. A single ₹150 registration covers both the workshop and the hackathon!",
+    description: "One two-day Agentic AI event by Google Developer Groups on Campus – HITAM. On October 9, learn AI agent fundamentals, reasoning, tool usage and multi-step workflows in an interactive, hands-on workshop. After the workshop, receive the problem statement and apply your learning by building a practical Agentic AI solution in a team of 2–4. Final submissions are due at noon on October 10, followed by evaluation and results. One ₹150 registration per participant includes both the workshop and hackathon.",
     bannerImage: "/images/events/agentic-ai-workshop-banner.png",
     date: "Both Days (Oct 9–10)",
     dayNumber: 0,
-    timings: "Oct 9: 9:30 AM – 3:00 PM (Workshop) & 3:00 PM Hackathon Start • Oct 10: Final Demos & Results (till 3:30 PM)",
+    timings: "Oct 9: Workshop 9:30 AM–3:00 PM; development continues until Oct 10 noon • Evaluation 12:00–1:30 PM • Results 2:30–3:30 PM",
+    agenda: [{"label": "Day 1 · October 9", "detail": "9:30 AM–3:00 PM: interactive, hands-on Agentic AI workshop."}, {"label": "Problem statement & development", "detail": "Problem statement released 3:00–4:00 PM on October 9; solution development starts after the workshop and continues until noon on October 10."}, {"label": "Day 2 · October 10", "detail": "Final submission: 12:00 PM. Evaluation: 12:00–1:30 PM. Results & recognition: 2:30–3:30 PM."}],
     venue: "Activity Block – 2nd/3rd Floor Classroom",
     prizePool: "₹10,000",
     prizeBreakup: {
@@ -153,12 +160,12 @@ export const FEST_EVENTS: FestEventItem[] = [
       second: "₹3,000",
       third: "₹2,000",
     },
-    teamSize: "2–4 Members (or Solo)",
+    teamSize: "Individual registration · Hackathon teams of 2–4",
     registrationFee: {
       hitam: "₹150 / participant",
       nonHitam: "₹150 / participant",
       perTeam: false,
-      note: "Single ₹150 registration gives complete access to BOTH Day 1 Workshop & Day 2 Hackathon",
+      note: "One ₹150 registration per participant covers both days. Register individually for the workshop; form teams of 2–4 for the hackathon.",
     },
     highlights: [
       "Single ₹150 Pass Covers Both Workshop & Hackathon",
@@ -167,7 +174,10 @@ export const FEST_EVENTS: FestEventItem[] = [
       "Day 1: Hands-on Agentic AI Masterclass",
       "Day 2: Autonomous Multi-Agent AI Hackathon",
       "Guest Speaker & Industry Mentor Jury",
-      "GDGoC HITAM Official Certificates"
+      "Build Practical AI Agents & Multi-step Workflows",
+      "Hackathon Teams of 2–4",
+      "Final Submission: October 10 at 12:00 PM",
+      "THINK. BUILD. AUTOMATE."
     ],
     featured: true,
     coordinators: {
@@ -212,9 +222,12 @@ export const FEST_EVENTS: FestEventItem[] = [
       students: [
         { name: "Ameena", phone: "9966864664", email: "24e51a6612@gmail.com" },
         { name: "Kanishka", phone: "9494753922", email: "24e51a05b4@gmail.com" },
-        { name: "Alankrusha", phone: "9063412373", email: "24e51a6628@gmail.com" }
+        { name: "Alankrusha", phone: "9063412373", email: "24e51a6628@gmail.com" },
+        { name: "Charvitha", phone: "7675041666", email: "24e51a05k5@gmail.com" }
       ],
       faculty: { name: "Mr. Santosh Naik", phone: "9980299366", email: "santoshn.mech@hitam.org" },
+      additionalFaculty: [{ name: "D. Harikrishna", phone: "9490425130", email: "associatedean.mdp@hitam.org" }],
+      clubEmail: "ewb@hitam.org",
     },
   },
   {
@@ -232,11 +245,11 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 1,
     timings: "10:00 AM – 4:00 PM",
     venue: "HITAM Campus",
-    prizePool: "₹5,700 (Total: ₹11,400)",
+    prizePool: "₹5,000 (Both days: ₹10,000)",
     prizeBreakup: {
       first: "₹2,500",
-      second: "₹2,000",
-      third: "₹1,200",
+      second: "₹1,500",
+      third: "₹1,000",
     },
     teamSize: "Solo or Team of 4 Members",
     registrationFee: {
@@ -246,8 +259,8 @@ export const FEST_EVENTS: FestEventItem[] = [
       note: "Team of 4: HITAM ₹200 / Outside ₹300. Individual: HITAM ₹100 / Outside ₹150.",
     },
     highlights: [
-      "₹5,700 Day 1 Prize Pool",
-      "1st: ₹2,500 | 2nd: ₹2,000 | 3rd: ₹1,200",
+      "₹5,000 Day 1 Prize Pool",
+      "1st: ₹2,500 | 2nd: ₹1,500 | 3rd: ₹1,000",
       "Tech Talk Session with Expert",
       "Work on Real Industry Problems",
       "Compete, Sustain & Win",
@@ -256,6 +269,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "Rishitha", phone: "9121014558", email: "24e51a66e1@hitam.org" }],
       faculty: { name: "Mr. P. Praveen", phone: "8919046164", email: "praveenp.mech@hitam.org" },
+      clubEmail: "ieom.hitam@gmail.com",
     },
   },
   {
@@ -273,11 +287,11 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 2,
     timings: "10:00 AM – 3:30 PM",
     venue: "HITAM Campus",
-    prizePool: "₹5,700 (Total: ₹11,400)",
+    prizePool: "₹5,000 (Both days: ₹10,000)",
     prizeBreakup: {
       first: "₹2,500",
-      second: "₹2,000",
-      third: "₹1,200",
+      second: "₹1,500",
+      third: "₹1,000",
     },
     teamSize: "Team (4 Members) or Solo",
     registrationFee: {
@@ -287,8 +301,8 @@ export const FEST_EVENTS: FestEventItem[] = [
       note: "Team of 4: HITAM ₹200 / Outside ₹300. Individual: HITAM ₹100 / Outside ₹150.",
     },
     highlights: [
-      "₹5,700 Day 2 Prize Pool",
-      "1st: ₹2,500 | 2nd: ₹2,000 | 3rd: ₹1,200",
+      "₹5,000 Day 2 Prize Pool",
+      "1st: ₹2,500 | 2nd: ₹1,500 | 3rd: ₹1,000",
       "Pitch Your Innovative Idea",
       "Solve Real-World Problems",
       "Showcase Vision & Win Recognition",
@@ -297,6 +311,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "Rishitha", phone: "9121014558", email: "24e51a66e1@hitam.org" }],
       faculty: { name: "Mr. P. Praveen", phone: "8919046164", email: "praveenp.mech@hitam.org" },
+      clubEmail: "ieom.hitam@gmail.com",
     },
   },
   {
@@ -401,6 +416,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "Arutla Sai Prasanna", phone: "8106110146", email: "23e51a6711@hitam.org" }],
       faculty: { name: "Ms. Richa Tiwari", phone: "9131539794", email: "richatiwari.cse@hitam.org" },
+      clubEmail: "minds.datascience@hitam.org",
     },
   },
   {
@@ -435,6 +451,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "Arutla Sai Prasanna", phone: "8106110146", email: "23e51a6711@hitam.org" }],
       faculty: { name: "Ms. Richa Tiwari", phone: "9131539794", email: "richatiwari.cse@hitam.org" },
+      clubEmail: "minds.datascience@hitam.org",
     },
   },
   {
@@ -468,6 +485,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     coordinators: {
       students: [{ name: "G. Sri Harshika", phone: "9052693939", email: "24e51a0311@hitam.org" }],
       faculty: { name: "Ruchir Shrivastava", phone: "903958390", email: "programhead.mech@hitam.org" },
+      clubEmail: "torquex.hitam@gmail.com",
     },
   },
   {
@@ -510,10 +528,11 @@ export const FEST_EVENTS: FestEventItem[] = [
         { name: "Narendra Reddy", phone: "7981427446", email: "24e55a0325@hitam.org" }
       ],
       faculty: {
-        name: "Mr. Deepak Kumar Singh & Mr. P. Bhaskar Rao",
+        name: "Mr. Deepak Kumar Singh",
         phone: "8982930521",
         email: "deepakkumarsingh.mech@hitam.org"
       },
+      additionalFaculty: [{ name: "Mr. P. Bhaskar Rao", phone: "9705482627" }],
     },
   },
   {
@@ -526,7 +545,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     category: "Gaming & Coding",
     tagline: "Numbers are easy, but tech makes it interesting! — CS trivia, code clues & instant rewards",
     description: "Numbers are easy, but tech makes it interesting! A fast-paced technical party game where you crack CS theory clues, identify runtime complexity riddles, solve syntax debug puzzles, and claim instant cash rewards on your technical game card.",
-    bannerImage: "/images/events/tech-tambola-banner.png",
+    bannerImage: "/images/events/technical-tambola-official-banner.png",
     date: "Day 1 (Oct 9)",
     dayNumber: 1,
     timings: "11:00 AM – 2:00 PM",
@@ -554,6 +573,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     ],
     coordinators: {
       students: [{ name: "K. Manivenkat (Student HOD, CSE)", phone: "8008819830", email: "24e51a05b5@hitam.org" }],
+      faculty: { name: "Preeti C M", phone: "9985068108", email: "preethicm.cse@hitam.org" },
     },
   },
   {
@@ -564,12 +584,13 @@ export const FEST_EVENTS: FestEventItem[] = [
     clubId: "csi",
     clubLogo: "/images/chapters/csi-hitam.png",
     category: "Gaming & Coding",
-    tagline: "Wager chips on code optimization, speed debugging & logic duels",
-    description: "High-stakes competitive coding game organized by CSI Student Chapter. Place strategic chip wagers on code optimization rounds, guess asymptotic complexities, debug under pressure, and maximize your chip stack.",
+    tagline: "Think. Code. Solve. Win. — Wager chips on code optimization, speed debugging & logic duels",
+    description: "Think. Code. Solve. Win.! High-stakes competitive coding game organized by CSI Student Chapter. Place strategic chip wagers on code optimization rounds, guess asymptotic complexities, debug under pressure, and maximize your chip stack.",
+    bannerImage: "/images/events/code-casino-official-banner.png",
     date: "Day 2 (Oct 10)",
     dayNumber: 2,
     timings: "10:30 AM – 3:30 PM",
-    venue: "HITAM Campus",
+    venue: "HITAM Campus, Gowdavelly",
     prizePool: "₹1,200",
     prizeBreakup: {
       first: "₹600",
@@ -583,9 +604,18 @@ export const FEST_EVENTS: FestEventItem[] = [
       perTeam: false,
       note: "Team Size: 2–3 Members | Registration: ₹50 (HITAM) / ₹60 (Outside) per participant",
     },
-    highlights: ["₹1,200 Cash Prize Pool", "1st: ₹600 | 2nd: ₹400 | 3rd: ₹200", "Teams of 2–3 Members", "Chip Wagering Mechanics", "High-Speed Code Duels", "Strategic Problem Solving"],
+    highlights: [
+      "₹1,200 Cash Prize Pool",
+      "1st: ₹600 | 2nd: ₹400 | 3rd: ₹200",
+      "Think. Code. Solve. Win.",
+      "Teams of 2–3 Members",
+      "Chip Wagering Mechanics",
+      "High-Speed Code Duels",
+      "Strategic Problem Solving",
+    ],
     coordinators: {
       students: [{ name: "K. Manivenkat (Student HOD, CSE)", phone: "8008819830", email: "24e51a05b5@hitam.org" }],
+      faculty: { name: "Preeti C M", phone: "9985068108", email: "preethicm.cse@hitam.org" },
     },
   },
 ];

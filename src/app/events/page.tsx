@@ -366,19 +366,19 @@ export default function EventsPage() {
                         </div>
 
                         {/* Event Visual Banner Box */}
-                        <div className="relative w-full h-40 sm:h-44 rounded-xl overflow-hidden mb-4 border border-white/10 bg-gradient-to-br from-black/80 via-[#0e0a2b] to-[#1a0e38] flex flex-col justify-between p-3.5 group-hover:border-white/20 transition-all">
+                        <div className={`relative w-full rounded-xl overflow-hidden mb-4 border border-white/10 bg-gradient-to-br from-black/80 via-[#0e0a2b] to-[#1a0e38] flex flex-col justify-between group-hover:border-white/20 transition-all ${event.bannerImage ? "" : "h-40 sm:h-44 p-3.5"}`}>
                           {event.bannerImage ? (
                             <>
                               <Image
                                 src={event.bannerImage}
+                                unoptimized={event.id === "technical-tambola" || event.id === "code-casino"}
                                 alt={event.title}
-                                fill
+                                width={1600}
+                                height={600}
                                 sizes="(max-width: 768px) 100vw, 450px"
-                                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                className="block w-full h-auto"
                                 priority
                               />
-                              {/* Soft gradient overlay so badges pop and contrast against bright banners */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/50 pointer-events-none" />
                             </>
                           ) : (
                             /* Subtle Graphic Grid Accent for cards without custom banner */
@@ -389,7 +389,7 @@ export default function EventsPage() {
                           )}
 
                           {/* Banner Top Row: Prize Badge (Pinned to Right) */}
-                          <div className="flex items-center justify-end gap-2 z-10">
+                          <div className={`flex items-center justify-end gap-2 z-10 ${event.bannerImage ? "p-2" : ""}`}>
                             {event.prizePool && event.prizePool !== "Certifications & GDG Kits" && (
                               <div className="flex items-center gap-1.5 bg-black/80 backdrop-blur-md border border-amber-400/30 px-2.5 py-1 rounded-full text-amber-300 font-mono font-semibold text-[10px] shrink-0 shadow-[0_0_12px_rgba(251,191,36,0.2)]">
                                 <Trophy className="w-3 h-3 text-amber-400 shrink-0" />
@@ -582,13 +582,15 @@ export default function EventsPage() {
 
             {/* Event Official Banner */}
             {activeModalEvent.bannerImage && (
-              <div className="relative w-full aspect-[8/3] rounded-2xl overflow-hidden mb-6 border border-white/15 bg-white/5 shadow-2xl group">
+              <div className="relative w-full rounded-2xl overflow-hidden mb-6 border border-white/15 bg-white/5 shadow-2xl group">
                 <Image
                   src={activeModalEvent.bannerImage}
+                  unoptimized={activeModalEvent.id === "technical-tambola" || activeModalEvent.id === "code-casino"}
                   alt={`${activeModalEvent.title} Official Banner`}
-                  fill
+                  width={1600}
+                  height={600}
                   sizes="(max-width: 768px) 100vw, 700px"
-                  className="object-cover"
+                  className="block w-full h-auto"
                   priority
                 />
               </div>
@@ -632,6 +634,20 @@ export default function EventsPage() {
                   </div>
                 )}
               </div>
+            )}
+
+            {activeModalEvent.agenda && (
+              <section className="mb-6 p-4 rounded-2xl border border-white/10 bg-white/[0.03]">
+                <h4 className="text-[11px] font-mono uppercase tracking-wider text-text-muted mb-3 font-bold">One Event · Two-Day Schedule</h4>
+                <dl className="space-y-3 text-sm">
+                  {activeModalEvent.agenda.map((item) => (
+                    <div key={item.label}>
+                      <dt className="font-semibold text-white">{item.label}</dt>
+                      <dd className="text-text-secondary leading-relaxed mt-1">{item.detail}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
             )}
 
             {/* Track Overview */}
@@ -777,6 +793,17 @@ export default function EventsPage() {
                       </div>
                     </div>
                   )}
+
+                  {activeModalEvent.coordinators.additionalFaculty?.map((faculty) => (
+                    <div key={faculty.name} className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-2 text-[11px]">
+                      <span className="text-brand-magenta font-mono uppercase">Faculty Coordinator</span>
+                      <div className="font-semibold text-white">{faculty.name}</div>
+                      <div className="flex flex-wrap gap-3">
+                        {faculty.phone && <a className="text-brand-magenta hover:underline" href={`tel:${faculty.phone}`}>{faculty.phone}</a>}
+                        {faculty.email && <a className="text-text-muted hover:underline" href={`mailto:${faculty.email}`}>{faculty.email}</a>}
+                      </div>
+                    </div>
+                  ))}
 
                   {/* Faculty Coordinator */}
                   {activeModalEvent.coordinators.faculty && (

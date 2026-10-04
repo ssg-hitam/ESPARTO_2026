@@ -5,7 +5,7 @@ var mocks = require('./apps-script-mocks.cjs');
 function plain(value) { return JSON.parse(JSON.stringify(value)); }
 function rowCount(harness, name) { return harness.sheets[name].rows.length - 1; }
 test('group links stay private until both payment records are verified, with possession of the submission token', function () {
-  ['E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08', 'E09', 'E10', 'E13', 'E14'].forEach(function (id) {
+  ['E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08', 'E09', 'E10', 'E11', 'E13', 'E14'].forEach(function (id) {
     var h = mocks.createHarness(), payload = mocks.payloadFor(h, id);
     var privateLink = 'https://chat.whatsapp.com/PrivateGroup' + id;
     h.store['WHATSAPP_GROUP_' + id] = privateLink;
@@ -41,10 +41,10 @@ test('group access fails closed for invalid URLs, mismatched records, or backend
 test('catalog has the exact 14 IDs, slugs, fees, models, team bounds, prizes, and chapter contacts', function () {
   var h = mocks.createHarness(), catalog = h.scope.EVENT_CATALOG;
   var expected = [
-    ['E01','ieee-ideathon',3,4,200,300,'team',30000],['E02','reverse-hackathon',2,3,550,600,'team',10000],['E03','agentic-ai-workshop-hackathon',1,4,150,150,'person',10000],['E04','programmers-got-talent',1,1,150,150,'person',5000],['E05','smart-manufacturing-challenge',1,4,200,300,'team',5700],['E06','ieom-startup-pitch',1,4,200,300,'team',5700],['E07','dataquest-kaggle',2,2,300,300,'team',5000],['E08','n8n-automation-challenge',2,2,300,300,'team',5000],['E09','data-heist-datathon',2,4,200,300,'team',3000],['E10','data-dossier',2,4,100,200,'team',3000],['E11','torquex-motorsport',1,4,50,70,'person',5000],['E12','build-first-robot',1,4,250,250,'team',5000],['E13','code-casino',2,3,50,60,'person',1200],['E14','technical-tambola',1,1,50,60,'person',1200]
+    ['E01','ieee-ideathon',3,4,199,249,'person',30000],['E02','reverse-hackathon',2,3,550,600,'team',10000],['E03','agentic-ai-workshop-hackathon',1,4,150,150,'person',10000],['E04','programmers-got-talent',1,1,150,150,'person',5000],['E05','smart-manufacturing-challenge',1,4,200,300,'team',5000],['E06','ieom-startup-pitch',1,4,200,300,'team',5000],['E07','dataquest-kaggle',2,2,300,300,'team',5000],['E08','n8n-automation-challenge',2,2,300,300,'team',5000],['E09','data-heist-datathon',2,4,200,300,'team',3000],['E10','data-dossier',2,4,100,200,'team',3000],['E11','torquex-motorsport',1,4,50,70,'person',5000],['E12','build-first-robot',1,4,250,250,'team',5000],['E13','code-casino',2,3,50,60,'person',1200],['E14','technical-tambola',1,1,50,60,'person',1200]
   ];
   assert.deepEqual(plain(catalog.map(function (e) { return [e.id,e.slug,e.minTeam,e.maxTeam,e.hitamFee,e.otherFee,e.feeModel,e.prize]; })), expected);
-  catalog.forEach(function (event) { assert.equal(h.scope.getChapterName(event.id, ''), event.club); assert.equal(h.scope.getChapterName('', event.slug), event.club); assert.match(event.logo,/^https:\/\/cdn\.jsdelivr\.net\//); assert.ok(event.studentContact); if(event.id === "E13" || event.id === "E14") {assert.equal(event.facultyContact, "");assert.match(event.studentContact,/K\. Manivenkat/);assert.ok(!event.studentContact.includes("Nandhitha"));assert.ok(!event.studentContact.includes("Kyathieshwary"));} else assert.ok(event.facultyContact); });
+  catalog.forEach(function (event) { assert.equal(h.scope.getChapterName(event.id, ''), event.club); assert.equal(h.scope.getChapterName('', event.slug), event.club); assert.match(event.logo,/^https:\/\/cdn\.jsdelivr\.net\//); assert.ok(event.studentContact); if(event.id === "E13" || event.id === "E14") {assert.match(event.facultyContact, /Preeti C M/);assert.match(event.facultyContact, /preethicm\.cse@hitam\.org/);assert.match(event.studentContact,/K\. Manivenkat/);assert.ok(!event.studentContact.includes("Nandhitha"));assert.ok(!event.studentContact.includes("Kyathieshwary"));} else assert.ok(event.facultyContact); });
   assert.equal(h.scope.getPortalData().chapters.length,11);
   assert.match(h.scope.IEEE_URL,/AKfycbwoVAJO1VLPibThDX3h5Sewj3HVaZkgGAenKgqiOb8SlhyhJgT6GRzjp4cx2aWlOXK41A/);
 });
@@ -147,4 +147,66 @@ test('IEOM allows only individuals or four-member teams with exact tier fees', f
    [2,3].forEach(function(size){var h=mocks.createHarness(),p=mocks.payloadFor(h,id,tier,size);assert.equal(h.scope.submitRegistration(p).code,'INVALID_TEAM');assert.equal(h.batches.length,0);});
   });
  });
+});
+
+test('TorqueX charges a flat team fee for both college tiers', function () {
+  ['HITAM', 'Other'].forEach(function(tier) {
+    [1,2,3,4].forEach(function(size) {
+      var h=mocks.createHarness(), p=mocks.payloadFor(h,'E11',tier,size);
+      var expected = size === 1 ? (tier === 'HITAM' ? 50 : 70) : (tier === 'HITAM' ? 100 : 140);
+      assert.equal(p.totalFee,expected);
+      assert.equal(h.scope.submitRegistration(p).receipt.amount,expected);
+    });
+  });
+});
+
+test('GDG is one two-day event with individual registration and per-participant fees',function(){
+ var h=mocks.createHarness(),event=h.scope.findEvent_('E03');
+ assert.equal(h.scope.EVENT_CATALOG.filter(function(e){return e.slug==='agentic-ai-workshop-hackathon';}).length,1);
+ assert.equal(event.minTeam,1); assert.match(event.participationNote,/teams of 2–4/);
+ assert.equal(event.agenda.length,3);assert.match(event.agenda[2].detail,/12:00 PM/);
+ var p=mocks.payloadFor(h,'E03','Other',1);p.teamName='';
+ var result=h.scope.submitRegistration(p);assert.equal(result.success,true);assert.equal(result.receipt.amount,150);
+ assert.equal(result.receipt.teamName,p.lead.name);
+});
+
+function emailHarness(options) {
+  options = options || {};
+  var h = mocks.createHarness(), mail = [], qrRequests = [];
+  h.scope.Session.getEffectiveUser = function () { return { getEmail: function () { return options.sender || 'elysian@hitam.org'; } }; };
+  h.scope.LockService.getUserLock = h.scope.LockService.getScriptLock;
+  h.scope.MailApp = { getRemainingDailyQuota: function () { return options.quota === undefined ? 100 : options.quota; }, sendEmail: function (message) { mail.push(message); if (options.mailFails) throw Error('Private mail error'); } };
+  h.scope.UrlFetchApp = { fetch: function(url) { qrRequests.push(url); return { getResponseCode:function(){return options.qrFails ? 503 : 200;},getBlob:function(){return {getContentType:function(){return 'image/png';},setName:function(name){this.name=name;return this;}};}}; } };
+  var queue = h.spreadsheet.insertSheet('TICKET_EMAIL_DELIVERY');queue.rows.push(Array.from(h.scope.EMAIL_HEADERS));
+  h.store.ESPARTO_TICKET_EMAIL_ENABLED='true';h.store.WHATSAPP_GROUP_E02='https://chat.whatsapp.com/PrivateVerifiedGroup';
+  var p=mocks.payloadFor(h,'E02'), result=h.scope.submitRegistration(p);
+  return {h:h,mail:mail,requests:qrRequests,p:p,result:result,queue:queue,verify:function(){h.sheets.ALL_REGISTRATIONS.rows[1][17]='Verified';h.sheets.ALL_PAYMENTS_COLLECTION.rows[1][11]='Verified';}};
+}
+test('ticket email only follows verification and includes private group, ticket and QR once',function(){
+ var e=emailHarness();e.h.scope.processVerifiedTicketEmails_();assert.equal(e.mail.length,0);
+ e.h.sheets.ALL_REGISTRATIONS.rows[1][17]='Verified';e.h.scope.processVerifiedTicketEmails_();assert.equal(e.mail.length,0);
+ e.verify();e.h.scope.processVerifiedTicketEmails_();assert.equal(e.mail.length,1);
+ var message=e.mail[0];assert.equal(message.to,e.p.lead.email);assert.equal(message.replyTo,'elysian@hitam.org');assert.match(message.htmlBody,/cid:ticketQr/);assert.equal(message.attachments.length,1);assert.match(message.body,/PrivateVerifiedGroup/);assert.ok(message.body.includes(e.result.receipt.regId));
+ var qrText=new URL(e.requests[0]).searchParams.get('data');assert.equal(qrText,'ESPARTO 2026|'+e.result.receipt.regId+'|E02');assert.ok(!qrText.includes(e.p.requestId));assert.ok(!qrText.includes(e.p.lead.email));
+ assert.equal(e.queue.rows[1][2],'Sent');e.h.scope.processVerifiedTicketEmails_();assert.equal(e.mail.length,1);assert.equal(e.h.lockHeld(),false);
+});
+test('email automation fails closed for wrong sender, missing group, mismatched amount and quota exhaustion',function(){
+ var wrong=emailHarness({sender:'other@hitam.org'});assert.throws(function(){wrong.h.scope.processVerifiedTicketEmails_();},/elysian/);assert.equal(wrong.mail.length,0);
+ var quota=emailHarness({quota:0});quota.verify();quota.h.scope.processVerifiedTicketEmails_();assert.equal(quota.mail.length,0);
+ var group=emailHarness();group.verify();delete group.h.store.WHATSAPP_GROUP_E02;group.h.scope.processVerifiedTicketEmails_();assert.equal(group.mail.length,0);
+ var amount=emailHarness();amount.verify();amount.h.sheets.ALL_PAYMENTS_COLLECTION.rows[1][6]=1;amount.h.scope.processVerifiedTicketEmails_();assert.equal(amount.mail.length,0);
+});
+test('QR failure is safely retried, uncertain mail delivery requires organizer review',function(){
+ var qr=emailHarness({qrFails:true});qr.verify();qr.h.scope.processVerifiedTicketEmails_();assert.equal(qr.mail.length,0);assert.equal(qr.queue.rows[1][2],'Pending');
+ var mail=emailHarness({mailFails:true});mail.verify();mail.h.scope.processVerifiedTicketEmails_();assert.equal(mail.queue.rows[1][2],'ReviewRequired');mail.h.scope.processVerifiedTicketEmails_();assert.equal(mail.mail.length,1);assert.equal(mail.h.lockHeld(),false);
+});
+
+test('visible ticket setup rejects anonymous and other-account callers',function(){
+ var h=mocks.createHarness({anonymousAdmin:true});h.scope.Session.getEffectiveUser=function(){return {getEmail:function(){return 'elysian@hitam.org';}};};
+ assert.throws(function(){h.scope.setupVerifiedTicketEmails();},/Apps Script editor/);
+ h.scope.Session.getActiveUser=function(){return {getEmail:function(){return 'other@hitam.org';}};};
+ assert.throws(function(){h.scope.setupVerifiedTicketEmails();},/Apps Script editor/);
+ h.scope.Session.getActiveUser=function(){return {getEmail:function(){return 'elysian@hitam.org';}};};
+ h.scope.setupVerifiedTicketEmails_=function(){return 'enabled';};
+ assert.equal(h.scope.setupVerifiedTicketEmails(),'enabled');
 });
