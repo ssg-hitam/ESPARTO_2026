@@ -76,7 +76,7 @@ export function MobileMenu({
       >
         {/* Header */}
         <div className="flex items-center justify-between pb-6 border-b border-border-glass">
-          <BrandLogo variant="minimal" showHitam={false} />
+          <BrandLogo variant="minimal" showHitam={true} />
           <button
             ref={closeButtonRef}
             type="button"
