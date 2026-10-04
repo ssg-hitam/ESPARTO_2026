@@ -52,11 +52,13 @@ export const ssgLeadership: Organizer[] = [
     role: "Student Dean — IIIC",
     department: "Student Organizing Core",
     teamDomain: "lead-organizer",
+    contact: "+91 83282 32607",
     highlight: true,
     handling: "Overall Fest Direction, Lead Coordination & Sponsorships",
     image: "/images/team/ssg/Student_Dean_IIIC.png",
     socials: {
       email: "ssg.iiic@hitam.org",
+      phone: "+918328232607",
     },
   },
   {
@@ -67,8 +69,10 @@ export const ssgLeadership: Organizer[] = [
     teamDomain: "student-leadership",
     handling: "Program Quality",
     image: "/images/team/ssg/Student_Director.png",
+    contact: "+91 84592 94899",
     socials: {
       email: "ssg.director@hitam.org",
+      phone: "+918459294899",
     },
   },
   {

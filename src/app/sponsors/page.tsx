@@ -452,13 +452,13 @@ export default function SponsorsPage() {
                     </div>
                     <div className="truncate">
                       <span className="text-[10px] font-mono text-text-muted block uppercase">EMAIL US</span>
-                      <strong className="text-white text-xs font-mono truncate block">ssg@hitam.org</strong>
-                      <span className="text-[10px] text-text-muted truncate block">ssg.iiic@hitam.org</span>
+                      <strong className="text-white text-xs font-mono truncate block">ssg.iiic@hitam.org</strong>
+                      <span className="text-[10px] text-text-muted truncate block">ssg@hitam.org</span>
                     </div>
                   </a>
 
                   <a
-                    href="tel:+918328232607"
+                    href="tel:+918459294899"
                     className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.04] border border-white/10 hover:border-emerald-500/50 hover:bg-white/[0.08] transition-all group"
                   >
                     <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
@@ -466,8 +466,8 @@ export default function SponsorsPage() {
                     </div>
                     <div>
                       <span className="text-[10px] font-mono text-text-muted block uppercase">CALL / WHATSAPP</span>
-                      <strong className="text-white text-xs font-mono block">Hemanth — Student Organizing Core</strong>
-                      <span className="text-emerald-400 font-mono text-xs">+91 83282 32607</span>
+                      <strong className="text-white text-xs font-mono block">Bhavya — Sponsorship Lead</strong>
+                      <span className="text-emerald-400 font-mono text-xs">+91 84592 94899</span>
                     </div>
                   </a>
                 </div>
