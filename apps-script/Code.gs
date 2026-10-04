@@ -451,6 +451,10 @@ var EVENT_CATALOG = [
 
 function doGet(e) {
   try {
+    if (e && e.parameter && e.parameter.action === "desk") {
+      requireDeskUser_();
+      return HtmlService.createTemplateFromFile("scanner").evaluate().setTitle("ESPARTO | Organizer Check-in").addMetaTag("viewport", "width=device-width, initial-scale=1");
+    }
     if (e && e.parameter && e.parameter.action === "payment-status") {
       return ContentService.createTextOutput(JSON.stringify(publicPaymentStatus_(e.parameter.ticketId))).setMimeType(ContentService.MimeType.JSON);
     }
@@ -1139,4 +1143,66 @@ function processVerifiedTicketEmails_() {
       }
     }
   } finally { lock.releaseLock(); }
+}
+
+// Staff-only entry desk. Identity comes from Google's active session, never
+// effectiveUser (which may be the owner for anonymous public requests).
+function requireDeskUser_(eventId) {
+  var email = String(Session.getActiveUser().getEmail() || "").trim().toLowerCase();
+  var roles;
+  try { roles = JSON.parse(PropertiesService.getScriptProperties().getProperty("ESPARTO_DESK_ROLES") || "{}"); } catch (invalidRoles) { roles = {}; }
+  if (!email || !/@hitam\.org$/.test(email) || !Object.prototype.hasOwnProperty.call(roles, email) || !Array.isArray(roles[email])) throw publicError_("DESK_FORBIDDEN", "Sign in with an authorized HITAM organizer account. Contact the desk administrator.");
+  var events = roles[email].filter(function (id) { return id !== "E01" && !!findEvent_(id); });
+  if (!events.length || (eventId && events.indexOf(eventId) === -1)) throw publicError_("DESK_FORBIDDEN", "This account is not authorized for the selected event.");
+  return { email: email, events: events };
+}
+function getDeskSession() {
+  try { var user = requireDeskUser_(); return { success: true, email: user.email, events: user.events.map(function(id){var event=findEvent_(id);return {id:id,title:event.title};}) }; }
+  catch(error) { return failure_(error.publicCode || "DESK_UNAVAILABLE", error.publicCode ? error.message : "The organizer desk is unavailable.", false); }
+}
+function deskReference_(raw, selectedEvent) {
+  if (typeof raw !== "string" || raw.length > 100) throw publicError_("INVALID_QR", "Scan an ESPARTO ticket QR or enter its registration reference.");
+  var value = raw.trim(), parts = value.split("|"), id = value;
+  if (parts.length > 1) {
+    if (parts.length !== 3 || parts[0] !== "ESPARTO 2026" || parts[2] !== selectedEvent) throw publicError_("WRONG_EVENT", "This QR is not for the selected ESPARTO event.");
+    id = parts[1];
+  }
+  var match = /^ESP26-(?:HITM-)?(E(?:0[1-9]|1[0-4]))-(\d{3,6})$/.exec(id);
+  if (!match || (id.indexOf("HITM-") === -1 && match[2].length !== 4)) throw publicError_("INVALID_QR", "Enter the complete ESPARTO registration reference.");
+  if (match[1] !== selectedEvent) throw publicError_("WRONG_EVENT", "This ticket belongs to a different event.");
+  return id;
+}
+function deskRecord_(id,eventId) {
+  var db=database_(),master=db.getSheetByName("ALL_REGISTRATIONS"),finance=db.getSheetByName("ALL_PAYMENTS_COLLECTION"),roster=db.getSheetByName("ALL_MEMBERS_ROSTER"),event=findEvent_(eventId),eventSheet=db.getSheetByName(event.sheetName);
+  assertHeaders_(master,HEADERS.ALL_REGISTRATIONS);assertHeaders_(finance,HEADERS.ALL_PAYMENTS_COLLECTION);assertHeaders_(roster,HEADERS.ALL_MEMBERS_ROSTER);assertHeaders_(eventSheet,EVENT_HEADERS);
+  function matching(sheet,width,col) { var found=[];if(sheet.getLastRow()>1)sheet.getRange(2,1,sheet.getLastRow()-1,width).getDisplayValues().forEach(function(row,index){if(row[col]===id)found.push({row:row,index:index+2});});return found; }
+  var registrations=matching(master,20,1),payments=matching(finance,13,1),eventRows=matching(eventSheet,18,1),members=matching(roster,11,0);
+  if (!registrations.length) throw publicError_("TICKET_NOT_FOUND","Ticket not found. Refer the participant to registration support.");
+  if(registrations.length!==1||payments.length!==1||eventRows.length!==1)throw publicError_("DESK_REVIEW","Registration records need administrator review. Do not admit automatically.");
+  var registration=registrations[0],payment=payments[0],eventRow=eventRows[0],r=registration.row,p=payment.row;
+  if(r[2]!==eventId||r[3]!==event.title||p[2]!==event.title||eventRow.row[3]!==event.title||r[18]!==p[8]||Number(r[15])!==Number(p[6])||members.length!==Number(r[6]))throw publicError_("DESK_REVIEW","Registration records do not match. Contact the administrator.");
+  if(r[17]!=="Verified"||p[11]!=="Verified")throw publicError_("PAYMENT_NOT_VERIFIED","Organizer payment verification is incomplete. Do not check in this ticket.");
+  var checked=r[16]==="CHECKED IN";
+  if((r[16]!=="NOT CHECKED IN"&&!checked)||(/^(true|TRUE)$/.test(eventRow.row[0])!==checked))throw publicError_("DESK_REVIEW","Attendance records need administrator review.");
+  return {master:master,eventSheet:eventSheet,registration:registration,eventRow:eventRow,view:{regId:id,eventId:eventId,eventTitle:event.title,teamName:r[5],college:r[12],checkedIn:checked,paymentStatus:"Verified",members:members.sort(function(a,b){return Number(a.row[3])-Number(b.row[3]);}).map(function(member){return {name:member.row[5],rollNo:member.row[6],role:member.row[4]};})}};
+}
+function lookupDeskTicket(raw,eventId) {
+  try { requireDeskUser_(eventId);var id=deskReference_(raw,eventId);return {success:true,ticket:deskRecord_(id,eventId).view}; }
+  catch(error){return failure_(error.publicCode||"DESK_UNAVAILABLE",error.publicCode?error.message:"Ticket lookup is unavailable. Try again or contact the administrator.",false);}
+}
+function confirmDeskCheckIn(raw,eventId,identityChecked) {
+  var lock=LockService.getScriptLock(),locked=false;
+  try {
+    var user=requireDeskUser_(eventId),id=deskReference_(raw,eventId);
+    if(identityChecked!==true)throw publicError_("IDENTITY_REQUIRED","Compare every listed participant with their college ID before confirming the whole registration.");
+    locked=lock.tryLock(1000);if(!locked)return failure_("BUSY","The desk is busy. Look up this ticket again before retrying.",true);
+    var record=deskRecord_(id,eventId);
+    if(record.view.checkedIn)return {success:true,alreadyCheckedIn:true,ticket:record.view,message:"Already checked in. Do not admit a duplicate entry."};
+    var note="CHECK-IN | "+Utilities.formatDate(new Date(),"Asia/Kolkata","yyyy-MM-dd HH:mm:ss")+" IST | "+user.email+" | Whole registration identity checked";
+    var previous=record.eventRow.row[17];if(previous.length>3000)throw publicError_("DESK_REVIEW","Desk notes need administrator review.");
+    function cell(sheet,row,col,value){return {updateCells:{range:{sheetId:sheet.getSheetId(),startRowIndex:row-1,endRowIndex:row,startColumnIndex:col-1,endColumnIndex:col},rows:[{values:[{userEnteredValue:typeof value==="boolean"?{boolValue:value}:{stringValue:value}}]}],fields:"userEnteredValue"}};}
+    Sheets.Spreadsheets.batchUpdate({requests:[cell(record.master,record.registration.index,17,"CHECKED IN"),cell(record.eventSheet,record.eventRow.index,1,true),cell(record.eventSheet,record.eventRow.index,18,previous?previous+"\n"+note:note)]},database_().getId());
+    record.view.checkedIn=true;return {success:true,ticket:record.view,message:"Whole registration checked in. Identity check recorded."};
+  }catch(error){return failure_(error.publicCode||"DESK_UNAVAILABLE",error.publicCode?error.message:"Check-in could not be confirmed. Look up the ticket again before retrying.",false);}
+  finally{if(locked)lock.releaseLock();}
 }

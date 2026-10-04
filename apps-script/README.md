@@ -123,3 +123,7 @@ The pasted Ameena contact `99668646647` has eleven digits; the existing `9966864
 ### HITAM rolls and peak-time retries
 
 HITAM participants, including every teammate, must supply a roll number. Other-college teammate roll numbers remain optional. The server enforces this before any upload or write. Busy registration writers return promptly; the browser backs off and retries up to three times using the same payload, UTR and request token. Uncertain saves still require recovery, not a new payment. Retry exhaustion asks the participant to retry the same submission. Live Apps Script execution/daily service quotas remain limits; mocked tests do not establish a production traffic rating.
+
+### Organizer QR check-in
+
+See [SCANNER_SETUP.md](SCANNER_SETUP.md) for the separate staff deployment, explicit account/event permissions, required HTML files and event-day identity checks. Scanner access defaults to closed; ticket scanning does not change payment status.

@@ -52,9 +52,11 @@ function createHarness(options) {
     HtmlService: { createTemplateFromFile: function () { var template = { evaluate: function () { scope.renderedSlug = template.initialEvent; return output; } }; return template; }, createHtmlOutput: function () { return output; } },
     Sheets: { Spreadsheets: { get: function () { return { spreadsheetId: 'sheet-id' }; }, batchUpdate: function (body) {
       if (options.batchFailsBeforeCommit) throw Error('PRIVATE SHEETS FAILURE');
-      var updates = body.requests.map(function (request) { var target = Object.values(sheetMap).find(function (sheet) { return sheet.id === request.appendCells.sheetId; }); if (!target) throw Error('Invalid sheet'); return { target: target, rows: request.appendCells.rows.map(function (row) { return row.values.map(function (cell) { var value = cell.userEnteredValue; return Object.values(value)[0]; }); }) }; });
+      var updates = body.requests.map(function (request) { var update = request.updateCells;
+        var target = Object.values(sheetMap).find(function (sheet) { return sheet.id === (update ? update.range.sheetId : request.appendCells.sheetId); });
+        if (update) { if(!target || update.fields!=='userEnteredValue')throw Error('Invalid update');return {target:target,row:update.range.startRowIndex+1,col:update.range.startColumnIndex+1,rows:update.rows.map(function(row){return row.values.map(function(cell){return Object.values(cell.userEnteredValue)[0];});})}; } if (!target) throw Error('Invalid sheet'); return { target: target, rows: request.appendCells.rows.map(function (row) { return row.values.map(function (cell) { var value = cell.userEnteredValue; return Object.values(value)[0]; }); }) }; });
       // Validate the entire request before applying ANY mutations, like Sheets.
-      batches.push(body); updates.forEach(function (update) { update.target.rows.push.apply(update.target.rows, update.rows); });
+      batches.push(body); updates.forEach(function (update) { if(update.row)update.target.getRange(update.row,update.col,update.rows.length,update.rows[0].length).setValues(update.rows);else update.target.rows.push.apply(update.target.rows, update.rows); });
       if (options.batchFailsAfterCommit) throw Error('PRIVATE LOST RESPONSE');
       return { replies: body.requests.map(function () { return {}; }) };
     } } }
