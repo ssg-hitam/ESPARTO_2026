@@ -57,7 +57,7 @@ test('every allowed team size and college tier uses the server fee schedule (60 
       var h = mocks.createHarness(), p = mocks.payloadFor(h,event.id,tier,size), result = h.scope.submitRegistration(p);
       assert.equal(result.success,true,event.id+' '+tier+' '+size); assert.equal(result.receipt.amount,p.totalFee);
       assert.equal(rowCount(h,'ALL_REGISTRATIONS'),1); assert.equal(rowCount(h,'ALL_PAYMENTS_COLLECTION'),1); assert.equal(rowCount(h,'ALL_MEMBERS_ROSTER'),size); assert.equal(rowCount(h,event.sheetName),1);
-      assert.equal(h.batches.length,1); assert.equal(h.batches[0].requests.length,4); assert.equal(h.files.length,1); assert.equal(h.files[0].shared,true); assert.equal(h.files[0].trashed,false); assert.equal(h.lockHeld(),false); count++;
+      assert.equal(h.batches.length,1); assert.equal(h.batches[0].requests.length,4); assert.equal(h.files.length,1); assert.equal(h.files[0].shared,false); assert.equal(h.files[0].trashed,false); assert.equal(h.lockHeld(),false); count++;
     } });
   });
   assert.equal(count,60);
@@ -243,3 +243,5 @@ test('new numbering expands after 999 and old issued tickets remain readable',fu
  var p=mocks.payloadFor(h);h.scope.submitRegistration(p);h.sheets.ALL_REGISTRATIONS.rows[1][1]='ESP26-E02-8419';h.sheets.ALL_PAYMENTS_COLLECTION.rows[1][1]='ESP26-E02-8419';
  assert.equal(h.scope.publicPaymentStatus_('ESP26-E02-8419').status,'Pending Verification');assert.equal(h.scope.getRegistrationStatus('ESP26-E02-8419',p.requestId).success,true);
 });
+
+test("payment proof uploads request restricted Drive sharing",function(){var h=mocks.createHarness();assert.equal(h.scope.submitRegistration(mocks.payloadFor(h)).success,true);assert.equal(h.files[0].access,"private");assert.equal(h.files[0].shared,false);});

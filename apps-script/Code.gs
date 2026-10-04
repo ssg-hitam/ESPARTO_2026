@@ -655,9 +655,9 @@ function submitRegistration(payload) {
       props.setProperty(journalKey, JSON.stringify(journal));
     }
     try {
-      file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      file.setSharing(DriveApp.Access.PRIVATE, DriveApp.Permission.VIEW);
     } catch (sharingError) {
-      throw publicError_("PROOF_SHARING", "Payment proof could not be saved with the required sharing permissions. Contact SSG; do not make another payment.");
+      throw publicError_("PROOF_SHARING", "Payment proof could not be saved with restricted sharing permissions. Contact SSG; do not make another payment.");
     }
     var receipt = receipt_(journal.regId, data);
     var notes = JSON.stringify({ requestId: data.requestId, fingerprint: fingerprint });
