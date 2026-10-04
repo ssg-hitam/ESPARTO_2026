@@ -1288,6 +1288,7 @@ function websiteRegistrationRequest_(e) {
   if(request.action==="submit") {
     var event=findEvent_(String(payload.eventId||""));
     if(!event || allowed.indexOf(event.id)===-1 || payload.eventSlug!==event.slug)throw Error("Pilot event denied");
+    if(event.id==="E03" && Number(payload.teamSize)<2)return failure_("TEAM_SIZE","Agentic AI registration requires a team of 2–4 participants.",false);
     if(properties.getProperty("ESPARTO_REGISTRATION_BRIDGE_SUBMIT_ENABLED")!=="true")return failure_("SUBMISSIONS_DISABLED","Google Sheets test submissions have not been enabled.",false);
     return submitRegistration(payload);
   }
