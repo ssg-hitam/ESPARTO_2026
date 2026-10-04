@@ -105,6 +105,15 @@ export const TECHNICAL_CHAPTERS: TechnicalChapter[] = [
     description: "Indian Society for the Advancement of Materials and Process Engineering",
   },
   {
+    id: "isnt",
+    name: "ISNT HITAM Student Chapter",
+    shortName: "ISNT",
+    category: "Technical Chapter",
+    domain: "Non-Destructive Testing",
+    logo: "/images/chapters/isnt.png",
+    description: "Indian Society for Non-Destructive Testing",
+  },
+  {
     id: "torquex",
     name: "TorqueX - MotorSport Club of HITAM",
     shortName: "TorqueX",
@@ -114,5 +123,4 @@ export const TECHNICAL_CHAPTERS: TechnicalChapter[] = [
     description: "TorqueX - MotorSport Club of HITAM: automotive engineering, EV prototyping & racing",
   },
 ];
-
 

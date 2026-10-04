@@ -325,6 +325,14 @@ export const chapterCommittees: Organizer[] = [
     }
   },
   {
+    id: "isnt-core",
+    name: "ISNT HITAM Student Chapter",
+    role: "Non-Destructive Testing",
+    department: "Indian Society for Non-Destructive Testing",
+    teamDomain: "chapter-committee",
+    image: "/images/chapters/isnt.png",
+  },
+  {
     id: "torquex-core",
     name: "TorqueX Motorsport",
     role: "Automotive & EV Prototyping",
@@ -369,4 +377,3 @@ export const teamData: Organizer[] = [
   ...ssgLeadership,
   ...chapterCommittees
 ];
-

@@ -13,7 +13,7 @@ import CircularCarousel from "@/components/ui/CircularCarousel";
  * - Organised by SSG (Student Self Governance)
  * - In collaboration with HITAM Technical Council
  * - Prominent SSG official emblem card balancing the header
- * - 3D Circular Carousel showcasing all 11 technical chapters & student clubs
+ * - 3D Circular Carousel showcasing all technical chapters & student clubs
  */
 export function ChaptersMarqueeSection() {
   const carouselItems = React.useMemo(() => 
@@ -124,5 +124,4 @@ export function ChaptersMarqueeSection() {
     </section>
   );
 }
-
 
