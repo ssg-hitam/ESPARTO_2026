@@ -67,7 +67,12 @@ export default function RegisterPage() {
         </FadeUp>
 
 
-        <Link href="/payment-status" className="inline-flex min-h-11 items-center text-brand-orange hover:text-white font-semibold mt-2">Check your payment status →</Link>
+        <Link
+          href="/payment-status"
+          className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-xl border border-brand-orange/60 bg-gradient-to-r from-brand-orange to-brand-magenta px-5 py-3 text-white font-semibold mt-2 shadow-[0_0_24px_rgba(255,94,0,0.3)] hover:border-brand-orange hover:brightness-125 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-4 focus-visible:ring-offset-[#03010b] transition-all"
+        >
+          Check your payment status <ArrowRight className="w-4 h-4 shrink-0" aria-hidden="true" />
+        </Link>
 
         <FadeUp delay={0.12} distance={20}>
           <section aria-labelledby="explore-events-title" className="max-w-3xl mt-12 sm:mt-16 rounded-2xl border border-brand-violet/20 bg-white/[0.03] p-6 sm:p-8">
