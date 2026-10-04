@@ -1148,7 +1148,9 @@ function processVerifiedTicketEmails_() {
 // Staff-only entry desk. Identity comes from Google's active session, never
 // effectiveUser (which may be the owner for anonymous public requests).
 function requireDeskUser_(eventId) {
-  var email = String(Session.getActiveUser().getEmail() || "").trim().toLowerCase();
+  return requireDeskEmail_(String(Session.getActiveUser().getEmail() || "").trim().toLowerCase(), eventId);
+}
+function requireDeskEmail_(email, eventId) {
   var roles;
   try { roles = JSON.parse(PropertiesService.getScriptProperties().getProperty("ESPARTO_DESK_ROLES") || "{}"); } catch (invalidRoles) { roles = {}; }
   if (!email || !/@hitam\.org$/.test(email) || !Object.prototype.hasOwnProperty.call(roles, email) || !Array.isArray(roles[email])) throw publicError_("DESK_FORBIDDEN", "Sign in with an authorized HITAM organizer account. Contact the desk administrator.");
@@ -1191,9 +1193,13 @@ function lookupDeskTicket(raw,eventId) {
   catch(error){return failure_(error.publicCode||"DESK_UNAVAILABLE",error.publicCode?error.message:"Ticket lookup is unavailable. Try again or contact the administrator.",false);}
 }
 function confirmDeskCheckIn(raw,eventId,identityChecked) {
+  try { return confirmDeskCheckIn_(requireDeskUser_(eventId).email,raw,eventId,identityChecked); }
+  catch(error){return failure_(error.publicCode||"DESK_FORBIDDEN", "Sign in with an authorized HITAM organizer account.",false);}
+}
+function confirmDeskCheckIn_(email,raw,eventId,identityChecked) {
   var lock=LockService.getScriptLock(),locked=false;
   try {
-    var user=requireDeskUser_(eventId),id=deskReference_(raw,eventId);
+    var user=requireDeskEmail_(email,eventId),id=deskReference_(raw,eventId);
     if(identityChecked!==true)throw publicError_("IDENTITY_REQUIRED","Compare every listed participant with their college ID before confirming the whole registration.");
     locked=lock.tryLock(1000);if(!locked)return failure_("BUSY","The desk is busy. Look up this ticket again before retrying.",true);
     var record=deskRecord_(id,eventId);
@@ -1205,4 +1211,35 @@ function confirmDeskCheckIn(raw,eventId,identityChecked) {
     record.view.checkedIn=true;return {success:true,ticket:record.view,message:"Whole registration checked in. Identity check recorded."};
   }catch(error){return failure_(error.publicCode||"DESK_UNAVAILABLE",error.publicCode?error.message:"Check-in could not be confirmed. Look up the ticket again before retrying.",false);}
   finally{if(locked)lock.releaseLock();}
+}
+
+// Only the website server holds the bridge secret; browser-supplied emails never authorize this path.
+function doPost(e) {
+  var result;
+  try { result=websiteDeskRequest_(e); }
+  catch(error) { result=failure_(error.publicCode||"DESK_FORBIDDEN",error.publicCode?error.message:"Scanner request denied or unavailable.",false); }
+  return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+}
+function websiteDeskRequest_(e) {
+  var key=PropertiesService.getScriptProperties().getProperty("ESPARTO_SCANNER_BRIDGE_SECRET")||"";
+  var text=e&&e.postData&&e.postData.contents;
+  if(key.length<32||typeof text!=="string"||text.length>8192)throw Error("Denied");
+  var envelope=JSON.parse(text);
+  if(typeof envelope.payload!=="string"||envelope.payload.length>4000||typeof envelope.signature!=="string")throw Error("Denied");
+  var expected=Utilities.base64EncodeWebSafe(Utilities.computeHmacSha256Signature("ESPARTO-DESK-V1\n"+envelope.payload,key)).replace(/=+$/g,"");
+  if(envelope.signature.length!==expected.length)throw Error("Denied");
+  var difference=0;for(var i=0;i<expected.length;i++)difference|=expected.charCodeAt(i)^envelope.signature.charCodeAt(i);
+  if(difference)throw Error("Denied");
+  var request=JSON.parse(envelope.payload);
+  if(typeof request.timestamp!=="number"||Math.abs(Date.now()-request.timestamp)>60000||typeof request.nonce!=="string"||!/^[-a-f0-9]{36}$/.test(request.nonce))throw Error("Expired");
+  var cache=CacheService.getScriptCache(),nonceKey="desk_nonce_"+request.nonce;
+  var lock=LockService.getScriptLock();if(!lock.tryLock(1000))throw publicError_("BUSY","The desk is busy. Try lookup again.");
+  try {if(cache.get(nonceKey))throw Error("Replay");cache.put(nonceKey,"1",120);}finally{lock.releaseLock();}
+  if(typeof request.email!=="string")throw Error("Denied");
+  var user=requireDeskEmail_(request.email,request.action==="session"?undefined:request.eventId);
+  if(request.action==="session")return {success:true,email:user.email,events:user.events.map(function(id){return {id:id,title:findEvent_(id).title};})};
+  if(typeof request.reference!=="string"||typeof request.eventId!=="string")throw Error("Denied");
+  if(request.action==="lookup")return {success:true,ticket:deskRecord_(deskReference_(request.reference,request.eventId),request.eventId).view};
+  if(request.action==="confirm")return confirmDeskCheckIn_(user.email,request.reference,request.eventId,request.identityChecked);
+  throw Error("Denied");
 }

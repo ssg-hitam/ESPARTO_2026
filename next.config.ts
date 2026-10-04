@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
       { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
       { key: "Strict-Transport-Security", value: "max-age=31536000" },
+    ] }, { source: "/scanner", headers: [
+      { key: "Permissions-Policy", value: "camera=(self), microphone=(), geolocation=()" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
+      { key: "Cache-Control", value: "no-store" },
     ] }];
   },
   allowedDevOrigins: ["localhost", "127.0.0.1", "172.18.20.182", "192.168.1.6"],
