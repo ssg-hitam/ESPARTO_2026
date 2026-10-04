@@ -45,3 +45,7 @@ Local backend tests exercise invalid signatures, replay rejection, stale request
 
 Google setup: https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid
 Token verification: https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
+
+## Multiple desks
+
+The website scanner supports separate device sessions. Attendance is serialized by the Apps Script lock; only an explicit BUSY response is retried, with four increasing-delay/jitter retries using the same ticket/event/identity request. Uncertain network failures and validation failures are not automatically retried. Duplicate scans remain blocked. A local five-client overlap test verifies contention recovery without duplicate commits; it is not a live Google/Vercel capacity measurement. Before event day, test five actual devices with separate controlled verified demo tickets and also scan the same demo ticket simultaneously. Preserve genuine unauthorized, unpaid, wrong-event and duplicate flags.

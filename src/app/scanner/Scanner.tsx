@@ -3,9 +3,10 @@ import Script from 'next/script';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import jsQR from 'jsqr';
+import { deskRequest } from '@/lib/scanner/request';
 type Ticket={regId:string;eventId:string;eventTitle:string;teamName:string;college:string;checkedIn:boolean;members:{name:string;rollNo:string;role:string}[]};
 type Access={email:string;events:{id:string;title:string}[]};
-type Result={success:boolean;message?:string;ticket?:Ticket;email?:string;events?:Access['events']};
+type Result={success:boolean;code?:string;message?:string;ticket?:Ticket;email?:string;events?:Access['events']};
 type GIS={accounts:{id:{initialize:(options:{client_id:string;hd:string;callback:(r:{credential:string})=>void})=>void;renderButton:(el:HTMLElement,options:{theme:string;size:string})=>void;disableAutoSelect:()=>void}}};
 export default function Scanner({clientId}:{clientId:string}) {
  const [access,setAccess]=useState<Access|null>(null),[eventId,setEvent]=useState(''),[message,setMessage]=useState('Sign in with an approved HITAM organizer account.'),[ticket,setTicket]=useState<Ticket|null>(null),[identity,setIdentity]=useState(false),[active,setActive]=useState(false),[busy,setBusy]=useState(false),[reference,setReference]=useState(''),[googleReady,setGoogleReady]=useState(false);
@@ -27,7 +28,7 @@ export default function Scanner({clientId}:{clientId:string}) {
  useEffect(()=>{if(timer.current)clearTimeout(timer.current);if(ticket)timer.current=setTimeout(()=>{clear();setMessage('Details cleared after inactivity. Scan again.');},90000);},[ticket,clear]);
  const lookup=useCallback(async(raw:string)=>{
   if(working.current)return;working.current=true;setBusy(true);stop();clear();setMessage('QR detected. Looking up ticket…');
-  try{const response=await fetch('/api/scanner',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'lookup',reference:raw,eventId:selectedEvent.current})});const r:Result=await response.json();if(response.status===401)setAccess(null);if(r.success&&r.ticket&&!document.hidden){setTicket(r.ticket);setMessage(r.ticket.checkedIn?'Already checked in. Do not admit a duplicate entry.':'Payment verified. Compare every participant with their college ID.');setTimeout(()=>resultPanel.current?.scrollIntoView({behavior:'smooth',block:'start'}),0);}else setMessage(r.message||'Ticket lookup failed.');}catch{setMessage('Connection failed. Scan again when connected.');}finally{working.current=false;setBusy(false);}
+  try{const {response,result:r}=await deskRequest<Result>({action:'lookup',reference:raw,eventId:selectedEvent.current},setMessage);if(response.status===401)setAccess(null);if(r.success&&r.ticket&&!document.hidden){setTicket(r.ticket);setMessage(r.ticket.checkedIn?'Already checked in. Do not admit a duplicate entry.':'Payment verified. Compare every participant with their college ID.');setTimeout(()=>resultPanel.current?.scrollIntoView({behavior:'smooth',block:'start'}),0);}else setMessage(r.message||'Ticket lookup failed.');}catch{setMessage('Connection failed. Scan again when connected.');}finally{working.current=false;setBusy(false);}
  },[clear,stop]);
  async function start(){
   if(working.current||stream.current)return;const run=++generation.current;working.current=true;setBusy(true);clear();setMessage('Requesting camera access…');
@@ -41,7 +42,7 @@ export default function Scanner({clientId}:{clientId:string}) {
    working.current=false;scanTimer.current=setTimeout(frame,0);
   }catch(error){stop();setMessage(error instanceof DOMException&&error.name==='NotAllowedError'?'Camera permission denied. Allow camera access in browser site settings and try again.':'Camera could not start. Open this page directly in Chrome or Safari over HTTPS and check camera permissions.');}finally{working.current=false;setBusy(false);}
  }
- async function confirm(){if(!ticket||!identity||ticket.checkedIn||working.current)return;working.current=true;setBusy(true);const old=ticket;try{const response=await fetch('/api/scanner',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'confirm',reference:old.regId,eventId:old.eventId,identityChecked:true})});const r:Result=await response.json();if(response.status===401)setAccess(null);if(r.success&&r.ticket&&!document.hidden){setTicket(r.ticket);setIdentity(false);setMessage(r.message||'Attendance recorded.');}else{clear();setMessage(r.message||'Look up the ticket again before retrying.');}}catch{clear();setMessage('Save outcome is uncertain. Look up the ticket again before retrying.');}finally{working.current=false;setBusy(false);}}
+ async function confirm(){if(!ticket||!identity||ticket.checkedIn||working.current)return;working.current=true;setBusy(true);const old=ticket;try{const {response,result:r}=await deskRequest<Result>({action:'confirm',reference:old.regId,eventId:old.eventId,identityChecked:true},setMessage);if(response.status===401)setAccess(null);if(r.success&&r.ticket&&!document.hidden){setTicket(r.ticket);setIdentity(false);setMessage(r.message||'Attendance recorded.');}else{clear();setMessage(r.message||'Look up the ticket again before retrying.');}}catch{clear();setMessage('Save outcome is uncertain. Look up the ticket again before retrying.');}finally{working.current=false;setBusy(false);}}
  async function logout(){stop();clear();await fetch('/api/scanner',{method:'DELETE'});setAccess(null);(window as Window & {google?:GIS}).google?.accounts.id.disableAutoSelect();setMessage('Signed out.');}
  return <main className="mx-auto max-w-5xl px-4 pb-16 pt-28 text-white">
   {clientId&&<Script src="https://accounts.google.com/gsi/client" strategy="afterInteractive" onLoad={()=>setGoogleReady(true)} onReady={()=>setGoogleReady(true)}/>}
