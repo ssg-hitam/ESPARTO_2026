@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, CSSProperties } from 'react';
 import './CircularCarousel.css';
 
@@ -305,18 +306,18 @@ export const CircularCarousel: React.FC<CircularCarouselProps> = ({
     velocity: 0,
     target: null as number | null,
     dir: 0,
-    press: null as any,
+    press: null as {id:number;x:number;y:number;angle:number;moved:boolean;origin:number;samples:{time:number;angle:number}[]} | null,
     drag: false,
     hover: false,
     pointer: { inside: false, x: 0, y: 0 },
     yaw: 0,
     pitch: 0,
-    intro: null as any,
+    intro: null as {type:NonNullable<CircularCarouselProps['intro']>;start:number} | null,
     introDone: false,
     holdUntil: 0,
     stepAt: 0,
     suppressClick: false,
-    wheelTimer: 0 as any,
+    wheelTimer: undefined as ReturnType<typeof setTimeout> | undefined,
     fit: 1,
     shift: 0,
     drop: 0,
@@ -841,7 +842,7 @@ export const CircularCarousel: React.FC<CircularCarouselProps> = ({
   const current = list[active] || list[0];
   const label = current ? current.title || current.alt || `Image ${active + 1}` : '';
 
-  const renderTile = (item: CarouselItem, tile: any, back: boolean) => {
+  const renderTile = (item: CarouselItem, tile: (typeof tiles)[number], back: boolean) => {
     const strip = back ? tile.total - 1 - tile.index : tile.index;
     const first = strip === 0;
     const last = strip === tile.total - 1;
@@ -872,7 +873,10 @@ export const CircularCarousel: React.FC<CircularCarouselProps> = ({
           className="circular-carousel__frame"
           style={{ height: axis === 'x' ? size : cardH, borderRadius: frameRadius }}
         >
-          <img
+          <Image
+            unoptimized
+            width={Math.ceil(cardW)}
+            height={Math.ceil(cardH)}
             className="circular-carousel__photo"
             src={item.src}
             alt=""
@@ -893,10 +897,10 @@ export const CircularCarousel: React.FC<CircularCarouselProps> = ({
       className={`circular-carousel ${className}`.trim()}
       style={{
         ...style,
-        ['--cc-fade' as any]: fadeColor,
-        ['--cc-radius' as any]: `${Math.max(0, cornerRadius)}px`,
-        ['--cc-inner' as any]: (1 - clamp(innerShade, 0, 1)).toFixed(3)
-      }}
+        '--cc-fade': fadeColor,
+        '--cc-radius': `${Math.max(0, cornerRadius)}px`,
+        '--cc-inner': (1 - clamp(innerShade, 0, 1)).toFixed(3)
+      } as CSSProperties}
       role="region"
       aria-roledescription="carousel"
       aria-label="Image carousel"

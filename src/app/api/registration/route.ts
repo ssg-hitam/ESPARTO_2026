@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { registrationBridge, registrationBridgeConfig, registrationTestEventIds, registrationHeaders, type RegistrationAction } from '@/lib/registration/bridge';
+import { registrationAdmission, registrationBridge, registrationBridgeConfig, registrationTestEventIds, registrationHeaders, type RegistrationAction } from '@/lib/registration/bridge';
 export const runtime='nodejs';
 export const dynamic='force-dynamic';
 export const maxDuration=60;
@@ -18,6 +18,7 @@ export async function POST(request:NextRequest) {
     if(data.action==='submit' && (!registrationTestEventIds().includes(data.payload?.eventId)||typeof data.payload?.eventSlug!=='string'))return json({success:false,message:'This event is not enabled for registration.'},400);
     if(data.action==='status' && (typeof data.payload?.requestId!=='string' || typeof data.payload?.regId!=='string'))return json({success:false,message:'Ticket reference and submission token are required.'},400);
   }catch{return json({success:false,message:'Invalid request.'},400);}
+  if(process.env.VERCEL==='1'&&!registrationAdmission(request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim()||'unknown',data.action))return json({success:false,code:'RATE_LIMITED',retryable:true,message:'Too many requests. Wait one minute, then retry the same submission; do not pay again.'},429);
   try{return json(await registrationBridge(data.action as RegistrationAction,data.payload));}
   catch{return json({success:false,code:'CONNECTION_UNCERTAIN',retryable:true,message:'The backend response could not be confirmed. Retry this same submission to recover it; do not pay again.'},503);}
 }

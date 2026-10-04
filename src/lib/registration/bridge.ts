@@ -21,8 +21,31 @@ export function registrationEnvelope(action:RegistrationAction,payload:unknown,s
   const signature=createHmac('sha256',secret).update('ESPARTO-REGISTRATION-V1\n'+serialized).digest('base64url');
   return {kind:'registration',payload:serialized,signature};
 }
-export async function registrationBridge(action:RegistrationAction,payload?:unknown) {
+type BridgeResult={success:boolean;[key:string]:unknown};
+let catalogueCache:{key:string;expires:number;result:BridgeResult}|undefined;
+let cataloguePending:{key:string;promise:Promise<BridgeResult>}|undefined;
+const admissionWindows=new Map<string,{count:number;expires:number}>();
+// Per-instance defence in depth; hosting firewall provides distributed enforcement.
+export function registrationAdmission(key:string,action:string,now=Date.now()) {
+  const bucketKey=action+':'+key;
+  const previous=admissionWindows.get(bucketKey);
+  if(!previous||previous.expires<=now) {
+    if(admissionWindows.size>=5000)admissionWindows.delete(admissionWindows.keys().next().value!);
+    admissionWindows.set(bucketKey,{count:1,expires:now+60000});return true;
+  }
+  previous.count++;return previous.count<=(action==='submit'?60:120);
+}
+export async function registrationBridge(action:RegistrationAction,payload?:unknown):Promise<BridgeResult> {
   const config=registrationBridgeConfig();if(!config)throw Error('UNCONFIGURED');
+  if(action!=='catalogue'||process.env.NODE_ENV!=='production')return sendRegistration(config,action,payload);
+  const key=config.url+':'+registrationTestEventIds().join(',');
+  if(catalogueCache?.key===key&&catalogueCache.expires>Date.now())return catalogueCache.result;
+  if(cataloguePending?.key===key)return cataloguePending.promise;
+  const promise=sendRegistration(config,action,payload).then(result=>{if(result.success)catalogueCache={key,expires:Date.now()+30000,result};return result;});
+  cataloguePending={key,promise};
+  try{return await promise;}finally{if(cataloguePending?.promise===promise)cataloguePending=undefined;}
+}
+async function sendRegistration(config:{url:string;secret:string},action:RegistrationAction,payload?:unknown):Promise<BridgeResult> {
   const response=await fetch(config.url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(registrationEnvelope(action,payload,config.secret)),cache:'no-store',signal:AbortSignal.timeout(30000)});
   if(!response.ok)throw Error('UPSTREAM');
   const result=await response.json();
