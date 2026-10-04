@@ -33,6 +33,12 @@ export const facultyCoordinators: Organizer[] = [
     image: "/images/team/faculties/chiranjivi-cutout.png",
     role: "Associate Professor",
     department: "Electrical and Electronics Engineering (EEE)",
+    affiliation: "Hyderabad Institute of Technology and Management (HITAM), Hyderabad, India",
+    biography: [
+      "Dr. M. Chiranjivi is an Associate Professor in the Department of Electrical and Electronics Engineering (EEE) at Hyderabad Institute of Technology and Management (HITAM), with 17 years of experience. His core interests include Power Systems, Renewable Energy, and Electrical Machines.",
+      "He has published more than 30 papers in reputed journals and conferences, and has published and granted patents.",
+      "He is trained and certified in Project-Based Learning (PBL) through Aalborg University, Denmark, and is also IUCEE–IGIP trained and certified.",
+    ],
     teamDomain: "faculty-coordinator",
     contact: "+91 83095 69407",
     socials: {
