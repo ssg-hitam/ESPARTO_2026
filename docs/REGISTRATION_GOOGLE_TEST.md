@@ -62,3 +62,9 @@ To run real Google tests for the other shared events:
 5. Test each event with synthetic data and verify the same four record sets, proof privacy, failed validation and recovery. Real concurrent submission, ticket email and real-device coverage are still rollout gates.
 
 Expanded-preview validation: all 12 additional shared-event forms (E02–E07 and E09–E14) passed mobile browser submission to the isolated simulator, including exact IUCEE consents/category and individual/four-member selection. Together with the real n8n pilot, all 13 shared-event frontend paths have been exercised, but only n8n has real Google persistence evidence. 56 contract tests and the production build passed; eight existing CircularCarousel lint warnings remain. IEEE was excluded throughout.
+
+## Test deployment v2 follow-up
+
+The operator updated the isolated deployment to version 2. Its signed catalogue returned all 13 permitted event IDs. A transport encoding mismatch rejected Unicode payloads; the website now escapes non-ASCII characters in signed JSON so Node and Apps Script sign identical bytes while parsed participant text remains unchanged. A read-only Unicode probe passed, and 57 contract tests passed with type checking and targeted lint clean.
+
+Real test requests returned pending-verification receipts for E02–E05, in addition to the earlier verified workbook evidence for E08. Complete workbook inspection for these newer receipts remains pending. A burst of five distinct synthetic E08 submissions returned one successful receipt and four retryable BUSY responses in approximately 3–6.5 seconds. This is a production rollout blocker for the requested simultaneous-device experience; no claim of error-free concurrency is supported. Test requests are persisted before sending and must be reused when recovering or retrying. No production deployment, DNS, payment verification, or email trigger was changed.

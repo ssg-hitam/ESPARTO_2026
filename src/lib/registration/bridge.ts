@@ -14,7 +14,8 @@ export function registrationBridgeConfig() {
   } catch {return null;}
 }
 export function registrationEnvelope(action:RegistrationAction,payload:unknown,secret:string) {
-  const serialized=JSON.stringify({action,payload,timestamp:Date.now(),nonce:randomUUID()});
+  // ASCII transport gives Node and Apps Script identical signed bytes for Unicode text.
+  const serialized=JSON.stringify({action,payload,timestamp:Date.now(),nonce:randomUUID()}).replace(/[\u007f-\uffff]/g,char=>'\\u'+char.charCodeAt(0).toString(16).padStart(4,'0'));
   const signature=createHmac('sha256',secret).update('ESPARTO-REGISTRATION-V1\n'+serialized).digest('base64url');
   return {kind:'registration',payload:serialized,signature};
 }
