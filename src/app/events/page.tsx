@@ -636,6 +636,18 @@ export default function EventsPage() {
               </div>
             )}
 
+            {activeModalEvent.brochureUrl && (
+              <a
+                href={activeModalEvent.brochureUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-6 flex items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/[0.05] p-4 text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+              >
+                <span><strong className="block">Official event brochure</strong><span className="text-sm text-text-secondary">Full Agentic AI Workshop &amp; Hackathon details · PDF</span></span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            )}
+
             {activeModalEvent.agenda && (
               <section className="mb-6 p-4 rounded-2xl border border-white/10 bg-white/[0.03]">
                 <h4 className="text-[11px] font-mono uppercase tracking-wider text-text-muted mb-3 font-bold">One Event · Two-Day Schedule</h4>

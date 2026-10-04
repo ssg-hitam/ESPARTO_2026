@@ -41,6 +41,7 @@ export interface FestEventItem {
   };
   highlights: string[];
   bannerImage?: string;
+  brochureUrl?: string;
   featured?: boolean;
   unstopUrl?: string;
   coordinators?: {
@@ -140,6 +141,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "agentic-ai-workshop-hackathon",
+    brochureUrl: "/brochures/agentic-ai-workshop-hackathon.pdf",
     slug: "agentic-ai-workshop-hackathon",
     title: "Agentic AI Workshop & Hackathon",
     club: "Google Developer Groups on Campus – HITAM",
