@@ -448,41 +448,12 @@ export default function EventsPage() {
                             </p>
                           </div>
 
-                        {/* Registration Specs (Date, Time, Team Size, Fee) */}
-                        <div className="grid grid-cols-2 gap-2 text-[11px] font-mono p-2.5 rounded-xl bg-black/40 border border-white/5 mb-3">
-                          <div>
-                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1.5 tracking-wider font-semibold">
-                              <Calendar className="w-3 h-3 text-text-muted shrink-0" /> SCHEDULE
-                            </span>
-                            <span className="text-white font-medium truncate block">{cleanString(event.date)}</span>
-                          </div>
-                          <div>
-                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1.5 tracking-wider font-semibold">
-                              <Clock className="w-3 h-3 text-text-muted shrink-0" /> TIMINGS
-                            </span>
-                            <span className="text-white font-medium truncate block">{cleanString(event.timings)}</span>
-                          </div>
-                          <div>
-                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1.5 tracking-wider font-semibold">
-                              <Users className="w-3 h-3 text-text-muted shrink-0" /> TEAM FORMAT
-                            </span>
-                            <span className="text-white font-medium truncate block">{cleanString(event.teamSize)}</span>
-                          </div>
-                          <div>
-                            <span className="text-[9px] text-text-muted uppercase flex items-center gap-1.5 tracking-wider font-semibold">
-                              <CreditCard className="w-3 h-3 text-text-muted shrink-0" /> ENTRY FEE
-                            </span>
-                            <span className={`text-brand-orange font-bold block ${event.clubId === "ieee" ? "whitespace-normal" : "truncate"}`}>{cleanString(event.registrationFee.hitam)}</span>
-                            {event.clubId === "ieee" && <span className="text-brand-magenta font-bold block mt-1">{cleanString(event.registrationFee.nonHitam)}</span>}
-                          </div>
-                        </div>
-
                         {/* Quick Details Trigger */}
                         <Link
                           href={eventPath(event)}
-                          className="block w-full text-center text-[11px] font-mono text-text-muted hover:text-white py-1 transition-colors"
+                          className="flex w-full items-center justify-center gap-2 rounded-xl border border-violet-400/40 bg-violet-500/15 px-4 py-3 text-sm font-semibold text-violet-100 transition hover:border-violet-300/60 hover:bg-violet-500/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-400"
                         >
-                          View details →
+                          View event details <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
 
                       </div>
