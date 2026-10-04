@@ -35,7 +35,7 @@ export default function PaymentStatusPage() {
           <h1 className="font-display font-bold text-3xl sm:text-4xl text-white mb-6">Check your payment status →</h1>
           <form onSubmit={checkStatus} className="space-y-3" aria-busy={busy}>
             <label htmlFor="ticket-id" className="block text-sm font-semibold">Ticket ID</label>
-            <input id="ticket-id" name="ticketId" value={ticketId} onChange={(event) => { setTicketId(event.target.value); setStatus(""); setMessage(""); }} required maxLength={14} pattern="[Ee][Ss][Pp]26-[Ee](0[1-9]|1[0-4])-[0-9]{4}" placeholder="ESP26-E02-8419" autoComplete="off" spellCheck={false} disabled={busy} className="w-full min-h-12 rounded-xl border border-white/20 bg-white/5 px-4 font-mono text-white focus:outline-none focus:ring-2 focus:ring-brand-orange disabled:opacity-70" />
+            <input id="ticket-id" name="ticketId" value={ticketId} onChange={(event) => { setTicketId(event.target.value); setStatus(""); setMessage(""); }} required maxLength={21} pattern="[Ee][Ss][Pp]26-([Ee](0[1-9]|1[0-4])-[0-9]{4}|[Hh][Ii][Tt][Mm]-[Ee](0[1-9]|1[0-4])-[0-9]{3,6})" placeholder="ESP26-HITM-E08-001" autoComplete="off" spellCheck={false} disabled={busy} className="w-full min-h-12 rounded-xl border border-white/20 bg-white/5 px-4 font-mono text-white focus:outline-none focus:ring-2 focus:ring-brand-orange disabled:opacity-70" />
             <button disabled={busy} type="submit" className="min-h-12 w-full sm:w-auto px-6 rounded-xl bg-gradient-to-r from-brand-orange to-brand-magenta font-semibold text-white disabled:opacity-60">{busy ? "Checking…" : "Check payment status"}</button>
           </form>
           <div aria-live="polite" aria-atomic="true" className="mt-5">

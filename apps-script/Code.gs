@@ -741,8 +741,8 @@ function validatePayload_(payload) {
   if (typeof teamSize !== "number" || !Number.isInteger(teamSize) || teamSize < event.minTeam || teamSize > event.maxTeam) throw publicError_("INVALID_TEAM", "Choose a valid number of participants for this event.");
   if (event.allowedTeamSizes && event.allowedTeamSizes.indexOf(teamSize) === -1) throw publicError_("INVALID_TEAM", "Choose individual entry or a team of exactly four participants.");
   if (!Array.isArray(payload.members) || payload.members.length !== teamSize - 1) throw publicError_("INVALID_MEMBERS", "Complete one teammate block for each selected participant.");
-  var lead = validateMember_(payload.lead, true, "Team lead");
-  var members = payload.members.map(function (member, index) { return validateMember_(member, false, "Teammate " + (index + 2)); });
+  var lead = validateMember_(payload.lead, true, "Team lead", institution);
+  var members = payload.members.map(function (member, index) { return validateMember_(member, false, "Teammate " + (index + 2), institution); });
   var emails = Object.create(null), rolls = Object.create(null);
   [lead].concat(members).forEach(function (member) {
     var email = member.email.toLowerCase(), roll = member.rollNo.toLowerCase();
@@ -775,7 +775,7 @@ function validatePayload_(payload) {
   return { event: event, requestId: requestId, institution: institution, college: college, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, proof: proof, normalized: normalized };
 }
 
-function validateMember_(member, required, label) {
+function validateMember_(member, required, label, institution) {
   if (!member || typeof member !== "object" || Array.isArray(member)) throw publicError_("INVALID_MEMBER", "Complete the " + label.toLowerCase() + " details.");
   var name = text_(member.name, label + " name", 120, true);
   var email = text_(member.email, label + " email", 254, required).toLowerCase();
@@ -785,7 +785,16 @@ function validateMember_(member, required, label) {
   var phone = rawPhone.replace(/\D/g, "");
   if (phone.length === 12 && phone.indexOf("91") === 0) phone = phone.slice(2);
   if (phone && !/^[6-9]\d{9}$/.test(phone)) throw publicError_("INVALID_PHONE", "Enter a 10-digit Indian WhatsApp number, optionally prefixed with +91, for " + label.toLowerCase() + ".");
-  return { name: name, email: email, phone: phone, rollNo: text_(member.rollNo, label + " roll number", 60, required), branchYear: text_(member.branchYear, label + " branch and year", 100, required) };
+  var branchYear = member.branchYear;
+  if (Object.prototype.hasOwnProperty.call(member, "branch") || Object.prototype.hasOwnProperty.call(member, "year")) {
+    var branch = text_(member.branch, label + " branch", 80, required);
+    var year = text_(member.year, label + " year", 1, required);
+    if (year && !/^[1-4]$/.test(year)) throw publicError_("INVALID_YEAR", "Choose a year from 1 to 4.");
+    if (branch && institution === "HITAM" && ["CSE", "CSM", "CSD", "ECE", "EEE", "MECH", "ITP - CSE", "ITP - MECH", "IIBMP"].indexOf(branch) === -1) throw publicError_("INVALID_BRANCH", "Choose a listed HITAM branch.");
+    if (!!branch !== !!year) throw publicError_("INVALID_MEMBER", "Complete both branch and year, or leave both optional fields blank.");
+    branchYear = branch + (year ? " · Year " + year : "");
+  }
+  return { name: name, email: email, phone: phone, rollNo: text_(member.rollNo, label + " roll number", 60, required), branchYear: text_(branchYear, label + " branch and year", 100, required) };
 }
 
 function decodeProof_(dataUrl) {
@@ -888,7 +897,7 @@ function receipt_(regId, data) {
 // UTRs, proof URLs, submission tokens or private group invites here.
 function publicPaymentStatus_(ticketId) {
   var id = String(ticketId || "").trim().toUpperCase();
-  if (!/^ESP26-E(?:0[1-9]|1[0-4])-\d{4}$/.test(id)) return { status: "Not Found" };
+  if (!/^ESP26-(?:E(?:0[1-9]|1[0-4])-\d{4}|HITM-E(?:0[1-9]|1[0-4])-\d{3,6})$/.test(id)) return { status: "Not Found" };
   try {
     var db = database_(), master = db.getSheetByName("ALL_REGISTRATIONS"), finance = db.getSheetByName("ALL_PAYMENTS_COLLECTION");
     assertHeaders_(master, HEADERS.ALL_REGISTRATIONS);
@@ -912,7 +921,7 @@ function publicPaymentStatus_(ticketId) {
 // the public catalog nor a registration ID/UTR alone can disclose group links.
 function getRegistrationStatus(regId, requestId) {
   try {
-    if (!/^ESP26-E\d{2}-\d{4}$/.test(String(regId || "")) || !/^[a-f0-9]{32}$/.test(String(requestId || ""))) {
+    if (!/^ESP26-(?:E(?:0[1-9]|1[0-4])-\d{4}|HITM-E(?:0[1-9]|1[0-4])-\d{3,6})$/.test(String(regId || "")) || !/^[a-f0-9]{32}$/.test(String(requestId || ""))) {
       return failure_("NOT_FOUND", "Unable to find this saved registration. Contact SSG for assistance.", false);
     }
     var spreadsheet = database_();
@@ -953,10 +962,19 @@ function newRegId_(master, eventId) {
     if (key.indexOf("SUBMISSION_") !== 0) return;
     try { var reservation = JSON.parse(pending[key]); if (reservation.regId) used[reservation.regId] = true; } catch (invalidJournal) {}
   });
-  var start = Math.floor(1000 + Math.random() * 9000);
-  for (var i = 0; i < 9000; i++) {
-    var candidate = "ESP26-" + eventId + "-" + (1000 + ((start - 1000 + i) % 9000));
-    if (!used[candidate]) return candidate;
+  var properties = PropertiesService.getScriptProperties();
+  var prefix = "ESP26-HITM-" + eventId + "-";
+  var counterKey = "REG_COUNTER_" + eventId;
+  var last = Number(properties.getProperty(counterKey) || 0);
+  Object.keys(used).forEach(function (id) {
+    if (id.indexOf(prefix) === 0) last = Math.max(last, Number(id.slice(prefix.length)) || 0);
+  });
+  // Called under the registration writer's script lock. Persist reservations,
+  // including failed attempts, so a reference is never recycled.
+  if (last < 999999) {
+    var next = last + 1;
+    properties.setProperty(counterKey, String(next));
+    return prefix + ("00" + next).slice(-Math.max(3, String(next).length));
   }
   throw publicError_("CAPACITY", "This event has reached its registration ID capacity. Please contact SSG.");
 }
@@ -1003,8 +1021,22 @@ function setupVerifiedTicketEmails_() {
     return trigger.getHandlerFunction() === "processVerifiedTicketEmails_";
   });
   if (!existing) ScriptApp.newTrigger("processVerifiedTicketEmails_").timeBased().everyMinutes(5).create();
+  var editTrigger = ScriptApp.getProjectTriggers().some(function (trigger) {
+    return trigger.getHandlerFunction() === "onPaymentVerificationEdit_";
+  });
+  if (!editTrigger) ScriptApp.newTrigger("onPaymentVerificationEdit_").forSpreadsheet(database.getId()).onEdit().create();
   PropertiesService.getScriptProperties().setProperty("ESPARTO_TICKET_EMAIL_ENABLED", "true");
-  return "Ticket emails enabled. Verified registrations with configured event groups will be processed every five minutes.";
+  return "Ticket emails enabled. Manual verification edits trigger processing; a five-minute trigger provides fallback checks.";
+}
+function onPaymentVerificationEdit_(event) {
+  if (!event || !event.range || !event.source) return;
+  if (event.source.getId() !== database_().getId()) return;
+  var range = event.range, name = range.getSheet().getName();
+  var column = name === "ALL_REGISTRATIONS" ? 18 : name === "ALL_PAYMENTS_COLLECTION" ? 12 : 0;
+  // Include multi-cell paste operations, not just single-cell edits. Both
+  // matching records must still be Verified before the worker sends anything.
+  if (!column || range.getLastRow() < 2 || range.getColumn() > column || range.getLastColumn() < column) return;
+  processVerifiedTicketEmails_();
 }
 function emailEscape_(value) {
   return String(value || "").replace(/[&<>"']/g, function (character) {
@@ -1013,21 +1045,33 @@ function emailEscape_(value) {
 }
 function ticketEmailCandidate_(registration, payment, properties) {
   var event = findEvent_(registration[2]);
-  if (!/^ESP26-E\d{2}-\d{4}$/.test(String(registration[1] || "")) || !event || event.id === "E01" || !payment || registration[17] !== "Verified" || payment[11] !== "Verified") return null;
-  if (String(registration[1]).indexOf("ESP26-" + event.id + "-") !== 0 || registration[1] !== payment[1] || event.title !== payment[2] || registration[18] !== payment[8] || Number(registration[15]) !== Number(payment[6])) return null;
+  if (!/^ESP26-(?:E(?:0[1-9]|1[0-4])-\d{4}|HITM-E(?:0[1-9]|1[0-4])-\d{3,6})$/.test(String(registration[1] || "")) || !event || event.id === "E01" || !payment || registration[17] !== "Verified" || payment[11] !== "Verified") return null;
+  if (!new RegExp("^ESP26-(?:HITM-)?" + event.id + "-").test(String(registration[1])) || registration[1] !== payment[1] || event.title !== payment[2] || registration[18] !== payment[8] || Number(registration[15]) !== Number(payment[6])) return null;
   var email = String(registration[10] || "").trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return null;
   var group = properties.getProperty("WHATSAPP_GROUP_" + event.id);
   if (!group || !/^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9]+(?:\?[^\s]*)?$/.test(group)) return null;
   return { regId: registration[1], email: email, name: registration[7], team: registration[5], size: registration[6], amount: Number(registration[15]), event: event, group: group };
 }
-function composeTicketEmail_(ticket, qrBlob) {
+function composeTicketEmail_(ticket, qrBlob, logoBlob, extraLogos) {
   var event = ticket.event;
   var schedule = event.agenda ? event.agenda.map(function (item) { return item.label + ": " + item.detail; }).join("\n") : event.date + " · " + event.timings;
   var venue = event.venue || "HITAM Campus, Gowdavelly, Hyderabad";
   var body = "Thank you for registering for " + event.title + ".\n\nYour payment has been verified.\nRegistration ID: " + ticket.regId + "\nParticipant: " + ticket.name + "\nTeam / participant: " + ticket.team + "\nParticipants: " + ticket.size + "\nAmount verified: ₹" + ticket.amount + "\nVenue: " + venue + "\n\n" + schedule + "\n\nJoin your event WhatsApp group for communication: " + ticket.group + "\n\nYour event ticket is included in this email and your ticket QR is attached. Present them at the event desk. The QR identifies your registration; organizers must check the verified registration record.\n\nESPARTO 2026\n" + TICKET_EMAIL_SENDER;
-  var html = '<div style="font-family:Arial,sans-serif;max-width:640px;margin:auto;color:#0f172a"><h1>ESPARTO 2026</h1><h2>' + emailEscape_(event.title) + '</h2><p>Thank you for registering for this event. Your payment has been verified.</p><section style="border:1px solid #e2e8f0;padding:24px;border-radius:12px"><h3>Your confirmed event ticket</h3><p><strong>' + emailEscape_(ticket.regId) + '</strong></p><p>Participant: ' + emailEscape_(ticket.name) + '<br>Team / participant: ' + emailEscape_(ticket.team) + '<br>Participants: ' + emailEscape_(ticket.size) + '<br>Amount verified: ₹' + ticket.amount + '<br>Venue: ' + emailEscape_(venue) + '</p><img src="cid:ticketQr" width="220" height="220" alt="Event ticket QR code"><p>Present this ticket and QR at the event desk. Organizer verification is required.</p></section><p style="white-space:pre-line">' + emailEscape_(schedule) + '</p><p>Join your event group for updates and communication:</p><p><a href="' + emailEscape_(ticket.group) + '">Join event WhatsApp group</a></p><p>Questions? <a href="mailto:' + TICKET_EMAIL_SENDER + '">' + TICKET_EMAIL_SENDER + '</a></p></div>';
-  return { to: ticket.email, subject: "ESPARTO 2026 · Confirmed ticket · " + event.title + " · " + ticket.regId, body: body, htmlBody: html, name: "ESPARTO 2026", replyTo: TICKET_EMAIL_SENDER, inlineImages: { ticketQr: qrBlob }, attachments: [qrBlob] };
+  var rows = [["Participant", ticket.name], ["Team / participant", ticket.team], ["Participants", ticket.size], ["Amount verified", "₹" + ticket.amount], ["Venue", venue]];
+  var details = rows.map(function (row) { return '<tr><td style="padding:8px 0;color:#64748b;font-size:13px;width:40%;vertical-align:top">' + emailEscape_(row[0]) + '</td><td style="padding:8px 0;font-size:14px;font-weight:bold;word-break:break-word">' + emailEscape_(row[1]) + '</td></tr>'; }).join('');
+  extraLogos = extraLogos || {};
+  var logoUrl = logoBlob ? "cid:espartoLogo" : CDN_BASE + "images/brand/esparto-logo.png";
+  var brandRow = '<table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr>' +
+    '<td align="center" width="25%"><img src="' + (extraLogos.hitam ? 'cid:hitamLogo' : CDN_BASE + 'images/hitam/hitam_logo.jpg') + '" alt="HITAM" width="64" style="width:64px;max-width:100%;height:auto"></td>' +
+    '<td align="center" width="50%"><img src="' + emailEscape_(logoUrl) + '" alt="ESPARTO — HITAM Technical Fest" width="140" style="width:140px;max-width:100%;height:auto"></td>' +
+    '<td align="center" width="25%"><img src="' + (extraLogos.ssg ? 'cid:ssgLogo' : CDN_BASE + 'images/brand/ssg-logo.png') + '" alt="SSG HITAM" width="64" style="width:64px;max-width:100%;height:auto"></td></tr></table>';
+  var html = '<!doctype html><html><body style="margin:0;padding:0;background:#f1f5f9;color:#0f172a;font-family:Arial,sans-serif"><table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center" style="padding:20px 12px"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden"><tr><td align="center" style="padding:24px;background:#ffffff;border-bottom:4px solid #ff5e00">' + brandRow + '<p style="margin:12px 0 0;color:#002855;font-size:12px;letter-spacing:2px;font-weight:bold">ESPARTO 2026 · OCTOBER 9–10</p></td></tr><tr><td style="padding:24px"><p style="margin:0 0 12px;color:#059669;font-size:12px;font-weight:bold;letter-spacing:1px">PAYMENT VERIFIED · REGISTRATION CONFIRMED</p><h1 style="margin:0 0 12px;font-size:24px;line-height:1.3;color:#002855">' + emailEscape_(event.title) + '</h1><p style="font-size:14px;line-height:1.6">Thank you for registering, ' + emailEscape_(ticket.name) + '. Your confirmed event ticket is below.</p><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px dashed #cbd5e1;border-radius:12px"><tr><td style="padding:20px"><p style="margin:0 0 6px;font-size:11px;color:#64748b;letter-spacing:1px">REGISTRATION ID</p><p style="margin:0 0 16px;font-family:monospace;font-weight:bold;font-size:20px;color:#002855">' + emailEscape_(ticket.regId) + '</p><table role="presentation" width="100%" cellspacing="0" cellpadding="0">' + details + '</table><div style="text-align:center;margin-top:20px"><img src="cid:ticketQr" width="220" height="220" style="display:block;margin:auto;max-width:100%;height:auto" alt="Your event ticket QR — also attached as PNG"><p style="font-size:12px;color:#64748b;line-height:1.5">Your event ticket QR<br>Save the attached PNG and present it at the event desk.</p></div></td></tr></table><h2 style="font-size:16px;color:#002855;margin-top:24px">Event schedule</h2><p style="font-size:14px;line-height:1.6;white-space:pre-line">' + emailEscape_(schedule) + '</p><p style="font-size:14px;line-height:1.6">Join your event group for updates and communication:</p><table role="presentation" cellspacing="0" cellpadding="0"><tr><td bgcolor="#059669" style="border-radius:8px"><a href="' + emailEscape_(ticket.group) + '" style="display:inline-block;padding:14px 20px;color:#ffffff;text-decoration:none;font-size:14px;font-weight:bold">Join event WhatsApp group</a></td></tr></table><p style="font-size:12px;color:#64748b;line-height:1.5;margin-top:20px">The ticket QR identifies your registration. Event staff will check your verified record at entry.</p></td></tr><tr><td style="padding:20px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:12px;color:#64748b;line-height:1.6">Organized by SSG · HITAM<br>Questions? <a href="mailto:' + TICKET_EMAIL_SENDER + '" style="color:#002855">' + TICKET_EMAIL_SENDER + '</a></td></tr></table></td></tr></table></body></html>';
+  var images = { ticketQr: qrBlob };
+  if (logoBlob) images.espartoLogo = logoBlob;
+  if (extraLogos.hitam) images.hitamLogo = extraLogos.hitam;
+  if (extraLogos.ssg) images.ssgLogo = extraLogos.ssg;
+  return { to: ticket.email, subject: "ESPARTO 2026 · Confirmed ticket · " + event.title + " · " + ticket.regId, body: body, htmlBody: html, name: "ESPARTO 2026", replyTo: TICKET_EMAIL_SENDER, inlineImages: images, attachments: [qrBlob] };
 }
 function processVerifiedTicketEmails_() {
   requireTicketSender_();
@@ -1047,7 +1091,14 @@ function processVerifiedTicketEmails_() {
     });
     if (queue.getLastRow() > 1) queue.getRange(2, 1, queue.getLastRow() - 1, EMAIL_HEADERS.length).getDisplayValues().forEach(function (row, index) { delivery[row[0]] = { state: row[2], index: index + 2 }; });
     var rows = master.getLastRow() > 1 ? master.getRange(2, 1, master.getLastRow() - 1, 20).getDisplayValues() : [];
-    var started = Date.now(), sent = 0, quota = MailApp.getRemainingDailyQuota();
+    var started = Date.now(), sent = 0, quota = MailApp.getRemainingDailyQuota(), logoBlob = null, extraLogos = {};
+    if (quota > 0) {
+      try { logoBlob = DriveApp.getFileById("1d7VRlLtobVhe4ne47mqsfG2gGEmztFzj").getBlob(); } catch (logoError) { /* Public CDN fallback in the email. */ }
+    }
+    if (quota > 0) {
+      try { extraLogos.hitam = DriveApp.getFileById("13EBtB_px7-U2LiGuEzXqEISv7N-ZIjee").getBlob(); } catch (hitamLogoError) {}
+      try { extraLogos.ssg = DriveApp.getFileById("1sMtm29iMFg29ZcVfzh1EM7BEN8kKzcOo").getBlob(); } catch (ssgLogoError) {}
+    }
     for (var index = 0; index < rows.length && sent < 20 && sent < quota && Date.now() - started < 120000; index++) {
       var registration = rows[index], existing = delivery[registration[1]], payment = payments[registration[1]];
       if (existing && existing.state !== "Pending") continue;
@@ -1076,7 +1127,7 @@ function processVerifiedTicketEmails_() {
       queue.getRange(queueRow, 2, 1, 5).setValues([["'" + ticket.email, "Sending", new Date(), "", ""]]);
       SpreadsheetApp.flush();
       try {
-        MailApp.sendEmail(composeTicketEmail_(ticket, qrBlob));
+        MailApp.sendEmail(composeTicketEmail_(ticket, qrBlob, logoBlob, extraLogos));
         // If this acknowledgement fails, leave Sending for manual review. Never
         // automatically resend an email whose delivery may already have happened.
         queue.getRange(queueRow, 3, 1, 4).setValues([["Sent", new Date(), new Date(), "Accepted by email service; inbox delivery is not guaranteed."]]);

@@ -41,7 +41,7 @@ Every new e-ticket says **Pending Verification**. Local event registration is di
 - The dashboard separates **AmountSubmitted** from **VerifiedAmount**. `COUNTIF` and `SUMIF` use EventID, not potentially edited event titles; verified amounts use `SUMIFS` with `PaymentStatus = "Verified"`.
 - IEEE registrations/payments live in the external form's database. Its local dashboard row is labeled **External IEEE form** and remains zero unless an organizer performs a separately planned import.
 - Do not delete participant rows, edit ID/UTR fields, replace payment Notes' first JSON line, or run another Apps Script writer against these tabs. The lock coordinates this script's submissions; it does not lock out human spreadsheet edits or other projects.
-- The four-digit reference format supports 9,000 IDs per event (`1000`–`9999`). Committed and unresolved references are reserved so collisions cannot silently overwrite registrations.
+- New references use `ESP26-HITM-E08-001`, with sequential numbering per event that expands beyond three digits. Reservations and counters are protected by the writer lock; failed attempts may leave gaps. Existing four-digit references remain valid and must not be renamed.
 - Screenshot uploads and API calls are subject to the owning account's Apps Script/Drive quotas. A busy-lock response asks the participant to retry; this was not a live-account capacity/load test.
 
 ## Recover an uncertain submission

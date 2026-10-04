@@ -68,7 +68,7 @@ test('master, finance, roster and event rows retain text UTRs, phones, amounts, 
   var master=h.sheets.ALL_REGISTRATIONS.rows[1], finance=h.sheets.ALL_PAYMENTS_COLLECTION.rows[1], roster=h.sheets.ALL_MEMBERS_ROSTER.rows,event=h.sheets[h.scope.findEvent_('E03').sheetName].rows[1];
   assert.equal(master[3],'Agentic AI Workshop & Hackathon'); assert.equal(master[5],p.teamName); assert.equal(master[9],'9876543211'); assert.equal(master[12],'Example Institute'); assert.equal(master[15],600); assert.equal(master[17],'Pending Verification'); assert.equal(master[18],'000012345678'); assert.equal(finance[6],600); assert.equal(finance[8],master[18]); assert.equal(roster.length,5); assert.equal(event[0],false); assert.equal(event[14],600); assert.equal(event[15],master[18]);
   var typed=h.batches[0].requests[0].appendCells.rows[0].values; assert.equal(typed[5].userEnteredValue.stringValue,p.teamName); assert.equal(typed[18].userEnteredValue.stringValue,p.utrNumber); assert.equal(typed[15].userEnteredValue.numberValue,600);
-  assert.match(result.receipt.regId,/^ESP26-E03-\d{4}$/); assert.equal(Object.keys(h.store).filter(function(k){return k.startsWith('SUBMISSION_');}).length,0);
+  assert.match(result.receipt.regId,/^ESP26-HITM-E03-\d{3,6}$/); assert.equal(Object.keys(h.store).filter(function(k){return k.startsWith('SUBMISSION_');}).length,0);
 });
 test('same request and proof recovers the same ticket without extra uploads or rows', function () {
   var h=mocks.createHarness(), p=mocks.payloadFor(h), first=h.scope.submitRegistration(p), second=h.scope.submitRegistration(p);
@@ -99,7 +99,7 @@ test('atomic batch failure keeps all four tabs unchanged and journal blocks blin
 });
 test('lost API response after commit reconciles all four rows instead of duplicating or trashing proof',function(){var h=mocks.createHarness({batchFailsAfterCommit:true}),p=mocks.payloadFor(h),result=h.scope.submitRegistration(p);assert.equal(result.success,true);assert.equal(h.scope.submitRegistration(p).receipt.regId,result.receipt.regId);assert.equal(h.batches.length,1);assert.equal(h.files[0].trashed,false);assert.equal(Object.keys(h.store).filter(function(k){return k.startsWith('SUBMISSION_');}).length,0);});
 test('failed journal cleanup still returns success and sheet idempotency remains effective',function(){var h=mocks.createHarness({journalDeleteFails:true}),p=mocks.payloadFor(h);assert.equal(h.scope.submitRegistration(p).success,true);assert.equal(h.scope.submitRegistration(p).success,true);assert.equal(h.batches.length,1);});
-test('registration ID collisions are avoided while retaining four digits',function(){var h=mocks.createHarness(),p=mocks.payloadFor(h);h.scope.Math=Object.create(Math);h.scope.Math.random=function(){return 0;};var first=h.scope.submitRegistration(p);var next=Object.assign({},p,{requestId:'a'.repeat(32),utrNumber:'000012345679'});var second=h.scope.submitRegistration(next);assert.notEqual(second.receipt.regId,first.receipt.regId);assert.match(second.receipt.regId,/^ESP26-E02-\d{4}$/);});
+test('registration references are sequential and unique',function(){var h=mocks.createHarness(),p=mocks.payloadFor(h);h.scope.Math=Object.create(Math);h.scope.Math.random=function(){return 0;};var first=h.scope.submitRegistration(p);var next=Object.assign({},p,{requestId:'a'.repeat(32),utrNumber:'000012345679'});var second=h.scope.submitRegistration(next);assert.notEqual(second.receipt.regId,first.receipt.regId);assert.match(second.receipt.regId,/^ESP26-HITM-E02-\d{3,6}$/);});
 test('setup creates 14 event tabs, 3 masters and formulas, then preserves existing participants on rerun',function(){
   var h=mocks.createHarness({emptyDatabase:true});assert.equal(h.scope.setupDatabase().success,true);assert.equal(Object.keys(h.sheets).length,18);var dash=h.sheets.DASHBOARD_LIVE_METRICS.rows;assert.equal(dash.length,16);assert.equal(dash[1][11],'External IEEE form');assert.match(dash[2][8],/COUNTIF\(ALL_REGISTRATIONS!C2:C,A3\)/);assert.match(dash[2][9],/SUMIF\(ALL_REGISTRATIONS!C2:C,A3,ALL_REGISTRATIONS!P2:P\)/);assert.match(dash[2][10],/"Verified"/);h.scope.submitRegistration(mocks.payloadFor(h));assert.equal(h.scope.setupDatabase().success,true);assert.equal(rowCount(h,'ALL_REGISTRATIONS'),1);
 });
@@ -109,7 +109,7 @@ test('owner recovery enforces waiting, preserves committed proof, and permits a 
 });
 test('deep links are whitelist-coerced strings and hostile scriptlet input is never reflected',function(){var h=mocks.createHarness();h.scope.doGet({parameter:{event:'reverse-hackathon'}});assert.equal(h.scope.renderedSlug,'reverse-hackathon');h.scope.doGet({parameter:{event:'\";alert(1);//'}});assert.equal(h.scope.renderedSlug,'');h.scope.doGet();assert.equal(h.scope.renderedSlug,'');h.scope.doGet({parameter:{event:'agentic-ai-workshop'}});assert.equal(h.scope.renderedSlug,'agentic-ai-workshop-hackathon');});
 
-test('uncertain submissions reserve their registration IDs until resolved',function(){var h=mocks.createHarness();h.scope.Math=Object.create(Math);h.scope.Math.random=function(){return 0;};h.store.SUBMISSION_pending=JSON.stringify({regId:'ESP26-E02-1000',state:'committing'});var result=h.scope.submitRegistration(mocks.payloadFor(h));assert.equal(result.success,true);assert.equal(result.receipt.regId,'ESP26-E02-1001');});
+test('uncertain submissions reserve their registration IDs until resolved',function(){var h=mocks.createHarness();h.scope.Math=Object.create(Math);h.scope.Math.random=function(){return 0;};h.store.SUBMISSION_pending=JSON.stringify({regId:'ESP26-HITM-E02-001',state:'committing'});var result=h.scope.submitRegistration(mocks.payloadFor(h));assert.equal(result.success,true);assert.equal(result.receipt.regId,'ESP26-HITM-E02-002');});
 
 test('the delivered frontend parses, uses the required string scriptlet, and only var declarations',function(){
   var fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
@@ -209,4 +209,37 @@ test('visible ticket setup rejects anonymous and other-account callers',function
  h.scope.Session.getActiveUser=function(){return {getEmail:function(){return 'elysian@hitam.org';}};};
  h.scope.setupVerifiedTicketEmails_=function(){return 'enabled';};
  assert.equal(h.scope.setupVerifiedTicketEmails(),'enabled');
+});
+
+test('verification edit trigger handles only payment status columns including pasted ranges',function(){
+ var h=mocks.createHarness(),calls=0;h.scope.processVerifiedTicketEmails_=function(){calls++;};
+ function edit(name,start,end,lastRow){return {source:h.spreadsheet,range:{getSheet:function(){return {getName:function(){return name;}};},getColumn:function(){return start;},getLastColumn:function(){return end;},getLastRow:function(){return lastRow;}}};}
+ h.scope.onPaymentVerificationEdit_(edit('ALL_REGISTRATIONS',18,18,2));
+ h.scope.onPaymentVerificationEdit_(edit('ALL_PAYMENTS_COLLECTION',10,13,3));assert.equal(calls,2);
+ h.scope.onPaymentVerificationEdit_(edit('ALL_REGISTRATIONS',17,17,2));h.scope.onPaymentVerificationEdit_(edit('ALL_REGISTRATIONS',18,18,1));h.scope.onPaymentVerificationEdit_(edit('ALL_MEMBERS_ROSTER',1,20,2));h.scope.onPaymentVerificationEdit_();assert.equal(calls,2);
+});
+
+ test('separate branch/year validate HITAM choices and preserve existing sheet format',function(){
+ var h=mocks.createHarness(),p=mocks.payloadFor(h,'E03','HITAM',1);
+ p.lead.branch='ITP - MECH';p.lead.year='4';p.lead.branchYear='tampered';
+ assert.equal(h.scope.submitRegistration(p).success,true);
+ assert.equal(h.sheets.ALL_MEMBERS_ROSTER.rows[1][7],'ITP - MECH · Year 4');
+ ['Civil','CSE'].forEach(function(branch,index){var bad=mocks.createHarness(),payload=mocks.payloadFor(bad,'E03','HITAM',1);payload.lead.branch=branch;payload.lead.year=index?'5':'2';assert.equal(bad.scope.submitRegistration(payload).success,false);});
+ var other=mocks.createHarness(),external=mocks.payloadFor(other,'E03','Other',1);external.lead.branch='Civil Engineering';external.lead.year='3';assert.equal(other.scope.submitRegistration(external).success,true);
+ });
+ test('ticket email embeds official logo separately from the attached ticket QR',function(){
+ var e=emailHarness();e.h.scope.DriveApp.getFileById=function(id){assert.ok(['1d7VRlLtobVhe4ne47mqsfG2gGEmztFzj','13EBtB_px7-U2LiGuEzXqEISv7N-ZIjee','1sMtm29iMFg29ZcVfzh1EM7BEN8kKzcOo'].includes(id));return {getBlob:function(){return {logo:true};}};};
+ e.verify();e.h.scope.processVerifiedTicketEmails_();var message=e.mail[0];assert.match(message.htmlBody,/cid:espartoLogo/);assert.equal(message.inlineImages.espartoLogo.logo,true);assert.equal(message.inlineImages.hitamLogo.logo,true);assert.equal(message.inlineImages.ssgLogo.logo,true);assert.match(message.htmlBody,/cid:hitamLogo/);assert.match(message.htmlBody,/cid:ssgLogo/);assert.equal(message.attachments.length,1);assert.equal(message.attachments[0],message.inlineImages.ticketQr);
+ });
+
+test('participant status reads cannot change payment verification even with forged flags',function(){
+ var h=mocks.createHarness(),p=mocks.payloadFor(h),saved=h.scope.submitRegistration(p),before=JSON.stringify(h.sheets);
+ assert.equal(h.scope.getRegistrationStatus(saved.receipt.regId,p.requestId,true).verified,false);
+ assert.equal(h.scope.publicPaymentStatus_(saved.receipt.regId,true).status,'Pending Verification');
+ assert.equal(JSON.stringify(h.sheets),before);
+});
+test('new numbering expands after 999 and old issued tickets remain readable',function(){
+ var h=mocks.createHarness();h.store.REG_COUNTER_E08='999';assert.equal(h.scope.newRegId_(h.sheets.ALL_REGISTRATIONS,'E08'),'ESP26-HITM-E08-1000');
+ var p=mocks.payloadFor(h);h.scope.submitRegistration(p);h.sheets.ALL_REGISTRATIONS.rows[1][1]='ESP26-E02-8419';h.sheets.ALL_PAYMENTS_COLLECTION.rows[1][1]='ESP26-E02-8419';
+ assert.equal(h.scope.publicPaymentStatus_('ESP26-E02-8419').status,'Pending Verification');assert.equal(h.scope.getRegistrationStatus('ESP26-E02-8419',p.requestId).success,true);
 });

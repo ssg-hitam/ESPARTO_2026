@@ -13,8 +13,8 @@ export async function POST(request: Request) {
     const body: unknown = JSON.parse(text);
     const ticketId = typeof body === "object" && body !== null && "ticketId" in body && typeof body.ticketId === "string"
       ? body.ticketId.trim().toUpperCase() : "";
-    if (!/^ESP26-E(?:0[1-9]|1[0-4])-\d{4}$/.test(ticketId)) {
-      return NextResponse.json({ error: "Enter your complete ticket ID, for example ESP26-E02-8419." }, { status: 400, headers });
+    if (!/^ESP26-(?:E(?:0[1-9]|1[0-4])-\d{4}|HITM-E(?:0[1-9]|1[0-4])-\d{3,6})$/.test(ticketId)) {
+      return NextResponse.json({ error: "Enter your complete ticket ID, for example ESP26-HITM-E08-001." }, { status: 400, headers });
     }
     const url = new URL(GOOGLE_APPS_SCRIPT_REGISTRATION_URL);
     url.searchParams.set("action", "payment-status");

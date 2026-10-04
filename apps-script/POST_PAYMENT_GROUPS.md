@@ -32,9 +32,9 @@ Uploading a screenshot or submitting a UTR is not payment confirmation. The auth
 
 Leave the first JSON line of finance `Notes` intact; it stores the private submission token used for recovery and group access. Human notes can be added after a newline.
 
-Participants click **Check payment status** on their e-ticket. On the same browser, **Check my saved registration** restores the last ticket after reload. The browser stores the ticket and its random access token, not group URLs. A registration ID, UTR, or client-side status alone cannot unlock a group.
+Participant tickets have no payment verification or WhatsApp-access button. The confirmed email includes the event group only after organizers mark both payment records Verified. **Check my saved registration** restores the submission ticket; no invitations are stored in the browser. The website payment-status page is read-only and never changes payment records.
 
-The backend checks both payment statuses, matches the finance/master records and amount, and returns only that registration's event group. Pending, rejected, mismatched, missing, or failed checks do not return an invitation URL. Events without configured groups direct verified participants to their coordinator. IEEE's separate registration system is unchanged.
+The backend checks both payment statuses, matches the finance/master records and amount, and returns only that registration's event group. Pending, rejected, mismatched, missing, or failed checks do not return an invitation URL. Events without configured groups wait for organizer configuration before ticket email delivery. IEEE's separate registration system is unchanged.
 
 Group links can be copied or forwarded by verified participants once disclosed; WhatsApp itself governs membership thereafter. This gate prevents pre-verification disclosure by the ESPARTO application.
 

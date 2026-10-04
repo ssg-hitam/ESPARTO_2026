@@ -1556,7 +1556,7 @@
           <section class="panel payment-card"><div class="panel-heading"><span class="number" aria-hidden="true">03</span><div><h2>Submit your payment proof</h2><p id="paymentTeamSummary"></p></div></div><div class="stack"><div class="field"><label for="utrNumber">UPI transaction reference (UTR) <span class="required" aria-hidden="true">*</span></label><input id="utrNumber" name="utrNumber" type="text" inputmode="numeric" pattern="[0-9]{8,16}" minlength="8" maxlength="16" autocomplete="off" required placeholder="8–16 digits from your payment app"><small>Enter the reference exactly as shown. Do not use your phone number.</small></div><div class="field"><label for="proofFile">Payment screenshot <span class="required" aria-hidden="true">*</span></label><div class="upload"><input id="proofFile" name="proofFile" type="file" accept="image/png,image/jpeg,image/webp" required aria-describedby="proofHelp"><p id="proofHelp" class="small muted">PNG, JPG, or WebP · Maximum 2 MB</p><div id="proofPreview" class="proof-preview" hidden><img id="proofImage" alt="Selected payment screenshot"><p id="proofMeta" class="proof-meta"></p></div></div></div><fieldset id="eventRules" class="stack" hidden><legend>Event rules &amp; consent</legend><div id="eventRuleFields" class="stack"></div></fieldset><label class="agreement"><input id="agreement" name="agreement" type="checkbox" required><span>I confirm these participant details and payment proof are correct. I understand payment and entry are subject to organizer verification, and the proof will be shared with anyone who has its link.</span></label><div id="paymentError" class="status status-error" role="alert" hidden></div><button id="paymentReview" class="btn btn-primary btn-full" type="submit">Review registration →</button></div><p class="payment-note">Nothing is submitted until you confirm the next screen. Need help? <a href="mailto:ssg@hitam.org">ssg@hitam.org</a> · <a href="tel:+919059111595">+91 90591 11595</a></p></section>
         </div></form>
       </section>
-      <section id="ticketView" hidden aria-labelledby="ticketTitle"><div class="ticket"><div class="ticket-top"><span class="ticket-check" aria-hidden="true">✓</span><h1 id="ticketTitle" tabindex="-1">You're on the list.</h1><p>Thank you for registering for this event. After your payment is verified, you will receive an email from elysian@hitam.org with your event ticket, QR code, and WhatsApp group link for event communication. Keep this submission e-ticket for your records.</p></div><div class="ticket-body"><div class="ticket-id"><p>Registration reference</p><strong id="ticketRegId"></strong></div><dl id="ticketDetails" class="ticket-details"></dl><div id="groupAccess" style="margin-top:20px"><p id="groupStatus" class="small muted" role="status">Event group access becomes available after organizer payment verification.</p><button id="checkPayment" type="button" class="btn btn-secondary" style="margin-top:12px">Check payment status</button><a id="eventGroupLink" class="btn btn-primary" style="margin-top:12px" hidden>Join event WhatsApp group</a></div><div class="ticket-actions"><button id="printTicket" type="button" class="btn btn-primary">Print / Save e-ticket</button><button id="exploreEvents" type="button" class="btn btn-secondary">Explore other events →</button></div><p class="ticket-note"><span id="ticketPaymentNote">Payment is pending verification by the event organizers. This e-ticket records your submission and does not confirm bank settlement.</span> Festival: 9–10 October 2026 · HITAM Campus, Medchal, Hyderabad.<br>Queries: <a href="mailto:ssg@hitam.org">ssg@hitam.org</a> · <a href="tel:+919059111595">+91 90591 11595</a></p></div></div></section>
+      <section id="ticketView" hidden aria-labelledby="ticketTitle"><div class="ticket"><div class="ticket-top"><div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:20px"><img id="ticketHitamLogo" alt="HITAM" style="width:60px;height:70px;object-fit:contain"><img id="ticketEspartoLogo" alt="ESPARTO" style="width:120px;height:80px;object-fit:contain"><img id="ticketSsgLogo" alt="SSG HITAM" style="width:60px;height:70px;object-fit:contain"></div><span class="ticket-check" aria-hidden="true">✓</span><h1 id="ticketTitle" tabindex="-1">You're on the list.</h1><p>Thank you for registering for this event. After your payment is verified, you will receive an email from elysian@hitam.org with your event ticket, QR code, and WhatsApp group link for event communication. Keep this submission e-ticket for your records.</p></div><div class="ticket-body"><div class="ticket-id"><p>Registration reference</p><strong id="ticketRegId"></strong></div><dl id="ticketDetails" class="ticket-details"></dl><p class="small muted" style="margin-top:20px">After organizer payment verification, your WhatsApp group link and confirmed ticket will be emailed to your registered address.</p><div class="ticket-actions"><button id="printTicket" type="button" class="btn btn-primary">Print / Save e-ticket</button><button id="exploreEvents" type="button" class="btn btn-secondary">Explore other events →</button></div><p class="ticket-note"><span id="ticketPaymentNote">Payment is pending verification by the event organizers. This e-ticket records your submission and does not confirm bank settlement.</span> Festival: 9–10 October 2026 · HITAM Campus, Medchal, Hyderabad.<br>Queries: <a href="mailto:ssg@hitam.org">ssg@hitam.org</a> · <a href="tel:+919059111595">+91 90591 11595</a></p></div></div></section>
     </main>
     <footer class="footer"><div class="container"><p>ESPARTO 2026 · Organized by SSG, HITAM</p><p>Registration support: <a href="tel:+919059111595">Tejal · +91 90591 11595</a> · <a href="mailto:ssg@hitam.org">ssg@hitam.org</a></p></div></footer>
     <div id="mobileBar" class="mobile-bar" hidden><div><small id="mobileAmountLabel">REGISTRATION TOTAL</small><strong id="mobileAmount"></strong></div><button id="mobileCta" class="btn btn-primary" type="submit" form="detailsForm">Proceed to payment →</button></div>
@@ -1577,7 +1577,6 @@
     var proofReadVersion = 0;
     var requestId = '';
     var ticketAccess = null;
-    var checkingPayment = false;
     var pendingPayload = null;
     var inFlight = false;
     var slowTimer = null;
@@ -1661,12 +1660,17 @@
     }
     function newRequestId() { var bytes = new Uint8Array(16); window.crypto.getRandomValues(bytes); return Array.prototype.map.call(bytes, function (byte) { return ('0' + byte.toString(16)).slice(-2); }).join(''); }
     function fieldsHtml(prefix, required, values) {
-        var rows = [['Name', 'Full name', 'text', 120, 'name'], ['Email', 'Email address', 'email', 254, 'email'], ['Phone', 'WhatsApp number', 'tel', 24, 'tel'], ['Roll', 'Roll number', 'text', 60, 'off'], ['Branch', 'Branch & year', 'text', 100, 'off']];
+        var rows = [['Name', 'Full name', 'text', 120, 'name'], ['Email', 'Email address', 'email', 254, 'email'], ['Phone', 'WhatsApp number', 'tel', 24, 'tel'], ['Roll', 'Roll number', 'text', 60, 'off'], ['Branch', 'Branch', 'text', 80, 'off'], ['Year', 'Year', 'text', 1, 'off']];
         return rows.map(function (row) {
-            var key = { Name: 'name', Email: 'email', Phone: 'phone', Roll: 'rollNo', Branch: 'branchYear' }[row[0]];
-            var isRequired = required || row[0] === 'Name' || (selectedEvent.id === 'E02' && (row[0] === 'Email' || row[0] === 'Branch'));
+            var key = { Name: 'name', Email: 'email', Phone: 'phone', Roll: 'rollNo', Branch: 'branch', Year: 'year' }[row[0]];
+            var isRequired = required || row[0] === 'Name' || (selectedEvent.id === 'E02' && (row[0] === 'Email' || row[0] === 'Branch' || row[0] === 'Year'));
             var id = prefix + row[0];
-            var example = row[0] === 'Phone' ? '10-digit number or +91…' : row[0] === 'Branch' ? 'e.g. CSE · 2nd year' : row[1];
+            if (row[0] === 'Year' || (row[0] === 'Branch' && institutionValue() === 'HITAM')) {
+                var choices = row[0] === 'Year' ? ['1', '2', '3', '4'] : ['CSE', 'CSM', 'CSD', 'ECE', 'EEE', 'MECH', 'ITP - CSE', 'ITP - MECH', 'IIBMP'];
+                var current = String(values && values[key] || '');
+                return '<div class="field"><label for="' + id + '">' + row[1] + (isRequired ? ' <span class="required" aria-hidden="true">*</span>' : ' <span class="muted small">(optional)</span>') + '</label><select id="' + id + '" name="' + id + '"' + (isRequired ? ' required' : '') + '><option value="">Select ' + row[1].toLowerCase() + '</option>' + choices.map(function (choice) { return '<option value="' + escapeHtml(choice) + '"' + (current === choice ? ' selected' : '') + '>' + escapeHtml(row[0] === 'Year' ? 'Year ' + choice : choice) + '</option>'; }).join('') + '</select></div>';
+            }
+            var example = row[0] === 'Phone' ? '10-digit number or +91…' : row[0] === 'Branch' ? 'e.g. Computer Science' : row[1];
             return '<div class="field' + (row[0] === 'Name' ? ' field-full' : '') + '"><label for="' + id + '">' + row[1] + (isRequired ? ' <span class="required" aria-hidden="true">*</span>' : ' <span class="muted small">(optional)</span>') + '</label><input id="' + id + '" name="' + id + '" type="' + row[2] + '" maxlength="' + row[3] + '" autocomplete="' + (prefix === 'lead' ? row[4] : 'off') + '"' + (isRequired ? ' required' : '') + (row[0] === 'Phone' ? ' inputmode="tel"' : '') + ' placeholder="' + escapeHtml(example) + '" value="' + escapeHtml(values && values[key] || '') + '"></div>';
         }).join('');
     }
@@ -1761,19 +1765,19 @@
         byId('eventRuleFields').innerHTML = config ? config.rules.map(function (rule, index) { return '<label class="agreement"><input type="checkbox" id="eventConsent' + index + '" required><span>' + escapeHtml(rule) + '</span></label>'; }).join('') : '';
         byId('eventBrief').innerHTML = config ? '<h2>' + escapeHtml(config.tagline) + '</h2><p>' + escapeHtml(config.intro) + '</p><ul>' + config.highlights.map(function (item) { return '<li>' + escapeHtml(item) + '</li>'; }).join('') + '</ul>' : '';
     }
-    function readMember(prefix) { function value(suffix) { var element = byId(prefix + suffix); return element ? element.value.trim() : ''; } return { name: value('Name'), email: value('Email'), phone: value('Phone'), rollNo: value('Roll'), branchYear: value('Branch') }; }
+    function readMember(prefix) { function value(suffix) { var element = byId(prefix + suffix); return element ? element.value.trim() : ''; } return { name: value('Name'), email: value('Email'), phone: value('Phone'), rollNo: value('Roll'), branch: value('Branch'), year: value('Year'), branchYear: value('Branch') + (value('Year') ? ' · Year ' + value('Year') : '') }; }
     function renderTeammates() {
         var previousBlocks = byId('teammateFields').querySelectorAll('[data-member-index]');
         Array.prototype.forEach.call(previousBlocks, function (block) { var index = Number(block.getAttribute('data-member-index')); memberDrafts[index] = readMember('member' + index); });
         var html = '';
         for (var index = 2; index <= Number(byId('teamSize').value); index++) {
-            html += '<section class="panel" data-member-index="' + index + '"><div class="panel-heading"><span class="number" aria-hidden="true">' + ('0' + (index + 1)).slice(-2) + '</span><div><h2>Teammate ' + index + '</h2><p>' + (selectedEvent.id === 'E02' ? 'Full name, email and year / department are required.' : 'Name is required. Add contact details where available.') + '</p></div></div><div class="form-fields">' + fieldsHtml('member' + index, false, memberDrafts[index]) + '</div></section>';
+            html += '<section class="panel" data-member-index="' + index + '"><div class="panel-heading"><span class="number" aria-hidden="true">' + ('0' + (index + 1)).slice(-2) + '</span><div><h2>Teammate ' + index + '</h2><p>' + (selectedEvent.id === 'E02' ? 'Full name, email, branch and year are required.' : 'Name is required. Add contact details where available.') + '</p></div></div><div class="form-fields">' + fieldsHtml('member' + index, false, memberDrafts[index]) + '</div></section>';
         }
         byId('teammateFields').innerHTML = html;
         updateSummary();
     }
     function institutionValue() { return byId('detailsForm').querySelector('input[name="institution"]:checked').value; }
-    function updateInstitution() { var other = institutionValue() === 'Other'; byId('collegeField').hidden = !other; byId('collegeName').required = other; updateSummary(); }
+    function updateInstitution() { var leadValues = readMember('lead'); byId('leadFields').innerHTML = fieldsHtml('lead', true, leadValues); renderTeammates(); var other = institutionValue() === 'Other'; byId('collegeField').hidden = !other; byId('collegeName').required = other; updateSummary(); }
     function calculateAmount() {
         var size = Number(byId('teamSize').value);
         if (selectedEvent.id === 'E12') {
@@ -1860,7 +1864,7 @@
         reader.readAsDataURL(file);
     }
     function reviewRows(rows) { return '<dl class="review-grid">' + rows.map(function (row) { return '<div><dt>' + escapeHtml(row[0]) + '</dt><dd>' + escapeHtml(row[1] || '—') + '</dd></div>'; }).join('') + '</dl>'; }
-    function memberReview(member, index) { return '<section class="review-section"><h3>' + (index === 0 ? (draft.teamSize === 1 ? 'Participant' : 'Team lead') : 'Teammate ' + (index + 1)) + '</h3>' + reviewRows([['Full name', member.name], ['Email', member.email], ['WhatsApp', member.phone], ['Roll number', member.rollNo], ['Branch & year', member.branchYear]]) + '</section>'; }
+    function memberReview(member, index) { return '<section class="review-section"><h3>' + (index === 0 ? (draft.teamSize === 1 ? 'Participant' : 'Team lead') : 'Teammate ' + (index + 1)) + '</h3>' + reviewRows([['Full name', member.name], ['Email', member.email], ['WhatsApp', member.phone], ['Roll number', member.rollNo], ['Branch', member.branch], ['Year', member.year]]) + '</section>'; }
     function openConfirmation(event) {
         event.preventDefault();
         if (inFlight || !draft)
@@ -1914,8 +1918,11 @@
         receipt.teamSize = receipt.teamSize || (draft && draft.teamSize) || '';
         ticketAccess = { receipt: receipt, requestId: requestId };
         try { localStorage.setItem('espartoSavedTicket', JSON.stringify(ticketAccess)); byId('restoreTicket').hidden = false; } catch (storageError) {}
-        clearGroupAccess();
+
         byId('ticketPaymentNote').textContent = 'Payment is pending verification by the event organizers. This e-ticket records your submission and does not confirm bank settlement.';
+        setImage('ticketHitamLogo', portal.logos.hitam, 'HITAM');
+        setImage('ticketEspartoLogo', portal.logos.esparto, 'ESPARTO');
+        setImage('ticketSsgLogo', portal.logos.ssg, 'SSG HITAM');
         byId('ticketRegId').textContent = receipt.regId;
         var rows = [['Event', receipt.eventTitle], ['Chapter', receipt.chapter], ['Team / participant', receipt.teamName], ['Participants', String(receipt.teamSize)], ['Team lead / participant', receipt.leadName], ['Amount paid (submitted)', money(receipt.amount)], ['Transaction reference', receipt.utr], ['Status', receipt.status || 'Pending Verification']];
         byId('ticketDetails').innerHTML = rows.map(function (row) { return '<div><dt>' + escapeHtml(row[0]) + '</dt><dd>' + (row[0] === 'Status' ? '<span id="ticketPaymentStatus" class="pill pending">' + escapeHtml(row[1]) + '</span>' : escapeHtml(row[1])) + '</dd></div>'; }).join('');
@@ -1926,40 +1933,7 @@
         byId('confirmationBody').innerHTML = '';
         byId('proofFile').value = '';
         showView('ticket', 'ticketTitle');
-        checkPaymentStatus();
-    }
-    function clearGroupAccess() {
-        byId('eventGroupLink').hidden = true;
-        byId('eventGroupLink').removeAttribute('href');
-        byId('groupStatus').textContent = 'Event group access becomes available after organizer payment verification.';
-    }
-    function checkPaymentStatus() {
-        if (checkingPayment || !ticketAccess) return;
-        clearGroupAccess();
-        checkingPayment = true;
-        byId('checkPayment').disabled = true;
-        byId('groupStatus').textContent = 'Checking payment verification…';
-        var access = ticketAccess;
-        google.script.run.withSuccessHandler(function (result) {
-            checkingPayment = false;
-            byId('checkPayment').disabled = false;
-            if (ticketAccess !== access) return;
-            var verified = result && result.success && result.verified === true;
-            byId('ticketPaymentStatus').textContent = verified ? 'Verified' : 'Pending Verification';
-            byId('ticketPaymentNote').textContent = verified ? 'Payment has been verified by the event organizers.' : 'Payment is awaiting organizer verification. Submission alone does not confirm payment.';
-            byId('groupStatus').textContent = verified ? 'Your payment is verified. The event group is available below.' : (result && result.message ? result.message : 'Payment is not yet verified. Check again after the organizers confirm it.');
-            if (verified && /^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9]+(?:\?[^\s]*)?$/.test(result.whatsappUrl || '')) {
-                byId('eventGroupLink').href = result.whatsappUrl;
-                byId('eventGroupLink').hidden = false;
-            } else if (verified) {
-                byId('groupStatus').textContent = 'Your payment is verified. Contact the event coordinator for group access.';
-            }
-        }).withFailureHandler(function () {
-            checkingPayment = false;
-            byId('checkPayment').disabled = false;
-            clearGroupAccess();
-            byId('groupStatus').textContent = 'Unable to check payment status. Please try again or contact SSG.';
-        }).getRegistrationStatus(access.receipt.regId, access.requestId);
+
     }
     function returnDirectory() { if (inFlight)
         return; selectedEvent = null; updateHeader(null); setMessage('pageMessage', ''); showView('directory', 'directoryTitle'); }
@@ -2057,7 +2031,7 @@
     byId('confirmCancel').addEventListener('click', closeConfirmation);
     byId('confirmSubmit').addEventListener('click', submitRegistration);
     byId('copyUpi').addEventListener('click', copyUpi);
-    byId('checkPayment').addEventListener('click', checkPaymentStatus);
+
     byId('restoreTicket').addEventListener('click', function () { if (!ticketAccess) return; var saved = ticketAccess; requestId = saved.requestId; selectedEvent = events.filter(function (event) { return event.id === saved.receipt.eventId || event.title === saved.receipt.eventTitle; })[0] || null; updateHeader(selectedEvent); showTicket(saved.receipt); });
     byId('printTicket').addEventListener('click', function () { window.print(); });
     byId('exploreEvents').addEventListener('click', returnDirectory);
