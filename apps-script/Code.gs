@@ -622,7 +622,7 @@ function submitRegistration(payload) {
   var data;
   try {
     data = validatePayload_(payload);
-    locked = lock.tryLock(15000);
+    locked = lock.tryLock(1000);
     if (!locked) return failure_("BUSY", "The registration desk is busy. Wait a few seconds, then retry with the same payment reference.", true);
     props = PropertiesService.getScriptProperties();
     ss = database_();
@@ -794,7 +794,7 @@ function validateMember_(member, required, label, institution) {
     if (!!branch !== !!year) throw publicError_("INVALID_MEMBER", "Complete both branch and year, or leave both optional fields blank.");
     branchYear = branch + (year ? " · Year " + year : "");
   }
-  return { name: name, email: email, phone: phone, rollNo: text_(member.rollNo, label + " roll number", 60, required), branchYear: text_(branchYear, label + " branch and year", 100, required) };
+  return { name: name, email: email, phone: phone, rollNo: text_(member.rollNo, label + " roll number", 60, required || institution === "HITAM"), branchYear: text_(branchYear, label + " branch and year", 100, required) };
 }
 
 function decodeProof_(dataUrl) {

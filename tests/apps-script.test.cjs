@@ -87,7 +87,7 @@ test('invalid payload cases are rejected before any mutation',function(){
 });
 test('IEEE cannot register in this database and unknown events are rejected',function(){var h=mocks.createHarness();assert.equal(h.scope.submitRegistration(mocks.payloadFor(h,'E01')).code,'EXTERNAL_EVENT');var p=mocks.payloadFor(h);p.eventId='E99';assert.equal(h.scope.submitRegistration(p).code,'INVALID_EVENT');assert.equal(h.files.length,0);});
 test('optional teammate fields, solo identity, and +91 phones normalize correctly',function(){
-  var h=mocks.createHarness(),p=mocks.payloadFor(h,'E03','HITAM',2);p.members=[{name:'Teammate',email:'',phone:'',rollNo:'',branchYear:''}];assert.equal(h.scope.submitRegistration(p).success,true);assert.equal(h.sheets.ALL_MEMBERS_ROSTER.rows[2][8],'');
+  var h=mocks.createHarness(),p=mocks.payloadFor(h,'E03','HITAM',2);p.members=[{name:'Teammate',email:'',phone:'',rollNo:'TEST-002',branchYear:''}];assert.equal(h.scope.submitRegistration(p).success,true);assert.equal(h.sheets.ALL_MEMBERS_ROSTER.rows[2][8],'');
   h=mocks.createHarness();p=mocks.payloadFor(h,'E14');p.teamName='Ignored';var result=h.scope.submitRegistration(p);assert.equal(result.receipt.teamName,p.lead.name);assert.equal(h.sheets.ALL_MEMBERS_ROSTER.rows[1][4],'Participant');
 });
 test('busy lock, missing schema and sharing/upload failures leave no sheet rows',function(){
@@ -245,3 +245,18 @@ test('new numbering expands after 999 and old issued tickets remain readable',fu
 });
 
 test("payment proof uploads request restricted Drive sharing",function(){var h=mocks.createHarness();assert.equal(h.scope.submitRegistration(mocks.payloadFor(h)).success,true);assert.equal(h.files[0].access,"private");assert.equal(h.files[0].shared,false);});
+
+test('HITAM lead and every teammate must supply roll numbers before any write',function(){
+ ['lead','teammate'].forEach(function(role){var h=mocks.createHarness(),p=mocks.payloadFor(h,'E08','HITAM',2);if(role==='lead')p.lead.rollNo='';else p.members[0].rollNo='';assert.equal(h.scope.submitRegistration(p).success,false);assert.equal(h.files.length,0);assert.equal(h.batches.length,0);});
+ var h=mocks.createHarness(),p=mocks.payloadFor(h,'E08','Other',2);p.members[0].rollNo='';assert.equal(h.scope.submitRegistration(p).success,true);
+});
+test('local burst preserves unique references and exactly one atomic batch per request including replays',function(){
+ var h=mocks.createHarness(),ids=new Set();for(var i=1;i<=100;i++){var p=mocks.payloadFor(h,'E08','HITAM',2);p.requestId=i.toString(16).padStart(32,'0');p.utrNumber=String(100000000000+i);var result=h.scope.submitRegistration(p);assert.equal(result.success,true);assert.ok(!ids.has(result.receipt.regId));ids.add(result.receipt.regId);assert.equal(h.scope.submitRegistration(p).receipt.regId,result.receipt.regId);}
+ assert.equal(h.batches.length,100);assert.equal(h.sheets.ALL_REGISTRATIONS.rows.length,101);assert.equal(h.sheets.ALL_PAYMENTS_COLLECTION.rows.length,101);assert.equal(h.sheets.ALL_MEMBERS_ROSTER.rows.length,201);assert.equal(h.files.length,100);
+});
+test('overlapping submission cannot write while another commit holds the lock and retries cleanly',function(){
+ var h=mocks.createHarness(),first=mocks.payloadFor(h,'E08'),second=mocks.payloadFor(h,'E08');second.requestId='b'.repeat(32);second.utrNumber='000012345679';
+ var batch=h.scope.Sheets.Spreadsheets.batchUpdate,overlap,injected=false;
+ h.scope.Sheets.Spreadsheets.batchUpdate=function(body){if(!injected){injected=true;overlap=h.scope.submitRegistration(second);assert.equal(overlap.code,'BUSY');assert.equal(h.batches.length,0);assert.equal(h.files.length,1);}return batch(body);};
+ var a=h.scope.submitRegistration(first),b=h.scope.submitRegistration(second);assert.equal(a.success,true);assert.equal(b.success,true);assert.notEqual(a.receipt.regId,b.receipt.regId);assert.equal(h.batches.length,2);assert.equal(h.files.length,2);assert.equal(h.lockHeld(),false);
+});

@@ -29,7 +29,7 @@ test('public status is fresh, requires both verification records, and returns no
 function loadRoute(fetch) {
   const code = ts.transpileModule(fs.readFileSync('src/app/api/payment-status/route.ts', 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
   const exports = {};
-  const scope = { exports, URL, AbortSignal, fetch, require(name) {
+  const scope = { exports, URL, AbortSignal, TextDecoder, fetch, require(name) {
     if (name === 'next/server') return { NextResponse: { json: (body, options) => Response.json(body, options) } };
     if (name === '@/data/events') return { GOOGLE_APPS_SCRIPT_REGISTRATION_URL: 'https://script.google.com/macros/s/test/exec' };
     throw Error('Unexpected import');
@@ -63,4 +63,11 @@ test('upstream failure or old deployment fails clearly without inventing a payme
     assert.equal(response.status, 503); const result = await response.json();
     assert.equal(result.status, undefined); assert.ok(!result.error.includes('Private upstream exception'));
   }
+});
+
+test('status API rejects oversized and malformed input before any upstream request',async()=>{
+ let calls=0;const route=loadRoute(async()=>{calls++;throw Error('Unexpected upstream request');});
+ for(const body of ['x'.repeat(513),'{invalid',JSON.stringify({ticketId:'ESP26-HITM-E08-001',extra:'x'.repeat(600)})]){
+ const response=await route.POST(new Request('https://www.espartohitam.com/api/payment-status',{method:'POST',body}));assert.equal(response.status,400);
+ }assert.equal(calls,0);
 });

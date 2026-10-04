@@ -41,7 +41,7 @@ function createHarness(options) {
     files.push(file); return file;
   } };
   var props = { getProperties: function () { return Object.assign({}, store); }, getProperty: function (key) { return store[key] === undefined ? null : store[key]; }, setProperty: function (key, value) { if (options.journalWriteFails) throw Error('PRIVATE PROPERTY QUOTA'); store[key] = value; return props; }, setProperties: function (values) { Object.assign(store, values); return props; }, deleteProperty: function (key) { if (options.journalDeleteFails) throw Error('PRIVATE PROPERTY FAILURE'); delete store[key]; return props; } };
-  var scriptLock = { tryLock: function () { if (options.busy || lockHeld) return false; lockHeld = true; return true; }, waitLock: function () { if (!this.tryLock()) throw Error('Busy'); }, releaseLock: function () { lockHeld = false; } };
+  var scriptLock = { tryLock: function () { if (options.busyAttempts > 0) { options.busyAttempts--; return false; } if (options.busy || lockHeld) return false; lockHeld = true; return true; }, waitLock: function () { if (!this.tryLock()) throw Error('Busy'); }, releaseLock: function () { lockHeld = false; } };
   var scope = {
     SpreadsheetApp: { getActiveSpreadsheet: function () { return spreadsheet; }, openById: function (id) { if (id !== 'sheet-id') throw Error('PRIVATE SHEET ID'); return spreadsheet; }, newDataValidation: function () { return { requireCheckbox: function () { return this; }, build: function () { return {}; } }; }, flush: function () {} },
     PropertiesService: { getScriptProperties: function () { return props; } },

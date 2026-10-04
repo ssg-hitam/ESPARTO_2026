@@ -1669,7 +1669,7 @@
         var rows = [['Name', 'Full name', 'text', 120, 'name'], ['Email', 'Email address', 'email', 254, 'email'], ['Phone', 'WhatsApp number', 'tel', 24, 'tel'], ['Roll', 'Roll number', 'text', 60, 'off'], ['Branch', 'Branch', 'text', 80, 'off'], ['Year', 'Year', 'text', 1, 'off']];
         return rows.map(function (row) {
             var key = { Name: 'name', Email: 'email', Phone: 'phone', Roll: 'rollNo', Branch: 'branch', Year: 'year' }[row[0]];
-            var isRequired = required || row[0] === 'Name' || (selectedEvent.id === 'E02' && (row[0] === 'Email' || row[0] === 'Branch' || row[0] === 'Year'));
+            var isRequired = required || row[0] === 'Name' || (row[0] === 'Roll' && institutionValue() === 'HITAM') || (selectedEvent.id === 'E02' && (row[0] === 'Email' || row[0] === 'Branch' || row[0] === 'Year'));
             var id = prefix + row[0];
             if (row[0] === 'Year' || (row[0] === 'Branch' && institutionValue() === 'HITAM')) {
                 var choices = row[0] === 'Year' ? ['1', '2', '3', '4'] : ['CSE', 'CSM', 'CSD', 'ECE', 'EEE', 'MECH', 'ITP - CSE', 'ITP - MECH', 'IIBMP'];
@@ -1777,7 +1777,7 @@
         Array.prototype.forEach.call(previousBlocks, function (block) { var index = Number(block.getAttribute('data-member-index')); memberDrafts[index] = readMember('member' + index); });
         var html = '';
         for (var index = 2; index <= Number(byId('teamSize').value); index++) {
-            html += '<section class="panel" data-member-index="' + index + '"><div class="panel-heading"><span class="number" aria-hidden="true">' + ('0' + (index + 1)).slice(-2) + '</span><div><h2>Teammate ' + index + '</h2><p>' + (selectedEvent.id === 'E02' ? 'Full name, email, branch and year are required.' : 'Name is required. Add contact details where available.') + '</p></div></div><div class="form-fields">' + fieldsHtml('member' + index, false, memberDrafts[index]) + '</div></section>';
+            html += '<section class="panel" data-member-index="' + index + '"><div class="panel-heading"><span class="number" aria-hidden="true">' + ('0' + (index + 1)).slice(-2) + '</span><div><h2>Teammate ' + index + '</h2><p>' + (selectedEvent.id === 'E02' ? 'Full name, email, branch and year are required.' : (institutionValue() === 'HITAM' ? 'Name and HITAM roll number are required. Add contact details where available.' : 'Name is required. Add contact details where available.')) + '</p></div></div><div class="form-fields">' + fieldsHtml('member' + index, false, memberDrafts[index]) + '</div></section>';
         }
         byId('teammateFields').innerHTML = html;
         updateSummary();
@@ -1905,7 +1905,15 @@
         setMessage('submitError', '');
         setMessage('submitStatus', 'Saving your registration and payment proof. Please keep this page open.');
         slowTimer = window.setTimeout(function () { setMessage('submitStatus', 'Your registration is still saving. Please wait; do not make another payment. Support reference: ' + requestId); }, 30000);
+        var retryCount = 0;
+        function sendAttempt() {
         google.script.run.withSuccessHandler(function (result) {
+            if (result && result.code === 'BUSY' && result.retryable === true && retryCount < 3) {
+                retryCount++;
+                setMessage('submitStatus', 'The registration desk is busy. Retrying safely (' + retryCount + '/3). Keep this page open; do not pay again.');
+                window.setTimeout(sendAttempt, Math.pow(2, retryCount) * 1000 + Math.floor(Math.random() * 1000));
+                return;
+            }
             window.clearTimeout(slowTimer);
             setBusy(false);
             setMessage('submitStatus', '');
@@ -1918,6 +1926,8 @@
             closeConfirmation();
             showTicket(result.receipt);
         }).withFailureHandler(function () { window.clearTimeout(slowTimer); setBusy(false); setMessage('submitStatus', ''); setMessage('submitError', 'The connection was interrupted. Retry this same submission to recover it without duplicate rows. Do not pay again. Support reference: ' + requestId); byId('confirmSubmit').textContent = 'Retry / recover registration'; }).submitRegistration(pendingPayload);
+        }
+        sendAttempt();
     }
     function showTicket(receipt) {
         receipt.teamName = receipt.teamName || (draft && draft.teamName) || '';

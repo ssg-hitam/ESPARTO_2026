@@ -8,9 +8,28 @@ const statuses = ["Verified", "Pending Verification", "Rejected", "Not Found"];
 
 export async function POST(request: Request) {
   try {
-    const text = await request.text();
-    if (text.length > 512) return NextResponse.json({ error: "Enter a valid ticket ID." }, { status: 400, headers });
-    const body: unknown = JSON.parse(text);
+    if (!request.body || Number(request.headers.get("content-length")) > 512) {
+      return NextResponse.json({ error: "Enter a valid ticket ID." }, { status: 400, headers });
+    }
+    const reader = request.body.getReader();
+    const decoder = new TextDecoder();
+    let text = "", bytes = 0;
+    try {
+      while (true) {
+        const chunk = await reader.read();
+        if (chunk.done) break;
+        bytes += chunk.value.byteLength;
+        if (bytes > 512) {
+          await reader.cancel();
+          return NextResponse.json({ error: "Enter a valid ticket ID." }, { status: 400, headers });
+        }
+        text += decoder.decode(chunk.value, { stream: true });
+      }
+      text += decoder.decode();
+    } finally { reader.releaseLock(); }
+    let body: unknown;
+    try { body = JSON.parse(text); }
+    catch { return NextResponse.json({ error: "Enter a valid ticket ID." }, { status: 400, headers }); }
     const ticketId = typeof body === "object" && body !== null && "ticketId" in body && typeof body.ticketId === "string"
       ? body.ticketId.trim().toUpperCase() : "";
     if (!/^ESP26-(?:E(?:0[1-9]|1[0-4])-\d{4}|HITM-E(?:0[1-9]|1[0-4])-\d{3,6})$/.test(ticketId)) {
