@@ -43,3 +43,9 @@ The website server signs requests using a separate HMAC secret; the browser neve
 To stop test writes immediately, set `ESPARTO_REGISTRATION_BRIDGE_SUBMIT_ENABLED=false`. Set bridge enabled false to stop all adapter traffic. Remove the three local environment variables and restart Next to return to simulated local mode. Production rollback is unnecessary at this stage because no production traffic or deployment is changed.
 
 Before production enablement, complete real test Sheet verification, abuse/rate-limit planning, Google quota and concurrent-device testing, IEEE integration audit, every event's special requirements (including IUCEE), actual deployment backup/rollback rehearsal, and real-device testing. This development-only pilot does not yet enable the complete production migration.
+
+## Real Google test evidence — 4 October 2026
+
+Using the separate test project and test Sheet above, localhost loaded the signed E08 catalogue. The disabled-write check returned `SUBMISSIONS_DISABLED`. After the operator enabled test submissions, a synthetic two-person team saved with reference `ESP26-HITM-E08-001`, amount ₹300, and pending verification in both payment records. An exported real workbook confirmed one master row, one payment row, two roster rows (CSD · Year 4), and one n8n event row. The existing-submission recovery UI returned the same reference with its no-duplicate message. A Drive proof link was present in the saved records; Drive permissions were not independently inspected in this run. No actual payment or verification/email trigger was performed.
+
+The in-app browser download event did not complete within its timeout during this real test; the PNG download already passed automated local browser tests, but real in-app-browser download remains unconfirmed. This is evidence for the n8n test backend only, not production readiness or all-event/concurrency verification. Production endpoints and traffic remain unchanged.
