@@ -25,6 +25,11 @@ export const facultyCoordinators: Organizer[] = [
     role: "Associate Professor",
     department: "Electrical and Electronics Engineering (EEE)",
     teamDomain: "faculty-coordinator",
+    contact: "+91 83095 69407",
+    socials: {
+      email: "chiranjivi.eee@hitam.org",
+      phone: "+918309569407",
+    },
     highlight: true,
   },
   {
