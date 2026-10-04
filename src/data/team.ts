@@ -39,7 +39,7 @@ export const facultyCoordinators: Organizer[] = [
       "He has contributed more than 30 publications to reputed journals and conferences. His research contributions also include published and granted patents, reflecting his involvement in research and innovation.",
       "He is trained and certified in Project-Based Learning (PBL) through Aalborg University, Denmark, and is also IUCEE–IGIP trained and certified. His academic interests combine electrical engineering with project-based learning and engineering education.",
       "His work spans Power Systems, Renewable Energy, and Electrical Machines, bringing together his subject interests, research publications, and patent contributions within electrical engineering.",
-      "His 17 years of experience, research contributions, and training in PBL and IUCEE–IGIP form the foundation of his academic profile as an engineering educator at HITAM.",
+      "His academic experience, research contributions, and training in PBL and IUCEE–IGIP form the foundation of his profile as an engineering educator at HITAM.",
     ],
     teamDomain: "faculty-coordinator",
     contact: "+91 83095 69407",
