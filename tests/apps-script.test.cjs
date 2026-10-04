@@ -260,3 +260,36 @@ test('overlapping submission cannot write while another commit holds the lock an
  h.scope.Sheets.Spreadsheets.batchUpdate=function(body){if(!injected){injected=true;overlap=h.scope.submitRegistration(second);assert.equal(overlap.code,'BUSY');assert.equal(h.batches.length,0);assert.equal(h.files.length,1);}return batch(body);};
  var a=h.scope.submitRegistration(first),b=h.scope.submitRegistration(second);assert.equal(a.success,true);assert.equal(b.success,true);assert.notEqual(a.receipt.regId,b.receipt.regId);assert.equal(h.batches.length,2);assert.equal(h.files.length,2);assert.equal(h.lockHeld(),false);
 });
+
+test('outside-college referral choices are stored in master and event records; HITAM ignores them', function () {
+  ['Promotions', 'Social media', 'LinkedIn', 'Instagram', 'Friends', 'Other'].forEach(function (source) {
+    var h = mocks.createHarness(), p = mocks.payloadFor(h, 'E14', 'Other', 1);
+    p.referralSource = source;
+    assert.equal(h.scope.submitRegistration(p).success, true);
+    assert.equal(h.sheets.ALL_REGISTRATIONS.rows[1][20], source);
+    assert.equal(h.sheets[h.scope.findEvent_('E14').sheetName].rows[1][18], source);
+  });
+  var h = mocks.createHarness(), p = mocks.payloadFor(h, 'E14', 'Other', 1);
+  p.referralSource = 'Forged option';
+  assert.equal(h.scope.submitRegistration(p).code, 'INVALID_REFERRAL');
+  assert.equal(h.batches.length, 0);
+  p.institution = 'HITAM'; p.totalFee = 50;
+  assert.equal(h.scope.submitRegistration(p).success, true);
+  assert.equal(h.sheets.ALL_REGISTRATIONS.rows[1][20], '');
+});
+
+test('referral header migration appends only to an exact legacy schema', function () {
+  var h = mocks.createHarness(), headers = h.scope.HEADERS.ALL_REGISTRATIONS;
+  var row = Array.from(headers).slice(0, -1), writes = [];
+  var sheet = { getName: function () { return 'ALL_REGISTRATIONS'; }, getRange: function (r, c, n, width) {
+    return { getDisplayValues: function () { return [Array.from({length: width}, function (_, i) { return row[i] || ''; })]; },
+      setValue: function (value) { writes.push([c, value]); row[c - 1] = value; } };
+  } };
+  h.scope.assertHeaders_(sheet, headers);
+  assert.deepEqual(writes, [[21, 'HowDidYouHearAboutEvent']]);
+  h.scope.assertHeaders_(sheet, headers);
+  assert.equal(writes.length, 1);
+  row[0] = 'Unexpected'; row[20] = '';
+  assert.throws(function () { h.scope.assertHeaders_(sheet, headers); }, /Header mismatch/);
+  assert.equal(writes.length, 1);
+});

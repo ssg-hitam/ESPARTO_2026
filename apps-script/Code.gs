@@ -21,11 +21,11 @@ var MAX_PROOF_BYTES = 2 * 1024 * 1024;
 var IEEE_URL = "https://script.google.com/a/macros/hitam.org/s/AKfycbwoVAJO1VLPibThDX3h5Sewj3HVaZkgGAenKgqiOb8SlhyhJgT6GRzjp4cx2aWlOXK41A/exec";
 var CDN_BASE = "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/";
 var HEADERS = {
-  ALL_REGISTRATIONS: ["Timestamp", "RegID", "EventID", "EventName", "Chapter", "TeamName", "TeamSize", "LeadName", "LeadRoll", "LeadPhone", "LeadEmail", "Institution", "College", "TeammatesSummary", "CustomDetails", "AmountPaid", "CheckInStatus", "PaymentStatus", "UTR", "ScreenshotLink"],
+  ALL_REGISTRATIONS: ["Timestamp", "RegID", "EventID", "EventName", "Chapter", "TeamName", "TeamSize", "LeadName", "LeadRoll", "LeadPhone", "LeadEmail", "Institution", "College", "TeammatesSummary", "CustomDetails", "AmountPaid", "CheckInStatus", "PaymentStatus", "UTR", "ScreenshotLink", "HowDidYouHearAboutEvent"],
   ALL_PAYMENTS_COLLECTION: ["Timestamp", "RegID", "EventName", "Chapter", "PayerName", "PayerPhone", "Amount", "Mode", "UTR", "DriveFileID", "ScreenshotLink", "VerificationStatus", "Notes"],
   ALL_MEMBERS_ROSTER: ["RegID", "EventName", "TeamName", "MemberIndex", "Role", "FullName", "RollNo", "BranchYear", "Email", "Phone", "College"]
 };
-var EVENT_HEADERS = ["Checkbox", "RegID", "Chapter", "EventName", "TeamName", "TeamSize", "LeadName", "LeadRoll", "Phone", "Email", "Institution", "College", "AllTeammates", "CustomAnswers", "AmountPaid", "UTR", "ProofLink", "DeskNotes"];
+var EVENT_HEADERS = ["Checkbox", "RegID", "Chapter", "EventName", "TeamName", "TeamSize", "LeadName", "LeadRoll", "Phone", "Email", "Institution", "College", "AllTeammates", "CustomAnswers", "AmountPaid", "UTR", "ProofLink", "DeskNotes", "HowDidYouHearAboutEvent"];
 var EVENT_CATALOG = [
   {
     "id": "E01",
@@ -672,12 +672,12 @@ function submitRegistration(payload) {
     var customText = data.customDetails || "";
     var institution = data.institution;
     var proofUrl = file.getUrl();
-    var masterRow = [timestamp, journal.regId, data.event.id, data.event.title, data.event.club, data.teamName, data.teamSize, lead.name, lead.rollNo, lead.phone, lead.email, institution, data.college, summary, customText, data.amount, "NOT CHECKED IN", "Pending Verification", data.utr, proofUrl];
+    var masterRow = [timestamp, journal.regId, data.event.id, data.event.title, data.event.club, data.teamName, data.teamSize, lead.name, lead.rollNo, lead.phone, lead.email, institution, data.college, summary, customText, data.amount, "NOT CHECKED IN", "Pending Verification", data.utr, proofUrl, data.referralSource || ""];
     var paymentRow = [timestamp, journal.regId, data.event.title, data.event.club, lead.name, lead.phone, data.amount, "UPI", data.utr, file.getId(), proofUrl, "Pending Verification", notes];
     var rosterRows = allMembers.map(function (member, index) {
       return [journal.regId, data.event.title, data.teamName, index + 1, index === 0 ? (data.teamSize === 1 ? "Participant" : "Team Lead") : "Teammate", member.name, member.rollNo, member.branchYear, member.email, member.phone, data.college];
     });
-    var eventRow = [false, journal.regId, data.event.club, data.event.title, data.teamName, data.teamSize, lead.name, lead.rollNo, lead.phone, lead.email, institution, data.college, summary, customText, data.amount, data.utr, proofUrl, ""];
+    var eventRow = [false, journal.regId, data.event.club, data.event.title, data.teamName, data.teamSize, lead.name, lead.rollNo, lead.phone, lead.email, institution, data.college, summary, customText, data.amount, data.utr, proofUrl, "", data.referralSource || ""];
     var requests = [appendRequest_(sheets.master, [masterRow]), appendRequest_(sheets.payments, [paymentRow]), appendRequest_(sheets.roster, rosterRows), appendRequest_(sheets.event, [eventRow])];
     // Persist BEFORE the API call: a timeout must never trigger a blind second write.
     journal.state = "committing";
@@ -755,6 +755,8 @@ function validatePayload_(payload) {
     if (roll) rolls[roll] = true;
   });
   var college = institution === "HITAM" ? "Hyderabad Institute of Technology and Management (HITAM)" : text_(payload.college, "College name", 160, true);
+  var referralSource = institution === "Other" ? String(payload.referralSource || "").trim() : "";
+  if (referralSource && ["Promotions", "Social media", "LinkedIn", "Instagram", "Friends", "Other"].indexOf(referralSource) === -1) throw publicError_("INVALID_REFERRAL", "Choose a valid option for how you heard about the event.");
   var teamName = event.maxTeam === 1 || ((event.allowedTeamSizes || event.id === "E03") && teamSize === 1) ? lead.name : text_(payload.teamName, "Team name", 120, true);
   var unitFee = institution === "HITAM" ? event.hitamFee : event.otherFee;
   if (event.allowedTeamSizes && teamSize === 1) unitFee = institution === "HITAM" ? event.soloHitamFee : event.soloOtherFee;
@@ -775,8 +777,8 @@ function validatePayload_(payload) {
     customDetails = JSON.stringify({ category: category, acceptedRules: formConfig.rules, additionalDetails: customDetails });
   }
   var proof = decodeProof_(payload.screenshotBase64);
-  var normalized = { eventId: event.id, eventSlug: event.slug, institution: institution, college: college, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, eventAnswers: eventAnswers, agreement: true };
-  return { event: event, requestId: requestId, institution: institution, college: college, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, proof: proof, normalized: normalized };
+  var normalized = { eventId: event.id, eventSlug: event.slug, institution: institution, college: college, referralSource: referralSource, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, eventAnswers: eventAnswers, agreement: true };
+  return { event: event, requestId: requestId, institution: institution, college: college, referralSource: referralSource, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, proof: proof, normalized: normalized };
 }
 
 function validateMember_(member, required, label, institution) {
@@ -847,6 +849,12 @@ function database_() {
 
 function assertHeaders_(sheet, headers) {
   var actual = sheet.getRange(1, 1, 1, headers.length).getDisplayValues()[0];
+  // Append the new reporting field only when every existing header matches.
+  // Existing records and column positions remain unchanged.
+  if (headers[headers.length - 1] === "HowDidYouHearAboutEvent" && !actual[headers.length - 1] && actual.slice(0, -1).join("\u001f") === headers.slice(0, -1).join("\u001f")) {
+    sheet.getRange(1, headers.length).setValue("HowDidYouHearAboutEvent");
+    actual[headers.length - 1] = "HowDidYouHearAboutEvent";
+  }
   if (actual.join("\u001f") !== headers.join("\u001f")) throw new Error("Header mismatch in " + sheet.getName() + ". Use a new spreadsheet for this rebuild; do not overwrite existing records.");
 }
 
