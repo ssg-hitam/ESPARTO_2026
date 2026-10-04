@@ -318,6 +318,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "dataquest-kaggle",
+    brochureUrl: "/brochures/dataquest-kaggle.pdf",
     slug: "dataquest-kaggle",
     title: "DataQuest – Kaggle Data Science Challenge",
     club: "HITAM AI Club",
@@ -353,6 +354,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "n8n-automation-challenge",
+    brochureUrl: "/brochures/n8n-automation-challenge.pdf",
     slug: "n8n-automation-challenge",
     title: "n8n Automation Challenge",
     club: "HITAM AI Club",

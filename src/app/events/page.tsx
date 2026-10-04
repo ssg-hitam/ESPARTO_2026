@@ -643,7 +643,7 @@ export default function EventsPage() {
                 rel="noopener noreferrer"
                 className="mb-6 flex items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/[0.05] p-4 text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               >
-                <span><strong className="block">Official event brochure</strong><span className="text-sm text-text-secondary">Full Agentic AI Workshop &amp; Hackathon details · PDF</span></span>
+                <span><strong className="block">Official event brochure</strong><span className="text-sm text-text-secondary">Full {activeModalEvent.title} details · PDF</span></span>
                 <span aria-hidden="true">↗</span>
               </a>
             )}
