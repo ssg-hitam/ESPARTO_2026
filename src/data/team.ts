@@ -7,9 +7,17 @@ import { Organizer } from "@/types";
 export const facultyCoordinators: Organizer[] = [
   {
     id: "mr-p-praveen",
-    name: "Mr. P. Praveen",
-    role: "Faculty Coordinator (IEOM)",
-    department: "Mechanical Engineering (MECH)",
+    name: "Mr. Praveen Pagidipalli",
+    role: "Associate Professor · Faculty Advisor, IEOM Student Chapter – HITAM",
+    department: "Department of Mechanical Engineering",
+    affiliation: "Hyderabad Institute of Technology and Management (HITAM), Hyderabad, India",
+    biography: [
+      "Mr. Praveen Pagidipalli is an Associate Professor in the Department of Mechanical Engineering at Hyderabad Institute of Technology and Management (HITAM), Hyderabad, with 13 years of teaching experience. His areas of expertise include Advanced Manufacturing, Production Technology, Manufacturing Automation, CAD, Metrology, and Project-Based Learning.",
+      "He has published 15 research papers, presented 10 papers at international conferences, and holds three granted patents. He has guided numerous student projects and has received the Best Project Mentor Award for three consecutive academic years in recognition of his contribution to student innovation and project development.",
+      "He is trained and certified in Project-Based Learning (PBL) through Aalborg University, Denmark, and is also IUCEE–IGIP trained and certified. His academic interests focus on innovative teaching methodologies, experiential learning, advanced manufacturing, and industry-oriented education.",
+      "As the Faculty Advisor of the IEOM Student Chapter at HITAM, he mentors students in research, technical activities, industrial exposure, professional development, and leadership. He actively promotes student participation in IEOM activities and works towards strengthening industry–academia collaboration, research culture, and global professional engagement.",
+      "His experience in academics, manufacturing, student mentoring, and IEOM student chapter development brings a practical and student-centric perspective to international panel discussions.",
+    ],
     teamDomain: "faculty-coordinator",
     contact: "+91 89190 46164",
     image: "/images/team/faculties/praveensir.png",

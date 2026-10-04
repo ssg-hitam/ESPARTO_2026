@@ -132,6 +132,8 @@ export interface Organizer {
   contact?: string;
   highlight?: boolean;
   handling?: string;
+  affiliation?: string;
+  biography?: string[];
   socials?: {
     linkedin?: string;
     github?: string;

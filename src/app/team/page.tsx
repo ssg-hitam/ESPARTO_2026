@@ -191,6 +191,19 @@ export default function TeamPage() {
                     <p className="text-xs sm:text-sm font-mono text-text-secondary mt-1 leading-relaxed">
                       {faculty.department}
                     </p>
+                    {faculty.affiliation && (
+                      <p className="mt-2 text-sm leading-relaxed text-text-secondary">{faculty.affiliation}</p>
+                    )}
+                    {faculty.biography && (
+                      <details className="mt-5 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                        <summary className="cursor-pointer font-semibold text-brand-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-orange">
+                          About {faculty.name}
+                        </summary>
+                        <div className="mt-4 space-y-4 text-sm leading-relaxed text-text-secondary">
+                          {faculty.biography.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+                        </div>
+                      </details>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-2.5 pt-5 border-t border-white/10 mt-6">
