@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/ui/FadeUp";
-import { GOOGLE_APPS_SCRIPT_REGISTRATION_URL } from "@/data/events";
+
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function RegisterPage() {
@@ -56,13 +56,13 @@ export default function RegisterPage() {
               Continue to the official registration portal to choose your event and complete your registration.
             </p>
 
-            <a
-              href={GOOGLE_APPS_SCRIPT_REGISTRATION_URL}
+            <Link
+              href="/events"
               className="inline-flex min-h-11 items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider text-white bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple hover:brightness-110 transition-all shadow-[0_0_20px_rgba(255,94,0,0.3)] hover:scale-[1.02] active:scale-[0.98]"
             >
               <span>CONTINUE TO REGISTRATION</span>
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </FadeUp>
 

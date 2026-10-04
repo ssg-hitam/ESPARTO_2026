@@ -1281,7 +1281,7 @@ function websiteRegistrationRequest_(e) {
   try{if(cache.get(nonceKey))throw Error("Replay");cache.put(nonceKey,"1",120);}finally{lock.releaseLock();}
   if(request.action==="catalogue") {
     var portal=getPortalData();
-    return {success:true,registrationAvailable:portal.registrationAvailable,events:portal.events.filter(function(event){return allowed.indexOf(event.id)!==-1;}).map(function(event){return {id:event.id,slug:event.slug,title:event.title,minTeam:event.minTeam,maxTeam:event.maxTeam,hitamFee:event.hitamFee,otherFee:event.otherFee,feeModel:event.feeModel,allowedTeamSizes:event.allowedTeamSizes,soloHitamFee:event.soloHitamFee,soloOtherFee:event.soloOtherFee,teamHitamFee:event.teamHitamFee,teamOtherFee:event.teamOtherFee,registrationForm:event.registrationForm||null};})};
+    return {success:true,payment:{upiId:portal.upiId,payee:portal.payee,paymentQrUrl:portal.paymentQrUrl},registrationAvailable:portal.registrationAvailable,events:portal.events.filter(function(event){return allowed.indexOf(event.id)!==-1;}).map(function(event){return {id:event.id,slug:event.slug,title:event.title,minTeam:event.minTeam,maxTeam:event.maxTeam,hitamFee:event.hitamFee,otherFee:event.otherFee,feeModel:event.feeModel,allowedTeamSizes:event.allowedTeamSizes,soloHitamFee:event.soloHitamFee,soloOtherFee:event.soloOtherFee,teamHitamFee:event.teamHitamFee,teamOtherFee:event.teamOtherFee,registrationForm:event.registrationForm||null};})};
   }
   var payload=request.payload;
   if(!payload || typeof payload!=="object" || Array.isArray(payload))throw Error("Denied");

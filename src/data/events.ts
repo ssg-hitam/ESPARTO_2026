@@ -62,7 +62,7 @@ export function getEventRegisterUrl(event: FestEventItem): string {
   }
 
   // Pre-select the specific event in Google Apps Script registration engine
-  return `${GOOGLE_APPS_SCRIPT_REGISTRATION_URL}?event=${encodeURIComponent(event.slug || event.id)}`;
+  return `/events/${encodeURIComponent(event.slug || event.id)}/register`;
 }
 
 export const FEST_EVENTS: FestEventItem[] = [

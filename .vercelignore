@@ -1,0 +1,7 @@
+.git/
+.env*
+scratch/
+node_modules/
+.next/
+.next-dev/
+*.tsbuildinfo

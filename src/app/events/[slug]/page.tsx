@@ -1,3 +1,4 @@
+import { productionRegistrationEnabled } from '@/lib/registration/bridge';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -35,8 +36,8 @@ export default async function EventPage({ params }: Props) {
     <section className="my-8"><h2 className="text-2xl font-bold mb-4">Event highlights</h2><ul className="list-disc pl-5 space-y-2">{event.highlights.map(text => <li key={text}>{text}</li>)}</ul></section>
     {event.coordinators && <section className="my-8"><h2 className="text-2xl font-bold mb-4">Coordinators</h2>{[...event.coordinators.students, ...(event.coordinators.faculty ? [event.coordinators.faculty] : []), ...(event.coordinators.additionalFaculty || [])].map(person => <p key={person.name} className="my-3">{person.name} {person.email && <a className="text-brand-orange break-all" href={`mailto:${person.email}`}>{person.email}</a>} {person.phone && <a href={`tel:${person.phone}`}>{person.phone}</a>}</p>)}</section>}
     <div className="flex flex-wrap gap-4 mt-8">
-      {pilot && <Link className="rounded-xl bg-brand-orange px-6 py-4 font-bold" href={`${eventPath(event)}/register`}>Try local registration</Link>}
-      <a className="rounded-xl border border-white/25 px-6 py-4" href={getEventRegisterUrl(event)}>Existing official registration</a>
+      {pilot && !productionRegistrationEnabled() && <Link className="rounded-xl bg-brand-orange px-6 py-4 font-bold" href={`${eventPath(event)}/register`}>Try local registration</Link>}
+      <a className="rounded-xl border border-white/25 px-6 py-4" href={getEventRegisterUrl(event)}>Register for event</a>
       {event.brochureUrl && <a className="rounded-xl border border-white/25 px-6 py-4" href={event.brochureUrl}>Event brochure</a>}
     </div>
   </main>;
