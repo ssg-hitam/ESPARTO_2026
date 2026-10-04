@@ -23,3 +23,9 @@ No biometric or automated identity matching is implemented. The desk records a s
 ## Approved SSG accounts
 
 The user-approved initial list is in `SSG_DESK_ROLES.json`: all eleven supplied SSG addresses are assigned E02–E14. E01 (IEEE) uses a separate system and is excluded. Copy the entire JSON object into the `ESPARTO_DESK_ROLES` Script property; saving this file in Git does not activate permissions. Add future registration-team accounts explicitly after approval. Staff must sign in with the exact account: a mailing-list address or alias alone does not establish a Google active-user identity.
+
+## Mobile scanning update
+
+Save the latest scanner.html into the Apps Script HTML file named scanner, then update the staff deployment to a new version. On phones use Take QR photo for rear-camera capture, Choose QR image for a saved ticket, or Start camera for continuous scanning when browser/iframe permissions allow it. Photo decoding stays local. Ticket results scroll into view on narrow screens. Live camera requests are canceled safely when the page is hidden while permission is pending.
+
+Google's Drive-style unable-to-open page and HTTP 400 before the desk loads are deployment/sign-in failures outside scanner code. Test the exact deployment URL copied from Manage deployments in a fresh browser session with only an approved real Google Workspace account signed in. Verify Execute as Me and organization-only access with the deployment owner/admin; do not make the desk public or grant spreadsheet access to scan operators to work around this failure.
