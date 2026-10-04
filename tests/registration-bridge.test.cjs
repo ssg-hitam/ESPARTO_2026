@@ -20,3 +20,11 @@ test('other events/actions are denied and backend fee/member/proof validation st
  const h=setup();assert.throws(()=>h.scope.websiteRegistrationRequest_(request(h,'confirm',{identityChecked:true})));assert.throws(()=>h.scope.websiteRegistrationRequest_(request(h,'submit',payloadFor(h,'E07'))));assert.throws(()=>h.scope.websiteRegistrationRequest_(request(h,'status',{regId:'ESP26-HITM-E07-001',requestId:'1'.repeat(32)})));
  const p=payloadFor(h,'E08');p.totalFee=1;assert.equal(h.scope.websiteRegistrationRequest_(request(h,'submit',p)).code,'FEE_CHANGED');p.totalFee=300;p.lead.rollNo='';assert.equal(h.scope.websiteRegistrationRequest_(request(h,'submit',p)).success,false);assert.equal(h.batches.length,0);
 });
+
+test('explicit event allowlist exposes exact IUCEE rules and preserves backend validation',()=>{
+ const h=setup();h.store.ESPARTO_REGISTRATION_BRIDGE_EVENT_IDS='E02,E04,E05,E12,E01,unknown';
+ const catalogue=h.scope.websiteRegistrationRequest_(request(h));assert.deepEqual(Array.from(catalogue.events,e=>e.id),['E02','E04','E05','E12']);
+ assert.equal(JSON.stringify(catalogue.events[0].registrationForm),JSON.stringify(h.scope.EVENT_FORM_CONFIG.E02));
+ for(const id of ['E02','E04','E05','E12']){const p=payloadFor(h,id);p.requestId=id.slice(1).padStart(32,'0');p.utrNumber=id.slice(1).padStart(12,'0');const result=h.scope.websiteRegistrationRequest_(request(h,'submit',p));assert.equal(result.success,true,id);}
+ assert.throws(()=>h.scope.websiteRegistrationRequest_(request(h,'submit',payloadFor(h,'E08'))));
+});

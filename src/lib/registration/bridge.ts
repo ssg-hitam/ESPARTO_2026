@@ -26,3 +26,7 @@ export async function registrationBridge(action:RegistrationAction,payload?:unkn
   if(typeof result.success!=='boolean')throw Error('UPSTREAM');
   return result;
 }
+
+export function registrationTestEventIds():string[] {
+  return (process.env.EVENT_PLATFORM_GOOGLE_TEST_EVENT_IDS||'E08').split(',').map(id=>id.trim()).filter(id=>/^E(?:0[2-9]|1[0-4])$/.test(id));
+}

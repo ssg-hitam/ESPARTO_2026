@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     const chunks:Uint8Array[]=[];let size=0;
     while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>3000000){await reader.cancel();return NextResponse.json({success:false,message:'Screenshot is too large.'},{status:413});}chunks.push(value);}
     const body=Buffer.concat(chunks).toString('utf8');const data=JSON.parse(body);
-    if (!['catalogue','submit','status'].includes(data.action) || (data.action==='submit' && data.payload?.eventId!=='E08')) return NextResponse.json({success:false,message:'Unsupported local pilot action.'},{status:400});
+    if (!['catalogue','submit','status'].includes(data.action) || (data.action==='submit' && !/^E(?:0[2-9]|1[0-4])$/.test(String(data.payload?.eventId||'')))) return NextResponse.json({success:false,message:'Unsupported local pilot action.'},{status:400});
     const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body,cache:'no-store',signal:AbortSignal.timeout(15000)});
     return NextResponse.json(await response.json(),{status:response.status,headers:{'Cache-Control':'no-store'}});
   } catch {return NextResponse.json({success:false,retryable:true,message:'The local test backend is unavailable. Retry the same submission; do not pay.'},{status:503});}

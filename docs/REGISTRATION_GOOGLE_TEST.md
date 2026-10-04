@@ -49,3 +49,16 @@ Before production enablement, complete real test Sheet verification, abuse/rate-
 Using the separate test project and test Sheet above, localhost loaded the signed E08 catalogue. The disabled-write check returned `SUBMISSIONS_DISABLED`. After the operator enabled test submissions, a synthetic two-person team saved with reference `ESP26-HITM-E08-001`, amount ₹300, and pending verification in both payment records. An exported real workbook confirmed one master row, one payment row, two roster rows (CSD · Year 4), and one n8n event row. The existing-submission recovery UI returned the same reference with its no-duplicate message. A Drive proof link was present in the saved records; Drive permissions were not independently inspected in this run. No actual payment or verification/email trigger was performed.
 
 The in-app browser download event did not complete within its timeout during this real test; the PNG download already passed automated local browser tests, but real in-app-browser download remains unconfirmed. This is evidence for the n8n test backend only, not production readiness or all-event/concurrency verification. Production endpoints and traffic remain unchanged.
+
+## Expand the shared-backend test to 13 events
+
+IEEE/E01 remains on its separate official link, as requested. The local simulator supports E02–E14. The frontend reads backend team bounds, allowed sizes, fee fields and IUCEE form/rule/category text. GDG frontend requires 2–4 participants per the user's earlier decision; legacy backend still allows solo, so align that contract before production. The additional signed adapter exposes these non-sensitive form fields only for explicitly enabled events. Defaults remain E08 alone; production mode remains disabled.
+
+To run real Google tests for the other shared events:
+1. Replace Code.gs in the **test project only** with `scratch/google-registration-test/Code.gs`. This prepared copy retains the test Sheet ID and test proof folder name. Existing business functions and IEEE routing are preserved. No index.html update is needed for the adapter change.
+2. Add test Script property `ESPARTO_REGISTRATION_BRIDGE_EVENT_IDS` with `E02,E03,E04,E05,E06,E07,E08,E09,E10,E11,E12,E13,E14`. Keep the existing bridge secret and flags.
+3. Update that test Web app deployment to a new version, description `Shared event website test v2`. Keep its URL and access settings. Do not touch the production deployment.
+4. Only after the updated catalogue is verified, set local `EVENT_PLATFORM_GOOGLE_TEST_EVENT_IDS` to the same list and restart Next. Before this setting, only n8n uses Google; other forms use the simulator.
+5. Test each event with synthetic data and verify the same four record sets, proof privacy, failed validation and recovery. Real concurrent submission, ticket email and real-device coverage are still rollout gates.
+
+Expanded-preview validation: all 12 additional shared-event forms (E02–E07 and E09–E14) passed mobile browser submission to the isolated simulator, including exact IUCEE consents/category and individual/four-member selection. Together with the real n8n pilot, all 13 shared-event frontend paths have been exercised, but only n8n has real Google persistence evidence. 56 contract tests and the production build passed; eight existing CircularCarousel lint warnings remain. IEEE was excluded throughout.

@@ -11,9 +11,9 @@ http.createServer(async (req,res) => {
     const {action,payload}=JSON.parse(Buffer.concat(chunks));
     let result;
     if(action==='catalogue')result=harness.scope.getPortalData();
-    else if(action==='submit' && payload?.eventId==='E08')result=harness.scope.submitRegistration(payload);
+    else if(action==='submit' && /^E(?:0[2-9]|1[0-4])$/.test(String(payload?.eventId||'')))result=harness.scope.submitRegistration(payload);
     else if(action==='status')result=harness.scope.getRegistrationStatus(payload.regId,payload.requestId);
-    else {res.statusCode=400;result={success:false,message:'Local pilot supports E08 only.'};}
+    else {res.statusCode=400;result={success:false,message:'Shared-backend events only; IEEE is separate.'};}
     res.end(JSON.stringify(result));
   }catch {res.statusCode=400;res.end(JSON.stringify({success:false,message:'Local backend request failed.'}));}
 }).listen(4100,'127.0.0.1',()=>console.log('Isolated Code.gs harness: http://127.0.0.1:4100 (no live data or emails)'));

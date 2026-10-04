@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { registrationBridge, registrationBridgeConfig, registrationHeaders, type RegistrationAction } from '@/lib/registration/bridge';
+import { registrationBridge, registrationBridgeConfig, registrationTestEventIds, registrationHeaders, type RegistrationAction } from '@/lib/registration/bridge';
 export const runtime='nodejs';
 export const dynamic='force-dynamic';
 export async function POST(request:NextRequest) {
@@ -14,7 +14,7 @@ export async function POST(request:NextRequest) {
     try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>3000000){await reader.cancel();return json({success:false,message:'Upload exceeds the request limit.'},413);}chunks.push(value);}}finally{reader.releaseLock();}
     data=JSON.parse(Buffer.concat(chunks).toString('utf8'));
     if(!data || !['catalogue','submit','status'].includes(data.action))return json({success:false,message:'Unsupported action.'},400);
-    if(data.action==='submit' && (data.payload?.eventId!=='E08' || data.payload?.eventSlug!=='n8n-automation-challenge'))return json({success:false,message:'Only the n8n test pilot is enabled.'},400);
+    if(data.action==='submit' && (!registrationTestEventIds().includes(data.payload?.eventId)||typeof data.payload?.eventSlug!=='string'))return json({success:false,message:'This event is not enabled for Google testing.'},400);
     if(data.action==='status' && (typeof data.payload?.requestId!=='string' || typeof data.payload?.regId!=='string'))return json({success:false,message:'Ticket reference and submission token are required.'},400);
   }catch{return json({success:false,message:'Invalid request.'},400);}
   try{return json(await registrationBridge(data.action as RegistrationAction,data.payload));}

@@ -1263,6 +1263,7 @@ function websiteDeskRequest_(e) {
 function websiteRegistrationRequest_(e) {
   var properties=PropertiesService.getScriptProperties();
   var secret=properties.getProperty("ESPARTO_REGISTRATION_BRIDGE_SECRET")||"";
+  var allowed=(properties.getProperty("ESPARTO_REGISTRATION_BRIDGE_EVENT_IDS")||"E08").split(",").map(function(id){return id.trim();}).filter(function(id){return /^E(?:0[2-9]|1[0-4])$/.test(id);});
   if(properties.getProperty("ESPARTO_REGISTRATION_BRIDGE_ENABLED")!=="true" || secret.length<32)throw Error("Registration bridge disabled");
   var text=e&&e.postData&&e.postData.contents;
   if(typeof text!=="string" || text.length>3000000)throw Error("Denied");
@@ -1280,15 +1281,17 @@ function websiteRegistrationRequest_(e) {
   try{if(cache.get(nonceKey))throw Error("Replay");cache.put(nonceKey,"1",120);}finally{lock.releaseLock();}
   if(request.action==="catalogue") {
     var portal=getPortalData();
-    return {success:true,registrationAvailable:portal.registrationAvailable,events:portal.events.filter(function(event){return event.id==="E08";}).map(function(event){return {id:event.id,slug:event.slug,title:event.title,minTeam:event.minTeam,maxTeam:event.maxTeam,hitamFee:event.hitamFee,otherFee:event.otherFee,feeModel:event.feeModel};})};
+    return {success:true,registrationAvailable:portal.registrationAvailable,events:portal.events.filter(function(event){return allowed.indexOf(event.id)!==-1;}).map(function(event){return {id:event.id,slug:event.slug,title:event.title,minTeam:event.minTeam,maxTeam:event.maxTeam,hitamFee:event.hitamFee,otherFee:event.otherFee,feeModel:event.feeModel,allowedTeamSizes:event.allowedTeamSizes,soloHitamFee:event.soloHitamFee,soloOtherFee:event.soloOtherFee,teamHitamFee:event.teamHitamFee,teamOtherFee:event.teamOtherFee,registrationForm:event.registrationForm||null};})};
   }
   var payload=request.payload;
   if(!payload || typeof payload!=="object" || Array.isArray(payload))throw Error("Denied");
   if(request.action==="submit") {
-    if(payload.eventId!=="E08" || payload.eventSlug!=="n8n-automation-challenge")throw Error("Pilot event denied");
+    var event=findEvent_(String(payload.eventId||""));
+    if(!event || allowed.indexOf(event.id)===-1 || payload.eventSlug!==event.slug)throw Error("Pilot event denied");
     if(properties.getProperty("ESPARTO_REGISTRATION_BRIDGE_SUBMIT_ENABLED")!=="true")return failure_("SUBMISSIONS_DISABLED","Google Sheets test submissions have not been enabled.",false);
     return submitRegistration(payload);
   }
-  if(!/^ESP26-(?:E08-\d{4}|HITM-E08-\d{3,6})$/.test(String(payload.regId||"")))throw Error("Pilot event denied");
+  var reference=String(payload.regId||""),match=reference.match(/^ESP26-(?:HITM-)?(E\d{2})-\d{3,6}$/);
+  if(!match || allowed.indexOf(match[1])===-1)throw Error("Pilot event denied");
   return getRegistrationStatus(payload.regId,payload.requestId);
 }
