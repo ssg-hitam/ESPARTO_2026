@@ -101,11 +101,11 @@ export const ssgLeadership: Organizer[] = [
   },
   {
     id: "hemanth-freshmen",
-    name: "Hemanth",
+    name: "Hemanth Nayak",
     role: "Student Dean — Freshmen",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
-    handling: "Registrations & Delegate Desk",
+    handling: "Website & Registrations",
     image: "/images/team/ssg/Student_Dean_Freshmen.png",
     socials: {
       email: "ssg.deanfreshmen@hitam.org"
