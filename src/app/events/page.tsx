@@ -482,7 +482,7 @@ export default function EventsPage() {
                           href={eventPath(event)}
                           className="block w-full text-center text-[11px] font-mono text-text-muted hover:text-white py-1 transition-colors"
                         >
-                          Open Event Page →
+                          View details →
                         </Link>
 
                       </div>
