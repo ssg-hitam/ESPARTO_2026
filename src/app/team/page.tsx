@@ -194,16 +194,6 @@ export default function TeamPage() {
                     {faculty.affiliation && (
                       <p className="mt-2 text-sm leading-relaxed text-text-secondary">{faculty.affiliation}</p>
                     )}
-                    {faculty.biography && (
-                      <details className="mt-5 rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                        <summary className="cursor-pointer font-semibold text-brand-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-orange">
-                          About {faculty.name}
-                        </summary>
-                        <div className="mt-4 space-y-4 text-sm leading-relaxed text-text-secondary">
-                          {faculty.biography.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
-                        </div>
-                      </details>
-                    )}
                   </div>
 
                   <div className="flex flex-col gap-2.5 pt-5 border-t border-white/10 mt-6">
@@ -216,17 +206,6 @@ export default function TeamPage() {
                           <Mail className="w-3.5 h-3.5" />
                         </div>
                         <span className="truncate">{faculty.socials.email}</span>
-                      </a>
-                    )}
-                    {faculty.contact && (
-                      <a
-                        href={`tel:${faculty.socials?.phone || faculty.contact.replace(/\s+/g, '')}`}
-                        className="inline-flex items-center gap-2.5 text-xs font-mono text-emerald-400/90 hover:text-emerald-400 transition-colors group/link"
-                      >
-                        <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
-                          <Phone className="w-3.5 h-3.5" />
-                        </div>
-                        <span>{faculty.contact}</span>
                       </a>
                     )}
                   </div>
