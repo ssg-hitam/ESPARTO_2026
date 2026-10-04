@@ -113,7 +113,7 @@ var EVENT_CATALOG = [
     "logo": "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/hhc-iucee.png",
     "sheetName": "[HHC] Programmers Got Talent",
     "themeColor": "#7c3aed",
-    "description": "An electrifying high-speed coding battle: blind syntax rounds, obscure runtime bug hunts, algorithmic sprint races, and rapid-fire problem solving under tournament pressure.",
+    "description": "A stage-based showcase where students get the opportunity to demonstrate their software, hardware, coding, electronics, or other technical skills live. The goal is to make technical talent visible, engaging, and entertaining while giving students a platform to showcase what they can actually build.",
     "prizeBreakup": {
       "first": "₹3,000",
       "second": "₹2,000"
@@ -128,11 +128,14 @@ var EVENT_CATALOG = [
     "title": "Smart Manufacturing Challenge",
     "club": "IEOM HITAM",
     "category": "Challenge",
-    "minTeam": 4,
+    "minTeam": 1,
     "maxTeam": 4,
-    "hitamFee": 99,
-    "otherFee": 149,
+    "hitamFee": 200,
+    "otherFee": 300,
     "feeModel": "team",
+    "allowedTeamSizes": [1, 4],
+    "soloHitamFee": 100,
+    "soloOtherFee": 150,
     "prize": 5700,
     "logo": "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ieom-hitam.png",
     "sheetName": "[IEOM] Smart Manufacturing Challenge",
@@ -155,9 +158,12 @@ var EVENT_CATALOG = [
     "category": "Ideathon",
     "minTeam": 1,
     "maxTeam": 4,
-    "hitamFee": 149,
-    "otherFee": 199,
+    "hitamFee": 200,
+    "otherFee": 300,
     "feeModel": "team",
+    "allowedTeamSizes": [1, 4],
+    "soloHitamFee": 100,
+    "soloOtherFee": 150,
     "prize": 5700,
     "logo": "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ieom-hitam.png",
     "sheetName": "[IEOM] Startup Pitch Challenge",
@@ -329,18 +335,18 @@ var EVENT_CATALOG = [
     "hitamFee": 50,
     "otherFee": 60,
     "feeModel": "person",
-    "prize": 10000,
+    "prize": 1200,
     "logo": "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/csi-hitam.png",
     "sheetName": "[CSI] Code Casino",
     "themeColor": "#6d28d9",
     "description": "High-stakes competitive coding game organized by CSI Student Chapter. Place strategic chip wagers on code optimization rounds, guess asymptotic complexities, debug under pressure, and maximize your chip stack.",
     "prizeBreakup": {
-      "first": "₹5,000",
-      "second": "₹3,000",
-      "third": "₹2,000"
+      "first": "₹600",
+      "second": "₹400",
+      "third": "₹200"
     },
-    "studentContact": "CSI Student Lead (+91 90591 11595)",
-    "facultyContact": "ssg@hitam.org",
+    "studentContact": "K. Manivenkat — Student HOD, CSE (+91 80088 19830, 24e51a05b5@hitam.org)",
+    "facultyContact": "",
     "clubEmail": ""
   },
   {
@@ -364,8 +370,8 @@ var EVENT_CATALOG = [
       "second": "₹400",
       "third": "₹200"
     },
-    "studentContact": "CSI Student Lead (+91 90591 11595)",
-    "facultyContact": "ssg@hitam.org",
+    "studentContact": "K. Manivenkat — Student HOD, CSE (+91 80088 19830, 24e51a05b5@hitam.org)",
+    "facultyContact": "",
     "clubEmail": ""
   }
 ];
@@ -416,7 +422,7 @@ var EVENT_FORM_CONFIG = {
   },
   E04: {
     tagline: "Your Code. Your Build. Center Stage.",
-    intro: "Bring software, hardware, robotics, electronics or competitive coding to life in front of a live audience and judges. Enter solo and showcase your technical depth and stage presence.",
+    intro: "A stage-based showcase where students get the opportunity to demonstrate their software, hardware, coding, electronics, or other technical skills live. The goal is to make technical talent visible, engaging, and entertaining while giving students a platform to showcase what they can actually build.",
     highlights: ["October 10, 2026 · HITAM Campus", "Zero eliminations: every act performs in all three rounds through the Grand Finale.", "A live 3-minute spotlight, a surprise Twist Challenge and a finale with audience voting.", "Any technical, working live demonstration belongs on stage."],
     categories: ["Software", "Hardware", "Robotics", "Electronics", "Competitive coding", "Other technical demonstration"],
     rules: ["I confirm this build/performance is my own original work.", "I understand a live, working demo is required and pre-recorded footage may only be used as brief supporting b-roll.", "I agree to strict time limits and understand my slot will be cut off at the buzzer.", "I consent to photography/video during the event."]
@@ -657,6 +663,7 @@ function validatePayload_(payload) {
   if (institution !== "HITAM" && institution !== "Other") throw publicError_("INVALID_INSTITUTION", "Choose HITAM Student or Other College.");
   var teamSize = payload.teamSize;
   if (typeof teamSize !== "number" || !Number.isInteger(teamSize) || teamSize < event.minTeam || teamSize > event.maxTeam) throw publicError_("INVALID_TEAM", "Choose a valid number of participants for this event.");
+  if (event.allowedTeamSizes && event.allowedTeamSizes.indexOf(teamSize) === -1) throw publicError_("INVALID_TEAM", "Choose individual entry or a team of exactly four participants.");
   if (!Array.isArray(payload.members) || payload.members.length !== teamSize - 1) throw publicError_("INVALID_MEMBERS", "Complete one teammate block for each selected participant.");
   var lead = validateMember_(payload.lead, true, "Team lead");
   var members = payload.members.map(function (member, index) { return validateMember_(member, false, "Teammate " + (index + 2)); });
@@ -668,8 +675,9 @@ function validatePayload_(payload) {
     if (roll) rolls[roll] = true;
   });
   var college = institution === "HITAM" ? "Hyderabad Institute of Technology and Management (HITAM)" : text_(payload.college, "College name", 160, true);
-  var teamName = event.maxTeam === 1 ? lead.name : text_(payload.teamName, "Team name", 120, true);
+  var teamName = event.maxTeam === 1 || (event.allowedTeamSizes && teamSize === 1) ? lead.name : text_(payload.teamName, "Team name", 120, true);
   var unitFee = institution === "HITAM" ? event.hitamFee : event.otherFee;
+  if (event.allowedTeamSizes && teamSize === 1) unitFee = institution === "HITAM" ? event.soloHitamFee : event.soloOtherFee;
   var amount = event.id === "E12" ? (teamSize === 1 ? 120 : 250) : (unitFee * (event.feeModel === "person" ? teamSize : 1));
   if (typeof payload.totalFee !== "number" || payload.totalFee !== amount) throw publicError_("FEE_CHANGED", "The displayed amount does not match the event fee. Return to participant details and check the payment amount.");
   var utr = String(payload.utrNumber || "").trim();
@@ -855,7 +863,7 @@ function newRegId_(master, eventId) {
 function digest_(value) {
   return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, value).map(function (byte) { return ("0" + ((byte + 256) % 256).toString(16)).slice(-2); }).join("");
 }
-function teamLabel_(event) { return event.maxTeam === 1 ? "Solo" : event.minTeam === event.maxTeam ? event.minTeam + " participants" : event.minTeam + "–" + event.maxTeam + " participants"; }
+function teamLabel_(event) { if (event.allowedTeamSizes) return "Individual or team of 4"; return event.maxTeam === 1 ? "Solo" : event.minTeam === event.maxTeam ? event.minTeam + " participants" : event.minTeam + "–" + event.maxTeam + " participants"; }
 function publicError_(code, message) { var error = new Error(message); error.publicCode = code; return error; }
 function failure_(code, message, retryable) { return { success: false, code: code, message: message, retryable: retryable === true }; }
 function requireOwner_() {

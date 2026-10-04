@@ -5,7 +5,7 @@ var mocks = require('./apps-script-mocks.cjs');
 function plain(value) { return JSON.parse(JSON.stringify(value)); }
 function rowCount(harness, name) { return harness.sheets[name].rows.length - 1; }
 test('group links stay private until both payment records are verified, with possession of the submission token', function () {
-  ['E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08'].forEach(function (id) {
+  ['E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08', 'E09', 'E10', 'E13', 'E14'].forEach(function (id) {
     var h = mocks.createHarness(), payload = mocks.payloadFor(h, id);
     var privateLink = 'https://chat.whatsapp.com/PrivateGroup' + id;
     h.store['WHATSAPP_GROUP_' + id] = privateLink;
@@ -41,25 +41,26 @@ test('group access fails closed for invalid URLs, mismatched records, or backend
 test('catalog has the exact 14 IDs, slugs, fees, models, team bounds, prizes, and chapter contacts', function () {
   var h = mocks.createHarness(), catalog = h.scope.EVENT_CATALOG;
   var expected = [
-    ['E01','ieee-ideathon',3,4,200,300,'team',30000],['E02','reverse-hackathon',2,3,550,600,'team',10000],['E03','agentic-ai-workshop-hackathon',1,4,150,150,'person',10000],['E04','programmers-got-talent',1,1,150,150,'person',5000],['E05','smart-manufacturing-challenge',4,4,99,149,'team',5700],['E06','ieom-startup-pitch',1,4,149,199,'team',5700],['E07','dataquest-kaggle',2,2,300,300,'team',5000],['E08','n8n-automation-challenge',2,2,300,300,'team',5000],['E09','data-heist-datathon',2,4,200,300,'team',3000],['E10','data-dossier',2,4,100,200,'team',3000],['E11','torquex-motorsport',1,4,50,70,'person',5000],['E12','build-first-robot',1,4,250,250,'team',5000],['E13','code-casino',2,3,50,60,'person',10000],['E14','technical-tambola',1,1,50,60,'person',1200]
+    ['E01','ieee-ideathon',3,4,200,300,'team',30000],['E02','reverse-hackathon',2,3,550,600,'team',10000],['E03','agentic-ai-workshop-hackathon',1,4,150,150,'person',10000],['E04','programmers-got-talent',1,1,150,150,'person',5000],['E05','smart-manufacturing-challenge',1,4,200,300,'team',5700],['E06','ieom-startup-pitch',1,4,200,300,'team',5700],['E07','dataquest-kaggle',2,2,300,300,'team',5000],['E08','n8n-automation-challenge',2,2,300,300,'team',5000],['E09','data-heist-datathon',2,4,200,300,'team',3000],['E10','data-dossier',2,4,100,200,'team',3000],['E11','torquex-motorsport',1,4,50,70,'person',5000],['E12','build-first-robot',1,4,250,250,'team',5000],['E13','code-casino',2,3,50,60,'person',1200],['E14','technical-tambola',1,1,50,60,'person',1200]
   ];
   assert.deepEqual(plain(catalog.map(function (e) { return [e.id,e.slug,e.minTeam,e.maxTeam,e.hitamFee,e.otherFee,e.feeModel,e.prize]; })), expected);
-  catalog.forEach(function (event) { assert.equal(h.scope.getChapterName(event.id, ''), event.club); assert.equal(h.scope.getChapterName('', event.slug), event.club); assert.match(event.logo,/^https:\/\/cdn\.jsdelivr\.net\//); assert.ok(event.studentContact); assert.ok(event.facultyContact); });
+  catalog.forEach(function (event) { assert.equal(h.scope.getChapterName(event.id, ''), event.club); assert.equal(h.scope.getChapterName('', event.slug), event.club); assert.match(event.logo,/^https:\/\/cdn\.jsdelivr\.net\//); assert.ok(event.studentContact); if(event.id === "E13" || event.id === "E14") {assert.equal(event.facultyContact, "");assert.match(event.studentContact,/K\. Manivenkat/);assert.ok(!event.studentContact.includes("Nandhitha"));assert.ok(!event.studentContact.includes("Kyathieshwary"));} else assert.ok(event.facultyContact); });
   assert.equal(h.scope.getPortalData().chapters.length,11);
   assert.match(h.scope.IEEE_URL,/AKfycbwoVAJO1VLPibThDX3h5Sewj3HVaZkgGAenKgqiOb8SlhyhJgT6GRzjp4cx2aWlOXK41A/);
 });
-test('every allowed team size and college tier uses the server fee schedule (62 combinations)', function () {
+test('every allowed team size and college tier uses the server fee schedule (60 combinations)', function () {
   var catalog = mocks.createHarness().scope.EVENT_CATALOG, count = 0;
   catalog.forEach(function (event) {
     if (event.id === 'E01') return;
     ['HITAM','Other'].forEach(function (tier) { for (var size = event.minTeam; size <= event.maxTeam; size++) {
+      if(event.allowedTeamSizes && !event.allowedTeamSizes.includes(size))continue;
       var h = mocks.createHarness(), p = mocks.payloadFor(h,event.id,tier,size), result = h.scope.submitRegistration(p);
       assert.equal(result.success,true,event.id+' '+tier+' '+size); assert.equal(result.receipt.amount,p.totalFee);
       assert.equal(rowCount(h,'ALL_REGISTRATIONS'),1); assert.equal(rowCount(h,'ALL_PAYMENTS_COLLECTION'),1); assert.equal(rowCount(h,'ALL_MEMBERS_ROSTER'),size); assert.equal(rowCount(h,event.sheetName),1);
       assert.equal(h.batches.length,1); assert.equal(h.batches[0].requests.length,4); assert.equal(h.files.length,1); assert.equal(h.files[0].shared,true); assert.equal(h.files[0].trashed,false); assert.equal(h.lockHeld(),false); count++;
     } });
   });
-  assert.equal(count,62);
+  assert.equal(count,60);
 });
 test('master, finance, roster and event rows retain text UTRs, phones, amounts, and pending status', function () {
   var h = mocks.createHarness(), p = mocks.payloadFor(h,'E03','Other',4); p.lead.phone = '+91 98765 43211'; p.teamName = '=IMPORTXML("bad","bad")'; p.eventTitle='FORGED TITLE'; p.chapter='FORGED CLUB';
@@ -137,4 +138,13 @@ test('event forms enforce category, teammate details and every consent on the se
     assert.deepEqual(stored.acceptedRules,plain(h.scope.EVENT_FORM_CONFIG[id].rules));
     if(id==='E04')assert.equal(stored.category,'Software');
   });
+});
+
+test('IEOM allows only individuals or four-member teams with exact tier fees', function(){
+ ['E05','E06'].forEach(function(id){
+  ['HITAM','Other'].forEach(function(tier){
+   [1,4].forEach(function(size){var h=mocks.createHarness(),p=mocks.payloadFor(h,id,tier,size);var result=h.scope.submitRegistration(p);assert.equal(result.success,true);assert.equal(result.receipt.amount,size===1?(tier==='HITAM'?100:150):(tier==='HITAM'?200:300));});
+   [2,3].forEach(function(size){var h=mocks.createHarness(),p=mocks.payloadFor(h,id,tier,size);assert.equal(h.scope.submitRegistration(p).code,'INVALID_TEAM');assert.equal(h.batches.length,0);});
+  });
+ });
 });

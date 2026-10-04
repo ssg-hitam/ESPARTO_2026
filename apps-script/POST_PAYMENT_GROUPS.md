@@ -4,7 +4,7 @@ Group invitation URLs must never be placed in `Code.gs`, `index.html`, website d
 
 ## Configure once in Apps Script
 
-Open Project Settings → Script properties → Add script property. Copy the seven key/value pairs from the private configuration file supplied in the chat. This file is intentionally outside the repository.
+Open Project Settings → Script properties → Add script property. Copy the event key/value pairs from the private configuration file supplied in the chat. This file is intentionally outside the repository.
 
 | Property key | Event |
 | --- | --- |
@@ -15,6 +15,10 @@ Open Project Settings → Script properties → Add script property. Copy the se
 | WHATSAPP_GROUP_E06 | IEOM Startup Pitch Challenge |
 | WHATSAPP_GROUP_E07 | DataQuest — Kaggle Data Science Challenge |
 | WHATSAPP_GROUP_E08 | n8n Automation Challenge |
+| WHATSAPP_GROUP_E09 | DATA HEIST Datathon |
+| WHATSAPP_GROUP_E10 | DATA DOSSIER Case Study |
+| WHATSAPP_GROUP_E13 | Code Casino |
+| WHATSAPP_GROUP_E14 | Technical Tambola |
 
 Paste updated `Code.gs` and `index.html`, save, then update the existing deployment with a new version. Do not rerun database setup or replace existing participant rows.
 

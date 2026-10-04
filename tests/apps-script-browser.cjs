@@ -109,8 +109,17 @@ async function edgeCases(browser,base,engineName) {
   for(var event of catalog) {
     var entry=session(),page=await newPage(browser,base,entry,{width:390,height:844},event.slug);
     if(event.id==='E01'){assert.equal(await page.locator('#externalPanel').isVisible(),true);assert.equal(await page.locator('#externalPanel a.btn').getAttribute('href'),entry.state.harness.scope.IEEE_URL);assert.equal(await page.locator('#mobileBar').isVisible(),false);}
-    else {assert.equal(await page.locator('#detailsView').isVisible(),true);assert.equal(Number(await page.locator('#teamSize').inputValue()),event.minTeam);assert.equal(await page.locator('#mobileAmount').textContent(),'₹'+(event.hitamFee*(event.feeModel==='person'?event.minTeam:1)).toLocaleString('en-IN'));}
+    else {assert.equal(await page.locator('#detailsView').isVisible(),true);assert.equal(Number(await page.locator('#teamSize').inputValue()),event.minTeam);assert.equal(await page.locator('#mobileAmount').textContent(),'₹'+(mocks.payloadFor(entry.state.harness,event.id,'HITAM',event.minTeam).totalFee).toLocaleString('en-IN'));}
     await noOverflow(page,engineName+' deep link '+event.id);assert.deepEqual(page.errors,[]);await page.close();
+  }
+  for(var ieomSlug of ['smart-manufacturing-challenge','ieom-startup-pitch']){
+    var ieom=session(),ip=await newPage(browser,base,ieom,{width:390,height:844},ieomSlug);
+    assert.deepEqual(await ip.locator('#teamSize option').evaluateAll(function(options){return options.map(function(option){return option.value;});}),['1','4']);
+    assert.equal(await ip.locator('#mobileAmount').textContent(),'₹100');
+    await ip.getByText('Other College',{exact:true}).click();assert.equal(await ip.locator('#mobileAmount').textContent(),'₹150');
+    await ip.locator('#teamSize').selectOption('4');assert.equal(await ip.locator('#mobileAmount').textContent(),'₹300');
+    await ip.getByText('HITAM Student',{exact:true}).click();assert.equal(await ip.locator('#mobileAmount').textContent(),'₹200');
+    await noOverflow(ip,'IEOM four-person details');await ip.close();
   }
   var showcase=session(),showcasePage=await newPage(browser,base,showcase,{width:320,height:740},'programmers-got-talent');
   assert.equal(await showcasePage.locator('#eventCategory').getAttribute('required'),'');

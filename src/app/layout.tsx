@@ -57,8 +57,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
+        width: 1024,
+        height: 576,
         alt: "ESPARTO 2026 - HITAM Annual Technical Fest",
       },
     ],

@@ -44,7 +44,7 @@ export interface FestEventItem {
   unstopUrl?: string;
   coordinators?: {
     students: { name: string; phone?: string; email?: string }[];
-    faculty: { name: string; phone?: string; email?: string };
+    faculty?: { name: string; phone?: string; email?: string };
     clubEmail?: string;
   };
 }
@@ -188,8 +188,8 @@ export const FEST_EVENTS: FestEventItem[] = [
     clubId: "hhc",
     clubLogo: "/images/chapters/hhc-iucee.png",
     category: "Gaming & Coding",
-    tagline: "Speed coding, blind syntax rounds & algorithmic showdowns",
-    description: "An electrifying high-speed coding battle: blind syntax rounds, obscure runtime bug hunts, algorithmic sprint races, and rapid-fire problem solving under tournament pressure.",
+    tagline: "Your Code. Your Build. Center Stage.",
+    description: "A stage-based showcase where students get the opportunity to demonstrate their software, hardware, coding, electronics, or other technical skills live. The goal is to make technical talent visible, engaging, and entertaining while giving students a platform to showcase what they can actually build.",
     bannerImage: "/images/events/programmers-got-talent-banner.png",
     date: "Day 2 (Oct 10)",
     dayNumber: 2,
@@ -207,7 +207,7 @@ export const FEST_EVENTS: FestEventItem[] = [
       perTeam: false,
       note: "Solo Participation | Registration: ₹150/participant",
     },
-    highlights: ["₹5,000 Cash Prize Pool", "1st: ₹3,000 | 2nd: ₹2,000", "Solo Speed Duel", "Blind Coding Arenas", "Live Leaderboard Tracking"],
+    highlights: ["₹5,000 Cash Prize Pool", "1st: ₹3,000 | 2nd: ₹2,000", "Solo Technical Showcase", "Software, Hardware, Coding & Electronics", "Live Stage Demonstrations"],
     coordinators: {
       students: [
         { name: "Ameena", phone: "9966864664", email: "24e51a6612@gmail.com" },
@@ -238,12 +238,12 @@ export const FEST_EVENTS: FestEventItem[] = [
       second: "₹2,000",
       third: "₹1,200",
     },
-    teamSize: "Team of 4 Members",
+    teamSize: "Solo or Team of 4 Members",
     registrationFee: {
-      hitam: "₹99 / team",
-      nonHitam: "₹149 / team",
+      hitam: "₹200 / team · ₹100 / individual",
+      nonHitam: "₹300 / team · ₹150 / individual",
       perTeam: true,
-      note: "Team of 4 | HITAM: ₹99/team | Outside: ₹149/team",
+      note: "Team of 4: HITAM ₹200 / Outside ₹300. Individual: HITAM ₹100 / Outside ₹150.",
     },
     highlights: [
       "₹5,700 Day 1 Prize Pool",
@@ -281,10 +281,10 @@ export const FEST_EVENTS: FestEventItem[] = [
     },
     teamSize: "Team (4 Members) or Solo",
     registrationFee: {
-      hitam: "₹149 team / ₹79 solo",
-      nonHitam: "₹199 team / ₹99 solo",
+      hitam: "₹200 / team · ₹100 / individual",
+      nonHitam: "₹300 / team · ₹150 / individual",
       perTeam: true,
-      note: "Team (4): ₹149 (HITAM) / ₹199 (Outside) | Solo: ₹79 (HITAM) / ₹99 (Outside)",
+      note: "Team of 4: HITAM ₹200 / Outside ₹300. Individual: HITAM ₹100 / Outside ₹150.",
     },
     highlights: [
       "₹5,700 Day 2 Prize Pool",
@@ -309,7 +309,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     category: "Challenge",
     tagline: "Live machine learning competition on private Kaggle arena",
     description: "Compete in an intense Kaggle hackathon. Perform exploratory data analysis, engineer discriminative features, train neural networks, and climb the live private leaderboard.",
-    bannerImage: "/images/events/dataquest-kaggle-banner.png",
+    bannerImage: "/images/events/dataquest-official-banner.png",
     date: "Day 1 (Oct 9)",
     dayNumber: 1,
     timings: "10:00 AM – 4:00 PM",
@@ -344,7 +344,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     category: "Challenge",
     tagline: "Event-driven workflow & AI agent integration hack",
     description: "Harness n8n to connect multi-source APIs, automate mission-critical organizational workflows, and orchestrate intelligent autonomous triggers without boilerplate code.",
-    bannerImage: "/images/events/n8n-automation-challenge-banner.png",
+    bannerImage: "/images/events/n8n-automation-official-banner.png",
     date: "Day 2 (Oct 10)",
     dayNumber: 2,
     timings: "10:00 AM – 4:00 PM",
@@ -524,12 +524,13 @@ export const FEST_EVENTS: FestEventItem[] = [
     clubId: "csi",
     clubLogo: "/images/chapters/csi-hitam.png",
     category: "Gaming & Coding",
-    tagline: "Classic Tambola electrified with computer science trivia & code clues",
-    description: "A fast-paced technical party game. Crack CS theory clues, identify runtime complexity riddles, solve syntax debug puzzles, and claim instant cash rewards on your technical game card.",
+    tagline: "Numbers are easy, but tech makes it interesting! — CS trivia, code clues & instant rewards",
+    description: "Numbers are easy, but tech makes it interesting! A fast-paced technical party game where you crack CS theory clues, identify runtime complexity riddles, solve syntax debug puzzles, and claim instant cash rewards on your technical game card.",
+    bannerImage: "/images/events/tech-tambola-banner.png",
     date: "Day 1 (Oct 9)",
     dayNumber: 1,
     timings: "11:00 AM – 2:00 PM",
-    venue: "HITAM Campus",
+    venue: "HITAM Campus, Gowdavelly",
     prizePool: "₹1,200",
     prizeBreakup: {
       first: "₹600",
@@ -543,10 +544,16 @@ export const FEST_EVENTS: FestEventItem[] = [
       perTeam: false,
       note: "Solo Participation | Registration: ₹50 (HITAM) / ₹60 (Non-Hitam)",
     },
-    highlights: ["₹1,200 Cash Prize Pool", "1st: ₹600 | 2nd: ₹400 | 3rd: ₹200", "Solo CS Trivia Battle", "Rapid Tech Trivia Clues", "Instant Cash Prizes"],
+    highlights: [
+      "₹1,200 Cash Prize Pool",
+      "1st: ₹600 | 2nd: ₹400 | 3rd: ₹200",
+      "Numbers are easy, but tech makes it interesting!",
+      "Solo CS Trivia Battle",
+      "Rapid Tech Trivia & Code Clues",
+      "Instant Cash Prizes",
+    ],
     coordinators: {
-      students: [{ name: "CSI Student Lead", phone: "9059111595", email: "ssg@hitam.org" }],
-      faculty: { name: "Faculty Advisor (CSI)", phone: "9059111595", email: "ssg@hitam.org" },
+      students: [{ name: "K. Manivenkat (Student HOD, CSE)", phone: "8008819830", email: "24e51a05b5@hitam.org" }],
     },
   },
   {
@@ -563,11 +570,11 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 2,
     timings: "10:30 AM – 3:30 PM",
     venue: "HITAM Campus",
-    prizePool: "₹10,000",
+    prizePool: "₹1,200",
     prizeBreakup: {
-      first: "₹5,000",
-      second: "₹3,000",
-      third: "₹2,000",
+      first: "₹600",
+      second: "₹400",
+      third: "₹200",
     },
     teamSize: "2–3 Members",
     registrationFee: {
@@ -576,10 +583,9 @@ export const FEST_EVENTS: FestEventItem[] = [
       perTeam: false,
       note: "Team Size: 2–3 Members | Registration: ₹50 (HITAM) / ₹60 (Outside) per participant",
     },
-    highlights: ["₹10,000 Cash Prize Pool", "1st: ₹5,000 | 2nd: ₹3,000 | 3rd: ₹2,000", "Teams of 2–3 Members", "Chip Wagering Mechanics", "High-Speed Code Duels", "Strategic Problem Solving"],
+    highlights: ["₹1,200 Cash Prize Pool", "1st: ₹600 | 2nd: ₹400 | 3rd: ₹200", "Teams of 2–3 Members", "Chip Wagering Mechanics", "High-Speed Code Duels", "Strategic Problem Solving"],
     coordinators: {
-      students: [{ name: "CSI Student Lead", phone: "9059111595", email: "ssg@hitam.org" }],
-      faculty: { name: "Faculty Advisor (CSI)", phone: "9059111595", email: "ssg@hitam.org" },
+      students: [{ name: "K. Manivenkat (Student HOD, CSE)", phone: "8008819830", email: "24e51a05b5@hitam.org" }],
     },
   },
 ];
