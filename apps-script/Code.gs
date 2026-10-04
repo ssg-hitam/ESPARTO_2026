@@ -532,7 +532,7 @@ function getPortalData() {
     upiId: "qr.hitam@sib",
     paymentQrUrl: "https://drive.google.com/thumbnail?id=1WWKBVMZlGpDm5s9Rh7hOH5cdaTJ8Msuz&sz=w1000",
     payee: "HYDERABAD INSTITUTE OF TECHNOLOGY AND MANAGEMENT",
-    support: "Tejal (+91 90591 11595), ssg@hitam.org",
+    support: "Hemanth (+91 83282 32607), ssg@hitam.org",
     logos: {
       ssg: driveLogo_(CDN_BASE + "images/brand/ssg-logo.png"),
       esparto: driveLogo_(CDN_BASE + "images/brand/esparto-logo.png"),

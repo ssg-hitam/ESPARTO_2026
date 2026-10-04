@@ -52,14 +52,12 @@ export const ssgLeadership: Organizer[] = [
     role: "Student Dean — IIIC",
     department: "Student Organizing Core",
     teamDomain: "lead-organizer",
-    contact: "+91 90591 11595",
     highlight: true,
     handling: "Overall Fest Direction, Lead Coordination & Sponsorships",
     image: "/images/team/ssg/Student_Dean_IIIC.png",
     socials: {
       email: "ssg.iiic@hitam.org",
-      phone: "+919059111595"
-    }
+    },
   },
   {
     id: "bhavya-director",
@@ -70,8 +68,8 @@ export const ssgLeadership: Organizer[] = [
     handling: "Program Quality",
     image: "/images/team/ssg/Student_Director.png",
     socials: {
-      email: "ssg.director@hitam.org"
-    }
+      email: "ssg.director@hitam.org",
+    },
   },
   {
     id: "sriya-principal",
@@ -82,20 +80,22 @@ export const ssgLeadership: Organizer[] = [
     handling: "Public Relations (PR) & Outreach",
     image: "/images/team/ssg/Student_Principal.png",
     socials: {
-      email: "ssg.principal@hitam.org"
-    }
+      email: "ssg.principal@hitam.org",
+    },
   },
   {
     id: "harsith-registrar",
-    name: "Harsith",
+    name: "Harshit",
     role: "Student Registrar",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Finance / Stall Management",
     image: "/images/team/ssg/Student_Registrar.png",
+    contact: "+91 63046 11025",
     socials: {
-      email: "ssg.registrar@hitam.org"
-    }
+      email: "ssg.registrar@hitam.org",
+      phone: "+916304611025",
+    },
   },
   {
     id: "sreeram-academics",
@@ -105,9 +105,11 @@ export const ssgLeadership: Organizer[] = [
     teamDomain: "student-leadership",
     handling: "Logistics & Infrastructure",
     image: "/images/team/ssg/Student_Dean_Academics.png",
+    contact: "+91 91829 93049",
     socials: {
-      email: "ssg.deanacademics@hitam.org"
-    }
+      email: "ssg.academics@hitam.org",
+      phone: "+919182993049",
+    },
   },
   {
     id: "hemanth-freshmen",
@@ -117,21 +119,23 @@ export const ssgLeadership: Organizer[] = [
     teamDomain: "student-leadership",
     handling: "Website & Registrations",
     image: "/images/team/ssg/Student_Dean_Freshmen.png",
+    contact: "+91 83282 32607",
     socials: {
-      email: "ssg.deanfreshmen@hitam.org"
-    }
+      email: "ssg.deanfreshmen@hitam.org",
+      phone: "+918328232607",
+    },
   },
   {
     id: "mavya-se",
-    name: "Mavya",
+    name: "Mavyaa",
     role: "Student Dean — Student Engagement (SE)",
     department: "Student Organizing Core",
     teamDomain: "student-leadership",
     handling: "Decoration & Design",
     image: "/images/team/ssg/Student_Dean_SE.png",
     socials: {
-      email: "ssg.se@hitam.org"
-    }
+      email: "ssg.se@hitam.org",
+    },
   },
   {
     id: "vennela-cdc",
@@ -142,8 +146,8 @@ export const ssgLeadership: Organizer[] = [
     handling: "Decoration & Design",
     image: "/images/team/ssg/Student_Dean_CDC.png",
     socials: {
-      email: "ssg.cdc@hitam.org"
-    }
+      email: "ssg.cdc@hitam.org",
+    },
   },
   {
     id: "mahesh-rand",
@@ -153,9 +157,11 @@ export const ssgLeadership: Organizer[] = [
     teamDomain: "student-leadership",
     handling: "Logistics & Infrastructure",
     image: "/images/team/ssg/Student_Dean_R_D.png",
+    contact: "+91 81259 32291",
     socials: {
-      email: "ssg.rand@hitam.org"
-    }
+      email: "ssg.randd@hitam.org",
+      phone: "+918125932291",
+    },
   },
   {
     id: "abhinav-sports",
@@ -165,10 +171,12 @@ export const ssgLeadership: Organizer[] = [
     teamDomain: "student-leadership",
     handling: "Discipline & Campus Protocol",
     image: "/images/team/ssg/Student_Dean_Sports.png",
+    contact: "+91 70132 24349",
     socials: {
-      email: "ssg.sports@hitam.org"
-    }
-  }
+      email: "ssg.sports@hitam.org",
+      phone: "+917013224349",
+    },
+  },
 ];
 
 export const chapterCommittees: Organizer[] = [

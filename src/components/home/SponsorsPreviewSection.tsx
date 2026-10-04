@@ -190,11 +190,11 @@ export function SponsorsPreviewSection() {
             </a>
             <span className="text-white/20">•</span>
             <a 
-              href="tel:+919059111595" 
+              href="tel:+918328232607" 
               className="flex items-center gap-1.5 text-emerald-400 hover:underline"
             >
               <Phone className="w-3.5 h-3.5" />
-              <span>Tejal: +91 90591 11595</span>
+              <span>Hemanth: +91 83282 32607</span>
             </a>
           </div>
 

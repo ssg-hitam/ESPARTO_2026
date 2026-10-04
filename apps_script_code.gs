@@ -103,7 +103,7 @@ var EVENT_CATALOG = [
   },
   { 
     id: "E11", club: "TorqueX Motorsports", name: "TorqueX – From Garage to Grid & Kart Reveal", cat: "Challenge", team: "Solo or Team (1-4)", fee: "₹50-₹100 / ₹70-₹140",
-    studentCoord: "TorqueX Student Lead (+91 90591 11595)",
+    studentCoord: "TorqueX Student Lead (+91 83282 32607)",
     facultyCoord: "TorqueX Faculty Incharge (ssg@hitam.org)"
   },
   { 
@@ -113,12 +113,12 @@ var EVENT_CATALOG = [
   },
   { 
     id: "E13", club: "CSI Student Chapter", name: "Code Casino", cat: "Gaming & Coding", team: "2–3 Members", fee: "₹50 / ₹60 (Person)",
-    studentCoord: "CSI Student Lead (+91 90591 11595)",
+    studentCoord: "CSI Student Lead (+91 83282 32607)",
     facultyCoord: "CSI Faculty Incharge (ssg@hitam.org)"
   },
   { 
     id: "E14", club: "CSI Student Chapter", name: "Technical Tambola", cat: "Gaming & Coding", team: "Solo", fee: "₹50 / ₹60 (Person)",
-    studentCoord: "CSI Student Lead (+91 90591 11595)",
+    studentCoord: "CSI Student Lead (+91 83282 32607)",
     facultyCoord: "CSI Faculty Incharge (ssg@hitam.org)"
   }
 ];
