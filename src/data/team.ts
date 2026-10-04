@@ -6,20 +6,6 @@ import { Organizer } from "@/types";
 
 export const facultyCoordinators: Organizer[] = [
   {
-    id: "dr-bindu-madhavi",
-    name: "Dr. Bindu Madhavi",
-    role: "Faculty Coordinator (IEEE)",
-    department: "Electronics & Communication Engineering (ECE)",
-    teamDomain: "faculty-coordinator",
-    contact: "+91 91603 08130",
-    image: "/images/team/faculties/bindumam.png",
-    highlight: true,
-    socials: {
-      email: "bindumadhavi.t@ieee.org",
-      phone: "+919160308130"
-    }
-  },
-  {
     id: "mr-p-praveen",
     name: "Mr. P. Praveen",
     role: "Faculty Coordinator (IEOM)",
@@ -32,6 +18,14 @@ export const facultyCoordinators: Organizer[] = [
       email: "praveenp.mech@hitam.org",
       phone: "+918919046164"
     }
+  },
+  {
+    id: "dr-m-chiranjivi",
+    name: "Dr. M. Chiranjivi",
+    role: "Associate Professor",
+    department: "Electrical and Electronics Engineering (EEE)",
+    teamDomain: "faculty-coordinator",
+    highlight: true,
   },
   {
     id: "dr-m-rajeshwar",
