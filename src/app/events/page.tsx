@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
+import { eventPath } from "@/lib/events/catalogue";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { FEST_EVENTS, FestEventItem, EventCategoryType, getEventRegisterUrl } from "@/data/events";
@@ -477,12 +478,12 @@ export default function EventsPage() {
                         </div>
 
                         {/* Quick Details Trigger */}
-                        <button
-                          onClick={() => setActiveModalEvent(event)}
-                          className="w-full text-center text-[11px] font-mono text-text-muted hover:text-white py-1 transition-colors"
+                        <Link
+                          href={eventPath(event)}
+                          className="block w-full text-center text-[11px] font-mono text-text-muted hover:text-white py-1 transition-colors"
                         >
-                          View Full Details &amp; Prize Breakdown →
-                        </button>
+                          Open Event Page →
+                        </Link>
 
                       </div>
 
