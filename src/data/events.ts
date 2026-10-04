@@ -496,6 +496,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     id: "build-first-robot",
     slug: "build-first-robot",
     title: "Build Your First Robot",
+    bannerImage: "/images/events/build-your-first-robot.jpg",
     club: "ISNT × ISAMPE Student Chapters",
     clubId: "isnt-isampe",
     clubLogo: "/images/chapters/isnt-isampe.png",
