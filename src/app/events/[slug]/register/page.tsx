@@ -5,5 +5,5 @@ export const metadata = {title:'Local registration test',robots:{index:false,fol
 export default async function RegistrationPage({params}:{params:Promise<{slug:string}>}) {
   const event=findPublicEvent((await params).slug);
   if(process.env.NODE_ENV!=='development' || !event || !registrationIntegration(event).localPilot)notFound();
-  return <RegistrationPilot displayEvent={event}/>;
+  return <RegistrationPilot displayEvent={event} googleTest={process.env.EVENT_PLATFORM_GOOGLE_TEST_ENABLED==='true'}/>;
 }

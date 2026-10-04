@@ -1223,9 +1223,14 @@ function confirmDeskCheckIn_(email,raw,eventId,identityChecked) {
 
 // Only the website server holds the bridge secret; browser-supplied emails never authorize this path.
 function doPost(e) {
-  var result;
-  try { result=websiteDeskRequest_(e); }
-  catch(error) { result=failure_(error.publicCode||"DESK_FORBIDDEN",error.publicCode?error.message:"Scanner request denied or unavailable.",false); }
+  var result, registrationRequest=false;
+  try {
+    var contents=e&&e.postData&&e.postData.contents;
+    var envelope=typeof contents==="string" && contents.length<=3000000 ? JSON.parse(contents) : null;
+    registrationRequest=!!(envelope && envelope.kind==="registration");
+    result=registrationRequest ? websiteRegistrationRequest_(e) : websiteDeskRequest_(e);
+  }
+  catch(error) { result=failure_(error.publicCode||(registrationRequest?"REGISTRATION_UNAVAILABLE":"DESK_FORBIDDEN"),error.publicCode?error.message:registrationRequest?"Registration request denied or unavailable.":"Scanner request denied or unavailable.",false); }
   return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
 }
 function websiteDeskRequest_(e) {
@@ -1250,4 +1255,40 @@ function websiteDeskRequest_(e) {
   if(request.action==="lookup")return {success:true,ticket:deskRecord_(deskReference_(request.reference,request.eventId),request.eventId).view};
   if(request.action==="confirm")return confirmDeskCheckIn_(user.email,request.reference,request.eventId,request.identityChecked);
   throw Error("Denied");
+}
+
+
+// Additive website registration adapter. Existing UI RPCs and business functions stay unchanged.
+// Private underscore function cannot be invoked through google.script.run.
+function websiteRegistrationRequest_(e) {
+  var properties=PropertiesService.getScriptProperties();
+  var secret=properties.getProperty("ESPARTO_REGISTRATION_BRIDGE_SECRET")||"";
+  if(properties.getProperty("ESPARTO_REGISTRATION_BRIDGE_ENABLED")!=="true" || secret.length<32)throw Error("Registration bridge disabled");
+  var text=e&&e.postData&&e.postData.contents;
+  if(typeof text!=="string" || text.length>3000000)throw Error("Denied");
+  var envelope=JSON.parse(text);
+  if(envelope.kind!=="registration" || typeof envelope.payload!=="string" || envelope.payload.length>2900000 || typeof envelope.signature!=="string")throw Error("Denied");
+  var expected=Utilities.base64EncodeWebSafe(Utilities.computeHmacSha256Signature("ESPARTO-REGISTRATION-V1\n"+envelope.payload,secret)).replace(/=+$/g,"");
+  if(envelope.signature.length!==expected.length)throw Error("Denied");
+  var difference=0;for(var i=0;i<expected.length;i++)difference|=expected.charCodeAt(i)^envelope.signature.charCodeAt(i);
+  if(difference)throw Error("Denied");
+  var request=JSON.parse(envelope.payload);
+  if(typeof request.timestamp!=="number" || Math.abs(Date.now()-request.timestamp)>60000 || typeof request.nonce!=="string" || !/^[-a-f0-9]{36}$/.test(request.nonce))throw Error("Expired");
+  if(["catalogue","submit","status"].indexOf(request.action)===-1)throw Error("Denied");
+  var cache=CacheService.getScriptCache(),nonceKey="registration_nonce_"+request.nonce;
+  var lock=LockService.getScriptLock();if(!lock.tryLock(1000))return failure_("BUSY","The registration service is busy. Retry the same submission.",true);
+  try{if(cache.get(nonceKey))throw Error("Replay");cache.put(nonceKey,"1",120);}finally{lock.releaseLock();}
+  if(request.action==="catalogue") {
+    var portal=getPortalData();
+    return {success:true,registrationAvailable:portal.registrationAvailable,events:portal.events.filter(function(event){return event.id==="E08";}).map(function(event){return {id:event.id,slug:event.slug,title:event.title,minTeam:event.minTeam,maxTeam:event.maxTeam,hitamFee:event.hitamFee,otherFee:event.otherFee,feeModel:event.feeModel};})};
+  }
+  var payload=request.payload;
+  if(!payload || typeof payload!=="object" || Array.isArray(payload))throw Error("Denied");
+  if(request.action==="submit") {
+    if(payload.eventId!=="E08" || payload.eventSlug!=="n8n-automation-challenge")throw Error("Pilot event denied");
+    if(properties.getProperty("ESPARTO_REGISTRATION_BRIDGE_SUBMIT_ENABLED")!=="true")return failure_("SUBMISSIONS_DISABLED","Google Sheets test submissions have not been enabled.",false);
+    return submitRegistration(payload);
+  }
+  if(!/^ESP26-(?:E08-\d{4}|HITM-E08-\d{3,6})$/.test(String(payload.regId||"")))throw Error("Pilot event denied");
+  return getRegistrationStatus(payload.regId,payload.requestId);
 }

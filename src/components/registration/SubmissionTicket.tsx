@@ -1,15 +1,15 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { CheckCircle2, Download, Printer, Mail, Clock3, ArrowRight } from 'lucide-react';
+import { CheckCircle2, Download, Printer, Mail, ArrowRight } from 'lucide-react';
 import { BrandHeader, ticketBrands } from './BrandHeader';
 import type { FestEventItem } from '@/data/events';
 import { ticketSupport } from './ticketSupport';
 export type SubmissionReceipt={regId:string;eventTitle:string;leadName:string;amount:number;status:string;replayed?:boolean;teamName?:string;teamSize?:number;utr?:string};
 export type TicketMember={name:string;email:string;phone:string;rollNo:string;branch:string;year:string};
-type Props={receipt:SubmissionReceipt;event:FestEventItem;teamName:string;institution:string;members:TicketMember[];utr:string;onRecover:()=>void;busy:boolean};
+type Props={receipt:SubmissionReceipt;event:FestEventItem;teamName:string;institution:string;members:TicketMember[];utr:string;onRecover:()=>void;busy:boolean;googleTest?:boolean};
 function loadImage(src:string):Promise<HTMLImageElement>{return new Promise((resolve,reject)=>{const image=new window.Image();image.onload=()=>resolve(image);image.onerror=()=>reject(Error('Logo could not load'));image.src=src;});}
-export default function SubmissionTicket({receipt,event,teamName,institution,members,utr,onRecover,busy}:Props) {
+export default function SubmissionTicket({receipt,event,teamName,institution,members,utr,onRecover,busy,googleTest=false}:Props) {
  const [downloading,setDownloading]=useState(false);const [error,setError]=useState('');
  async function download(){setDownloading(true);setError('');try{
   const logos=await Promise.all(ticketBrands.map(brand=>loadImage(brand.src)));
@@ -34,14 +34,12 @@ export default function SubmissionTicket({receipt,event,teamName,institution,mem
   logos.forEach((logo,index)=>{const limit=index===1?250:95;const scale=Math.min(limit/logo.width,105/logo.height);const width=logo.width*scale,height=logo.height*scale;ctx.drawImage(logo,[235,500,765][index]-width/2,135-height/2,width,height);});
   center('ESPARTO 2026 · SUBMISSION E-TICKET',260,22,'#ffad6a',true);
   let y=wrap(event.title,315,820,36,'#ffffff',500,true);
-  center('LOCAL TEST — NOT VALID FOR ENTRY',y+15,20,'#fbbf24');y+=65;
+  center(googleTest?'GOOGLE SHEETS TEST — NOT VALID FOR ENTRY':'LOCAL TEST — NOT VALID FOR ENTRY',y+15,20,'#fbbf24');y+=65;
   center('REGISTRATION REFERENCE',y,17,'#b9afcc');center(receipt.regId,y+43,34,'#ffffff',true);y+=90;
   const perforation=y;divider(y);y+=55;
-  center('PAYMENT STATUS PROGRESS',y,19,'#b9afcc',true);y+=55;
-  ctx.strokeStyle='#493d5e';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(235,y);ctx.lineTo(765,y);ctx.stroke();
-  [235,500,765].forEach((x,index)=>{ctx.fillStyle=index===0?'#34d399':index===1?'#fbbf24':'#493d5e';ctx.beginPath();ctx.arc(x,y,19,0,Math.PI*2);ctx.fill();center(String(index+1),y+7,20,index<2?'#0c0720':'#ddd',true,x);});
-  ['Submitted','Verification pending','Confirmed ticket'].forEach((label,index)=>center(label,y+46,18,index===1?'#fbbf24':'#b9afcc',false,[235,500,765][index]));
-  y+=95;ctx.fillStyle='#251f21';ctx.beginPath();ctx.roundRect(100,y-28,800,58,14);ctx.fill();center('Pending organizer payment verification',y+8,23,'#fbbf24',true);y+=90;
+  center('REGISTRATION SUCCESSFUL',y,26,'#34d399',true);y+=50;
+  y=wrap('Your registration and payment reference have been received. After payment verification, your event ticket, QR code and WhatsApp group link will arrive by email.',y,800,22,'#e3ddec');y+=30;
+  y=wrap('Check payment status: https://www.espartohitam.com/payment-status',y,800,22,'#ffad6a');y+=45;
   center('YOUR REGISTRATION DETAILS',y,20,'#ffad6a',true);y+=55;
   const pair=(leftLabel:string,leftValue:string,rightLabel:string,rightValue:string)=>{center(leftLabel.toUpperCase(),y,16,'#b9afcc',false,280);center(rightLabel.toUpperCase(),y,16,'#b9afcc',false,720);const left=wrap(leftValue,y+34,380,24,'#ffffff',280,true);const right=wrap(rightValue,y+34,380,24,'#ffffff',720,true);y=Math.max(left,right)+35;};
   pair('Team / participant',teamName,'Lead participant',receipt.leadName);
@@ -61,19 +59,19 @@ export default function SubmissionTicket({receipt,event,teamName,institution,mem
   output.beginPath();output.roundRect(24,24,952,height-48,36);output.clip();output.drawImage(canvas,0,0);
   output.globalCompositeOperation='destination-out';[24,976].forEach(x=>{output.beginPath();output.arc(x,perforation,22,0,Math.PI*2);output.fill();});output.globalCompositeOperation='source-over';
   const blob=await new Promise<Blob>((resolve,reject)=>ticket.toBlob(value=>value?resolve(value):reject(Error('Could not create ticket')),'image/png'));
-  const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=`${receipt.regId}-local-submission-ticket.png`;link.click();window.setTimeout(()=>URL.revokeObjectURL(url),10000);
+  const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=`${receipt.regId}-${googleTest?'google-test':'local'}-submission-ticket.png`;link.click();window.setTimeout(()=>URL.revokeObjectURL(url),10000);
  }catch{setError('The ticket could not download. Please retry or use Print / Save PDF.');}finally{setDownloading(false);}}
  return <main id="main-content" className="max-w-3xl mx-auto px-5 py-10 sm:py-14">
   <div className="submission-ticket rounded-3xl border border-white/15 overflow-hidden shadow-[0_20px_80px_rgba(121,40,202,0.12)] bg-[#0c0720]">
    <div className="px-5 sm:px-9 pt-7 pb-8 bg-gradient-to-b from-brand-violet/15 to-transparent"><BrandHeader/>
-    <p className="mt-6 text-center text-xs font-mono tracking-widest text-amber-300">LOCAL TEST RECEIPT — not valid for entry</p>
+    <p className="mt-6 text-center text-xs font-mono tracking-widest text-amber-300">{googleTest?'GOOGLE SHEETS TEST RECEIPT — not valid for entry':'LOCAL TEST RECEIPT — not valid for entry'}</p>
     <CheckCircle2 className="mx-auto my-5 h-12 w-12 text-emerald-400" aria-hidden="true"/>
-    <h1 className="text-3xl sm:text-4xl font-display font-bold text-center">Registration submitted</h1>
-    <p className="text-text-secondary text-center mt-4 leading-relaxed">Your submission and test payment proof have been saved.<br/>Organizer payment verification is pending.</p>
+    <h1 className="text-3xl sm:text-4xl font-display font-bold text-center">Registration successful</h1>
+    <p className="text-text-secondary text-center mt-4 leading-relaxed">Your registration and test payment proof have been received successfully.</p>
    </div>
    <div className="border-y border-dashed border-white/20 p-6 sm:px-9 bg-white/[0.025] text-center"><p className="text-xs uppercase tracking-widest text-text-muted mb-2">Registration reference</p><p data-testid="ticket-reference" className="font-mono text-xl sm:text-3xl font-bold break-all">{receipt.regId}</p></div>
    <div className="p-6 sm:p-9">
-    <ol aria-label="Payment status progress" className="grid grid-cols-3 gap-3 mb-6 text-center text-xs"><li className="text-emerald-300">✓ Submitted</li><li aria-current="step" className="text-amber-200">2 · Verification pending</li><li className="text-text-muted">3 · Confirmed ticket</li></ol><div className="flex items-start justify-center gap-3 rounded-xl bg-amber-300/10 border border-amber-300/20 p-4 mb-7"><Clock3 className="w-5 h-5 shrink-0 text-amber-300"/><p className="text-amber-200">Payment status: {receipt.status}</p></div>
+    <section className="mb-7 rounded-xl bg-emerald-400/10 border border-emerald-400/20 p-5 text-center"><p className="font-semibold text-emerald-300">Thank you for registering!</p><p className="mt-2 text-text-secondary">After payment verification, your event ticket, QR code and WhatsApp group link will be emailed from elysian@hitam.org.</p><Link href="/payment-status" className="inline-block mt-4 text-brand-orange underline">Check your payment status</Link></section>
     <h2 className="text-2xl font-bold mb-5 text-center">{event.title}</h2>
     <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-5 text-center">{Object.entries({'Team / participant':teamName,'Lead participant':receipt.leadName,Institution:institution,Participants:String(members.length),'Submitted amount':`₹${receipt.amount}`,'UPI transaction reference':utr,Date:event.date,Schedule:event.timings,Venue:event.venue}).map(([label,value])=><div key={label}><dt className="text-text-muted text-xs uppercase tracking-wide">{label}</dt><dd className="mt-1 font-medium break-words">{value}</dd></div>)}</dl>
     <section className="mt-7 text-center"><h2 className="text-sm uppercase tracking-widest text-text-muted mb-4">Participants</h2>{members.map((member,index)=><div className="my-4" key={index}><p className="font-semibold">{member.name}</p><p className="text-sm text-text-muted">{member.rollNo} · {member.branch} · Year {member.year}</p><p className="text-sm text-text-secondary break-all">{member.email}</p></div>)}</section>
