@@ -30,7 +30,7 @@ export const facultyCoordinators: Organizer[] = [
   {
     id: "dr-m-chiranjivi",
     name: "Dr. M. Chiranjivi",
-    image: "/images/team/faculties/chiranjivi.png",
+    image: "/images/team/faculties/chiranjivi-cutout.png",
     role: "Associate Professor",
     department: "Electrical and Electronics Engineering (EEE)",
     teamDomain: "faculty-coordinator",
