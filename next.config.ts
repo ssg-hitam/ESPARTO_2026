@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
-const nextConfig: NextConfig = {
+const nextConfig = (phase: string): NextConfig => ({
+  // Production builds must not replace files used by the running dev server.
+  distDir: phase === PHASE_DEVELOPMENT_SERVER ? ".next-dev" : ".next",
   reactStrictMode: true,
   poweredByHeader: false,
   async headers() {
@@ -21,6 +24,6 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
-};
+});
 
 export default nextConfig;
