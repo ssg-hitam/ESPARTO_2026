@@ -19,3 +19,7 @@ Only records with both payment statuses Verified and matching master/finance/eve
 Attendance writes use one atomic Sheets batch: master CheckInStatus, event checkbox, and event DeskNotes audit text recording time/account. Existing notes are preserved. Payment status is never changed. Duplicate check-in does not write again. If the connection fails after a save, look up the ticket again before retrying. Details clear on page hiding or after inactivity.
 
 No biometric or automated identity matching is implemented. The desk records a staff comparison; it cannot prove a person's identity on its own. Keep the scanner URL limited to event staff and keep the backing Sheets/Drive restricted. Event-day load/real-device testing remains necessary.
+
+## Approved SSG accounts
+
+The user-approved initial list is in `SSG_DESK_ROLES.json`: all eleven supplied SSG addresses are assigned E02–E14. E01 (IEEE) uses a separate system and is excluded. Copy the entire JSON object into the `ESPARTO_DESK_ROLES` Script property; saving this file in Git does not activate permissions. Add future registration-team accounts explicitly after approval. Staff must sign in with the exact account: a mailing-list address or alias alone does not establish a Google active-user identity.
