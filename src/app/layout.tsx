@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import { SkipLink } from "@/components/shared/SkipLink";
-import { IntroProvider } from "@/context/IntroContext";
 import { LayoutShell } from "@/components/layout/LayoutShell";
 import "./globals.css";
 
@@ -95,18 +94,8 @@ export default function RootLayout({
         className="bg-background text-text-primary antialiased min-h-screen flex flex-col selection:bg-brand-magenta selection:text-white"
         suppressHydrationWarning
       >
-        <IntroProvider>
-          <SkipLink />
-          {/*
-           * LayoutShell is a client component that reads IntroContext.
-           * During intro: Navbar + Footer have visibility:hidden so the
-           * layout shell holds full min-h-screen height (no footer flash).
-           * After intro: Navbar + Footer fade in alongside the hero.
-           */}
-          <LayoutShell>
-            {children}
-          </LayoutShell>
-        </IntroProvider>
+        <SkipLink />
+        <LayoutShell>{children}</LayoutShell>
       </body>
     </html>
   );
