@@ -1,6 +1,5 @@
 const assert=require('node:assert/strict');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE);
-const {PNG}=require('./apps-script-mocks.cjs');
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.CHROME_EXECUTABLE,headless:true});
  try{
@@ -18,12 +17,15 @@ const {PNG}=require('./apps-script-mocks.cjs');
   for(let i=0;i<2;i++){const g=groups.nth(i);await g.getByLabel('Name',{exact:true}).fill('Local Person '+i);await g.getByLabel('Email',{exact:true}).fill('test'+i+'@example.org');await g.getByLabel('WhatsApp number').fill('987654321'+i);await g.getByLabel('Roll number').fill('TEST-'+i);await g.getByLabel('Branch',{exact:true}).selectOption('CSD');await g.getByLabel('Year',{exact:true}).selectOption('4');}
   await page.getByRole('button',{name:'Continue to review'}).click();
   await page.getByLabel('UPI transaction reference').fill(String(Date.now()));
-  await page.getByLabel('Test payment screenshot').setInputFiles({name:'test.png',mimeType:'image/png',buffer:Buffer.from(PNG.split(',')[1],'base64')});
+  await page.getByRole('button',{name:'Use sample local test proof'}).click();
   await page.getByText('I confirm these local test details are correct.').click();await page.getByRole('button',{name:'Submit local test registration'}).click();
   await page.getByText('LOCAL TEST RECEIPT — not valid for entry').waitFor();assert.ok(await page.getByText('Payment status: Pending Verification').isVisible());
-  const original=await page.locator('main p.font-mono').innerText();await page.getByRole('button',{name:'Test recovery of same submission'}).click();await page.getByText('Existing submission recovered; no duplicate registration.').waitFor();assert.equal(await page.locator('main p.font-mono').innerText(),original);
+  const original=await page.getByTestId('ticket-reference').innerText();await page.getByRole('button',{name:'Test recovery of same submission'}).click();await page.getByText('Existing submission recovered; no duplicate registration.').waitFor();assert.equal(await page.getByTestId('ticket-reference').innerText(),original);
+  const downloadEvent=page.waitForEvent('download');await page.getByRole('button',{name:'Download submission e-ticket'}).click();const download=await downloadEvent;assert.ok(download.suggestedFilename().endsWith('-local-submission-ticket.png'));const file=await download.path();const bytes=require('node:fs').readFileSync(file);assert.equal(bytes.subarray(1,4).toString(),'PNG');assert.equal(bytes.readUInt32BE(16),1000);assert.equal(bytes.readUInt32BE(20),1550);require('node:fs').copyFileSync(file,'/private/tmp/esparto-downloaded-ticket.png');
   assert.equal(errors.length,0,errors.join('\n'));
   await page.screenshot({path:'/private/tmp/esparto-local-pilot-receipt.png',fullPage:true});
+  await page.emulateMedia({media:'print'});assert.equal(await page.locator('header').first().evaluate(el=>getComputedStyle(el).visibility),'hidden');await page.pdf({path:'/private/tmp/esparto-local-ticket.pdf',format:'A4',printBackground:true});await page.emulateMedia({media:'screen'});
+
   console.log('14 event routes, canonical/OG metadata, mobile/desktop layout, ten repeat opens, 404/legacy alias, n8n registration and duplicate recovery passed.');
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exit(1);});
