@@ -7,41 +7,35 @@ import { Organizer } from "@/types";
 export const facultyCoordinators: Organizer[] = [
   {
     id: "mr-p-praveen",
-    name: "Mr. Praveen Pagidipalli",
-    role: "Associate Professor · Faculty Advisor, IEOM Student Chapter – HITAM",
+    name: "Mr. P. Praveen",
+    role: "Associate Professor",
     department: "Department of Mechanical Engineering",
-    affiliation: "Hyderabad Institute of Technology and Management (HITAM), Hyderabad, India",
+    handling: "Convener – ESPARTO",
+    affiliation: "HITAM, Hyderabad",
     biography: [
-      "Mr. Praveen Pagidipalli is an Associate Professor in the Department of Mechanical Engineering at Hyderabad Institute of Technology and Management (HITAM), Hyderabad, with 13 years of teaching experience. His areas of expertise include Advanced Manufacturing, Production Technology, Manufacturing Automation, CAD, Metrology, and Project-Based Learning.",
-      "He has published 15 research papers, presented 10 papers at international conferences, and holds three granted patents. He has guided numerous student projects and has received the Best Project Mentor Award for three consecutive academic years in recognition of his contribution to student innovation and project development.",
-      "He is trained and certified in Project-Based Learning (PBL) through Aalborg University, Denmark, and is also IUCEE–IGIP trained and certified. His academic interests focus on innovative teaching methodologies, experiential learning, advanced manufacturing, and industry-oriented education.",
-      "As the Faculty Advisor of the IEOM Student Chapter at HITAM, he mentors students in research, technical activities, industrial exposure, professional development, and leadership. He actively promotes student participation in IEOM activities and works towards strengthening industry–academia collaboration, research culture, and global professional engagement.",
-      "His experience in academics, manufacturing, student mentoring, and IEOM student chapter development brings a practical and student-centric perspective to international panel discussions.",
+      "Associate Professor in the Department of Mechanical Engineering and Convener for ESPARTO 2026.",
     ],
-    teamDomain: "faculty-coordinator",
+    teamDomain: "convenor",
     contact: "+91 89190 46164",
     image: "/images/team/faculties/praveen-cutout.png",
     highlight: true,
     socials: {
       email: "praveenp.mech@hitam.org",
-      phone: "+918919046164"
-    }
+      phone: "+918919046164",
+    },
   },
   {
     id: "dr-m-chiranjivi",
     name: "Dr. M. Chiranjivi",
     image: "/images/team/faculties/chiranjivi-cutout.png",
     role: "Associate Professor",
-    department: "Electrical and Electronics Engineering (EEE)",
-    affiliation: "Hyderabad Institute of Technology and Management (HITAM), Hyderabad, India",
+    department: "Department of Electrical & Electronics Engineering",
+    handling: "Convener – ESPARTO",
+    affiliation: "HITAM, Hyderabad",
     biography: [
-      "Dr. M. Chiranjivi is an Associate Professor in the Department of Electrical and Electronics Engineering (EEE) at Hyderabad Institute of Technology and Management (HITAM), Hyderabad, with 17 years of experience. His core areas of interest include Power Systems, Renewable Energy, and Electrical Machines.",
-      "He has contributed more than 30 publications to reputed journals and conferences. His research contributions also include published and granted patents, reflecting his involvement in research and innovation.",
-      "He is trained and certified in Project-Based Learning (PBL) through Aalborg University, Denmark, and is also IUCEE–IGIP trained and certified. His academic interests combine electrical engineering with project-based learning and engineering education.",
-      "His work spans Power Systems, Renewable Energy, and Electrical Machines, bringing together his subject interests, research publications, and patent contributions within electrical engineering.",
-      "His academic experience, research contributions, and training in PBL and IUCEE–IGIP form the foundation of his profile as an engineering educator at HITAM.",
+      "Associate Professor in the Department of Electrical & Electronics Engineering and Convener for ESPARTO 2026.",
     ],
-    teamDomain: "faculty-coordinator",
+    teamDomain: "convenor",
     contact: "+91 83095 69407",
     socials: {
       email: "chiranjivi.eee@hitam.org",
@@ -49,7 +43,6 @@ export const facultyCoordinators: Organizer[] = [
     },
     highlight: true,
   },
-
 ];
 
 export const ssgLeadership: Organizer[] = [

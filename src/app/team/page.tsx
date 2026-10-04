@@ -137,7 +137,7 @@ export default function TeamPage() {
                   INSTITUTIONAL MENTORSHIP
                 </span>
                 <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
-                  FACULTY COORDINATORS
+                  FACULTY CONVENERS
                 </h2>
               </div>
             </div>
@@ -176,7 +176,7 @@ export default function TeamPage() {
                   <div>
                     <div className="flex items-center gap-2 mb-3">
                       <span className="px-2.5 py-1 rounded-md bg-brand-orange/10 border border-brand-orange/30 text-brand-orange font-mono text-[10px] font-bold uppercase tracking-wider">
-                        Faculty Coordinator
+                        {faculty.handling || "Convener – ESPARTO"}
                       </span>
                     </div>
 
