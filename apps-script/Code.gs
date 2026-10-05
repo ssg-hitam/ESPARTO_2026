@@ -412,7 +412,7 @@ var EVENT_CATALOG = [
       "second": "₹400",
       "third": "₹200"
     },
-    "studentContact": "K. Manivenkat — Student HOD, CSE (+91 80088 19830, 24e51a05b5@hitam.org)",
+    "studentContact": "G. Sri Nandhitha (9154900192, 24e51a0592@gmail.com)",
     "facultyContact": "Preeti C M (+91 99850 68108, preethicm.cse@hitam.org)",
     "clubEmail": "",
     "date": "Day 2 (Oct 10)",
@@ -440,7 +440,7 @@ var EVENT_CATALOG = [
       "second": "₹400",
       "third": "₹200"
     },
-    "studentContact": "K. Manivenkat — Student HOD, CSE (+91 80088 19830, 24e51a05b5@hitam.org)",
+    "studentContact": "G. Sri Nandhitha (9154900192, 24e51a0592@gmail.com)",
     "facultyContact": "Preeti C M (+91 99850 68108, preethicm.cse@hitam.org)",
     "clubEmail": "",
     "date": "Day 1 (Oct 9)",

@@ -577,7 +577,7 @@ export const FEST_EVENTS: FestEventItem[] = [
       "Instant Cash Prizes",
     ],
     coordinators: {
-      students: [{ name: "K. Manivenkat (Student HOD, CSE)", phone: "8008819830", email: "24e51a05b5@hitam.org" }],
+      students: [{ name: "G. Sri Nandhitha", phone: "9154900192", email: "24e51a0592@gmail.com" }],
       faculty: { name: "Preeti C M", phone: "9985068108", email: "preethicm.cse@hitam.org" },
     },
   },
@@ -619,7 +619,7 @@ export const FEST_EVENTS: FestEventItem[] = [
       "Strategic Problem Solving",
     ],
     coordinators: {
-      students: [{ name: "K. Manivenkat (Student HOD, CSE)", phone: "8008819830", email: "24e51a05b5@hitam.org" }],
+      students: [{ name: "G. Sri Nandhitha", phone: "9154900192", email: "24e51a0592@gmail.com" }],
       faculty: { name: "Preeti C M", phone: "9985068108", email: "preethicm.cse@hitam.org" },
     },
   },

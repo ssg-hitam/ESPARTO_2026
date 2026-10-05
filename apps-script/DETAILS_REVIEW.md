@@ -10,7 +10,7 @@ Compared the website dataset and Apps Script catalog with the supplied event she
 - MINDS: Data Heist ₹200/₹300 per 2–4-member team; Data Dossier ₹100/₹200. Each awards ₹1,500/₹1,000/₹500. Added minds.datascience@hitam.org.
 - TorqueX: solo ₹50/₹70; any currently allowed team (2–4) ₹100/₹140 flat. Apps Script now uses the same team pricing as the website. Added club email and award breakdown. The sheet does not specify a team size, so the existing 2–4 team range is preserved.
 - Robot workshop: solo ₹120 / team ₹250; both students' emails and both faculty telephone contacts are available. Existing descriptions and team bounds preserved.
-- CSI: solo Technical Tambola / 2–3-member Code Casino; ₹50/₹60 per person, awards ₹600/₹400/₹200. Both retain K. Manivenkat and Preeti C M, following the organizer's latest explicit instruction rather than the older screenshot's student rows.
+- CSI: solo Technical Tambola / 2–3-member Code Casino; ₹50/₹60 per person, awards ₹600/₹400/₹200. Both list student coordinator G. Sri Nandhitha (9154900192, 24e51a0592@gmail.com) and faculty coordinator Preeti C M.
 
 ## Organizer confirmation still needed
 

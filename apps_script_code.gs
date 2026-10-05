@@ -113,13 +113,13 @@ var EVENT_CATALOG = [
   },
   { 
     id: "E13", club: "CSI Student Chapter", name: "Code Casino", cat: "Gaming & Coding", team: "2–3 Members", fee: "₹50 / ₹60 (Person)",
-    studentCoord: "CSI Student Lead (+91 83282 32607)",
-    facultyCoord: "CSI Faculty Incharge (ssg@hitam.org)"
+    studentCoord: "G. Sri Nandhitha (9154900192, 24e51a0592@gmail.com)",
+    facultyCoord: "Preeti C M (9985068108, preethicm.cse@hitam.org)"
   },
   { 
     id: "E14", club: "CSI Student Chapter", name: "Technical Tambola", cat: "Gaming & Coding", team: "Solo", fee: "₹50 / ₹60 (Person)",
-    studentCoord: "CSI Student Lead (+91 83282 32607)",
-    facultyCoord: "CSI Faculty Incharge (ssg@hitam.org)"
+    studentCoord: "G. Sri Nandhitha (9154900192, 24e51a0592@gmail.com)",
+    facultyCoord: "Preeti C M (9985068108, preethicm.cse@hitam.org)"
   }
 ];
 
