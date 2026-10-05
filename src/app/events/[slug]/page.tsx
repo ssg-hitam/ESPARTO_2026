@@ -64,7 +64,7 @@ export default async function EventPage({ params }: Props) {
     <div className="flex flex-col sm:flex-row gap-4 mt-8 rounded-3xl border border-white/10 bg-white/[0.025] p-5 sm:p-6">
       {pilot && !productionRegistrationEnabled() && <Link className="rounded-xl bg-brand-orange px-6 py-4 font-bold" href={`${eventPath(event)}/register`}>Try local registration</Link>}
       <a className="inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-brand-orange to-brand-magenta px-7 py-4 font-bold shadow-lg shadow-orange-500/20 transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-400" href={getEventRegisterUrl(event)}>Register for event<ArrowUpRight className="h-5 w-5" aria-hidden="true"/></a>
-      {event.brochureUrl && <a className="inline-flex items-center justify-center rounded-xl border border-violet-400/50 bg-violet-500/15 px-7 py-4 font-bold text-violet-100 transition hover:bg-violet-500/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-400" href={event.brochureUrl} target="_blank" rel="noopener noreferrer"><FileText className="inline h-4 w-4 mr-2" aria-hidden="true"/>Event brochure</a>}
+      {event.brochureUrl && <a className="inline-flex items-center justify-center rounded-xl border border-violet-400/50 bg-violet-500/15 px-7 py-4 font-bold text-violet-100 transition hover:bg-violet-500/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-400" href={event.brochureUrl}><FileText className="inline h-4 w-4 mr-2" aria-hidden="true"/>Event brochure</a>}
     </div>
   </main>;
 }
