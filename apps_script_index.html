@@ -1,2053 +1,2057 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <title>ESPARTO 2026 — Official Festival Portal & Registrations</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ESPARTO 2026 — Event Registration</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap"
-    rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
-      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
       --primary: #ff5e00;
-      --primary-dark: #cc4b00;
-      --accent-glow: rgba(255, 94, 0, 0.2);
+      --hitam-navy: #002855;
+      --hitam-blue: #00629b;
+      --success: #059669;
       --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --card-inner: #f1f5f9;
-      --border: #e2e8f0;
       --text: #0f172a;
       --text-muted: #64748b;
-      --hitam-navy: #002855;
-      --hitam-blue: #00629B;
-      --success: #059669;
+      --border: #e2e8f0;
+      --display: 'Playfair Display',Georgia,serif;
+      --body: 'Plus Jakarta Sans',system-ui,sans-serif;
+      --mono: 'JetBrains Mono',monospace;
     }
-
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
-
-    body {
-      font-family: var(--font-body);
-      background-color: var(--bg);
+    html {
+      background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      scroll-behavior: smooth;
     }
-
-    /* ── HEADER STRIPE: EXACT TO REFERENCE BRANDING ── */
-    .header-stripe {
-      background: #ffffff;
-      border-bottom: 3px solid var(--primary);
-      padding: 20px 16px;
-      box-shadow: 0 4px 20px rgba(0, 40, 85, 0.06);
+    body {
+      margin: 0;
+      font-family: var(--body);
+      font-size: 15px;
+      line-height: 1.65;
     }
-
-    .header-container {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+    button,input,select,textarea {
+      font: inherit;
     }
-
-    /* Left & Right Logo Boxes: Clean, borderless, seamless blend */
-    .logo-box {
-      width: auto;
-      min-width: 90px;
-      height: 84px;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+    button,a,input,select,textarea {
+      -webkit-tap-highlight-color: transparent;
     }
-
-    .logo-box img {
+    button {
+      cursor: pointer;
+    }
+    button:disabled {
+      cursor: wait;
+      opacity: .65;
+    }
+    a {
+      color: var(--hitam-blue);
+      text-underline-offset: 3px;
+    }
+    img {
       max-width: 100%;
-      max-height: 84px;
-      width: auto;
-      height: auto;
       object-fit: contain;
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.05));
     }
-
-    .header-center {
-      text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
+    h1,h2,h3,p {
+      margin: 0;
     }
-
-    .college-tag {
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
+    h1,h2,h3 {
+      line-height: 1.2;
+    }
+    h1,h2 {
+      font-family: var(--display);
+    }
+    h1 {
+      font-size: clamp(2rem,4.5vw,3.35rem);
+      letter-spacing: -.025em;
+    }
+    h2 {
+      font-size: clamp(1.6rem,3vw,2.15rem);
+    }
+    h3 {
+      font-size: 1.17rem;
+    }
+    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible {
+      outline: 3px solid var(--hitam-blue);
+      outline-offset: 3px;
+    }
+    [hidden] {
+      display: none!important;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .skip-link {
+      position: fixed;
+      top: 8px;
+      left: 8px;
+      transform: translateY(-160%);
+      z-index: 100;
+      background: #fff;
+      padding: 10px 20px;
+    }
+    .skip-link:focus {
+      transform: none;
+    }
+    .container {
+      width: min(1180px,100%);
+      margin: auto;
+      padding: 0 24px;
+    }
+    .muted {
       color: var(--text-muted);
     }
-
-    .esparto-header-logo {
-      height: 58px;
-      max-width: 280px;
-      object-fit: contain;
-      margin: 2px 0 4px;
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.06));
-    }
-
-    .event-main-title {
-      font-family: var(--font-display);
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--hitam-navy);
-      letter-spacing: -0.4px;
-      line-height: 1.25;
-    }
-
-    .highlight-serif {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-weight: 500;
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .14em;
       color: var(--primary);
     }
-
-    .font-serif {
-      font-family: var(--font-display);
+    .mono {
+      font-family: var(--mono);
     }
-
-    .event-subtitle {
-      font-size: 13.5px;
-      color: var(--text-muted);
-      max-width: 700px;
+    .stack {
+      display: grid;
+      gap: 18px;
     }
-
-    .meta-badges {
-      display: flex;
-      flex-wrap: wrap;
+    .small {
+      font-size: 13px;
+    }
+    .wrap {
+      overflow-wrap: anywhere;
+    }
+    .btn {
+      min-height: 46px;
+      padding: 12px 20px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      gap: 8px;
-      margin-top: 6px;
+      gap: 9px;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.5;
+      text-decoration: none;
+      transition: background .15s,transform .15s;
     }
-
-    .pill {
-      background: #f1f5f9;
-      border: 1px solid var(--border);
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+    .btn-primary {
+      background: var(--hitam-navy);
+      color: #fff;
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: #004077;
+    }
+    .btn-secondary {
+      border-color: var(--border);
+      background: #fff;
       color: var(--hitam-navy);
+    }
+    .btn-text {
+      color: var(--hitam-navy);
+      background: transparent;
+      padding-left: 0;
+    }
+    .btn-full {
+      width: 100%;
+    }
+    .pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      font-size: 11px;
+      line-height: 1.6;
+      font-weight: 700;
     }
-
-    .pill.chapter {
+    .spinner {
+      width: 17px;
+      height: 17px;
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .status {
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      font-size: 13px;
+      color: #9a3412;
+      overflow-wrap: anywhere;
+    }
+    .status-error {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+    .status-info {
       background: #eff6ff;
       border-color: #bfdbfe;
-      color: var(--hitam-blue);
-      font-weight: 700;
-    }
-
-    @media (max-width: 800px) {
-      .header-container {
-        flex-direction: column;
-        text-align: center;
-        gap: 14px;
-      }
-
-      .event-main-title {
-        font-size: 20px;
-      }
-
-      .logo-box {
-        min-width: 72px;
-        height: 64px;
-      }
-
-      .logo-box img {
-        max-height: 64px;
-      }
-    }
-
-    /* Dedicated Mobile Optimizations (Smartphones 320px–600px) */
-    @media (max-width: 600px) {
-      .header-stripe {
-        padding: 12px 10px;
-      }
-
-      .header-container {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .header-center {
-        order: 3;
-        width: 100%;
-        margin-top: 4px;
-      }
-
-      .logo-box {
-        min-width: 50px;
-        height: 48px;
-      }
-
-      .logo-box img {
-        max-height: 48px;
-      }
-
-      .event-main-title {
-        font-size: 17px;
-      }
-
-      .esparto-header-logo {
-        height: 40px;
-        max-width: 200px;
-      }
-
-      .college-tag {
-        font-size: 10.5px;
-      }
-
-      .event-subtitle {
-        font-size: 12px;
-      }
-
-      .meta-badges {
-        gap: 5px;
-      }
-
-      .pill {
-        font-size: 10.5px;
-        padding: 3px 8px;
-      }
-
-      .main-wrapper {
-        margin: 14px auto 32px;
-        padding: 0 10px;
-      }
-
-      .stepper {
-        padding: 8px 10px;
-        gap: 4px;
-        overflow-x: auto;
-      }
-
-      .step-item {
-        font-size: 10.5px;
-        gap: 5px;
-        white-space: nowrap;
-      }
-
-      .step-num {
-        width: 22px;
-        height: 22px;
-        font-size: 10px;
-      }
-
-      .hero-banner {
-        padding: 16px 12px;
-        margin-bottom: 16px;
-      }
-
-      .hero-banner h2 {
-        font-size: 20px;
-      }
-
-      .events-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .event-card {
-        padding: 16px 12px;
-      }
-
-      .card-title {
-        font-size: 17.5px;
-      }
-
-      .form-card {
-        padding: 18px 14px;
-        border-radius: 12px;
-      }
-
-      .form-title {
-        font-size: 17px;
-      }
-
-      .payment-grid {
-        padding: 16px 12px;
-        gap: 16px;
-      }
-
-      .qr-frame {
-        width: 180px;
-        height: 180px;
-      }
-
-      .upi-amount {
-        font-size: 28px;
-      }
-
-      .upi-id-badge {
-        font-size: 12px;
-        word-break: break-all;
-      }
-
-      .btn-proceed,
-      .btn-submit-verify,
-      .btn-register-card {
-        padding: 13px;
-        font-size: 13px;
-      }
-    }
-
-    .main-wrapper {
-      max-width: 1140px;
-      margin: 28px auto 48px;
-      padding: 0 16px;
-      width: 100%;
-      flex: 1;
-    }
-
-    /* ── STEPPER ── */
-    .stepper {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 24px;
-      background: #ffffff;
-      padding: 14px 24px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    }
-
-    .step-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #94a3b8;
-    }
-
-    .step-item.active {
       color: var(--hitam-navy);
     }
-
-    .step-num {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
+    .topline {
+      background: var(--hitam-navy);
+      color: #fff;
+      padding: 7px 0;
+      font-size: 11px;
+      letter-spacing: .04em;
+    }
+    .topline .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .topline a {
+      color: #fff;
+    }
+    .header {
+      background: #fff;
+      border-bottom: 3px solid var(--primary);
+    }
+    .header-grid {
+      display: grid;
+      grid-template-columns: 160px minmax(0,1fr) 160px;
+      align-items: center;
+      gap: 28px;
+      padding: 32px 0 28px;
+    }
+    .side-logo {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f1f5f9;
-      border: 1.5px solid var(--border);
-      color: #64748b;
-      font-size: 12px;
-      font-weight: 800;
+      min-width: 0;
     }
-
-    .step-item.active .step-num {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
-
-    /* ── VIEW 1: DIRECTORY OF 14 EVENTS ── */
-    .hero-banner {
-      background: #ffffff;
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
-      margin-bottom: 24px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    }
-
-    .hero-banner h2 {
-      font-family: var(--font-display);
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--hitam-navy);
-      letter-spacing: -0.3px;
-      margin-bottom: 4px;
-    }
-
-    .filter-bar {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 24px;
-    }
-
-    .filter-pill {
-      padding: 8px 16px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: 0.2s;
-    }
-
-    .filter-pill.active {
-      background: var(--hitam-navy);
-      color: #fff;
-      border-color: var(--hitam-navy);
-    }
-
-    .events-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-      gap: 20px;
-    }
-
-    .event-card {
-      background: #ffffff;
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    }
-
-    .event-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--primary);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    }
-
-    .card-top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
-
-    .card-category {
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 3px 8px;
-      border-radius: 6px;
-      background: #fff7ed;
-      color: #ea580c;
-      border: 1px solid #ffedd5;
-    }
-
-    .card-prize-badge {
-      font-family: var(--font-display);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 6px;
-      background: #fef3c7;
-      color: #b45309;
-      border: 1px solid #fde68a;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .card-prize-breakup {
-      font-size: 11px;
-      font-weight: 700;
-      color: #334155;
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      padding: 6px 10px;
-      border-radius: 6px;
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-
-    .card-logo-row {
-      margin: 4px 0 6px 0;
-      display: flex;
-      align-items: center;
-      min-height: 28px;
-    }
-
-    .card-club-logo-img {
-      height: 28px;
-      max-width: 120px;
+    .side-logo img {
+      height: 118px;
+      width: 140px;
       object-fit: contain;
-      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.06));
     }
-
-    /* Enlarged, High-Contrast Event Coordinators Box */
-    .card-contacts-box {
-      margin-top: 14px;
-      margin-bottom: 12px;
-      padding: 11px 13px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      text-align: left;
+    .side-logo.combined-logo img {
+      width: 160px;
     }
-
-    .contacts-box-title {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-      color: #334155;
-      text-transform: uppercase;
-      padding-bottom: 5px;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .contact-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 7px;
-      font-size: 10px;
-      font-weight: 800;
-      border-radius: 5px;
-      white-space: nowrap;
-      flex-shrink: 0;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-
-    .contact-badge-student {
-      background: #fff7ed;
-      color: #c2410c;
-      border: 1px solid #fed7aa;
-    }
-
-    .contact-badge-faculty {
-      background: #fdf2f8;
-      color: #be185d;
-      border: 1px solid #fbcfe8;
-    }
-
-    .contact-badge-mail {
-      background: #eff6ff;
-      color: #1d4ed8;
-      border: 1px solid #bfdbfe;
-    }
-
-    .contact-info {
-      font-size: 12px;
-      font-weight: 600;
-      color: #0f172a; /* Deep sharp contrast on light background */
-      word-break: break-word;
-    }
-
-    .contact-info a {
-      color: #0284c7;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .contact-info a:hover {
-      text-decoration: underline;
-    }
-
-    .card-title {
-      font-family: var(--font-display);
-      font-size: 19.5px;
-      font-weight: 600;
-      color: var(--hitam-navy);
-      margin: 6px 0 8px;
-      line-height: 1.35;
-      letter-spacing: -0.2px;
-    }
-
-    .card-desc {
-      font-size: 12.5px;
-      color: #475569;
-      line-height: 1.5;
-      margin-bottom: 16px;
-      flex-grow: 1;
-    }
-
-    .card-specs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      background: #f8fafc;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 11px;
-      margin-bottom: 16px;
-      border: 1px solid var(--border);
-    }
-
-    .spec-label {
-      color: #64748b;
-      text-transform: uppercase;
-      font-size: 9.5px;
-      font-weight: 700;
-    }
-
-    .spec-val {
-      color: var(--hitam-navy);
-      font-weight: 700;
-      margin-top: 2px;
-    }
-
-    .btn-register-card {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      background: var(--primary);
-      color: #fff;
-      font-size: 12.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      transition: 0.2s;
-      text-align: center;
-    }
-
-    .btn-register-card:hover {
-      opacity: 0.95;
-    }
-
-    /* ── STEP 1: REGISTRATION DETAILS FORM ── */
-    #formStep1,
-    #paymentStep2 {
+    .image-fallback {
       display: none;
-    }
-
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border-radius: 8px;
-      background: #ffffff;
-      border: 1.5px solid var(--border);
+      font-size: 12px;
+      font-weight: 800;
       color: var(--hitam-navy);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-bottom: 20px;
     }
-
-    .back-btn:hover {
-      background: #f1f5f9;
-    }
-
-    .form-layout {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 24px;
-      align-items: start;
-    }
-
-    @media (max-width: 880px) {
-      .form-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .form-card {
-      background: #ffffff;
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 26px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    }
-
-    .form-title {
-      font-family: var(--font-display);
-      font-size: 19px;
-      font-weight: 600;
-      color: var(--hitam-navy);
-      letter-spacing: -0.2px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 18px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    @media (max-width: 600px) {
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    label {
+    .logo-failed .image-fallback {
       display: block;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: #334155;
-      margin-bottom: 6px;
     }
-
-    label .req {
-      color: #e11d48;
-      margin-left: 2px;
+    .brand {
+      display: contents;
+      align-items: center;
+      justify-content: center;
+      gap: 17px;
+      min-width: 0;
     }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 11px 14px;
-      font-size: 13.5px;
-      font-family: inherit;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      background: #ffffff;
-      color: #0f172a;
-      outline: none;
-      transition: 0.2s;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-
-    .toggle-box {
+    .brand-image {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: center;
+      width: 180px;
+      height: 125px;
       display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
-
-    .toggle-btn {
-      flex: 1;
-      padding: 11px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      background: #ffffff;
-      color: #64748b;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .toggle-btn.active {
-      background: #002855;
-      border-color: #002855;
-      color: #fff;
-    }
-
-    .member-block {
-      background: #f8fafc;
-      border: 1.5px dashed var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      margin-top: 14px;
-    }
-
-    .member-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--hitam-navy);
-      margin-bottom: 10px;
-    }
-
-    /* Sticky Registration Summary Card */
-    .summary-card {
-      background: #ffffff;
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      position: sticky;
-      top: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-    }
-
-    .summary-header {
-      background: var(--hitam-navy);
-      color: #fff;
-      padding: 14px 18px;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-    }
-
-    .summary-body {
-      padding: 18px;
-    }
-
-    .total-box {
-      background: #f8fafc;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      text-align: center;
-      margin: 14px 0;
-    }
-
-    .total-amt {
-      font-size: 32px;
-      font-weight: 800;
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--hitam-navy);
-    }
-
-    .btn-proceed {
-      width: 100%;
-      padding: 14px;
-      border-radius: 8px;
-      border: none;
-      background: var(--primary);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      text-transform: uppercase;
-      box-shadow: 0 4px 12px rgba(255, 94, 0, 0.25);
-      transition: 0.2s;
-    }
-
-    .btn-proceed:hover {
-      opacity: 0.95;
-    }
-
-    /* ── STEP 2: UPI PAYMENT VIEW (MATCHES SCREENSHOT) ── */
-    .payment-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      background: #ffffff;
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-    }
-
-    @media (max-width: 820px) {
-      .payment-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .upi-box {
-      background: #f8fafc;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      text-align: center;
-    }
-
-    .upi-recipient {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--hitam-navy);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .qr-frame {
-      width: 220px;
-      height: 220px;
-      margin: 12px auto;
-      background: #fff;
-      padding: 8px;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 10px;
-    }
-
-    .qr-frame img {
+    .brand-image img {
       width: 100%;
       height: 100%;
       object-fit: contain;
     }
-
-    .upi-id-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      font-weight: 700;
+    .brand-copy {
+      min-width: 0;
+      grid-column: 1/-1;
+      grid-row: 2;
+      text-align: center;
+    }
+    .institution-title {
+      max-width: 800px;
+      margin: 0 auto 12px;
       color: var(--hitam-navy);
-      background: #e2e8f0;
-      padding: 6px 12px;
+      font-size: clamp(19px,3vw,32px);
+      font-weight: 800;
+      line-height: 1.3;
+    }
+    .brand-copy h2 {
+      font-family: var(--display);
+      font-size: clamp(24px,3vw,34px);
+      letter-spacing: -.04em;
+      overflow-wrap: anywhere;
+    }
+    .brand-copy p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .brand-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 9px;
+    }
+    .brand-pills .pill {
+      font-size: 10px;
+    }
+    .brand-pills .accent {
+      background: #fff7ed;
+      color: #9a3412;
+      border-color: #ffedd5;
+    }
+    .portal-main {
+      padding-top: 36px;
+      padding-bottom: 65px;
+      min-height: 65vh;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      align-items: end;
+      gap: 24px;
+      margin: 15px 0 28px;
+    }
+    .hero p {
+      max-width: 650px;
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .hero-aside {
+      text-align: right;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .hero-aside strong {
+      color: var(--hitam-navy);
+      display: block;
+      font-family: var(--mono);
+      font-size: 20px;
+    }
+    .chapter-panel {
+      padding: 19px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 28px;
+    }
+    .chapter-panel h2 {
+      font-family: var(--body);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      margin-bottom: 17px;
+    }
+    .chapters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(125px,1fr));
+      gap: 24px 16px;
+    }
+    .chapter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      min-width: 0;
+    }
+    .chapter img {
+      width: 96px;
+      height: 88px;
+      object-fit: contain;
+    }
+    .chapter span {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+    .directory-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filters {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+    .filter {
+      min-height: 44px;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .filter[aria-pressed=true] {
+      background: var(--hitam-navy);
+      color: #fff;
+      border-color: var(--hitam-navy);
+    }
+    .directory-search {
+      min-height: 44px;
+      width: 220px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 10px 16px;
+      background: #fff;
+      font-size: 12px;
+    }
+    .event-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 22px;
+    }
+    .event-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      box-shadow: 0 4px 20px rgba(0,40,85,.035);
+    }
+    .card-top {
+      border-top: 4px solid var(--event-color);
+      padding: 22px 23px 0;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    #eventBrief { margin-bottom: 24px; }
+    #eventBrief p { margin: 14px 0; line-height: 1.8; }
+    #eventBrief ul { padding-left: 22px; line-height: 1.8; }
+    .club-identity {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+    .club-identity img {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+    }
+    .club-identity img.combined-logo {
+      width: 84px;
+      height: 50px;
+      object-fit: contain;
+    }
+    .club-identity span {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+    .category {
+      font-size: 10px;
+      border: 1px solid var(--border);
+      padding: 4px 8px;
       border-radius: 6px;
-      display: inline-block;
+      line-height: 1.4;
+      max-width: 100px;
+      flex-shrink: 0;
+      color: var(--hitam-navy);
+    }
+    .prize {
+      display: inline-flex;
+      gap: 7px;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #92400e;
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      padding: 5px 9px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .event-card h3 {
+      font-family: var(--display);
+      font-size: 23px;
+      letter-spacing: -.025em;
       margin-bottom: 10px;
     }
-
-    .upi-amount {
-      font-size: 38px;
-      font-weight: 800;
-      font-family: 'JetBrains Mono', monospace;
+    .card-description {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      overflow: hidden;
+    }
+    .prize-breakup {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+    .card-bottom {
+      padding: 20px 23px 23px;
+      margin-top: auto;
+    }
+    .team-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 13px;
+    }
+    .team-line strong {
       color: var(--hitam-navy);
-      margin-bottom: 4px;
     }
-
-    .file-input-box {
-      border: 1.5px dashed #cbd5e1;
-      background: #f8fafc;
-      padding: 14px;
-      border-radius: 8px;
+    .fee-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .fee-pair div {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .fee-choice-label { display:block; font-size:12px; margin-top:2px; }
+    .fee-team-price { display:block; color:var(--hitam-navy); font-family:inherit; font-size:14px; font-weight:700; margin-top:8px; }
+    .fee-pair strong {
+      font-family: var(--mono);
+      font-size: 19px;
+      color: var(--text);
+      display: block;
+    }
+    .fee-model {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .empty {
+      grid-column: 1/-1;
       text-align: center;
-      margin-top: 6px;
+      background: #fff;
+      padding: 45px;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
     }
-
-    .checkbox-row {
+    .view-heading {
+      margin-bottom: 26px;
+    }
+    .view-heading p {
+      margin-top: 10px;
+      max-width: 680px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .stepper {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin: 18px 0 28px;
+      padding-bottom: 5px;
+      overflow-x: auto;
+      max-width: 100%;
+      list-style: none;
+    }
+    .stepper li {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .stepper li:not(:last-child):after {
+      content: '';
+      width: 26px;
+      height: 1px;
+      background: var(--border);
+      margin-left: 5px;
+    }
+    .step-circle {
+      width: 29px;
+      height: 29px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+    .stepper [aria-current=step] {
+      font-weight: 800;
+      color: var(--hitam-navy);
+    }
+    .stepper [aria-current=step] .step-circle {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 330px;
+      gap: 26px;
+      align-items: start;
+    }
+    .panel {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
+      min-width: 0;
+    }
+    .panel-heading {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 23px;
+    }
+    .panel-heading .number {
+      width: 29px;
+      height: 29px;
+      border-radius: 8px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--hitam-navy);
+      flex-shrink: 0;
+    }
+    .panel-heading h2,.panel-heading h3 {
+      font-family: var(--body);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+    .panel-heading p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .form-fields {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 18px;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-width: 0;
+    }
+    .field-full {
+      grid-column: 1/-1;
+    }
+    .field label {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .required {
+      color: #b91c1c;
+    }
+    .field input,.field select,.field textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 11px 12px;
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .field input::placeholder,.field textarea::placeholder {
+      color: #94a3b8;
+    }
+    .field small {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    fieldset {
+      padding: 0;
+      border: 0;
+      margin: 0;
+      min-width: 0;
+    }
+    legend {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .institution-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .institution-option {
+      position: relative;
+      min-width: 0;
+    }
+    .institution-option input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+    .institution-option span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 13px 8px;
+      min-height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .institution-option input:checked+span {
+      background: #eff6ff;
+      border-color: var(--hitam-blue);
+      color: var(--hitam-navy);
+      font-weight: 800;
+    }
+    .institution-option input:focus-visible+span {
+      outline: 3px solid var(--hitam-blue);
+      outline-offset: 3px;
+    }
+    .sidebar {
+      position: sticky;
+      top: 24px;
+      display: grid;
+      gap: 18px;
+    }
+    .summary-title {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .summary-event {
+      font-family: var(--display);
+      font-size: 21px;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+      padding: 7px 0;
+    }
+    .summary-line span {
+      color: var(--text-muted);
+    }
+    .summary-line strong {
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+    .summary-total {
+      padding-top: 18px;
+      margin-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .summary-total span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .summary-total strong {
+      font-family: var(--mono);
+      font-size: 30px;
+      color: var(--hitam-navy);
+    }
+    .summary .btn {
+      margin-top: 19px;
+    }
+    .summary-foot {
+      margin-top: 12px;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .contacts h3 {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .contact-group {
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+    .contact-group+.contact-group {
+      padding-top: 14px;
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .contact-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 5px;
+    }
+    .contacts a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+    }
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      align-items: start;
+    }
+    .payment-recipient {
+      padding: 17px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-bottom: 23px;
+      overflow-wrap: anywhere;
+    }
+    .payment-recipient strong {
+      display: block;
+      color: var(--hitam-navy);
+      font-size: 13px;
+      margin-top: 5px;
+    }
+    .qr-wrap {
+      text-align: center;
+    }
+    .qr-wrap img {
+      width: 360px;
+      max-width: 100%;
+      height: auto;
+      padding: 9px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+    }
+    .qr-placeholder {
+      padding: 25px;
+      background: #f1f5f9;
+      border-radius: 12px;
+    }
+    .payment-amount {
+      font-family: var(--mono);
+      font-size: 34px;
+      color: var(--hitam-navy);
+      margin: 15px 0 5px;
+    }
+    .upi-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .upi-row code {
+      font-family: var(--mono);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+    .copy-btn {
+      min-height: 44px;
+      min-width: 44px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 8px;
+      color: var(--hitam-navy);
+      font-size: 11px;
+      padding: 6px 10px;
+    }
+    .payment-steps {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 23px 0 0;
+      padding-left: 22px;
+    }
+    .payment-steps li {
+      padding-bottom: 8px;
+    }
+    .payment-steps strong {
+      color: var(--text);
+    }
+    .upload {
+      border: 1px dashed #94a3b8;
+      padding: 16px;
+      background: #f8fafc;
+      border-radius: 10px;
+    }
+    .upload input {
+      border: 0;
+      padding: 0;
+      font-size: 12px;
+      min-height: 44px;
+      background: transparent;
+    }
+    .proof-preview {
+      margin-top: 12px;
+      text-align: center;
+    }
+    .proof-preview img {
+      max-height: 160px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .proof-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 7px;
+      overflow-wrap: anywhere;
+    }
+    .agreement {
       display: flex;
       align-items: flex-start;
       gap: 10px;
       font-size: 12px;
-      color: #475569;
-      margin: 16px 0;
-      line-height: 1.4;
-    }
-
-    .checkbox-row input {
-      width: 18px;
-      height: 18px;
-      margin-top: 2px;
-      accent-color: var(--primary);
-    }
-
-    .btn-submit-verify {
-      width: 100%;
-      padding: 14px;
-      border-radius: 8px;
-      border: none;
-      background: #002855;
-      color: #ffffff;
-      font-size: 14px;
-      font-weight: 800;
       cursor: pointer;
-      transition: 0.2s;
+      min-height: 44px;
     }
-
-    .btn-submit-verify:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .agreement input {
+      width: 19px;
+      height: 19px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      accent-color: var(--hitam-navy);
     }
-
-    .btn-back-team {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1.5px solid var(--border);
-      background: #f1f5f9;
-      color: #475569;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 10px;
+    .payment-card .btn {
+      margin-top: 4px;
     }
-
-    /* ── FOOTER: ORGANIZED BY SSG & CONTACTS ── */
-    .footer {
-      background: #ffffff;
-      border-top: 1.5px solid var(--border);
-      padding: 28px 16px;
-      margin-top: auto;
-    }
-
-    .footer-container {
-      max-width: 1140px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
-      font-size: 13px;
-    }
-
-    .footer-ssg-box {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .ssg-logo-img {
-      width: 44px;
-      height: 44px;
-      object-fit: contain;
-    }
-
-    .footer-contacts {
-      display: flex;
-      gap: 24px;
-      color: #475569;
-      font-weight: 600;
-    }
-
-    @media (max-width: 720px) {
-      .footer-container {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .footer-contacts {
-        flex-direction: column;
-        gap: 8px;
-      }
-    }
-
-    /* ── PARTICIPATING CLUBS STRIP ── */
-    .clubs-showcase-card {
-      background: #ffffff;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-    }
-
-    .clubs-showcase-title {
+    .payment-note {
       font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #64748b;
-      margin-bottom: 12px;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+    .mobile-bar {
+      display: none;
+    }
+    .footer {
+      border-top: 1px solid var(--border);
+      background: #fff;
+      padding: 26px 0;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+    .footer .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer a {
+      display: inline-block;
+      min-height: 32px;
+    }
+    .loading {
+      padding: 60px 0;
       text-align: center;
     }
-
-    .clubs-showcase-row {
+    .loading h1 {
+      font-size: 27px;
+      margin: 18px 0 10px;
+    }
+    .loading .spinner {
+      width: 29px;
+      height: 29px;
+      color: var(--primary);
+    }
+    .loading p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .loading .btn {
+      margin-top: 20px;
+    }
+    .ticket {
+      max-width: 710px;
+      margin: 12px auto;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 14px 45px rgba(0,40,85,.06);
+    }
+    .ticket-top {
+      padding: 34px;
+      text-align: center;
+      background: var(--hitam-navy);
+      color: #fff;
+    }
+    .ticket-check {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--success);
       display: flex;
       align-items: center;
       justify-content: center;
+      margin: 0 auto 17px;
+      font-size: 27px;
+      font-weight: 800;
+    }
+    .ticket-top h1 {
+      font-size: 31px;
+    }
+    .ticket-top p {
+      font-size: 12px;
+      opacity: .8;
+      margin-top: 9px;
+    }
+    .ticket-top .ticket-received { font-size: 16px; line-height: 1.6; opacity: 1; }
+    .ticket-email-notice { margin-top: 24px; padding: 20px; border: 2px solid #ff8a3d; border-radius: 12px; background: #fff; color: #002855; text-align: left; }
+    .ticket-email-notice h2 { font-size: 20px; line-height: 1.35; }
+    .ticket-top .ticket-email-notice p { font-size: 16px; line-height: 1.65; opacity: 1; }
+    .ticket-body {
+      padding: 32px;
+    }
+    .ticket-id {
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      background: #f8fafc;
+      margin-bottom: 22px;
+    }
+    .ticket-id p {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+    }
+    .ticket-id strong {
+      display: block;
+      font-family: var(--mono);
+      font-size: clamp(18px,3vw,27px);
+      margin-top: 7px;
+      overflow-wrap: anywhere;
+      color: var(--hitam-navy);
+    }
+    .ticket-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .ticket-details dt {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .ticket-details dd {
+      margin: 5px 0 0;
+      font-size: 13px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+    .ticket-actions {
+      display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      margin-top: 25px;
     }
-
-    .club-chip {
+    .ticket-note {
+      margin-top: 23px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .pending {
+      color: #92400e;
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(0,25,55,.55);
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 999px;
+      justify-content: center;
+      padding: 18px;
+      backdrop-filter: blur(3px);
+    }
+    .modal-card {
+      width: min(760px,100%);
+      max-height: 90dvh;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 20px 80px rgba(0,0,0,.2);
+      padding: 28px;
+    }
+    .modal-heading {
+      margin-bottom: 20px;
+    }
+    .modal-heading p {
       font-size: 12px;
-      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+    .review-section {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+    .review-section h3 {
+      font-size: 12px;
       color: var(--hitam-navy);
-      transition: all 0.2s ease;
+      margin-bottom: 12px;
     }
-
-    .club-chip:hover {
-      background: #ffffff;
-      border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      transform: translateY(-1px);
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 0;
     }
-
-    .club-chip img {
-      width: 22px;
-      height: 22px;
-      object-fit: contain;
-      border-radius: 50%;
+    .review-grid dt {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .review-grid dd {
+      font-size: 12px;
+      margin: 3px 0 0;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+    .review-proof img {
+      max-height: 130px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      margin-top: 25px;
+      position: sticky;
+      bottom: -28px;
+      padding: 16px 0;
+      background: #fff;
+    }
+    .external-panel {
+      max-width: 680px;
+      margin: 24px auto;
+      padding: 34px;
+      text-align: center;
+    }
+    .external-panel img {
+      width: 65px;
+      height: 65px;
+      margin-bottom: 20px;
+    }
+    .external-panel p {
+      margin-top: 15px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .external-panel .btn {
+      margin-top: 23px;
+    }
+    .external-panel .contacts {
+      text-align: left;
+      margin-top: 26px;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    @media(max-width:1050px) {
+      .event-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+      .chapters {
+        grid-template-columns: repeat(auto-fit,minmax(110px,1fr));
+      }
+      .form-grid {
+        grid-template-columns: minmax(0,1fr) 290px;
+      }
+      .panel {
+        padding: 22px;
+      }
+    }
+    @media(max-width:800px) {
+      .form-grid,.payment-grid {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: static;
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero-aside {
+        display: none;
+      }
+      .brand-pills .pill:last-child {
+        display: none;
+      }
+    }
+    @media(max-width:600px) {
+      .container {
+        padding: 0 16px;
+      }
+      .header-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding: 16px 0;
+      }
+      .side-logo {
+        grid-row: 1;
+      }
+      .side-logo:first-child {
+        justify-content: flex-start;
+      }
+      .side-logo:last-child {
+        grid-column: 2;
+        justify-content: flex-end;
+      }
+      .side-logo img {
+        height: 72px;
+        width: 92px;
+      }
+      .side-logo.combined-logo img {
+        width: 136px;
+        height: 76px;
+      }
+      .brand {
+        grid-column: 1/-1;
+        grid-row: 2;
+        text-align: center;
+        gap: 12px;
+      }
+      .brand-image {
+        grid-column: 1/-1;
+        grid-row: 2;
+        width: 150px;
+        height: 100px;
+      }
+      .brand-image img {
+        max-height: 100px;
+      }
+      .brand-copy {
+        grid-row: 3;
+      }
+      .brand-copy p {
+        font-size: 10px;
+      }
+      .brand-pills {
+        justify-content: center;
+      }
+      .portal-main {
+        padding-top: 22px;
+      }
+      .hero {
+        margin-top: 5px;
+      }
+      .hero p {
+        font-size: 12px;
+      }
+      .event-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .directory-search {
+        width: 100%;
+      }
+      .directory-tools {
+        gap: 12px;
+      }
+      .filter {
+        padding: 9px 12px;
+        font-size: 11px;
+      }
+      .chapters {
+        grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 18px 12px;
+      }
+      .chapter-panel {
+        padding: 17px;
+      }
+      .chapter img {
+        width: 72px;
+        height: 68px;
+      }
+      .form-fields {
+        grid-template-columns: 1fr;
+      }
+      .field-full {
+        grid-column: auto;
+      }
+      .panel {
+        padding: 20px;
+      }
+      .sidebar {
+        grid-template-columns: 1fr;
+      }
+      .summary-total strong {
+        font-size: 27px;
+      }
+      .mobile-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 30;
+        background: #fff;
+        border-top: 1px solid var(--border);
+        padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        box-shadow: 0 -6px 25px rgba(0,40,85,.07);
+      }
+      .mobile-bar .btn {
+        padding: 11px 14px;
+        max-width: 65%;
+        font-size: 11px;
+      }
+      .mobile-bar small {
+        display: block;
+        font-size: 9px;
+        color: var(--text-muted);
+      }
+      .mobile-bar strong {
+        font-family: var(--mono);
+        font-size: 21px;
+        color: var(--hitam-navy);
+      }
+      body.has-mobile-cta {
+        padding-bottom: 95px;
+      }
+      .view-heading h1 {
+        font-size: 30px;
+      }
+      .stepper {
+        gap: 8px;
+      }
+      .stepper li {
+        font-size: 10px;
+        gap: 6px;
+      }
+      .stepper li:not(:last-child):after {
+        width: 15px;
+        margin-left: 0;
+      }
+      .step-circle {
+        width: 26px;
+        height: 26px;
+      }
+      .modal {
+        padding: 12px;
+      }
+      .modal-card {
+        padding: 20px;
+        max-height: 92dvh;
+      }
+      .modal-actions {
+        bottom: -20px;
+        justify-content: stretch;
+      }
+      .modal-actions .btn {
+        flex: 1;
+      }
+      .review-grid,.ticket-details {
+        grid-template-columns: 1fr;
+      }
+      .ticket-top,.ticket-body {
+        padding: 25px;
+      }
+      .ticket-actions .btn {
+        width: 100%;
+      }
+      .topline {
+        font-size: 10px;
+      }
+      .topline a {
+        display: none;
+      }
+      .qr-wrap img {
+        width: 320px;
+        height: auto;
+      }
+      .footer .container {
+        display: block;
+      }
+      .footer p+p {
+        margin-top: 8px;
+      }
+      .external-panel {
+        padding: 24px;
+      }
+      .empty {
+        padding: 30px 18px;
+      }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *,*::before,*::after {
+        transition: none!important;
+      }
+      .spinner {
+        animation: none;
+        border-style: dotted;
+      }
+      .btn:hover:not(:disabled) {
+        transform: none;
+      }
+    }
+    @media print {
+      body {
+        background: #fff;
+        padding: 0!important;
+        font-size: 12px;
+      }
+      .topline,.header,.footer,.mobile-bar,.ticket-actions,.skip-link {
+        display: none!important;
+      }
+      .portal-main,.container {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        max-width: none;
+      }
+      .ticket {
+        border: 1px solid #bbb;
+        box-shadow: none;
+        margin: 0 auto;
+        break-inside: avoid;
+      }
+      .ticket-top {
+        background: #fff;
+        color: #002855;
+        border-bottom: 2px solid #002855;
+      }
+      .ticket-top p {
+        opacity: 1;
+      }
+      .ticket-check {
+        border: 1px solid #059669;
+      }
+      .ticket-details {
+        grid-template-columns: 1fr 1fr;
+      }
+      .ticket-top,.ticket-body {
+        padding: 25px;
+      }
+      .ticket-id {
+        background: #fff;
+      }
+      .ticket-note {
+        color: #333;
+      }
+    }
+    @media (max-width: 600px) {
+      .field input, .field select, .field textarea, .directory-search, .upload input {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
-
 <body>
-
-  <!-- ── HEADER STRIPE ── -->
-  <header class="header-stripe">
-    <div class="header-container">
-
-      <!-- Left: SSG Logo (Default) / Dynamic Club Logo (On Event Details) -->
-      <div class="logo-box" id="headerClubBox" title="Student Support Group (SSG)">
-        <img id="headerClubLogo" src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/brand/ssg-logo.png"
-          alt="SSG Logo" onerror="this.src='https://lh3.googleusercontent.com/d/10_oh0BP0xp8NZj-xzPjKZxUulxhS9qpi'">
-      </div>
-
-      <!-- Center: ESPARTO Official Seal & Event Titles -->
-      <div class="header-center">
-        <div class="college-tag">Hyderabad Institute of Technology and Management</div>
-        <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/brand/esparto-logo.png" alt="ESPARTO 2026"
-          class="esparto-header-logo">
-        <h1 class="event-main-title" id="eventTitle">ESPARTO 2026 Festival Events</h1>
-        <div class="event-subtitle" id="eventSubtitle">Intercollegiate Technical Festival • <span class="highlight-serif">Ideas → Innovation → Impact</span>
+  <a class="skip-link" href="#portalMain">Skip to registration content</a>
+  <div id="appContent">
+    <div class="topline"><div class="container"><span>SSG presents · HITAM Annual Technical Festival</span><span>9–10 October 2026 · <a href="mailto:ssg@hitam.org">ssg@hitam.org</a></span></div></div>
+    <header class="header">
+      <div class="container"><div class="header-grid">
+        <div class="side-logo"><img id="ssgLogo" alt="SSG"><span class="image-fallback">SSG HITAM</span></div>
+        <div class="brand"><div class="brand-image"><img id="brandLogo" alt="ESPARTO"><span class="image-fallback">ESPARTO</span></div><div class="brand-copy"><div class="institution-title">HYDERABAD INSTITUTE OF<br>TECHNOLOGY AND MANAGEMENT</div><h2 id="brandTitle">ESPARTO 2026</h2><p id="brandSubtitle">Official event registration portal</p><div class="brand-pills"><span class="pill accent">9–10 OCT 2026</span><span class="pill">HITAM · HYDERABAD</span><span class="pill">IDEAS → IMPACT</span></div></div></div>
+        <div class="side-logo"><img id="hitamLogo" alt="Hyderabad Institute of Technology and Management"><span class="image-fallback">HITAM</span></div>
+      </div></div>
+    </header>
+    <main id="portalMain" class="portal-main container" tabindex="-1">
+      <div id="loadingView" class="loading" aria-live="polite"><span class="spinner" aria-hidden="true"></span><h1>Choose your next challenge.</h1><p id="loadingText">Loading the official event directory…</p><button id="retryLoad" type="button" class="btn btn-secondary" hidden>Try loading again</button></div>
+      <div id="pageMessage" class="status status-info" role="status" hidden></div>
+      <section id="directoryView" hidden aria-labelledby="directoryTitle">
+        <div class="hero"><div><p class="eyebrow" style="margin:0 0 12px;color:var(--primary)">Fourteen events. One shared ambition.</p><h1 id="directoryTitle" tabindex="-1">Ideas become impact<br>when you show up.</h1><p>Choose your event, bring your team, and make your mark at ESPARTO 2026. Your registration starts here.</p></div><div class="hero-aside"><strong>09—10 OCT</strong><span>HITAM Campus, Medchal<br>Hyderabad, Telangana</span></div></div>
+        <section class="chapter-panel" aria-labelledby="chaptersTitle"><h2 id="chaptersTitle">Brought to you by our technical chapters</h2><div id="chapterStrip" class="chapters"></div></section><button id="restoreTicket" type="button" class="btn btn-secondary" style="margin-bottom:20px" hidden>Check my saved registration</button>
+        <div class="directory-tools"><div id="filters" class="filters" role="group" aria-label="Filter events by category"></div><label class="sr-only" for="eventSearch">Search events or chapters</label><input id="eventSearch" class="directory-search" type="search" placeholder="Search events or chapters" maxlength="100"></div>
+        <p id="eventCount" class="event-count" aria-live="polite"></p><div id="eventGrid" class="event-grid"></div>
+      </section>
+      <section id="detailsView" hidden aria-labelledby="detailsTitle">
+        <button id="backDirectory" type="button" class="btn btn-text">← Event directory</button>
+        <div id="externalPanel" class="panel external-panel" hidden></div>
+        <div id="localDetails">
+          <ol class="stepper" aria-label="Registration progress"><li aria-current="step"><span class="step-circle">1</span>Participant details</li><li><span class="step-circle">2</span>UPI payment</li><li><span class="step-circle">3</span>E-ticket</li></ol>
+          <div class="view-heading"><p class="eyebrow">Step 01 / Registration</p><h1 id="detailsTitle" tabindex="-1">Build your registration.</h1><p id="detailsIntro"></p><section id="eventAgenda" hidden></section></div>
+          <section id="eventBrief" class="panel" hidden></section>
+          <form id="detailsForm">
+            <div class="form-grid"><div class="stack">
+              <section class="panel"><div class="panel-heading"><span class="number" aria-hidden="true">01</span><div><h2>Institution &amp; team <span class="required" aria-hidden="true">*</span></h2><p>Choose your college tier and participant count. All fields are mandatory.</p></div></div>
+                <fieldset><legend>Institution <span class="required" aria-hidden="true">*</span></legend><div class="institution-toggle"><label class="institution-option"><input type="radio" name="institution" value="HITAM" checked required><span>HITAM Student</span></label><label class="institution-option"><input type="radio" name="institution" value="Other" required><span>Other College</span></label></div></fieldset>
+                <div class="form-fields"><div id="collegeField" class="field field-full" hidden><label for="collegeName">College name <span class="required" aria-hidden="true">*</span></label><input id="collegeName" name="college" type="text" maxlength="160" autocomplete="organization" placeholder="Full institution name"></div><div id="referralField" class="field field-full" hidden><label for="referralSource">How did you hear about the event? <span class="required" aria-hidden="true">*</span></label><select id="referralSource" name="referralSource"><option value="">Choose an option</option><option>Promotions</option><option>Social media</option><option>LinkedIn</option><option>Instagram</option><option>Friends</option><option>Other</option></select></div><div id="teamNameField" class="field"><label for="teamName">Team name <span class="required" aria-hidden="true">*</span></label><input id="teamName" name="teamName" type="text" maxlength="120" placeholder="Your team name" autocomplete="off"></div><div class="field"><label for="teamSize">Number of participants <span class="required" aria-hidden="true">*</span></label><select id="teamSize" name="teamSize" required></select><small id="teamHelp"></small></div></div>
+              </section>
+              <section class="panel"><div class="panel-heading"><span class="number" aria-hidden="true">02</span><div><h2 id="leadHeading">Team lead details <span class="required" aria-hidden="true">*</span></h2><p><span id="memberHelp">* All fields below are mandatory.</span></p></div></div><div id="leadFields" class="form-fields"></div></section>
+              <div id="teammateFields" class="stack"></div>
+              <section id="eventCategoryPanel" class="panel" hidden><div class="field"><label for="eventCategory">Showcase category <span class="required">*</span></label><select id="eventCategory" name="eventCategory"></select></div></section>
+              <section class="panel"><div class="field"><label for="customDetails">Additional details (optional)</label><input id="customDetails" name="customDetails" type="text" maxlength="1000" placeholder="Anything the event coordinators should know" autocomplete="off"></div></section>
+              <div id="detailsError" class="status status-error" role="alert" hidden></div>
+            </div><aside class="sidebar" aria-label="Registration summary and contacts"><section id="detailsSummary" class="panel summary"></section><section id="detailsContacts" class="panel contacts"></section></aside></div>
+          </form>
         </div>
-        <div class="meta-badges">
-          <span class="pill chapter" id="badgeChapter">🏛️ SSG Autonomous</span>
-          <span class="pill">📅 9–10 October 2026</span>
-          <span class="pill">📍 HITAM Campus, Medchal</span>
-          <span class="pill" id="badgeTeamLimit">👥 Technical Competitions</span>
-        </div>
-      </div>
-
-      <!-- Right: HITAM Autonomous Logo -->
-      <div class="logo-box" title="HITAM Autonomous">
-        <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/hitam/hitam_logo.jpg" alt="HITAM Autonomous Logo">
-      </div>
-
-    </div>
-  </header>
-
-  <!-- ── MAIN CONTENT ── -->
-  <main class="main-wrapper">
-
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <!-- VIEW 1: DIRECTORY OF ALL 14 FESTIVAL EVENTS                -->
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <div id="eventsDirectoryPage">
-      <div class="hero-banner">
-        <h2>Choose an Event to Register</h2>
-        <p style="font-size: 13.5px; color: #64748b;">Select any event below. Fill in participant details in Step 1,
-          verify fees, and complete payment in Step 2.</p>
-      </div>
-
-
-      <!-- ── PARTICIPATING CLUBS & CHAPTERS STRIP ── -->
-      <div class="clubs-showcase-card">
-        <div class="clubs-showcase-title">ORGANIZING CHAPTERS &amp; PARTICIPATING CLUBS</div>
-        <div class="clubs-showcase-row">
-          <div class="club-chip" title="CSI Student Chapter HITAM">
-            <img
-              src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/csi-hitam.png"
-              alt="CSI">
-            <span>CSI HITAM</span>
-          </div>
-          <div class="club-chip" title="Coding Club HITAM">
-            <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/hitam-coding-club.png" alt="Coding Club">
-            <span>Coding Club</span>
-          </div>
-          <div class="club-chip" title="Google Developer Groups on Campus">
-            <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/gdg-hitam.png" alt="GDG">
-            <span>GDG on Campus</span>
-          </div>
-          <div class="club-chip" title="HHC × IUCEE-EWB">
-            <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/hhc-iucee.png" alt="HHC x IUCEE">
-            <span>HHC × IUCEE</span>
-          </div>
-          <div class="club-chip" title="HITAM AI Club">
-            <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/hitam-ai.png" alt="AI Club">
-            <span>AI Club</span>
-          </div>
-          <div class="club-chip" title="TorqueX Motorsports">
-            <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/torquex-logo.jpg" alt="TorqueX">
-            <span>TorqueX</span>
-          </div>
-          <div class="club-chip" title="MINDS Club HITAM">
-            <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/minds-hitam.png" alt="MINDS">
-            <span>MINDS</span>
-          </div>
-          <div class="club-chip" title="IUCEE-EWB Chapter">
-            <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/hhc-iucee.png" alt="IUCEE-EWB">
-            <span>IUCEE-EWB</span>
-          </div>
-          <div class="club-chip" title="ISAMPE Chapter">
-            <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ISAMPE.png" alt="ISAMPE">
-            <span>ISAMPE</span>
-          </div>
-          <div class="club-chip" title="IEOM HITAM Chapter">
-            <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ieom-hitam.png" alt="IEOM">
-            <span>IEOM</span>
-          </div>
-          <div class="club-chip" title="IEEE Student Branch HITAM">
-            <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ieee-hitam.png" alt="IEEE">
-            <span>IEEE HITAM</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="filter-bar">
-        <button class="filter-pill active" onclick="filterEvents('All')">All Events (14)</button>
-        <button class="filter-pill" onclick="filterEvents('Hackathon')">Hackathons</button>
-        <button class="filter-pill" onclick="filterEvents('Ideathon')">Ideathons</button>
-        <button class="filter-pill" onclick="filterEvents('Workshop')">Workshops</button>
-        <button class="filter-pill" onclick="filterEvents('Challenge')">Challenges</button>
-        <button class="filter-pill" onclick="filterEvents('Gaming & Coding')">Gaming &amp; Coding</button>
-      </div>
-
-      <div class="events-grid" id="eventsGridContainer"></div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <!-- VIEW 2: STEP 1 — PARTICIPANT & TEAM DETAILS                -->
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <div id="formStep1">
-      <button class="back-btn" onclick="showEventsDirectory()">
-        ← Back to All Events (14)
-      </button>
-
-      <div class="stepper">
-        <div class="step-item active">
-          <div class="step-num">1</div>
-          <span>Participant &amp; Team Details</span>
-        </div>
-        <div class="step-item">
-          <div class="step-num">2</div>
-          <span>UPI Payment &amp; UTR</span>
-        </div>
-        <div class="step-item">
-          <div class="step-num">3</div>
-          <span>Confirmed E-Ticket</span>
-        </div>
-      </div>
-
-      <form id="step1Form" onsubmit="validateStep1AndProceed(event)">
-        <div class="form-layout">
-
-          <div>
-            <!-- Section 1 -->
-            <div class="form-card">
-              <div class="form-title">1. Institution &amp; Team Setup</div>
-
-              <label>Select Institution Category <span class="req">*</span></label>
-              <div class="toggle-box">
-                <button type="button" class="toggle-btn active" id="btnHitam" onclick="setCollegeType(true)">HITAM
-                  Student</button>
-                <button type="button" class="toggle-btn" id="btnOther" onclick="setCollegeType(false)">Other College /
-                  University</button>
-              </div>
-
-              <div class="form-group" id="otherCollegeGroup" style="display: none;">
-                <label>College / University Name <span class="req">*</span></label>
-                <input type="text" id="collegeName" placeholder="e.g. VNR VJIET / CBIT / Vasavi / JNTUH">
-              </div>
-
-              <div id="teamSetupGroup" style="display: none;">
-                <div class="grid-2">
-                  <div class="form-group">
-                    <label>Official Team Name <span class="req">*</span></label>
-                    <input type="text" id="teamName" placeholder="e.g. NeuralKnights">
-                  </div>
-                  <div class="form-group">
-                    <label>Total Team Size <span class="req">*</span></label>
-                    <select id="teamSizeSelect" onchange="renderDynamicMembers()"></select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Section 2 -->
-            <div class="form-card">
-              <div class="form-title" id="leadCardHeading">2. Team Lead Details</div>
-
-              <div class="grid-2">
-                <div class="form-group">
-                  <label>Full Name <span class="req">*</span></label>
-                  <input type="text" id="leadName" required placeholder="Enter full name">
-                </div>
-                <div class="form-group">
-                  <label>Email Address <span class="req">*</span></label>
-                  <input type="email" id="leadEmail" required placeholder="name@domain.com">
-                </div>
-              </div>
-
-              <div class="grid-2">
-                <div class="form-group">
-                  <label>WhatsApp Number <span class="req">*</span></label>
-                  <input type="tel" id="leadPhone" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
-                </div>
-                <div class="form-group">
-                  <label>Roll Number / Student ID <span class="req">*</span></label>
-                  <input type="text" id="leadRoll" required placeholder="e.g. 22XX1A05XX">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label>Branch &amp; Year <span class="req">*</span></label>
-                <input type="text" id="leadBranchYear" required placeholder="e.g. CSE (AI & ML) - 3rd Year">
-              </div>
-
-              <div id="dynamicMembersContainer"></div>
-            </div>
-
-          </div>
-
-          <!-- Right Sidebar Summary -->
-          <aside>
-            <div class="summary-card">
-              <div class="summary-header">REGISTRATION SUMMARY</div>
-              <div class="summary-body">
-                <div style="font-size: 12px; color: #64748b;">Selected Tier:</div>
-                <div id="sideTier"
-                  style="font-size: 14px; font-weight: 700; color: var(--hitam-navy); margin-bottom: 12px;">HITAM
-                  Student</div>
-
-                <div class="total-box">
-                  <div style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: #64748b;">Total
-                    Amount</div>
-                  <div class="total-amt" id="sideTotalFee">₹0</div>
-                  <div id="sideFeeBreakdown" style="font-size: 11px; color: #64748b; margin-top: 4px;">Per Team Entry
-                  </div>
-                </div>
-
-                <button type="submit" class="btn-proceed">
-                  Proceed to Payment →
-                </button>
-                <div style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 8px;">
-                  🔒 Payment gateway unlocks after Step 1 is verified.
-                </div>
-              </div>
-            </div>
-
-            <!-- Event Coordinators Card -->
-            <div class="summary-card" id="sideCoordinatorsCard" style="margin-top: 16px;">
-              <div class="summary-header" style="background: #0f172a; font-size: 11px;">📞 EVENT COORDINATORS</div>
-              <div class="summary-body" style="font-size: 12px; line-height: 1.5; color: #0f172a;">
-                <div id="sideStudentCoord"></div>
-                <div id="sideFacultyCoord"></div>
-                <div id="sideClubEmail"></div>
-              </div>
-            </div>
-          </aside>
-
-        </div>
-      </form>
-    </div>
-
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <!-- VIEW 3: STEP 2 — PAY BY UPI (MATCHES SCREENSHOT EXACTLY)   -->
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <div id="paymentStep2">
-      <div style="margin-bottom: 20px;">
-        <h2 style="font-size: 26px; font-weight: 600; font-family: var(--font-display); color: var(--hitam-navy); letter-spacing: -0.3px;">Step 2: Pay by UPI</h2>
-        <p style="font-size: 13.5px; color: #64748b;">Make one payment for the whole team. Check the recipient name in
-          your UPI app before paying.</p>
-      </div>
-
-      <div class="payment-grid">
-
-        <!-- Left UPI Card -->
-        <div class="upi-box">
-          <div class="upi-recipient" id="upiRecipientName">GOTTUMUKKALA DANUSH SAI PANINDRA VARMA</div>
-
-          <div style="font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 10px;">Pay using any UPI app
-            (GPay, PhonePe, Paytm, Navi)</div>
-
-          <div class="qr-frame">
-            <img id="dynamicUpiQr" src="" alt="UPI Payment QR">
-          </div>
-
-          <div style="font-size: 12px; font-weight: 700; color: var(--hitam-navy); margin-bottom: 4px;">GOTTUMUKKALA
-            DANUSH SAI PANINDRA VARMA</div>
-          <div style="font-size: 12px; color: #64748b; margin-bottom: 10px;">UPI ID : 7093324151@naviaxis</div>
-
-          <div class="upi-id-badge">7093324151@naviaxis</div>
-
-          <div class="upi-amount" id="displayUpiAmount">₹0</div>
-
-          <div style="font-size: 11px; color: #64748b; line-height: 1.4;">
-            Scan with another device, or save the QR and choose it from your UPI app's gallery. Enter the exact amount
-            shown.
-          </div>
-
-          <div style="font-size: 12px; font-weight: 700; color: #0284c7; margin-top: 8px;" id="feeCalculationBreakdown">
-            Calculating fee...
-          </div>
-        </div>
-
-        <!-- Right Verification Card -->
-        <form class="submit-pay-card" onsubmit="handleFinalPaymentSubmission(event)">
-          <div>
-            <div class="form-group">
-              <label>UPI UTR / bank reference <span class="req">*</span></label>
-              <input type="text" id="payUtrNumber" required pattern="[0-9]{8,16}" placeholder="12-digit UPI reference">
-              <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Find this in your completed payment's
-                transaction details.</div>
-            </div>
-
-            <div class="form-group">
-              <label>Payment screenshot <span class="req">*</span></label>
-              <div class="file-input-box">
-                <input type="file" id="payScreenshot" accept="image/*" required
-                  onchange="handleScreenshotUpload(event)">
-              </div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 4px;">PNG or JPG, maximum 2 MB. Show the
-                successful payment, amount, recipient, and UTR.</div>
-              <div style="margin-top: 6px; padding: 6px 10px; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px; font-size: 11.5px; color: #fef08a; line-height: 1.4;">
-                <strong>⚠️ Important Receipt Requirement:</strong> Payment receipt must <strong>clearly show the UTR &amp; transaction ID</strong> and amount paid. Please upload a clear receipt — <strong>this makes your registration verification fast</strong> and ensures prompt confirmation!
-              </div>
-            </div>
-
-            <div class="checkbox-row">
-              <input type="checkbox" id="payAgreement" required>
-              <label for="payAgreement">I understand that payment and membership documents will be reviewed by the
-                organizers before registration is confirmed.</label>
-            </div>
-
-            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 16px;">
-              Uploads are stored for organizer verification and are not publicly shared.
-            </div>
-          </div>
-
-          <div>
-            <button type="submit" class="btn-submit-verify" id="finalSubmitBtn">
-              Submit payment for verification
-            </button>
-            <button type="button" class="btn-back-team" onclick="backToStep1()">
-              Back to team details
-            </button>
-          </div>
-        </form>
-
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <!-- VIEW 4: SUCCESS E-TICKET                                   -->
-    <!-- ══════════════════════════════════════════════════════════ -->
-    <div id="successPage"
-      style="display:none; max-width:660px; margin:0 auto; background:#fff; border:2px solid var(--success); border-radius:16px; overflow:hidden;">
-      <div
-        style="background:linear-gradient(135deg, #065f46 0%, var(--success) 100%); color:#fff; padding:28px; text-align:center;">
-        <h2 style="font-family: var(--font-display); font-size: 26px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px;">🎉 REGISTRATION SUBMITTED</h2>
-        <p style="font-size: 13px; opacity: 0.9;">Your technical fest participation pass has been recorded.</p>
-      </div>
-
-      <div style="padding: 24px;">
-        <div
-          style="background: rgba(16, 185, 129, 0.1); border: 2px dashed var(--success); border-radius: 12px; padding: 18px; text-align: center; margin-bottom: 20px;">
-          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--success);">Official
-            Registration ID</div>
-          <div style="font-size: 30px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #047857;"
-            id="ticketRegId">ESP-E00-00000</div>
-        </div>
-
-        <div
-          style="background: #f8fafc; border: 1px solid var(--border); padding: 16px; border-radius: 10px; margin-bottom: 20px; font-size: 13.5px;">
-          <div style="margin-bottom: 8px;"><strong>Event:</strong> <span id="ticketEvent">-</span></div>
-          <div style="margin-bottom: 8px;"><strong>Team / Participant:</strong> <span id="ticketTeam">-</span></div>
-          <div style="margin-bottom: 8px;"><strong>Total Paid:</strong> <span id="ticketFee">-</span></div>
-          <div><strong>Status:</strong> <span style="color: #0284c7; font-weight:700;">Pending Verification at Campus
-              Desk</span></div>
-        </div>
-
-        <div style="display: flex; gap: 10px;">
-          <button class="btn-submit-verify" onclick="window.print()" style="background: #002855;">PRINT RECEIPT
-            (PDF)</button>
-          <button class="btn-back-team" onclick="showEventsDirectory()" style="margin:0;">EXPLORE OTHER EVENTS</button>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- ── FOOTER: ORGANIZED BY SSG & CONTACTS ── -->
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-ssg-box">
-        <img src="https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/brand/ssg-logo.png" alt="SSG Logo"
-          class="ssg-logo-img" onerror="this.src='https://lh3.googleusercontent.com/d/10_oh0BP0xp8NZj-xzPjKZxUulxhS9qpi'">
-        <div>
-          <div style="font-weight: 800; color: var(--hitam-navy);">Event Organized by Student Support Group (SSG)</div>
-          <div style="font-size: 12px; color: #64748b;">HITAM Autonomous • Hyderabad, Telangana</div>
-        </div>
-      </div>
-
-      <div class="footer-contacts">
-        <div>📞 Contact: <strong>Hemanth (+91 83282 32607)</strong></div>
-        <div>✉️ Email: <strong>ssg@hitam.org</strong></div>
-      </div>
-    </div>
-  </footer>
-
+      </section>
+      <section id="paymentView" hidden aria-labelledby="paymentTitle">
+        <button id="paymentBack" type="button" class="btn btn-text">← Edit participant details</button>
+        <ol class="stepper" aria-label="Registration progress"><li><span class="step-circle">✓</span>Participant details</li><li aria-current="step"><span class="step-circle">2</span>UPI payment</li><li><span class="step-circle">3</span>E-ticket</li></ol>
+        <div class="view-heading"><p class="eyebrow">Step 02 / Payment</p><h1 id="paymentTitle" tabindex="-1">One last step.</h1><p id="paymentIntro">Pay the exact amount below. Your registration will be recorded after you submit the transaction reference and payment screenshot.</p></div>
+        <form id="paymentForm"><div class="payment-grid">
+          <section class="panel"><div class="panel-heading"><span class="number" aria-hidden="true">UPI</span><div><h2>Complete your UPI payment</h2><p>GPay · PhonePe · Paytm · Navi</p></div></div><div class="payment-recipient"><span class="eyebrow" style="color:var(--text-muted)">Pay to</span><strong id="payeeName"></strong></div><div class="qr-wrap"><img id="paymentQr" alt="UPI payment QR code"><p id="qrError" class="qr-placeholder small" hidden>The QR code could not load. Pay using the UPI ID and exact amount below.</p><p id="paymentAmount" class="payment-amount"></p><div class="upi-row"><code id="upiId"></code><button id="copyUpi" class="copy-btn" type="button">Copy UPI ID</button></div><a id="openUpi" class="btn btn-secondary" style="margin-top:15px" target="_top" href="#">Open your UPI app ↗</a><p id="copyStatus" class="small muted" role="status"></p></div><ol class="payment-steps"><li>Check the recipient name, then pay <strong id="instructionAmount"></strong>. When scanning the bank QR, enter this exact amount in your payment app.</li><li>Find the UTR / transaction reference in your payment app.</li><li>Upload your payment screenshot and review all details before submitting.</li><li>Keep your proof until the chapter verifies the payment.</li></ol></section>
+          <section class="panel payment-card"><div class="panel-heading"><span class="number" aria-hidden="true">03</span><div><h2>Submit your payment proof</h2><p id="paymentTeamSummary"></p></div></div><div class="stack"><div class="field"><label for="utrNumber">UPI transaction reference (UTR) <span class="required" aria-hidden="true">*</span></label><input id="utrNumber" name="utrNumber" type="text" inputmode="numeric" pattern="[0-9]{8,16}" minlength="8" maxlength="16" autocomplete="off" required placeholder="8–16 digits from your payment app"><small>Enter the reference exactly as shown. Do not use your phone number.</small></div><div class="field"><label for="proofFile">Payment screenshot <span class="required" aria-hidden="true">*</span></label><div class="upload"><input id="proofFile" name="proofFile" type="file" accept="image/png,image/jpeg,image/webp" required aria-describedby="proofHelp"><p id="proofHelp" class="small muted">PNG, JPG, or WebP · Maximum 2 MB</p><div id="proofPreview" class="proof-preview" hidden><img id="proofImage" alt="Selected payment screenshot"><p id="proofMeta" class="proof-meta"></p></div></div><div style="margin-top:10px;padding:12px 14px;background:linear-gradient(135deg,rgba(245,158,11,0.14),rgba(26,18,11,0.7));border:1px solid rgba(245,158,11,0.35);border-radius:12px;font-size:12px;color:#fef08a;line-height:1.5;box-shadow:0 4px 14px rgba(0,0,0,0.25)"><div style="display:flex;align-items:center;gap:6px;margin-bottom:4px"><span style="font-size:14px">⚠️</span><strong style="color:#fff;font-size:13px;letter-spacing:0.02em">Payment Screenshot Requirement</strong></div><div style="color:rgba(255,255,255,0.85)">Payment receipt must <strong style="color:#fff;text-decoration:underline;text-decoration-color:#f59e0b">clearly show the UTR &amp; transaction ID</strong> and amount paid.</div><div style="color:#fde047;font-size:11px;margin-top:4px">✨ Please upload a clear receipt — this makes your registration verification fast and ensures prompt confirmation!</div></div></div><fieldset id="eventRules" class="stack" hidden><legend>Event rules &amp; consent <span class="required" aria-hidden="true">*</span></legend><div id="eventRuleFields" class="stack"></div></fieldset><label class="agreement"><input id="agreement" name="agreement" type="checkbox" required><span>I confirm these participant details and payment proof are correct. I understand payment and entry are subject to organizer verification, and the proof will be accessible to authorized organizers for payment verification.</span></label><div id="paymentError" class="status status-error" role="alert" hidden></div><button id="paymentReview" class="btn btn-primary btn-full" type="submit">Review registration →</button></div><p class="payment-note">Nothing is submitted until you confirm the next screen. Need help? <a href="mailto:ssg.iiic@hitam.org">ssg.iiic@hitam.org</a> · <a href="tel:+918328232607">+91 83282 32607</a> · <a href="mailto:ssg@hitam.org">ssg@hitam.org</a></p></section>
+        </div></form>
+      </section>
+      <section id="ticketView" hidden aria-labelledby="ticketTitle"><div class="ticket"><div class="ticket-top"><div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:20px"><img id="ticketHitamLogo" alt="HITAM" style="width:60px;height:70px;object-fit:contain"><img id="ticketEspartoLogo" alt="ESPARTO" style="width:120px;height:80px;object-fit:contain"><img id="ticketSsgLogo" alt="SSG HITAM" style="width:60px;height:70px;object-fit:contain"></div><span class="ticket-check" aria-hidden="true">✓</span><h1 id="ticketTitle" tabindex="-1">Registration successful!</h1><p class="ticket-received">Thank you! Your registration and payment proof have been received successfully.</p><section class="ticket-email-notice" aria-labelledby="ticketEmailTitle"><h2 id="ticketEmailTitle">Your confirmed ticket will arrive by email</h2><p>Thank you for registering for this event. After your payment is verified, you will receive an email from <strong>elysian@hitam.org</strong> with your <strong>event ticket, QR code, and WhatsApp group link</strong> for event communication.</p><p>Check your registered email inbox and spam folder. Keep this submission e-ticket for your records.</p><p><a href="https://www.espartohitam.com/payment-status" target="_top">Check your payment status</a></p></section></div><div class="ticket-body"><div class="ticket-id"><p>Registration reference</p><strong id="ticketRegId"></strong></div><dl id="ticketDetails" class="ticket-details"></dl><p class="small muted" style="margin-top:20px">After organizer payment verification, your WhatsApp group link and confirmed ticket will be emailed to your registered address.</p><div class="ticket-actions"><button id="printTicket" type="button" class="btn btn-primary">Print / Save e-ticket</button><button id="exploreEvents" type="button" class="btn btn-secondary">Explore other events →</button></div><p class="ticket-note"><span id="ticketPaymentNote">Your registration has been received successfully. Your confirmed event ticket will be emailed after organizer payment verification.</span> Festival: 9–10 October 2026 · HITAM Campus, Medchal, Hyderabad.<br>Queries: <a href="mailto:ssg.iiic@hitam.org">ssg.iiic@hitam.org</a> · <a href="tel:+918328232607">+91 83282 32607</a> · <a href="mailto:ssg@hitam.org">ssg@hitam.org</a></p></div></div></section>
+    </main>
+    <footer class="footer"><div class="container"><p>ESPARTO 2026 · Organized by SSG, HITAM</p><p>Registration support: <a href="mailto:ssg.iiic@hitam.org">Tejal (ssg.iiic@hitam.org)</a> · <a href="tel:+918328232607">Hemanth (+91 83282 32607)</a> · <a href="mailto:ssg@hitam.org">ssg@hitam.org</a></p></div></footer>
+    <div id="mobileBar" class="mobile-bar" hidden><div><small id="mobileAmountLabel">REGISTRATION TOTAL</small><strong id="mobileAmount"></strong></div><button id="mobileCta" class="btn btn-primary" type="submit" form="detailsForm">Proceed to payment →</button></div>
+  </div>
+  <div id="confirmation" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" hidden><div class="modal-card"><div class="modal-heading"><p class="eyebrow">Check before you submit</p><h2 id="confirmTitle" tabindex="-1">Your registration, at a glance.</h2><p>Review every participant and payment detail. Your e-ticket will initially show Pending Verification.</p></div><div id="confirmationBody"></div><div id="submitStatus" class="status status-info" role="status" style="margin-top:18px" hidden></div><div id="submitError" class="status status-error" role="alert" style="margin-top:18px" hidden></div><div class="modal-actions"><button id="confirmCancel" type="button" class="btn btn-secondary">Edit details</button><button id="confirmSubmit" type="button" class="btn btn-primary">Submit for verification</button></div></div></div>
   <script>
-    // ════════════════════════════════════════════════════════════
-    // 14 FESTIVAL EVENTS DATASET WITH LOGOS, THEMES & CONTACTS
-    // ════════════════════════════════════════════════════════════
-    var ALL_EVENTS = [
-      {
-        id: "E01", slug: "ieee-ideathon", title: "INNOVISION (IEEE National Ideathon)",
-        club: "IEEE Student Branch HITAM", category: "Ideathon", teamMin: 3, teamMax: 4,
-        feeHitam: 200, feeOther: 300, feeModel: "Per Team",
-        prizePool: "Upto ₹30,000",
-        prizeBreakup: "🥇 1st, 🥈 2nd & 🥉 3rd Stage Awards (₹30,000 Mega Pool)",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ieee-hitam.png",
-        themeColor: "#00629B",
-        externalLink: "https://script.google.com/a/macros/hitam.org/s/AKfycbwoVAJO1VLPibThDX3h5Sewj3HVaZkgGAenKgqiOb8SlhyhJgT6GRzjp4cx2aWlOXK41A/exec",
-        desc: "Flagship innovation stage on both days (Oct 9–10) to pitch transformative engineering concepts across clean energy, computing, healthcare, and robotics.",
-        studentContact: "Sai Sampada (+91 88793 41306, ieeesb@hitam.org)",
-        facultyContact: "Bindu Madhavi (+91 91603 08130, bindumadhavi.t@ieee.org)"
-      },
-      {
-        id: "E02", slug: "reverse-hackathon", title: "Reverse Hackathon",
-        club: "HHC × IUCEE-EWB", category: "Hackathon", teamMin: 2, teamMax: 3,
-        feeHitam: 550, feeOther: 600, feeModel: "Per Team",
-        prizePool: "Upto ₹10,000",
-        prizeBreakup: "🥇 1st: ₹5,000 | 🥈 2nd: ₹3,000 | 🥉 3rd: ₹2,000",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/hhc-iucee.png",
-        themeColor: "#7c3aed",
-        desc: "High-intensity reverse engineering battle on Day 1 (Oct 9). Deconstruct complex production software/hardware stacks, identify bottlenecks, and rebuild solutions.",
-        studentContact: "Ameena (9966864664), Kanishka (9494753922), Alankrusha (9063412373)",
-        facultyContact: "Santosh Naik (+91 99802 99366, santoshn.mech@hitam.org)"
-      },
-      {
-        id: "E03", slug: "agentic-ai-workshop-hackathon", title: "Agentic AI Workshop & Hackathon",
-        club: "Google Developer Groups on Campus – HITAM", category: "Hackathon", teamMin: 1, teamMax: 4,
-        feeHitam: 150, feeOther: 150, feeModel: "Per Person",
-        prizePool: "Upto ₹10,000",
-        prizeBreakup: "🥇 1st: ₹5,000 | 🥈 2nd: ₹3,000 | 🥉 3rd: ₹2,000",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/gdg-hitam.png",
-        themeColor: "#1a73e8",
-        desc: "2-Day Flagship: Day 1 Hands-on Workshop (9:30 AM–3:00 PM) + Day 2 Autonomous Agent Hackathon (Submission Oct 10 12:00 PM). Single ₹150 registration covers BOTH events! ₹10,000 prize pool.",
-        studentContact: "Manik Manohar (9100834381), Dhanudeep (7569956911), Y Shamsmitha (7396933363)",
-        facultyContact: "D. Harikrishna (+91 94904 25130, associatedean.mdp@hitam.org)",
-        clubEmail: "gdgoncampus@hitam.org"
-      },
-      {
-        id: "E04", slug: "programmers-got-talent", title: "Programmers Got Talent",
-        club: "HHC × IUCEE-EWB", category: "Gaming & Coding", teamMin: 1, teamMax: 1,
-        feeHitam: 150, feeOther: 150, feeModel: "Per Person",
-        prizePool: "Upto ₹5,000",
-        prizeBreakup: "🥇 1st: ₹3,000 | 🥈 2nd: ₹2,000",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/hhc-iucee.png",
-        themeColor: "#7c3aed",
-        desc: "High-speed coding battle: blind syntax rounds, obscure runtime bug hunts, algorithmic sprints on Day 2 (Oct 10). ₹5,000 cash pool for solo programmers.",
-        studentContact: "Ameena (9966864664), Kanishka (9494753922), Alankrusha (9063412373)",
-        facultyContact: "Santosh Naik (+91 99802 99366, santoshn.mech@hitam.org)"
-      },
-      {
-        id: "E05", slug: "smart-manufacturing-challenge", title: "Smart Manufacturing: Industry Insights & Innovation Challenge",
-        club: "IEOM HITAM Chapter", category: "Challenge", teamMin: 4, teamMax: 4,
-        feeHitam: 99, feeOther: 149, feeModel: "Per Team",
-        prizePool: "Upto ₹5,700",
-        prizeBreakup: "🥇 1st: ₹2,500 | 🥈 2nd: ₹2,000 | 🥉 3rd: ₹1,200",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ieom-hitam.png",
-        themeColor: "#0284c7",
-        desc: "Industry 4.0 simulation, factory optimization, and IoT automation on Day 1 (Oct 9). ₹5,700 prize pool (₹11,400 across both days). Teams of 4.",
-        studentContact: "Rishitha (+91 91210 14558, 24e51a66e1@hitam.org)",
-        facultyContact: "Praveen (+91 89190 46164, praveenp.mech@hitam.org)"
-      },
-      {
-        id: "E06", slug: "ieom-startup-pitch", title: "IEOM Startup Pitch Challenge",
-        club: "IEOM HITAM Chapter", category: "Ideathon", teamMin: 1, teamMax: 4,
-        feeHitam: 149, feeOther: 199, feeModel: "Per Team",
-        prizePool: "Upto ₹5,700",
-        prizeBreakup: "🥇 1st: ₹2,500 | 🥈 2nd: ₹2,000 | 🥉 3rd: ₹1,200",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/ieom-hitam.png",
-        themeColor: "#0284c7",
-        desc: "Pitch sustainable engineering ventures and prototypes before investor judges on Day 2 (Oct 10). ₹5,700 prize pool (₹11,400 both days). Team: ₹149/₹199, Solo: ₹79/₹99.",
-        studentContact: "Rishitha (+91 91210 14558, 24e51a66e1@hitam.org)",
-        facultyContact: "Praveen (+91 89190 46164, praveenp.mech@hitam.org)"
-      },
-      {
-        id: "E07", slug: "dataquest-kaggle", title: "DataQuest – Kaggle Data Science Challenge",
-        club: "HITAM AI Club", category: "Challenge", teamMin: 2, teamMax: 2,
-        feeHitam: 300, feeOther: 300, feeModel: "Per Team",
-        prizePool: "Upto ₹5,000",
-        prizeBreakup: "🥇 1st: ₹2,500 | 🥈 2nd: ₹1,500 | 🥉 3rd: ₹1,000",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/hitam-ai.png",
-        themeColor: "#059669",
-        desc: "Live private Kaggle hackathon on Day 1 (Oct 9). Feature engineering duel and ML model optimization. ₹5,000 prize pool (₹300/team of 2).",
-        studentContact: "MD Arif (+91 93902 19103, 23e51a6671@hitam.org)",
-        facultyContact: "Dr. M. Rajeshwar (+91 92487 11181, rajeshwarm.cse@hitam.org)",
-        clubEmail: "aiclub@hitam.org"
-      },
-      {
-        id: "E08", slug: "n8n-automation-challenge", title: "n8n Automation Challenge",
-        club: "HITAM AI Club", category: "Challenge", teamMin: 2, teamMax: 2,
-        feeHitam: 300, feeOther: 300, feeModel: "Per Team",
-        prizePool: "Upto ₹5,000",
-        prizeBreakup: "🥇 1st: ₹2,500 | 🥈 2nd: ₹1,500 | 🥉 3rd: ₹1,000",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/hitam-ai.png",
-        themeColor: "#059669",
-        desc: "Event-driven workflow and AI agent integration hack on Day 2 (Oct 10). Build autonomous triggers with n8n. ₹5,000 prize pool (₹300/team of 2).",
-        studentContact: "MD Arif (+91 93902 19103, 23e51a6671@hitam.org)",
-        facultyContact: "Dr. M. Rajeshwar (+91 92487 11181, rajeshwarm.cse@hitam.org)",
-        clubEmail: "aiclub@hitam.org"
-      },
-      {
-        id: "E09", slug: "data-heist-datathon", title: "DATA HEIST – Datathon",
-        club: "MINDS Club", category: "Challenge", teamMin: 2, teamMax: 4,
-        feeHitam: 200, feeOther: 300, feeModel: "Per Team",
-        prizePool: "Upto ₹3,000",
-        prizeBreakup: "🥇 1st: ₹1,500 | 🥈 2nd: ₹1,000 | 🥉 3rd: ₹500",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/minds-hitam.png",
-        themeColor: "#4f46e5",
-        desc: "Investigative data science thriller on Day 1 (Oct 9). Analyze fragmented database dumps, decrypt corrupted logs, and crack the case. ₹3,000 prize pool.",
-        studentContact: "Arutla Sai Prasanna (+91 81061 10146, 23e51a6711@hitam.org)",
-        facultyContact: "Richa Tiwari (+91 91315 39794, richatiwari.cse@hitam.org)"
-      },
-      {
-        id: "E10", slug: "data-dossier", title: "DATA DOSSIER Case Study",
-        club: "MINDS Club", category: "Challenge", teamMin: 2, teamMax: 4,
-        feeHitam: 100, feeOther: 200, feeModel: "Per Team",
-        prizePool: "Upto ₹3,000",
-        prizeBreakup: "🥇 1st: ₹1,500 | 🥈 2nd: ₹1,000 | 🥉 3rd: ₹500",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/minds-hitam.png",
-        themeColor: "#4f46e5",
-        desc: "Examine sealed mystery dossiers, analyze technical anomalies, and present an irrefutable deduction on Day 2 (Oct 10). ₹3,000 prize pool.",
-        studentContact: "Arutla Sai Prasanna (+91 81061 10146, 23e51a6711@hitam.org)",
-        facultyContact: "Richa Tiwari (+91 91315 39794, richatiwari.cse@hitam.org)"
-      },
-      {
-        id: "E11", slug: "torquex-motorsport", title: "TorqueX – From Garage to Grid & Kart Reveal",
-        club: "TorqueX Motorsports", category: "Challenge", teamMin: 1, teamMax: 4,
-        feeHitam: 50, feeOther: 70, feeModel: "Per Person",
-        prizePool: "Upto ₹5,000",
-        prizeBreakup: "🥇 1st: ₹1,500 | 🥈 2nd: ₹1,000 | 🥉 3rd: ₹500",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/torquex-logo.jpg",
-        themeColor: "#dc2626",
-        desc: "Grand unveiling of HITAM's custom racing kart on Day 2 (Oct 10). Telemetry design sprints and vehicle dynamics challenges. ₹5,000 prize pool.",
-        studentContact: "TorqueX Student Lead (+91 83282 32607)",
-        facultyContact: "TorqueX Faculty Incharge (ssg@hitam.org)"
-      },
-      {
-        id: "E12", slug: "build-first-robot", title: "Build Your First Robot",
-        club: "ISNT × ISAMPE Student Chapter", category: "Workshop", teamMin: 1, teamMax: 4,
-        feeHitam: 250, feeOther: 250, feeModel: "Per Team",
-        prizePool: "Upto ₹5,000",
-        prizeBreakup: "🥇 1st: ₹1,000 | 🥈 2nd: ₹800 | 🥉 3rd: ₹500",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/isnt-isampe.png",
-        themeColor: "#0d9488",
-        desc: "Assemble an autonomous obstacle-avoiding bot from scratch on Day 1 (Oct 9). Learn DC geared motors, Arduino Uno, sensors, and race in the arena. ₹5,000 prize pool (₹120 solo / ₹250 team).",
-        studentContact: "Bipul Kumar Yadav (+91 70933 46820) / Narendra Reddy (+91 79814 27446)",
-        facultyContact: "Mr. Deepak Kumar Singh (+91 89829 30521) / Mr. P. Bhaskar Rao (+91 97054 82627)"
-      },
-      {
-        id: "E13", slug: "code-casino", title: "Code Casino",
-        club: "CSI Student Chapter", category: "Gaming & Coding", teamMin: 2, teamMax: 3,
-        feeHitam: 50, feeOther: 60, feeModel: "Per Person",
-        prizePool: "Upto ₹10,000",
-        prizeBreakup: "🥇 1st: ₹5,000 | 🥈 2nd: ₹3,000 | 🥉 3rd: ₹2,000",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/csi-hitam.png",
-        themeColor: "#ca8a04",
-        desc: "High-stakes competitive coding game on Day 2 (Oct 10) organized by CSI Student Chapter. Strategic chip wagers on code optimization and logic duels. Total ₹10,000 prize pool!",
-        studentContact: "CSI Student Lead (+91 83282 32607)",
-        facultyContact: "CSI Faculty Incharge (ssg@hitam.org)"
-      },
-      {
-        id: "E14", slug: "technical-tambola", title: "Technical Tambola",
-        club: "CSI Student Chapter", category: "Gaming & Coding", teamMin: 1, teamMax: 1,
-        feeHitam: 50, feeOther: 60, feeModel: "Per Person",
-        prizePool: "Upto ₹1,200",
-        prizeBreakup: "🥇 1st: ₹600 | 🥈 2nd: ₹400 | 🥉 3rd: ₹200",
-        logo: "https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/chapters/csi-hitam.png",
-        themeColor: "#ca8a04",
-        desc: "Classic Tambola electrified with computer science trivia & code clues on Day 1 (Oct 9) organized by CSI Student Chapter. Solo participation. ₹1,200 prize pool.",
-        studentContact: "CSI Student Lead (+91 83282 32607)",
-        facultyContact: "CSI Faculty Incharge (ssg@hitam.org)"
-      }
-    ];
-
-    // Current State
-    var currentEvent = null;
-    var isHitam = true;
-    var validatedStep1Data = null;
-    var uploadedScreenshotBase64 = null;
-    var uploadedScreenshotName = null;
-
-    // Render View 1 (All Events (14))
-    function renderEventsDirectory(filterCat) {
-      var container = document.getElementById('eventsGridContainer');
-      container.innerHTML = '';
-
-      ALL_EVENTS.forEach(function (ev) {
-        if (filterCat && filterCat !== 'All' && ev.category !== filterCat) return;
-
-        var teamFormat = ev.teamMax > 1 ? '👥 ' + ev.teamMin + '–' + ev.teamMax + ' Members' : '👤 Solo';
-        var prizeBadge = ev.prizePool ? '<span class="card-prize-badge">🏆 ' + ev.prizePool + '</span>' : '';
-        var prizeBreakupHtml = ev.prizeBreakup ? '<div class="card-prize-breakup">' + ev.prizeBreakup + '</div>' : '';
-
-        var card = document.createElement('div');
-        card.className = 'event-card';
-
-        card.innerHTML =
-          '<div>' +
-          '<div class="card-top-row">' +
-          '<span class="card-category">' + ev.category + '</span>' +
-          prizeBadge +
-          '</div>' +
-          '<div class="card-logo-row">' +
-          '<img src="' + ev.logo + '" alt="' + ev.club + '" title="' + ev.club + '" class="card-club-logo-img" />' +
-          '</div>' +
-          '<h3 class="card-title">' + ev.title + '</h3>' +
-          '<p class="card-desc">' + ev.desc + '</p>' +
-          prizeBreakupHtml +
-          '</div>' +
-          '<div>' +
-          '<div class="card-specs">' +
-          '<div><div class="spec-label">TEAM STRUCTURE</div><div class="spec-val">' + teamFormat + '</div></div>' +
-          '<div><div class="spec-label">ENTRY FEE</div><div class="spec-val">🎟️ ₹' + ev.feeHitam + ' / ₹' + ev.feeOther + '</div></div>' +
-          '</div>' +
-          '<button class="btn-register-card" onclick="handleEventSelection(\'' + ev.slug + '\')">🎟️ REGISTER FOR THIS EVENT →</button>' +
-          '</div>';
-        container.appendChild(card);
-      });
-    }
-
-    function filterEvents(cat) {
-      document.querySelectorAll('.filter-pill').forEach(function (btn) {
-        btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === 'All' && btn.innerText.includes('All')));
-      });
-      renderEventsDirectory(cat);
-    }
-
-    // Helper: format contact text into clickable tel: and mailto: links
-    function formatContactLinks(text) {
-      if (!text) return '';
-      var emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
-      var phoneRegex = /(\+91[\s-]*)?([6-9]\d{4}[\s-]?\d{5}|[6-9]\d{9})/g;
-
-      var emails = [];
-      var temp = text.replace(emailRegex, function(m) {
-        emails.push(m);
-        return '___EMAIL_' + (emails.length - 1) + '___';
-      });
-
-      temp = temp.replace(phoneRegex, function(m) {
-        var rawDigits = m.replace(/[^\d+]/g, '');
-        if (!rawDigits.startsWith('+91') && rawDigits.length === 10) {
-          rawDigits = '+91' + rawDigits;
-        }
-        return '<a href="tel:' + rawDigits + '" style="color:#0284c7; font-weight:600; text-decoration:underline;" title="Call ' + rawDigits + '">' + m + '</a>';
-      });
-
-      temp = temp.replace(/___EMAIL_(\d+)___/g, function(_, idx) {
-        var mail = emails[Number(idx)];
-        return '<a href="mailto:' + mail + '" style="color:#0284c7; font-weight:600; text-decoration:underline;" title="Email ' + mail + '">' + mail + '</a>';
-      });
-
-      return temp;
-    }
-
-    // ── CLICK ON EVENT: SPECIAL IEEE REDIRECT OR OPEN DYNAMIC FORM ──
-    function handleEventSelection(eventSlug) {
-      if (eventSlug === 'agentic-ai-hackathon' || eventSlug === 'agentic-ai-workshop') {
-        eventSlug = 'agentic-ai-workshop-hackathon';
-      }
-      var ev = ALL_EVENTS.find(function (e) { return e.slug === eventSlug || e.id === eventSlug; });
-      if (!ev) return;
-
-      // Special IEEE Redirect Check
-      if (ev.externalLink) {
-        window.open(ev.externalLink, '_blank');
-        return;
-      }
-
-      openEventStep1(ev);
-    }
-
-    // ── STEP 1: OPEN EVENT DETAILS (PAYMENT IS HIDDEN) ──
-    function openEventStep1(ev) {
-      currentEvent = ev;
-
-      // Inject Dynamic Club Theme Colors
-      document.documentElement.style.setProperty('--primary', currentEvent.themeColor);
-      document.documentElement.style.setProperty('--accent-glow', currentEvent.themeColor + '33');
-
-      // Update Header with Chapter Logo & Titles
-      document.getElementById('headerClubLogo').src = currentEvent.logo;
-      document.getElementById('eventTitle').innerText = currentEvent.title;
-      document.getElementById('badgeChapter').innerText = "🏛️ " + currentEvent.club;
-      document.getElementById('badgeTeamLimit').innerText = currentEvent.teamMax > 1 ? "👥 " + currentEvent.teamMin + "–" + currentEvent.teamMax + " Members" : "👤 Solo Event";
-
-      document.getElementById('eventsDirectoryPage').style.display = 'none';
-      document.getElementById('paymentStep2').style.display = 'none';
-      document.getElementById('successPage').style.display = 'none';
-      document.getElementById('formStep1').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      var isTeam = currentEvent.teamMax > 1;
-      document.getElementById('teamSetupGroup').style.display = isTeam ? 'block' : 'none';
-      document.getElementById('leadCardHeading').innerText = isTeam ? "2. Team Lead Details" : "2. Participant Information";
-
-      if (isTeam) {
-        var sel = document.getElementById('teamSizeSelect');
-        sel.innerHTML = '';
-        for (var s = currentEvent.teamMin; s <= currentEvent.teamMax; s++) {
-          var opt = document.createElement('option');
-          opt.value = s;
-          opt.innerText = s + " Members";
-          sel.appendChild(opt);
-        }
-      }
-
-      renderDynamicMembers();
-      updateSidebarFee();
-
-      // Populate Coordinators & Support in Sidebar (with clickable call/mail links)
-      var scEl = document.getElementById('sideStudentCoord');
-      var fcEl = document.getElementById('sideFacultyCoord');
-      var emEl = document.getElementById('sideClubEmail');
-      var sideCard = document.getElementById('sideCoordinatorsCard');
-      if (sideCard) {
-        if (currentEvent.studentContact || currentEvent.facultyContact || currentEvent.clubEmail) {
-          sideCard.style.display = 'block';
-          if (scEl) scEl.innerHTML = currentEvent.studentContact ? '<div style="margin-bottom: 10px;"><span class="contact-badge contact-badge-student">Student</span><div style="font-weight: 500; color: #0f172a; margin-top: 4px; line-height: 1.5;">' + formatContactLinks(currentEvent.studentContact) + '</div></div>' : '';
-          if (fcEl) fcEl.innerHTML = currentEvent.facultyContact ? '<div style="margin-bottom: 10px;"><span class="contact-badge contact-badge-faculty">Faculty</span><div style="font-weight: 500; color: #0f172a; margin-top: 4px; line-height: 1.5;">' + formatContactLinks(currentEvent.facultyContact) + '</div></div>' : '';
-          if (emEl) emEl.innerHTML = currentEvent.clubEmail ? '<div><span class="contact-badge contact-badge-mail">Official Mail</span><div style="margin-top: 4px; line-height: 1.5;"><a href="mailto:' + currentEvent.clubEmail + '" style="font-weight: 600; color:#0284c7; text-decoration: underline;" title="Email ' + currentEvent.clubEmail + '">' + currentEvent.clubEmail + '</a></div></div>' : '';
-        } else {
-          sideCard.style.display = 'none';
-        }
-      }
-    }
-
-    function showEventsDirectory() {
-      // Reset Default Theme
-      document.documentElement.style.setProperty('--primary', '#ff5e00');
-      document.getElementById('headerClubLogo').src = 'https://cdn.jsdelivr.net/gh/ssg-hitam/ESPARTO_2026@main/public/images/brand/ssg-logo.png';
-      document.getElementById('eventTitle').innerText = 'ESPARTO 2026 Festival Events';
-      document.getElementById('badgeChapter').innerText = '🏛️ SSG';
-      document.getElementById('badgeTeamLimit').innerText = '👥 Technical Competitions';
-
-      document.getElementById('formStep1').style.display = 'none';
-      document.getElementById('paymentStep2').style.display = 'none';
-      document.getElementById('successPage').style.display = 'none';
-      document.getElementById('eventsDirectoryPage').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function setCollegeType(hitam) {
-      isHitam = hitam;
-      document.getElementById('btnHitam').className = 'toggle-btn ' + (hitam ? 'active' : '');
-      document.getElementById('btnOther').className = 'toggle-btn ' + (!hitam ? 'active' : '');
-      document.getElementById('otherCollegeGroup').style.display = hitam ? 'none' : 'block';
-      document.getElementById('sideTier').innerText = hitam ? "HITAM Student" : "Other College";
-      var colInput = document.getElementById('collegeName');
-      if (!hitam) colInput.setAttribute('required', 'required');
-      else colInput.removeAttribute('required');
-      updateSidebarFee();
-    }
-
-    function renderDynamicMembers() {
-      var container = document.getElementById('dynamicMembersContainer');
-      container.innerHTML = '';
-      if (!currentEvent || currentEvent.teamMax <= 1) return;
-
-      var teamCount = Number(document.getElementById('teamSizeSelect').value);
-      for (var i = 2; i <= teamCount; i++) {
-        var blk = document.createElement('div');
-        blk.className = 'member-block';
-        blk.innerHTML =
-          '<div class="member-title">👤 Teammate ' + i + ' Details</div>' +
-          '<div class="grid-2">' +
-          '<div class="form-group"><label>Full Name <span class="req">*</span></label><input type="text" id="mName_' + i + '" required placeholder="Teammate ' + i + ' Name"></div>' +
-          '<div class="form-group"><label>Email Address</label><input type="email" id="mEmail_' + i + '" placeholder="teammate' + i + '@domain.com"></div>' +
-          '</div>' +
-          '<div class="grid-2">' +
-          '<div class="form-group"><label>WhatsApp Number</label><input type="tel" id="mPhone_' + i + '" placeholder="10-digit mobile number"></div>' +
-          '<div class="form-group"><label>Roll Number / ID</label><input type="text" id="mRoll_' + i + '" placeholder="College ID"></div>' +
-          '</div>';
-        container.appendChild(blk);
-      }
-      updateSidebarFee();
-    }
-
-    function updateSidebarFee() {
-      if (!currentEvent) return;
-      var unitFee = isHitam ? currentEvent.feeHitam : currentEvent.feeOther;
-      var total = unitFee;
-      var breakdown = "";
-
-      if (currentEvent.feeModel === "Per Person") {
-        var count = currentEvent.teamMax > 1 ? Number(document.getElementById('teamSizeSelect').value) : 1;
-        total = unitFee * count;
-        breakdown = count + " Participant(s) × ₹" + unitFee;
-      } else {
-        breakdown = "1 Team × ₹" + unitFee + " (" + (isHitam ? "HITAM Entry" : "Other College Entry") + ")";
-      }
-
-      document.getElementById('sideTotalFee').innerText = total === 0 ? "FREE" : "₹" + total;
-      document.getElementById('sideFeeBreakdown').innerText = breakdown;
-    }
-
-    // ── STEP 1 VALIDATION & PROCEED TO STEP 2 ──
-    function validateStep1AndProceed(e) {
-      e.preventDefault();
-
-      var customAnswers = {};
-
-      var members = [];
-      if (currentEvent.teamMax > 1) {
-        var count = Number(document.getElementById('teamSizeSelect').value);
-        for (var k = 2; k <= count; k++) {
-          members.push({
-            name: document.getElementById('mName_' + k).value,
-            email: document.getElementById('mEmail_' + k).value,
-            phone: document.getElementById('mPhone_' + k).value,
-            rollNo: document.getElementById('mRoll_' + k).value,
-            college: isHitam ? "HITAM" : document.getElementById('collegeName').value
-          });
-        }
-      }
-
-      var unitFee = isHitam ? currentEvent.feeHitam : currentEvent.feeOther;
-      var total = unitFee;
-      var breakdownText = "";
-
-      if (currentEvent.id === "E12") {
-        var teamCount = Number(document.getElementById('teamSizeSelect').value);
-        if (teamCount === 1) {
-          total = 120;
-          breakdownText = "1 Individual Participant · ₹120";
-        } else {
-          total = 250;
-          breakdownText = "Team of " + teamCount + " Participants · ₹250";
-        }
-      } else if (currentEvent.feeModel === "Per Person") {
-        var teamCount = currentEvent.teamMax > 1 ? Number(document.getElementById('teamSizeSelect').value) : 1;
-        total = unitFee * teamCount;
-        breakdownText = teamCount + " Participant(s) × ₹" + unitFee + " (" + (isHitam ? "HITAM" : "Non-HITAM") + ")";
-      } else {
-        breakdownText = "1 Team × ₹" + unitFee + " (" + (isHitam ? "HITAM Entry" : "Other College") + ")";
-      }
-
-      validatedStep1Data = {
-        eventId: currentEvent.id,
-        eventSlug: currentEvent.slug,
-        eventTitle: currentEvent.title,
-        isHitam: isHitam,
-        teamName: currentEvent.teamMax > 1 ? document.getElementById('teamName').value : "Individual",
-        teamSize: currentEvent.teamMax > 1 ? Number(document.getElementById('teamSizeSelect').value) : 1,
-        lead: {
-          name: document.getElementById('leadName').value,
-          email: document.getElementById('leadEmail').value,
-          phone: document.getElementById('leadPhone').value,
-          rollNo: document.getElementById('leadRoll').value,
-          branchYear: document.getElementById('leadBranchYear').value,
-          college: isHitam ? "Hyderabad Institute of Technology and Management (HITAM)" : document.getElementById('collegeName').value
-        },
-        members: members,
-        customAnswers: customAnswers,
-        totalFee: total
-      };
-
-      // Unhide Step 2 (UPI Payment Screen)
-      document.getElementById('formStep1').style.display = 'none';
-      document.getElementById('paymentStep2').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // Populate Step 2
-      document.getElementById('displayUpiAmount').innerText = "₹" + total;
-      document.getElementById('feeCalculationBreakdown').innerText = breakdownText;
-
-      // Encode dynamic UPI URL
-      var upiUrl = 'upi://pay?pa=7093324151@naviaxis&pn=GOTTUMUKKALA%20DANUSH%20SAI%20PANINDRA%20VARMA&am=' + total + '&tn=ESP-' + currentEvent.id;
-      document.getElementById('dynamicUpiQr').src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(upiUrl);
-    }
-
-    function backToStep1() {
-      document.getElementById('paymentStep2').style.display = 'none';
-      document.getElementById('formStep1').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function handleScreenshotUpload(e) {
-      var file = e.target.files[0];
-      if (!file) return;
-      if (file.size > 2.5 * 1024 * 1024) {
-        alert("File size exceeds 2 MB limit. Please compress or choose a smaller image.");
-        e.target.value = "";
-        return;
-      }
-      uploadedScreenshotName = file.name;
-      var reader = new FileReader();
-      reader.onload = function (evt) {
-        uploadedScreenshotBase64 = evt.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // ── FINAL SUBMISSION TO GOOGLE SHEETS ──
-    function handleFinalPaymentSubmission(e) {
-      e.preventDefault();
-      var utr = document.getElementById('payUtrNumber').value.trim();
-      if (utr.length < 8) {
-        alert("Please enter a valid 12-digit UPI reference number (UTR).");
-        return;
-      }
-
-      var btn = document.getElementById('finalSubmitBtn');
-      btn.innerText = "SUBMITTING FOR VERIFICATION...";
-      btn.disabled = true;
-
-      validatedStep1Data.utrNumber = utr;
-      validatedStep1Data.screenshotBase64 = uploadedScreenshotBase64;
-      validatedStep1Data.screenshotName = uploadedScreenshotName;
-
-      google.script.run
-        .withSuccessHandler(function (res) {
-          if (res.success) {
-            document.getElementById('paymentStep2').style.display = 'none';
-            document.getElementById('ticketRegId').innerText = res.regId;
-            document.getElementById('ticketEvent').innerText = validatedStep1Data.eventTitle;
-            document.getElementById('ticketTeam').innerText = validatedStep1Data.teamName;
-            document.getElementById('ticketFee').innerText = "₹" + validatedStep1Data.totalFee;
-            document.getElementById('successPage').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          } else {
-            alert("Error: " + res.message);
-            btn.innerText = "Submit payment for verification";
-            btn.disabled = false;
-          }
-        })
-        .withFailureHandler(function (err) {
-          alert("Submission failed: " + err.message);
-          btn.innerText = "Submit payment for verification";
-          btn.disabled = false;
-        })
-        .submitRegistration(validatedStep1Data);
-    }
-
-    // Initial Load
-    renderEventsDirectory('All');
-
+    // Apps Script printing scriptlets are contextually escaped. The backend only
+    // supplies a known catalog slug, never arbitrary URL input.
     var preselected = "<?= initialEvent ?>";
-    if ((!preselected || preselected.indexOf('<?=') !== -1) && typeof window !== 'undefined' && window.location && window.location.search) {
-      try {
-        var urlParams = new URLSearchParams(window.location.search);
-        preselected = urlParams.get('event') || '';
-      } catch (err) {}
+    var portal = null;
+    var events = [];
+    var selectedEvent = null;
+    var activeCategory = 'All';
+    var currentView = 'loading';
+    var draft = null;
+    var memberDrafts = {};
+    var proof = null;
+    var proofReadVersion = 0;
+    var requestId = '';
+    var ticketAccess = null;
+    var pendingPayload = null;
+    var inFlight = false;
+    var slowTimer = null;
+    var modalPreviousFocus = null;
+    var modalPreviousOverflow = '';
+    var loadInFlight = false;
+    var categories = [['All', 'All events'], ['Hackathon', 'Hackathons'], ['Ideathon', 'Ideathons'], ['Workshop', 'Workshops'], ['Challenge', 'Challenges'], ['Gaming & Coding', 'Gaming & Coding']];
+    function byId(id) { return document.getElementById(id); }
+    function escapeHtml(value) { return String(value === undefined || value === null ? '' : value).replace(/[&<>"']/g, function (character) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]; }); }
+    function money(amount) { return '₹' + Number(amount).toLocaleString('en-IN'); }
+    function teamLabel(event) {
+        if (event.allowedTeamSizes) return 'Individual or team of 4'; return event.maxTeam === 1 ? 'Solo' : event.minTeam === event.maxTeam ? event.minTeam + ' participants' : event.minTeam + '–' + event.maxTeam + ' participants'; }
+    function setMessage(id, message) { var target = byId(id); target.textContent = message || ''; target.hidden = !message; }
+    function setImage(id, url, alt) { var image = byId(id); image.hidden = false; image.parentElement.classList.remove('logo-failed'); image.removeAttribute('data-cdn-retried'); image.removeAttribute('data-drive-retried'); image.src = url; if (alt)
+        image.alt = alt; }
+    function showView(name, focusId) {
+        ['loading', 'directory', 'details', 'payment', 'ticket'].forEach(function (view) { byId(view + 'View').hidden = view !== name; });
+        currentView = name;
+        var showCta = (name === 'details' && selectedEvent && selectedEvent.id !== 'E01') || name === 'payment';
+        byId('mobileBar').hidden = !showCta;
+        document.body.classList.toggle('has-mobile-cta', showCta);
+        byId('mobileCta').setAttribute('form', name === 'payment' ? 'paymentForm' : 'detailsForm');
+        byId('mobileCta').textContent = name === 'payment' ? 'Review registration →' : 'Proceed to payment →';
+        if (focusId) {
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            byId(focusId).focus({ preventScroll: true });
+        }
     }
-    if (preselected && preselected.indexOf('<?=') === -1) {
-      var found = ALL_EVENTS.find(function (e) { return e.slug === preselected || e.id === preselected; });
-      if (found) {
-        handleEventSelection(found.slug);
-      }
+    function updateHeader(event) {
+        document.documentElement.style.setProperty('--primary', event ? event.themeColor : '#ff5e00');
+        byId('ssgLogo').parentElement.classList.toggle('combined-logo', !!event && (event.id === 'E02' || event.id === 'E04'));
+        setImage('ssgLogo', event ? event.logo : portal.logos.ssg, event ? event.club : 'SSG HITAM');
+        byId('ssgLogo').nextElementSibling.textContent = event ? event.club : 'SSG HITAM';
+        setImage('brandLogo', portal.logos.esparto, 'ESPARTO 2026');
+        byId('brandTitle').textContent = event ? event.title : 'ESPARTO 2026';
+        byId('brandSubtitle').textContent = event ? event.club + ' · ESPARTO 2026' : 'Official event registration portal';
     }
+    function loadPortal() {
+        if (loadInFlight)
+            return;
+        loadInFlight = true;
+        byId('loadingView').querySelector('.spinner').hidden = false;
+        byId('retryLoad').hidden = true;
+        byId('loadingText').textContent = 'Loading the official event directory…';
+        if (typeof google === 'undefined' || !google.script || !google.script.run) {
+            loadFailed();
+            return;
+        }
+        google.script.run.withSuccessHandler(function (data) {
+            loadInFlight = false;
+            if (!data || !Array.isArray(data.events) || data.events.length !== 14) {
+                loadFailed();
+                return;
+            }
+            portal = data;
+            events = data.events;
+            setImage('ssgLogo', data.logos.ssg);
+            setImage('hitamLogo', data.logos.hitam);
+            updateHeader(null);
+            byId('chapterStrip').innerHTML = data.chapters.map(function (chapter) { return '<div class="chapter"><img src="' + escapeHtml(chapter.logo) + '" alt=""><span>' + escapeHtml(chapter.name) + '</span></div>'; }).join('');
+            byId('filters').innerHTML = categories.map(function (category) { return '<button class="filter" type="button" data-category="' + escapeHtml(category[0]) + '" aria-pressed="' + (category[0] === activeCategory) + '">' + escapeHtml(category[1]) + '</button>'; }).join('');
+            renderEvents();
+            try { var storedTicket = JSON.parse(localStorage.getItem('espartoSavedTicket') || 'null'); if (storedTicket && storedTicket.receipt && /^[a-f0-9]{32}$/.test(storedTicket.requestId)) { ticketAccess = storedTicket; byId('restoreTicket').hidden = false; } } catch (storageError) {}
+            showView('directory');
+            setMessage('pageMessage', data.registrationAvailable ? '' : 'Local registrations are temporarily unavailable. Please contact SSG; the separate IEEE form remains accessible.');
+            var event = events.filter(function (item) { return item.slug === preselected; })[0];
+            if (event)
+                handleEventSelection(event.slug);
+        }).withFailureHandler(loadFailed).getPortalData();
+    }
+    function loadFailed() { loadInFlight = false; byId('loadingView').querySelector('.spinner').hidden = true; byId('loadingText').textContent = 'The directory could not load. Please try again or contact ssg@hitam.org.'; byId('retryLoad').hidden = false; }
+    function renderEvents() {
+        var query = byId('eventSearch').value.trim().toLowerCase();
+        var matches = events.filter(function (event) { return (activeCategory === 'All' || event.category === activeCategory) && (!query || (event.title + ' ' + event.club + ' ' + event.description).toLowerCase().indexOf(query) !== -1); });
+        byId('eventCount').textContent = matches.length + (matches.length === 1 ? ' event' : ' events') + ' · Fees shown in INR';
+        byId('eventGrid').innerHTML = matches.length ? matches.map(function (event) {
+            var breakup = Object.keys(event.prizeBreakup || {}).map(function (key) { return escapeHtml(key.charAt(0).toUpperCase() + key.slice(1)) + ': ' + escapeHtml(event.prizeBreakup[key]); }).join(' · ');
+            var action = event.id === 'E01' ? '<a class="btn btn-primary btn-full" href="' + escapeHtml(portal.ieeeUrl) + '" target="_blank" rel="noopener noreferrer">Register on IEEE form ↗</a>' : '<button class="btn btn-primary btn-full" type="button" data-event="' + escapeHtml(event.slug) + '"' + (portal.registrationAvailable ? '' : ' disabled') + '>' + (portal.registrationAvailable ? 'Register for event →' : 'Registration unavailable') + '</button>';
+            return '<article class="event-card" style="--event-color:' + escapeHtml(event.themeColor) + '"><div class="card-top"><div class="card-meta"><div class="club-identity"><img class="' + (event.id === 'E02' || event.id === 'E04' || event.id === 'E12' ? 'combined-logo' : '') + '" src="' + escapeHtml(event.logo) + '" alt=""><span>' + escapeHtml(event.club) + '</span></div><span class="category">' + escapeHtml(event.category) + '</span></div><span class="prize">★ Upto ' + money(event.prize) + ' prize pool</span><h3>' + escapeHtml(event.title) + '</h3><p class="card-description">' + escapeHtml(event.description) + '</p><p class="prize-breakup">' + (breakup || 'Prize breakup: contact the chapter for details.') + '</p></div><div class="card-bottom"><div class="team-line"><span>Team format</span><strong>' + teamLabel(event) + '</strong></div><div class="fee-pair"><div>' + (event.id === 'E01' ? 'IEEE members' : 'HITAM students') + '<strong>' + money(event.allowedTeamSizes ? event.soloHitamFee : event.hitamFee) + (event.allowedTeamSizes ? '</strong><span class="fee-choice-label">Per individual</span><span class="fee-team-price">' + money(event.hitamFee) + ' / team of 4</span>' : '</strong>') + '</div><div>' + (event.id === 'E01' ? 'Non-IEEE / Other colleges' : 'Other colleges') + '<strong>' + money(event.allowedTeamSizes ? event.soloOtherFee : event.otherFee) + (event.allowedTeamSizes ? '</strong><span class="fee-choice-label">Per individual</span><span class="fee-team-price">' + money(event.otherFee) + ' / team of 4</span>' : '</strong>') + '</div></div><p class="fee-model">' + (event.teamHitamFee ? 'Individual: ' + money(event.hitamFee) + ' HITAM / ' + money(event.otherFee) + ' Other · Team: ' + money(event.teamHitamFee) + ' HITAM / ' + money(event.teamOtherFee) + ' Other' : event.id === 'E12' ? 'Individual ₹120 · Team ₹250' : event.allowedTeamSizes ? 'Choose individual entry or one flat fee for a team of 4' : event.feeModel === 'team' ? 'Per team · one flat fee' : 'Per person · multiplied by participant count') + '</p>' + action + '</div></article>';
+        }).join('') : '<div class="empty"><h2>No matching events</h2><p class="muted small" style="margin-top:12px">Try another category or search term.</p><button type="button" id="resetDirectory" class="btn btn-secondary" style="margin-top:20px">Reset filters</button></div>';
+    }
+    function newRequestId() { var bytes = new Uint8Array(16); window.crypto.getRandomValues(bytes); return Array.prototype.map.call(bytes, function (byte) { return ('0' + byte.toString(16)).slice(-2); }).join(''); }
+    function fieldsHtml(prefix, required, values) {
+        var rows = [['Name', 'Full name', 'text', 120, 'name'], ['Email', 'Email address', 'email', 254, 'email'], ['Phone', 'WhatsApp number', 'tel', 24, 'tel'], ['Roll', 'Roll number', 'text', 60, 'off'], ['Branch', 'Branch', 'text', 80, 'off'], ['Year', 'Year', 'text', 1, 'off']];
+        return rows.map(function (row) {
+            var key = { Name: 'name', Email: 'email', Phone: 'phone', Roll: 'rollNo', Branch: 'branch', Year: 'year' }[row[0]];
+            var isRequired = true;
+            var id = prefix + row[0];
+            if (row[0] === 'Year' || (row[0] === 'Branch' && institutionValue() === 'HITAM')) {
+                var choices = row[0] === 'Year' ? ['1', '2', '3', '4'] : ['CSE', 'CSM', 'CSD', 'ECE', 'EEE', 'MECH', 'ITP - CSE', 'ITP - MECH', 'IIBMP'];
+                var current = String(values && values[key] || '');
+                return '<div class="field"><label for="' + id + '">' + row[1] + (isRequired ? ' <span class="required" aria-hidden="true">*</span>' : ' <span class="muted small">(optional)</span>') + '</label><select id="' + id + '" name="' + id + '"' + (isRequired ? ' required' : '') + '><option value="">Select ' + row[1].toLowerCase() + '</option>' + choices.map(function (choice) { return '<option value="' + escapeHtml(choice) + '"' + (current === choice ? ' selected' : '') + '>' + escapeHtml(row[0] === 'Year' ? 'Year ' + choice : choice) + '</option>'; }).join('') + '</select></div>';
+            }
+            var example = row[0] === 'Phone' ? '10-digit number or +91…' : row[0] === 'Branch' ? 'e.g. Computer Science' : row[1];
+            return '<div class="field' + (row[0] === 'Name' ? ' field-full' : '') + '"><label for="' + id + '">' + row[1] + (isRequired ? ' <span class="required" aria-hidden="true">*</span>' : ' <span class="muted small">(optional)</span>') + '</label><input id="' + id + '" name="' + id + '" type="' + row[2] + '" maxlength="' + row[3] + '" autocomplete="' + (prefix === 'lead' ? row[4] : 'off') + '"' + (isRequired ? ' required' : '') + (row[0] === 'Phone' ? ' inputmode="tel"' : '') + ' placeholder="' + escapeHtml(example) + '" value="' + escapeHtml(values && values[key] || '') + '"></div>';
+        }).join('');
+    }
+    function contactLinks(text) {
+        var regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|(?:\+91[\s-]*)?[6-9](?:[\s-]*\d){9}/gi;
+        var output = '', position = 0, match;
+        while ((match = regex.exec(String(text || '')))) {
+            output += escapeHtml(text.slice(position, match.index));
+            var isEmail = match[0].indexOf('@') !== -1;
+            var digits = match[0].replace(/\D/g, '');
+            var href = isEmail ? 'mailto:' + match[0] : 'tel:+' + (digits.length === 10 ? '91' : '') + digits;
+            output += '<a href="' + escapeHtml(href) + '">' + escapeHtml(match[0]) + '</a>';
+            position = regex.lastIndex;
+        }
+        return output + escapeHtml(String(text || '').slice(position));
+    }
+    function contactsHtml(event) { return '<h3>Event coordinators</h3><div class="contact-group"><span class="contact-label">Student coordinators</span>' + contactLinks(event.studentContact) + '</div>' + (event.facultyContact ? '<div class="contact-group"><span class="contact-label">Faculty</span>' + contactLinks(event.facultyContact) + '</div>' : '') + (event.clubEmail ? '<div class="contact-group"><span class="contact-label">Chapter email</span>' + contactLinks(event.clubEmail) + '</div>' : '') + (event.id === 'E13' || event.id === 'E14' ? '' : '<div class="contact-group"><span class="contact-label">SSG support</span>' + contactLinks(portal.support) + '</div>'); }
+    function handleEventSelection(slug) {
+        if (inFlight)
+            return;
+        var event = events.filter(function (item) { return item.slug === slug; })[0];
+        if (!event) {
+            returnDirectory();
+            return;
+        }
+        if (event.id !== 'E01' && !portal.registrationAvailable) {
+            returnDirectory();
+            setMessage('pageMessage', 'Local registrations are temporarily unavailable. Please contact SSG before making a payment.');
+            return;
+        }
+        selectedEvent = event;
+        draft = null;
+        memberDrafts = {};
+        proof = null;
+        proofReadVersion++;
+        pendingPayload = null;
+        try {
+            requestId = newRequestId();
+        }
+        catch (error) {
+            setMessage('pageMessage', 'Your browser could not create a secure submission reference. Please use a current browser.');
+            return;
+        }
+        setMessage('pageMessage', '');
+        setMessage('detailsError', '');
+        setMessage('paymentError', '');
+        byId('detailsForm').reset();
+        byId('paymentForm').reset();
+        byId('proofPreview').hidden = true;
+        updateHeader(event);
+        byId('externalPanel').hidden = event.id !== 'E01';
+        byId('localDetails').hidden = event.id === 'E01';
+        if (event.id === 'E01') {
+            byId('externalPanel').innerHTML = '<img src="' + escapeHtml(event.logo) + '" alt="IEEE"><h1 id="externalTitle" tabindex="-1">INNOVISION (IEEE National Ideathon)</h1><p>This event uses its own official registration form. Continue there to enter participant details and complete payment.</p><a class="btn btn-primary" href="' + escapeHtml(portal.ieeeUrl) + '" target="_blank" rel="noopener noreferrer">Open official IEEE form ↗</a><div class="contacts">' + contactsHtml(event) + '</div>';
+            showView('details', 'externalTitle');
+            return;
+        }
+        configureEventForm(event);
+        byId('detailsIntro').textContent = event.participationNote || event.title + ' · ' + teamLabel(event) + ' · ' + (event.feeModel === 'team' ? 'Per-team pricing' : 'Per-person pricing');
+        byId('eventAgenda').hidden = !event.agenda;
+        byId('eventAgenda').innerHTML = event.agenda ? '<h2>One event · Two-day schedule</h2><p>' + escapeHtml(event.participationNote) + '</p><p>' + escapeHtml(event.venue) + '</p>' + event.agenda.map(function (item) { return '<p><strong>' + escapeHtml(item.label) + '</strong><br>' + escapeHtml(item.detail) + '</p>'; }).join('') : '';
+        byId('teamSize').innerHTML = '';
+        for (var size = event.minTeam; size <= event.maxTeam; size++) {
+            if (event.allowedTeamSizes && event.allowedTeamSizes.indexOf(size) === -1) continue;
+            var option = document.createElement('option');
+            option.value = String(size);
+            option.textContent = size + (size === 1 ? ' participant' : ' participants');
+            byId('teamSize').appendChild(option);
+        }
+        byId('teamSize').disabled = event.minTeam === event.maxTeam;
+        byId('teamHelp').textContent = 'Allowed: ' + teamLabel(event) + '. The lead is included in the count.';
+        byId('teamNameField').hidden = event.maxTeam === 1;
+        byId('teamName').required = event.maxTeam > 1;
+        byId('leadHeading').textContent = event.maxTeam === 1 ? 'Participant details' : 'Team lead details';
+        byId('leadFields').innerHTML = fieldsHtml('lead', true, {});
+        byId('detailsContacts').innerHTML = contactsHtml(event);
+        updateInstitution();
+        renderTeammates();
+        updateSummary();
+        showView('details', 'detailsTitle');
+    }
+    function configureEventForm(event) {
+        var config = event.registrationForm;
+        byId('memberHelp').textContent = '* All participant fields are strictly mandatory.';
+        byId('eventBrief').hidden = !config;
+        byId('detailsTitle').textContent = config ? event.title + ' registration' : 'Build your registration.';
+        byId('eventCategoryPanel').hidden = !config || !config.categories;
+        byId('eventCategory').required = !!config && !!config.categories;
+        byId('eventCategory').disabled = !config || !config.categories;
+        byId('eventCategory').innerHTML = config && config.categories ? '<option value="">Choose your technical showcase</option>' + config.categories.map(function (item) { return '<option>' + escapeHtml(item) + '</option>'; }).join('') : '';
+        byId('eventRules').hidden = !config;
+        byId('eventRuleFields').innerHTML = config ? config.rules.map(function (rule, index) { return '<label class="agreement"><input type="checkbox" id="eventConsent' + index + '" required><span>' + escapeHtml(rule) + '</span></label>'; }).join('') : '';
+        byId('eventBrief').innerHTML = config ? '<h2>' + escapeHtml(config.tagline) + '</h2><p>' + escapeHtml(config.intro) + '</p><ul>' + config.highlights.map(function (item) { return '<li>' + escapeHtml(item) + '</li>'; }).join('') + '</ul>' : '';
+    }
+    function readMember(prefix) { function value(suffix) { var element = byId(prefix + suffix); return element ? element.value.trim() : ''; } return { name: value('Name'), email: value('Email'), phone: value('Phone'), rollNo: value('Roll'), branch: value('Branch'), year: value('Year'), branchYear: value('Branch') + (value('Year') ? ' · Year ' + value('Year') : '') }; }
+    function renderTeammates() {
+        var previousBlocks = byId('teammateFields').querySelectorAll('[data-member-index]');
+        Array.prototype.forEach.call(previousBlocks, function (block) { var index = Number(block.getAttribute('data-member-index')); memberDrafts[index] = readMember('member' + index); });
+        var html = '';
+        for (var index = 2; index <= Number(byId('teamSize').value); index++) {
+            html += '<section class="panel" data-member-index="' + index + '"><div class="panel-heading"><span class="number" aria-hidden="true">' + ('0' + (index + 1)).slice(-2) + '</span><div><h2>Teammate ' + index + '</h2></div></div><div class="form-fields">' + fieldsHtml('member' + index, true, memberDrafts[index]) + '</div></section>';
+        }
+        byId('teammateFields').innerHTML = html;
+        updateSummary();
+    }
+    function institutionValue() { return byId('detailsForm').querySelector('input[name="institution"]:checked').value; }
+    function updateInstitution() { var leadValues = readMember('lead'); byId('leadFields').innerHTML = fieldsHtml('lead', true, leadValues); renderTeammates(); var other = institutionValue() === 'Other'; byId('collegeField').hidden = !other; byId('collegeName').required = other; byId('referralField').hidden = !other; byId('referralSource').required = other; if (!other) byId('referralSource').value = ''; updateSummary(); }
+    function calculateAmount() {
+        var size = Number(byId('teamSize').value);
+        if (selectedEvent.id === 'E12') {
+            var total = size === 1 ? 120 : 250;
+            return { unit: total, size: size, total: total };
+        }
+        var unit = institutionValue() === 'HITAM' ? selectedEvent.hitamFee : selectedEvent.otherFee;
+        if (selectedEvent.allowedTeamSizes && size === 1) unit = institutionValue() === 'HITAM' ? selectedEvent.soloHitamFee : selectedEvent.soloOtherFee;
+        if (selectedEvent.teamHitamFee && size > 1) unit = institutionValue() === 'HITAM' ? selectedEvent.teamHitamFee : selectedEvent.teamOtherFee;
+        return { unit: unit, size: size, total: unit * (selectedEvent.feeModel === 'person' && !selectedEvent.teamHitamFee ? size : 1) };
+    }
+    function updateSummary() {
+        if (!selectedEvent || selectedEvent.id === 'E01')
+            return;
+        var soloEntry = !!(selectedEvent.allowedTeamSizes || selectedEvent.id === 'E03') && Number(byId('teamSize').value) === 1;
+        byId('teamNameField').hidden = selectedEvent.maxTeam === 1 || soloEntry;
+        byId('teamName').required = selectedEvent.maxTeam > 1 && !soloEntry;
+        byId('leadHeading').textContent = selectedEvent.maxTeam === 1 || soloEntry ? 'Participant details' : 'Team lead details';
+        var fee = calculateAmount(), person = selectedEvent.feeModel === 'person' && !selectedEvent.teamHitamFee;
+        var pricingType = (selectedEvent.id === 'E12' || selectedEvent.allowedTeamSizes || selectedEvent.teamHitamFee) ? (fee.size === 1 ? 'Individual' : 'Per Team') : (person ? 'Per Person' : 'Per Team');
+        var breakdown = selectedEvent.teamHitamFee ? (money(fee.total) + ' · ' + (fee.size === 1 ? 'Individual entry' : 'Team entry (' + fee.size + ' people)')) : selectedEvent.id === 'E12' ? (fee.size === 1 ? 'Individual entry · ₹120' : 'Team entry (' + fee.size + ' people) · ₹250') : (money(fee.unit) + ' × ' + (person ? fee.size + ' people' : soloEntry ? '1 individual' : '1 team'));
+        byId('detailsSummary').innerHTML = '<p class="summary-title">Registration summary</p><h2 class="summary-event">' + escapeHtml(selectedEvent.title) + '</h2><div class="summary-line"><span>College tier</span><strong>' + (institutionValue() === 'HITAM' ? 'HITAM Student' : 'Other College') + '</strong></div><div class="summary-line"><span>Participants</span><strong>' + fee.size + '</strong></div><div class="summary-line"><span>Pricing</span><strong>' + pricingType + '</strong></div><div class="summary-line"><span>Fee breakdown</span><strong>' + breakdown + '</strong></div><div class="summary-total"><span>Total due</span><strong>' + money(fee.total) + '</strong></div><button class="btn btn-primary btn-full" type="submit">Proceed to payment →</button><p class="summary-foot">Pay on the next step. Your details will be reviewed before they are submitted.</p>';
+        byId('mobileAmount').textContent = money(fee.total);
+    }
+    function validateDetailsForm() {
+        var form = byId('detailsForm');
+        Array.prototype.forEach.call(form.querySelectorAll('input[type="text"],input[type="email"],input[type="tel"]'), function (input) {
+            input.setCustomValidity('');
+            if (input.required && !input.value.trim())
+                input.setCustomValidity('Please complete this field.');
+            if (input.type === 'tel' && input.value.trim()) {
+                var digits = input.value.replace(/\D/g, '');
+                if (digits.length === 12 && digits.indexOf('91') === 0)
+                    digits = digits.slice(2);
+                if (!/^\+?[\d ()-]+$/.test(input.value.trim()) || !/^[6-9]\d{9}$/.test(digits))
+                    input.setCustomValidity('Enter a 10-digit Indian WhatsApp number, optionally starting with +91.');
+            }
+        });
+        return form.reportValidity();
+    }
+    function proceedToPayment(event) {
+        event.preventDefault();
+        if (inFlight || !validateDetailsForm())
+            return;
+        var fee = calculateAmount(), members = [];
+        for (var index = 2; index <= fee.size; index++)
+            members.push(readMember('member' + index));
+        draft = { eventId: selectedEvent.id, eventSlug: selectedEvent.slug, institution: institutionValue(), referralSource: institutionValue() === 'Other' ? byId('referralSource').value : '', college: institutionValue() === 'HITAM' ? 'Hyderabad Institute of Technology and Management (HITAM)' : byId('collegeName').value.trim(), teamName: selectedEvent.maxTeam === 1 || ((selectedEvent.allowedTeamSizes || selectedEvent.id === 'E03') && fee.size === 1) ? byId('leadName').value.trim() : byId('teamName').value.trim(), teamSize: fee.size, lead: readMember('lead'), members: members, customDetails: byId('customDetails').value.trim(), eventAnswers: selectedEvent.registrationForm ? { category: byId('eventCategory').value, consents: [] } : null, totalFee: fee.total };
+        byId('payeeName').textContent = portal.payee;
+        byId('upiId').textContent = portal.upiId;
+        byId('paymentAmount').textContent = money(fee.total);
+        byId('instructionAmount').textContent = money(fee.total);
+        byId('mobileAmount').textContent = money(fee.total);
+        byId('paymentTeamSummary').textContent = draft.teamName + ' · ' + fee.size + (fee.size === 1 ? ' participant' : ' participants');
+        var upi = 'upi://pay?pa=' + encodeURIComponent(portal.upiId) + '&pn=' + encodeURIComponent(portal.payee) + '&am=' + fee.total + '&cu=INR&tn=' + encodeURIComponent('ESP-' + selectedEvent.id);
+        byId('qrError').hidden = true;
+        byId('paymentQr').hidden = false;
+        byId('paymentQr').src = portal.paymentQrUrl || 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(upi);
+        byId('paymentQr').alt = 'Scan to pay ' + money(fee.total) + ' to ' + portal.payee;
+        byId('openUpi').href = upi;
+        setMessage('copyStatus', '');
+        showView('payment', 'paymentTitle');
+    }
+    function readProof() {
+        var version = ++proofReadVersion;
+        proof = null;
+        byId('proofPreview').hidden = true;
+        setMessage('paymentError', '');
+        var file = byId('proofFile').files[0];
+        byId('proofFile').setCustomValidity('');
+        if (!file)
+            return;
+        if (['image/png', 'image/jpeg', 'image/webp'].indexOf(file.type) === -1 || file.size > 2 * 1024 * 1024 || file.size === 0) {
+            byId('proofFile').value = '';
+            setMessage('paymentError', 'Choose a PNG, JPG, or WebP image no larger than 2 MB.');
+            return;
+        }
+        setMessage('paymentError', 'Reading your screenshot…');
+        var reader = new FileReader();
+        reader.onload = function () { if (version !== proofReadVersion)
+            return; proof = { dataUrl: String(reader.result), name: file.name, size: file.size, mime: file.type }; byId('proofImage').src = proof.dataUrl; byId('proofMeta').textContent = file.name + ' · ' + Math.ceil(file.size / 1024) + ' KB'; byId('proofPreview').hidden = false; setMessage('paymentError', ''); };
+        reader.onerror = function () { if (version !== proofReadVersion)
+            return; byId('proofFile').value = ''; setMessage('paymentError', 'The screenshot could not be read. Select it again.'); };
+        reader.readAsDataURL(file);
+    }
+    function reviewRows(rows) { return '<dl class="review-grid">' + rows.map(function (row) { return '<div><dt>' + escapeHtml(row[0]) + '</dt><dd>' + escapeHtml(row[1] || '—') + '</dd></div>'; }).join('') + '</dl>'; }
+    function memberReview(member, index) { return '<section class="review-section"><h3>' + (index === 0 ? (draft.teamSize === 1 ? 'Participant' : 'Team lead') : 'Teammate ' + (index + 1)) + '</h3>' + reviewRows([['Full name', member.name], ['Email', member.email], ['WhatsApp', member.phone], ['Roll number', member.rollNo], ['Branch', member.branch], ['Year', member.year]]) + '</section>'; }
+    function openConfirmation(event) {
+        event.preventDefault();
+        if (inFlight || !draft)
+            return;
+        if (!byId('paymentForm').reportValidity())
+            return;
+        if (!proof) {
+            setMessage('paymentError', 'Wait for the screenshot to finish loading, then review your registration.');
+            return;
+        }
+        if (draft.eventAnswers) draft.eventAnswers.consents = selectedEvent.registrationForm.rules.map(function (rule, index) { return byId('eventConsent' + index).checked; });
+        pendingPayload = Object.assign({}, draft, { requestId: requestId, utrNumber: byId('utrNumber').value.trim(), screenshotBase64: proof.dataUrl, agreement: byId('agreement').checked });
+        byId('confirmationBody').innerHTML = (draft.eventAnswers ? '<section class="review-section"><h3>Event answers &amp; consent</h3>' + reviewRows([['Showcase category', draft.eventAnswers.category || 'Not applicable']]) + '<ul>' + selectedEvent.registrationForm.rules.map(function (rule) { return '<li>' + escapeHtml(rule) + ' — Accepted</li>'; }).join('') + '</ul></section>' : '') + reviewRows([['Event', selectedEvent.title], ['Chapter', selectedEvent.club], ['Institution', draft.institution === 'HITAM' ? 'HITAM Student' : 'Other College'], ['College', draft.college], ['How did you hear about the event?', draft.referralSource || 'Not applicable'], ['Team / participant', draft.teamName], ['Participant count', String(draft.teamSize)], ['Fee model', selectedEvent.feeModel === 'person' ? 'Per Person' : 'Per Team'], ['Total amount', money(draft.totalFee)], ['Additional details', draft.customDetails]]) + [draft.lead].concat(draft.members).map(memberReview).join('') + '<section class="review-section"><h3>Payment & consent</h3>' + reviewRows([['UTR', pendingPayload.utrNumber], ['Payee', portal.payee], ['UPI ID', portal.upiId], ['Amount submitted', money(draft.totalFee)], ['Screenshot', proof.name + ' · ' + Math.ceil(proof.size / 1024) + ' KB'], ['Consent', 'Participant details and payment proof confirmed; proof link sharing accepted.']]) + '<div class="review-proof"><img src="' + escapeHtml(proof.dataUrl) + '" alt="Payment screenshot being submitted"></div></section>';
+        setMessage('submitError', '');
+        setMessage('submitStatus', '');
+        byId('confirmSubmit').textContent = 'Submit for verification';
+        modalPreviousFocus = document.activeElement;
+        modalPreviousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        byId('confirmation').hidden = false;
+        byId('appContent').inert = true;
+        byId('confirmTitle').focus();
+    }
+    function closeConfirmation() { if (inFlight)
+        return; byId('confirmation').hidden = true; byId('appContent').inert = false; document.body.style.overflow = modalPreviousOverflow; if (modalPreviousFocus)
+        modalPreviousFocus.focus(); }
+    function setBusy(busy) { inFlight = busy; ['confirmSubmit', 'confirmCancel', 'paymentReview', 'mobileCta', 'paymentBack'].forEach(function (id) { byId(id).disabled = busy; }); byId('confirmation').setAttribute('aria-busy', String(busy)); byId('confirmSubmit').innerHTML = busy ? '<span class="spinner" aria-hidden="true"></span>Saving registration…' : 'Submit for verification'; }
+    function submitRegistration() {
+        if (inFlight || !pendingPayload)
+            return;
+        setBusy(true);
+        setMessage('submitError', '');
+        setMessage('submitStatus', 'Saving your registration and payment proof. Please keep this page open.');
+        slowTimer = window.setTimeout(function () { setMessage('submitStatus', 'Your registration is still saving. Please wait; do not make another payment. Support reference: ' + requestId); }, 30000);
+        var retryCount = 0;
+        function sendAttempt() {
+        google.script.run.withSuccessHandler(function (result) {
+            if (result && result.code === 'BUSY' && result.retryable === true && retryCount < 3) {
+                retryCount++;
+                setMessage('submitStatus', 'The registration desk is busy. Retrying safely (' + retryCount + '/3). Keep this page open; do not pay again.');
+                window.setTimeout(sendAttempt, Math.pow(2, retryCount) * 1000 + Math.floor(Math.random() * 1000));
+                return;
+            }
+            window.clearTimeout(slowTimer);
+            setBusy(false);
+            setMessage('submitStatus', '');
+            if (!result || !result.success || !result.receipt) {
+                setMessage('submitError', (result && result.message ? result.message : 'We could not confirm the save. Retry with the same details and payment reference; do not pay again.') + ' Support reference: ' + requestId);
+                if (result && result.code === 'RECONCILIATION_REQUIRED')
+                    byId('confirmSubmit').textContent = 'Check saved registration';
+                return;
+            }
+            closeConfirmation();
+            showTicket(result.receipt);
+        }).withFailureHandler(function () { window.clearTimeout(slowTimer); setBusy(false); setMessage('submitStatus', ''); setMessage('submitError', 'The connection was interrupted. Retry this same submission to recover it without duplicate rows. Do not pay again. Support reference: ' + requestId); byId('confirmSubmit').textContent = 'Retry / recover registration'; }).submitRegistration(pendingPayload);
+        }
+        sendAttempt();
+    }
+    function showTicket(receipt) {
+        receipt.teamName = receipt.teamName || (draft && draft.teamName) || '';
+        receipt.teamSize = receipt.teamSize || (draft && draft.teamSize) || '';
+        ticketAccess = { receipt: receipt, requestId: requestId };
+        try { localStorage.setItem('espartoSavedTicket', JSON.stringify(ticketAccess)); byId('restoreTicket').hidden = false; } catch (storageError) {}
+
+        byId('ticketPaymentNote').textContent = 'Your registration has been received successfully. Your confirmed event ticket will be emailed after organizer payment verification.';
+        setImage('ticketHitamLogo', portal.logos.hitam, 'HITAM');
+        setImage('ticketEspartoLogo', portal.logos.esparto, 'ESPARTO');
+        setImage('ticketSsgLogo', portal.logos.ssg, 'SSG HITAM');
+        byId('ticketRegId').textContent = receipt.regId;
+        var rows = [['Event', receipt.eventTitle], ['Chapter', receipt.chapter], ['Team / participant', receipt.teamName], ['Participants', String(receipt.teamSize)], ['Team lead / participant', receipt.leadName], ['Amount paid (submitted)', money(receipt.amount)], ['Transaction reference', receipt.utr], ['Status', receipt.status || 'Pending Verification']];
+        byId('ticketDetails').innerHTML = rows.map(function (row) { return '<div><dt>' + escapeHtml(row[0]) + '</dt><dd>' + (row[0] === 'Status' ? '<span id="ticketPaymentStatus" class="pill pending">' + escapeHtml(row[1]) + '</span>' : escapeHtml(row[1])) + '</dd></div>'; }).join('');
+        // Proof remains in Drive; release the base64 from browser memory after success.
+        proof = null;
+        pendingPayload = null;
+        byId('proofImage').removeAttribute('src');
+        byId('confirmationBody').innerHTML = '';
+        byId('proofFile').value = '';
+        showView('ticket', 'ticketTitle');
+
+    }
+    function returnDirectory() { if (inFlight)
+        return; selectedEvent = null; updateHeader(null); setMessage('pageMessage', ''); showView('directory', 'directoryTitle'); }
+    function copyUpi() {
+        if (navigator.clipboard && navigator.clipboard.writeText)
+            navigator.clipboard.writeText(portal.upiId).then(function () { setMessage('copyStatus', 'UPI ID copied.'); }, function () { fallbackCopy(); });
+        else
+            fallbackCopy();
+    }
+    function fallbackCopy() {
+        var input = document.createElement('textarea');
+        input.value = portal.upiId;
+        input.style.position = 'fixed';
+        input.style.left = '0';
+        input.style.top = '0';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        var copied = false;
+        try {
+            copied = document.execCommand('copy');
+        }
+        catch (error) {
+            copied = false;
+        }
+        input.remove();
+        byId('copyUpi').focus();
+        setMessage('copyStatus', copied ? 'UPI ID copied.' : 'Copy the UPI ID shown above manually.');
+    }
+    document.addEventListener('error', function (event) { if (event.target.tagName !== 'IMG')
+        return;
+        var failedImage = event.target;
+        if (portal && portal.logoFallbacks && portal.logoFallbacks[failedImage.src] && !failedImage.hasAttribute('data-drive-retried')) {
+            failedImage.setAttribute('data-drive-retried', 'true');
+            failedImage.src = portal.logoFallbacks[failedImage.src];
+            return;
+        }
+        if (failedImage.src.indexOf('https://cdn.jsdelivr.net/') === 0 && !failedImage.hasAttribute('data-cdn-retried')) {
+            failedImage.setAttribute('data-cdn-retried', 'true');
+            failedImage.src = failedImage.src.replace('https://cdn.jsdelivr.net/', 'https://fastly.jsdelivr.net/');
+            return;
+        }
+        event.target.hidden = true; if (event.target.id === 'paymentQr')
+        byId('qrError').hidden = false;
+    else
+        event.target.parentElement.classList.add('logo-failed'); }, true);
+    document.addEventListener('keydown', function (event) {
+        if (byId('confirmation').hidden)
+            return;
+        if (event.key === 'Escape' && !inFlight) {
+            event.preventDefault();
+            closeConfirmation();
+            return;
+        }
+        if (event.key !== 'Tab')
+            return;
+        var focusable = byId('confirmation').querySelectorAll('button:not([disabled]),a[href]');
+        if (!focusable.length) {
+            event.preventDefault();
+            byId('confirmTitle').focus();
+            return;
+        }
+        var first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && (document.activeElement === first || document.activeElement === byId('confirmTitle'))) {
+            event.preventDefault();
+            last.focus();
+        }
+        else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    });
+    byId('retryLoad').addEventListener('click', loadPortal);
+    byId('filters').addEventListener('click', function (event) { var button = event.target.closest('[data-category]'); if (!button)
+        return; activeCategory = button.getAttribute('data-category'); Array.prototype.forEach.call(byId('filters').querySelectorAll('button'), function (item) { item.setAttribute('aria-pressed', String(item === button)); }); renderEvents(); });
+    byId('eventGrid').addEventListener('click', function (event) { var button = event.target.closest('[data-event]'); if (button)
+        handleEventSelection(button.getAttribute('data-event')); if (event.target.closest('#resetDirectory')) {
+        activeCategory = 'All';
+        byId('eventSearch').value = '';
+        Array.prototype.forEach.call(byId('filters').querySelectorAll('button'), function (item) { item.setAttribute('aria-pressed', String(item.getAttribute('data-category') === 'All')); });
+        renderEvents();
+    } });
+    byId('eventSearch').addEventListener('input', renderEvents);
+    byId('backDirectory').addEventListener('click', returnDirectory);
+    byId('teamSize').addEventListener('change', renderTeammates);
+    byId('detailsForm').addEventListener('change', function (event) { if (event.target.name === 'institution')
+        updateInstitution(); });
+    byId('detailsForm').addEventListener('input', function (event) { if (event.target.setCustomValidity)
+        event.target.setCustomValidity(''); });
+    byId('detailsForm').addEventListener('submit', proceedToPayment);
+    byId('paymentBack').addEventListener('click', function () { if (!inFlight)
+        showView('details', 'detailsTitle'); });
+    byId('proofFile').addEventListener('change', readProof);
+    byId('paymentForm').addEventListener('submit', openConfirmation);
+    byId('confirmCancel').addEventListener('click', closeConfirmation);
+    byId('confirmSubmit').addEventListener('click', submitRegistration);
+    byId('copyUpi').addEventListener('click', copyUpi);
+
+    byId('restoreTicket').addEventListener('click', function () { if (!ticketAccess) return; var saved = ticketAccess; requestId = saved.requestId; selectedEvent = events.filter(function (event) { return event.id === saved.receipt.eventId || event.title === saved.receipt.eventTitle; })[0] || null; updateHeader(selectedEvent); showTicket(saved.receipt); });
+    byId('printTicket').addEventListener('click', function () { window.print(); });
+    byId('exploreEvents').addEventListener('click', returnDirectory);
+    loadPortal();
   </script>
 </body>
-
 </html>
