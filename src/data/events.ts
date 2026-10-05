@@ -82,7 +82,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 0,
     timings: "9:30 AM – 4:30 PM",
     venue: "HITAM, Gowdavelly",
-    prizePool: "₹30,000",
+    prizePool: "Upto ₹30,000",
     prizeBreakup: { first: "₹15,000", second: "₹10,000", third: "₹5,000" },
     teamSize: "3–4 Members",
     registrationFee: {
@@ -114,7 +114,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 1,
     timings: "9:30 AM – 4:30 PM",
     venue: "HITAM Campus",
-    prizePool: "₹10,000",
+    prizePool: "Upto ₹10,000",
     prizeBreakup: {
       first: "₹5,000",
       second: "₹3,000",
@@ -158,7 +158,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     timings: "Oct 9: Workshop 9:30 AM–3:00 PM; development continues until Oct 10 noon • Evaluation 12:00–1:30 PM • Results 2:30–3:30 PM",
     agenda: [{"label": "Day 1 · October 9", "detail": "9:30 AM–3:00 PM: interactive, hands-on Agentic AI workshop."}, {"label": "Problem statement & development", "detail": "Problem statement released 3:00–4:00 PM on October 9; solution development starts after the workshop and continues until noon on October 10."}, {"label": "Day 2 · October 10", "detail": "Final submission: 12:00 PM. Evaluation: 12:00–1:30 PM. Results & recognition: 2:30–3:30 PM."}],
     venue: "Activity Block – 2nd/3rd Floor Classroom",
-    prizePool: "₹10,000",
+    prizePool: "Upto ₹10,000",
     prizeBreakup: {
       first: "₹5,000",
       second: "₹3,000",
@@ -210,7 +210,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 2,
     timings: "10:00 AM – 1:30 PM",
     venue: "HITAM Campus",
-    prizePool: "₹5,000",
+    prizePool: "Upto ₹5,000",
     prizeBreakup: {
       first: "₹3,000",
       second: "₹2,000",
@@ -251,7 +251,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 1,
     timings: "10:00 AM – 4:00 PM",
     venue: "HITAM Campus",
-    prizePool: "₹5,000 (Both days: ₹10,000)",
+    prizePool: "Upto ₹5,000 (Both days: ₹10,000)",
     prizeBreakup: {
       first: "₹2,500",
       second: "₹1,500",
@@ -294,7 +294,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 2,
     timings: "10:00 AM – 3:30 PM",
     venue: "HITAM Campus",
-    prizePool: "₹5,000 (Both days: ₹10,000)",
+    prizePool: "Upto ₹5,000 (Both days: ₹10,000)",
     prizeBreakup: {
       first: "₹2,500",
       second: "₹1,500",
@@ -337,7 +337,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 1,
     timings: "10:00 AM – 4:00 PM",
     venue: "HITAM Campus",
-    prizePool: "₹5,000",
+    prizePool: "Upto ₹5,000",
     prizeBreakup: {
       first: "₹2,500",
       second: "₹1,500",
@@ -373,7 +373,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 2,
     timings: "10:00 AM – 4:00 PM",
     venue: "HITAM Campus",
-    prizePool: "₹5,000",
+    prizePool: "Upto ₹5,000",
     prizeBreakup: {
       first: "₹2,500",
       second: "₹1,500",
@@ -408,7 +408,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 1,
     timings: "9:30 AM – 4:00 PM",
     venue: "HITAM Campus",
-    prizePool: "₹3,000",
+    prizePool: "Upto ₹3,000",
     prizeBreakup: {
       first: "₹1,500",
       second: "₹1,000",
@@ -443,7 +443,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 2,
     timings: "9:30 AM – 4:00 PM",
     venue: "HITAM Campus",
-    prizePool: "₹3,000",
+    prizePool: "Upto ₹3,000",
     prizeBreakup: {
       first: "₹1,500",
       second: "₹1,000",
@@ -477,7 +477,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 2,
     timings: "10:00 AM – 4:00 PM",
     venue: "HITAM Campus",
-    prizePool: "₹5,000",
+    prizePool: "Upto ₹5,000",
     prizeBreakup: {
       first: "₹1,500",
       second: "₹1,000",
@@ -512,7 +512,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 1,
     timings: "10:00 AM – 4:00 PM",
     venue: "HITAM Campus",
-    prizePool: "₹5,000",
+    prizePool: "Upto ₹5,000",
     prizeBreakup: {
       first: "₹1,000",
       second: "₹800",
@@ -561,7 +561,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 1,
     timings: "11:00 AM – 2:00 PM",
     venue: "HITAM Campus, Gowdavelly",
-    prizePool: "₹1,200",
+    prizePool: "Upto ₹1,200",
     prizeBreakup: {
       first: "₹600",
       second: "₹400",
@@ -603,7 +603,7 @@ export const FEST_EVENTS: FestEventItem[] = [
     dayNumber: 2,
     timings: "10:30 AM – 3:30 PM",
     venue: "HITAM Campus, Gowdavelly",
-    prizePool: "₹1,200",
+    prizePool: "Upto ₹1,200",
     prizeBreakup: {
       first: "₹600",
       second: "₹400",

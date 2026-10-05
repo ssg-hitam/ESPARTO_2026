@@ -49,13 +49,157 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
  <div className="flex flex-wrap gap-4 items-center mt-6 pt-5 border-t border-white/10"><Link href={`/events/${backendSlug}`} className="rounded-xl border border-white/20 px-4 py-3 font-semibold hover:border-brand-orange/60 transition-colors">View event details →</Link><span className="text-text-muted text-sm">Prize pool <strong className="text-white">{displayEvent.prizePool}</strong></span>{displayEvent.brochureUrl&&<a href={displayEvent.brochureUrl} className="text-brand-orange text-sm">Read event brochure →</a>}</div>
  </div></header>{event?.registrationForm&&<section className="rounded-2xl border border-white/15 p-5 mb-6"><h2 className="font-bold text-xl">{event.registrationForm.tagline}</h2><p className="mt-3">{event.registrationForm.intro}</p><ul className="mt-4 list-disc pl-5">{event.registrationForm.highlights.map(value=><li key={value}>{value}</li>)}</ul></section>}{recoveryNote&&<p role="status" className="p-4 my-4 rounded-xl border border-amber-400/30 text-amber-200">{recoveryNote}</p>}{error && <p role="alert" className="p-4 my-4 bg-red-950 rounded-xl">{error}</p>}
  {!event?<div role="status" className="rounded-3xl border border-white/15 bg-white/5 p-8"><p className="text-text-secondary">Loading registration form…</p>{error&&<button className={field} onClick={load}>Retry loading registration form</button>}</div>:<form onSubmit={e=>{e.preventDefault();if(step===1)setStep(2);else void submit();}} className="space-y-6 rounded-3xl border border-white/15 bg-[#0c0720] p-5 sm:p-8">
- <ol aria-label="Registration progress" className="grid grid-cols-3 gap-2 mb-7">{['Participant details','Payment & review','Submission e-ticket'].map((label,index)=><li key={label} aria-current={step===index+1?'step':undefined} className={`rounded-xl border px-3 py-4 text-xs sm:text-sm ${step===index+1?'border-brand-orange/60 bg-brand-orange/10 text-white':'border-white/10 text-text-muted'}`}><span className="font-mono font-bold mr-2">0{index+1}</span>{label}</li>)}</ol>
- {step===1?<><label className="block">Institution<select className={field} value={institution} onChange={e=>setInstitution(e.target.value)}><option>HITAM</option><option value="Other">Other college</option></select></label>{institution==='Other'&&<label className="block">College<input className={field} value={college} onChange={e=>setCollege(e.target.value)} required maxLength={160}/></label>}
- {institution==='Other'&&<label className="block">How did you hear about this event?<select className={field} value={referral} onChange={e=>setReferral(e.target.value)}><option value="">Choose (optional)</option>{['Promotions','Social media','LinkedIn','Instagram','Friends','Other'].map(value=><option key={value}>{value}</option>)}</select></label>}
- {sizes.length>1&&<label className="block">Participant count<select className={field} value={members.length} onChange={e=>setMembers(current=>Array.from({length:Number(e.target.value)},(_,i)=>current[i]||emptyMember()))}>{sizes.map(size=><option key={size} value={size}>{size===1?'Individual':size+' participants'}</option>)}</select></label>}
- {members.length>1&&<label className="block">Team name<input className={field} value={team} onChange={e=>setTeam(e.target.value)} required maxLength={120}/></label>}<p>Participants: {event.id==='E03'?2:event.minTeam}–{event.maxTeam} (including lead) · Total ₹{amount} for this registration</p>
- {members.map((member,index)=><fieldset key={index} className="border border-white/15 bg-white/[0.025] rounded-2xl p-5 sm:p-6"><legend className="px-2">{index===0?'Team lead':'Member '+(index+1)}</legend><div className="grid sm:grid-cols-2 gap-4">{(['name','email','phone','rollNo'] as const).map(key=><label key={key}>{({name:'Name',email:'Email',phone:'WhatsApp number',rollNo:'Roll number'})[key]}<input className={field} value={member[key]} onChange={e=>change(index,key,e.target.value)} type={key==='email'?'email':key==='phone'?'tel':'text'} required={key==='name'||index===0||(key==='rollNo'&&institution==='HITAM')||(key==='email'&&event.id==='E02')} maxLength={key==='email'?254:120}/></label>)}<label>Branch{institution==='HITAM'?<select aria-label="Branch" className={field} value={member.branch} onChange={e=>change(index,'branch',e.target.value)} required={index===0||event.id==='E02'}><option value="">Choose branch</option>{branches.map(branch=><option key={branch}>{branch}</option>)}</select>:<input className={field} value={member.branch} onChange={e=>change(index,'branch',e.target.value)} required={index===0||event.id==='E02'}/>}</label><label>Year<select aria-label="Year" className={field} value={member.year} onChange={e=>change(index,'year',e.target.value)} required={index===0||event.id==='E02'}><option value="">Choose year</option>{[1,2,3,4].map(year=><option key={year} value={year}>{year}</option>)}</select></label></div></fieldset>)}
- </>:<><div className="rounded-2xl bg-brand-violet/10 border border-brand-violet/20 p-5"><p className="text-xs uppercase tracking-widest text-text-muted">Review your registration</p><h2 className="text-2xl font-bold mt-2">{members.length===1?members[0].name:team}</h2><p className="text-text-secondary mt-2">{members.length} participants · {institution==='HITAM'?'HITAM':college}</p><p className="text-3xl font-bold mt-4">₹{amount}<span className="text-sm font-normal text-text-muted ml-2">total</span></p><div className="mt-5 pt-4 border-t border-white/10 space-y-4">{members.map((member,index)=><div key={index}><p className="font-semibold">{index===0?'Team lead':'Member '+(index+1)}: {member.name}</p><p className="text-sm text-text-secondary break-all">{member.email} · {member.rollNo}</p><p className="text-sm text-text-muted">{member.branch} · Year {member.year}</p></div>)}</div></div>{live&&payment&&<section className="rounded-2xl border border-brand-orange/30 p-5 text-center"><h2 className="text-xl font-bold">Complete your UPI payment</h2><p className="mt-3">{payment.payee}</p><p className="font-mono mt-3">{payment.upiId}</p><p className="my-3 text-2xl font-bold">Pay ₹{amount}</p><Image src={payment.paymentQrUrl} alt="Official HITAM payment QR" width={256} height={256} unoptimized className="mx-auto w-64 max-w-full"/><p className="mt-3 text-sm">Check the recipient and enter the exact amount in your payment app. Upload the screenshot and UTR below.</p><a className="inline-block mt-4 text-brand-orange underline" href={`upi://pay?pa=${encodeURIComponent(payment.upiId)}&pn=${encodeURIComponent(payment.payee)}&am=${amount}&cu=INR`}>Open UPI app</a></section>}{!live&&<p className="text-text-secondary">Use a synthetic 8–16 digit transaction reference and a test screenshot. No live payment is required.</p>} {!live&&<button type="button" disabled={locked} onClick={sampleProof} className="rounded-xl border border-brand-orange/40 px-4 py-3 text-brand-orange">Use sample local test proof</button>}<fieldset disabled={locked} className="space-y-4"><label className="block">UPI transaction reference (UTR)<input className={field} value={utr} onChange={e=>setUtr(e.target.value)} required pattern="[0-9]{8,16}" inputMode="numeric"/></label><label className="block">{live?'Payment screenshot':'Test payment screenshot'}<input className={field} type="file" accept="image/png,image/jpeg,image/webp" required={!proof} onChange={e=>void upload(e.target.files?.[0])}/></label>{event.registrationForm&&<fieldset className="space-y-4"><legend>Event rules &amp; consent</legend>{event.registrationForm.categories&&<label className="block">Showcase category<select className={field} value={category} onChange={e=>setCategory(e.target.value)} required><option value="">Choose category</option>{event.registrationForm.categories.map(value=><option key={value}>{value}</option>)}</select></label>}{event.registrationForm.rules.map((rule,i)=><label key={rule} className="flex items-start gap-3"><input className="mt-1 h-5 w-5 shrink-0" type="checkbox" required checked={!!consents[i]} onChange={e=>setConsents(current=>current.map((value,j)=>j===i?e.target.checked:value))}/>{rule}</label>)}</fieldset>}<label className="flex items-start gap-3 min-h-12"><input className="mt-1 h-5 w-5 shrink-0 scroll-mt-28" type="checkbox" checked={agreement} onChange={e=>setAgreement(e.target.checked)} required/>I confirm these participant details and payment proof are correct. Payment and entry are subject to organizer verification.</label>{proof&&<div className="rounded-xl border border-white/10 p-4"><p className="text-sm text-text-muted mb-3">Selected payment proof</p><Image src={proof} alt="Selected payment screenshot" width={360} height={360} className="max-h-48 w-auto object-contain rounded-lg" unoptimized/></div>}</fieldset><p className="flex gap-2 text-sm text-text-muted"><ShieldCheck className="w-5 h-5 shrink-0 text-emerald-400"/>Payment can be verified only by organizers. This submission does not mark your payment as confirmed.</p>{!locked&&<button type="button" className={field} onClick={()=>setStep(1)}>Back to details</button>}</>}
- <button disabled={busy||(step===2&&!proof)} className="rounded-xl bg-brand-orange text-white font-bold p-4 w-full" type="submit">{busy?'Submitting…':step===1?'Continue to review':locked?'Retry same submission':live?'Submit registration':'Submit local test registration'}<ArrowRight className="inline w-4 h-4 ml-2"/></button>
- </form>}</main>;
+  <ol aria-label="Registration progress" className="grid grid-cols-3 gap-2 mb-7">{['Participant details','Payment & review','Submission e-ticket'].map((label,index)=><li key={label} aria-current={step===index+1?'step':undefined} className={`rounded-xl border px-3 py-4 text-xs sm:text-sm ${step===index+1?'border-brand-orange/60 bg-brand-orange/10 text-white':'border-white/10 text-text-muted'}`}><span className="font-mono font-bold mr-2">0{index+1}</span>{label}</li>)}</ol>
+  <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-200 text-xs sm:text-sm font-semibold">
+    <span className="text-red-400 font-bold text-lg leading-none">*</span>
+    <span>All sections and fields marked with <strong className="text-red-400 font-bold">*</strong> are strictly mandatory to complete registration.</span>
+  </div>
+  {step===1?<div className="space-y-6">
+    <div className="space-y-4 rounded-2xl border border-white/15 bg-white/[0.02] p-5 sm:p-6">
+      <div className="text-xs uppercase tracking-wider text-amber-300 font-bold flex items-center gap-1.5 pb-2 border-b border-white/10">
+        <span className="text-red-400 text-base leading-none font-bold">*</span> Section 01: College &amp; Team Setup
+      </div>
+      <label className="block text-sm font-semibold text-white/90">
+        Institution <span className="text-red-400 font-bold ml-1">*</span>
+        <select className={`mt-1.5 ${field}`} value={institution} onChange={e=>setInstitution(e.target.value)} required>
+          <option value="HITAM">HITAM</option>
+          <option value="Other">Other college</option>
+        </select>
+      </label>
+      {institution==='Other'&&<label className="block text-sm font-semibold text-white/90">
+        College name <span className="text-red-400 font-bold ml-1">*</span>
+        <input className={`mt-1.5 ${field}`} value={college} onChange={e=>setCollege(e.target.value)} required maxLength={160} placeholder="Enter your full college name"/>
+      </label>}
+      {institution==='Other'&&<label className="block text-sm font-semibold text-white/90">
+        How did you hear about this event? <span className="text-red-400 font-bold ml-1">*</span>
+        <select className={`mt-1.5 ${field}`} value={referral} onChange={e=>setReferral(e.target.value)} required>
+          <option value="">Choose an option</option>
+          {['Promotions','Social media','LinkedIn','Instagram','Friends','Other'].map(value=><option key={value}>{value}</option>)}
+        </select>
+      </label>}
+      {sizes.length>1&&<label className="block text-sm font-semibold text-white/90">
+        Participant count <span className="text-red-400 font-bold ml-1">*</span>
+        <select className={`mt-1.5 ${field}`} value={members.length} onChange={e=>setMembers(current=>Array.from({length:Number(e.target.value)},(_,i)=>current[i]||emptyMember()))} required>
+          {sizes.map(size=><option key={size} value={size}>{size===1?'Individual':size+' participants'}</option>)}
+        </select>
+      </label>}
+      {members.length>1&&<label className="block text-sm font-semibold text-white/90">
+        Team name <span className="text-red-400 font-bold ml-1">*</span>
+        <input className={`mt-1.5 ${field}`} value={team} onChange={e=>setTeam(e.target.value)} required maxLength={120} placeholder="Enter official team name"/>
+      </label>}
+      <p className="text-xs text-text-muted">
+        Participants: {event.id==='E03'?2:event.minTeam}–{event.maxTeam} (including lead) · Total ₹{amount} for this registration
+      </p>
+    </div>
+
+    <div className="space-y-5">
+      <div className="text-xs uppercase tracking-wider text-amber-300 font-bold flex items-center gap-1.5 px-1">
+        <span className="text-red-400 text-base leading-none font-bold">*</span> Section 02: Participant Details (All Members Mandatory)
+      </div>
+      {members.map((member,index)=><fieldset key={index} className="border border-white/15 bg-white/[0.025] rounded-2xl p-5 sm:p-6 space-y-4">
+        <legend className="px-2 text-sm font-bold text-white flex items-center gap-1.5">
+          <span className="text-red-400 font-bold text-base">*</span>
+          <span>{index===0?'Team Lead (Mandatory)':'Member '+(index+1)+' (Mandatory)'}</span>
+        </legend>
+        <p className="text-xs text-amber-300/90 font-medium -mt-2">
+          <span className="text-red-400 font-bold">*</span> Every field below is mandatory for this participant
+        </p>
+        <div className="grid sm:grid-cols-2 gap-4">
+          {(['name','email','phone','rollNo'] as const).map(key=><label key={key} className="block text-sm font-medium text-white/90">
+            {({name:'Full Name',email:'Email Address',phone:'WhatsApp Number',rollNo:institution==='HITAM'?'HITAM Roll Number':'Roll / Student ID Number'})[key]}
+            <span className="text-red-400 font-bold ml-1">*</span>
+            <input
+              className={`mt-1.5 ${field}`}
+              value={member[key]}
+              onChange={e=>change(index,key,e.target.value)}
+              type={key==='email'?'email':key==='phone'?'tel':'text'}
+              required
+              maxLength={key==='email'?254:120}
+              placeholder={key==='phone'?'10-digit WhatsApp number':key==='rollNo'?(institution==='HITAM'?'e.g. 23E51A...':'College ID / Roll No'):key==='email'?'active.email@example.com':'Full Name'}
+            />
+          </label>)}
+          <label className="block text-sm font-medium text-white/90">
+            Branch <span className="text-red-400 font-bold ml-1">*</span>
+            {institution==='HITAM'?<select aria-label="Branch" className={`mt-1.5 ${field}`} value={member.branch} onChange={e=>change(index,'branch',e.target.value)} required>
+              <option value="">Choose branch</option>
+              {branches.map(branch=><option key={branch}>{branch}</option>)}
+            </select>:<input className={`mt-1.5 ${field}`} value={member.branch} onChange={e=>change(index,'branch',e.target.value)} required placeholder="e.g. Computer Science"/>}
+          </label>
+          <label className="block text-sm font-medium text-white/90">
+            Year <span className="text-red-400 font-bold ml-1">*</span>
+            <select aria-label="Year" className={`mt-1.5 ${field}`} value={member.year} onChange={e=>change(index,'year',e.target.value)} required>
+              <option value="">Choose year</option>
+              {[1,2,3,4].map(year=><option key={year} value={year}>{`Year ${year}`}</option>)}
+            </select>
+          </label>
+        </div>
+      </fieldset>)}
+    </div>
+  </div>:<>
+    <div className="rounded-2xl bg-brand-violet/10 border border-brand-violet/20 p-5">
+      <p className="text-xs uppercase tracking-widest text-text-muted">Review your registration</p>
+      <h2 className="text-2xl font-bold mt-2">{members.length===1?members[0].name:team}</h2>
+      <p className="text-text-secondary mt-2">{members.length} participants · {institution==='HITAM'?'HITAM':college}</p>
+      <p className="text-3xl font-bold mt-4">₹{amount}<span className="text-sm font-normal text-text-muted ml-2">total</span></p>
+      <div className="mt-5 pt-4 border-t border-white/10 space-y-4">
+        {members.map((member,index)=><div key={index}>
+          <p className="font-semibold">{index===0?'Team lead':'Member '+(index+1)}: {member.name}</p>
+          <p className="text-sm text-text-secondary break-all">{member.email} · {member.rollNo}</p>
+          <p className="text-sm text-text-muted">{member.branch} · Year {member.year}</p>
+        </div>)}
+      </div>
+    </div>
+    {live&&payment&&<section className="rounded-2xl border border-brand-orange/30 p-5 text-center">
+      <h2 className="text-xl font-bold">Complete your UPI payment</h2>
+      <p className="mt-3">{payment.payee}</p>
+      <p className="font-mono mt-3">{payment.upiId}</p>
+      <p className="my-3 text-2xl font-bold">Pay ₹{amount}</p>
+      <Image src={payment.paymentQrUrl} alt="Official HITAM payment QR" width={256} height={256} unoptimized className="mx-auto w-64 max-w-full"/>
+      <p className="mt-3 text-sm">Check the recipient and enter the exact amount in your payment app. Upload the screenshot and UTR below.</p>
+      <a className="inline-block mt-4 text-brand-orange underline" href={`upi://pay?pa=${encodeURIComponent(payment.upiId)}&pn=${encodeURIComponent(payment.payee)}&am=${amount}&cu=INR`}>Open UPI app</a>
+    </section>}
+    {!live&&<p className="text-text-secondary">Use a synthetic 8–16 digit transaction reference and a test screenshot. No live payment is required.</p>}
+    {!live&&<button type="button" disabled={locked} onClick={sampleProof} className="rounded-xl border border-brand-orange/40 px-4 py-3 text-brand-orange">Use sample local test proof</button>}
+    <fieldset disabled={locked} className="space-y-5 rounded-2xl border border-white/15 bg-white/[0.02] p-5 sm:p-6">
+      <div className="text-xs uppercase tracking-wider text-amber-300 font-bold flex items-center gap-1.5 pb-2 border-b border-white/10">
+        <span className="text-red-400 text-base leading-none font-bold">*</span> Section 03: Payment Proof &amp; Consent (Mandatory)
+      </div>
+      <label className="block text-sm font-semibold text-white/90">
+        UPI transaction reference (UTR) <span className="text-red-400 font-bold ml-1">*</span>
+        <input className={`mt-1.5 ${field}`} value={utr} onChange={e=>setUtr(e.target.value)} required pattern="[0-9]{8,16}" inputMode="numeric" placeholder="8–16 digit bank UTR"/>
+      </label>
+      <label className="block text-sm font-semibold text-white/90">
+        {live?'Payment screenshot':'Test payment screenshot'} <span className="text-red-400 font-bold ml-1">*</span>
+        <input className={`mt-1.5 ${field}`} type="file" accept="image/png,image/jpeg,image/webp" required={!proof} onChange={e=>void upload(e.target.files?.[0])}/>
+      </label>
+      {event.registrationForm&&<fieldset className="space-y-4 pt-2">
+        <legend className="text-sm font-bold text-white flex items-center gap-1.5">
+          <span className="text-red-400 font-bold text-base">*</span> Event rules &amp; consent (Mandatory)
+        </legend>
+        {event.registrationForm.categories&&<label className="block text-sm font-semibold text-white/90">
+          Showcase category <span className="text-red-400 font-bold ml-1">*</span>
+          <select className={`mt-1.5 ${field}`} value={category} onChange={e=>setCategory(e.target.value)} required>
+            <option value="">Choose category</option>
+            {event.registrationForm.categories.map(value=><option key={value}>{value}</option>)}
+          </select>
+        </label>}
+        {event.registrationForm.rules.map((rule,i)=><label key={rule} className="flex items-start gap-3 text-sm text-white/90">
+          <input className="mt-1 h-5 w-5 shrink-0" type="checkbox" required checked={!!consents[i]} onChange={e=>setConsents(current=>current.map((value,j)=>j===i?e.target.checked:value))}/>
+          <span><span className="text-red-400 font-bold mr-1">*</span>{rule}</span>
+        </label>)}
+      </fieldset>}
+      <label className="flex items-start gap-3 min-h-12 text-sm text-white/90">
+        <input className="mt-1 h-5 w-5 shrink-0 scroll-mt-28" type="checkbox" checked={agreement} onChange={e=>setAgreement(e.target.checked)} required/>
+        <span><span className="text-red-400 font-bold mr-1">*</span>I confirm these participant details and payment proof are correct. Payment and entry are subject to organizer verification.</span>
+      </label>
+      {proof&&<div className="rounded-xl border border-white/10 p-4">
+        <p className="text-sm text-text-muted mb-3">Selected payment proof</p>
+        <Image src={proof} alt="Selected payment screenshot" width={360} height={360} className="max-h-48 w-auto object-contain rounded-lg" unoptimized/>
+      </div>}
+    </fieldset>
+    <p className="flex gap-2 text-sm text-text-muted"><ShieldCheck className="w-5 h-5 shrink-0 text-emerald-400"/>Payment can be verified only by organizers. This submission does not mark your payment as confirmed.</p>
+    {!locked&&<button type="button" className={field} onClick={()=>setStep(1)}>Back to details</button>}
+  </>}
+  <button disabled={busy||(step===2&&!proof)} className="rounded-xl bg-brand-orange text-white font-bold p-4 w-full" type="submit">{busy?'Submitting…':step===1?'Continue to review':locked?'Retry same submission':live?'Submit registration':'Submit local test registration'}<ArrowRight className="inline w-4 h-4 ml-2"/></button>
+</form>}</main>;
 }
