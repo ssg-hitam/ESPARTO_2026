@@ -207,6 +207,14 @@ export const chapterCommittees: Organizer[] = [
     }
   },
   {
+    id: "iete-core",
+    name: "IETE HITAM Student Forum",
+    role: "Electronics & Telecommunication",
+    department: "Electronics & Telecommunication Engineering",
+    teamDomain: "chapter-committee",
+    image: "/images/chapters/iete-hitam.png",
+  },
+  {
     id: "ieom-core",
     name: "IEOM HITAM Student Chapter",
     role: "Operations & Industrial Engineering",
