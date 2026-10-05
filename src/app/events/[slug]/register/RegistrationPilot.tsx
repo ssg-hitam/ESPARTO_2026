@@ -164,10 +164,16 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
         UPI transaction reference (UTR) <span className="text-red-400 font-bold ml-1">*</span>
         <input className={`mt-1.5 ${field}`} value={utr} onChange={e=>setUtr(e.target.value)} required pattern="[0-9]{8,16}" inputMode="numeric" placeholder="8–16 digit bank UTR"/>
       </label>
-      <label className="block text-sm font-semibold text-white/90">
-        {live?'Payment screenshot':'Test payment screenshot'} <span className="text-red-400 font-bold ml-1">*</span>
-        <input className={`mt-1.5 ${field}`} type="file" accept="image/png,image/jpeg,image/webp" required={!proof} onChange={e=>void upload(e.target.files?.[0])}/>
-      </label>
+      <div className="space-y-2">
+        <label className="block text-sm font-semibold text-white/90">
+          {live?'Payment screenshot':'Test payment screenshot'} <span className="text-red-400 font-bold ml-1">*</span>
+          <input className={`mt-1.5 ${field}`} type="file" accept="image/png,image/jpeg,image/webp" required={!proof} onChange={e=>void upload(e.target.files?.[0])}/>
+        </label>
+        <div className="p-3.5 rounded-xl bg-amber-400/10 border border-amber-400/30 text-amber-200 text-xs sm:text-sm leading-relaxed">
+          <strong className="text-white block font-bold mb-1">⚠️ Important Receipt Requirement:</strong>
+          Payment receipt must <strong className="text-white underline font-bold">clearly show the UTR &amp; transaction ID</strong> and amount paid. Please upload a clear receipt — <strong className="text-white font-bold">this makes your registration verification fast</strong> and ensures prompt confirmation!
+        </div>
+      </div>
       {event.registrationForm&&<fieldset className="space-y-4 pt-2">
         <legend className="text-sm font-bold text-white flex items-center gap-1.5">
           <span className="text-red-400 font-bold text-base">*</span> Event rules &amp; consent (Mandatory)
