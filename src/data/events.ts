@@ -69,7 +69,6 @@ export const FEST_EVENTS: FestEventItem[] = [
   {
     id: "ieee-ideathon",
     slug: "ieee-ideathon",
-    brochureUrl: "/brochures/innovision.pdf",
     title: "INNOVISION",
     club: "IEEE Student Branch HITAM",
     clubId: "ieee",
@@ -142,7 +141,6 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "agentic-ai-workshop-hackathon",
-    brochureUrl: "/brochures/agentic-ai-workshop-hackathon.pdf",
     slug: "agentic-ai-workshop-hackathon",
     title: "Agentic AI Workshop & Hackathon",
     club: "Google Developer Groups on Campus – HITAM",
@@ -236,7 +234,6 @@ export const FEST_EVENTS: FestEventItem[] = [
   {
     id: "smart-manufacturing-challenge",
     slug: "smart-manufacturing-challenge",
-    brochureUrl: "/brochures/smart-manufacturing-challenge.pdf",
     title: "Smart Manufacturing: Industry Insights & Innovation Challenge",
     club: "IEOM HITAM Chapter",
     clubId: "ieom",
@@ -279,7 +276,6 @@ export const FEST_EVENTS: FestEventItem[] = [
   {
     id: "ieom-startup-pitch",
     slug: "ieom-startup-pitch",
-    brochureUrl: "/brochures/ieom-startup-pitch.pdf",
     title: "IEOM Startup Pitch Challenge",
     club: "IEOM HITAM Chapter",
     clubId: "ieom",
