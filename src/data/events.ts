@@ -547,6 +547,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "technical-tambola",
+    brochureUrl: "https://drive.google.com/file/d/1m1OK1WDYuL_wn7lvATvCylkix7vJ7rIJ/view?usp=sharing",
     slug: "technical-tambola",
     title: "Technical Tambola",
     club: "CSI Student Chapter",
@@ -588,6 +589,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "code-casino",
+    brochureUrl: "https://drive.google.com/file/d/1LosUfxB3trUKj0tREyEQqsCTS4GIr5nn/view?usp=sharing",
     slug: "code-casino",
     title: "Code Casino",
     club: "CSI Student Chapter",
