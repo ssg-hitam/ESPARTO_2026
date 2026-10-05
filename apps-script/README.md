@@ -112,7 +112,7 @@ The supplied South Indian Bank QR decodes to `qr.hitam@sib` for `HYDERABAD INSTI
 
 ## Current registration deployment
 
-Version 6 was deployed on October 4, 2026 (12:37 AM), incorporating the updated E12 "Build Your First Robot" ISNT × ISAMPE Student Chapter dual pricing (Solo ₹120 / Team ₹250) and team bounds (1–4), along with E01 "INNOVISION (IEEE National Ideathon)" branding updates. The website uses the existing web app URL: [ESPARTO registration portal](https://script.google.com/macros/s/AKfycbyWW19qSK95FeVO35V-aX5Lr2ySIE-ZMLLqem_y6bIFRXLcVEzVtU4qooHetePr09dbHQ/exec). Updating this deployment keeps the same URL. IEEE retains its separate official form.
+Version 12 was deployed on October 5, 2026, incorporating updated CSI student coordinator details (G. Sri Nandhitha) across Code Casino and Technical Tambola, and active E12 WhatsApp group gating. The website uses the existing web app URL: [ESPARTO registration portal](https://script.google.com/macros/s/AKfycbyWW19qSK95FeVO35V-aX5Lr2ySIE-ZMLLqem_y6bIFRXLcVEzVtU4qooHetePr09dbHQ/exec). Updating this deployment keeps the same URL (`AKfycbyWW19qSK95FeVO35V-aX5Lr2ySIE-ZMLLqem_y6bIFRXLcVEzVtU4qooHetePr09dbHQ`). IEEE retains its separate official form.
 
 ## Event-specific HHC registration forms
 
