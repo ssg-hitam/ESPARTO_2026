@@ -18,6 +18,7 @@ Open Project Settings → Script properties → Add script property. Copy the ev
 | WHATSAPP_GROUP_E09 | DATA HEIST Datathon |
 | WHATSAPP_GROUP_E10 | DATA DOSSIER Case Study |
 | WHATSAPP_GROUP_E11 | TorqueX — From Garage to Grid & New Kart Reveal |
+| WHATSAPP_GROUP_E12 | Build Your First Robot — ISNT × ISAMPE Student Chapter |
 | WHATSAPP_GROUP_E13 | Code Casino |
 | WHATSAPP_GROUP_E14 | Technical Tambola |
 

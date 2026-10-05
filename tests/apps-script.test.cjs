@@ -5,7 +5,7 @@ var mocks = require('./apps-script-mocks.cjs');
 function plain(value) { return JSON.parse(JSON.stringify(value)); }
 function rowCount(harness, name) { return harness.sheets[name].rows.length - 1; }
 test('group links stay private until both payment records are verified, with possession of the submission token', function () {
-  ['E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08', 'E09', 'E10', 'E11', 'E13', 'E14'].forEach(function (id) {
+  ['E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08', 'E09', 'E10', 'E11', 'E12', 'E13', 'E14'].forEach(function (id) {
     var h = mocks.createHarness(), payload = mocks.payloadFor(h, id);
     var privateLink = 'https://chat.whatsapp.com/PrivateGroup' + id;
     h.store['WHATSAPP_GROUP_' + id] = privateLink;
