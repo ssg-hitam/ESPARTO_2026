@@ -236,6 +236,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   {
     id: "smart-manufacturing-challenge",
     slug: "smart-manufacturing-challenge",
+    brochureUrl: "/brochures/smart-manufacturing-challenge.pdf",
     title: "Smart Manufacturing: Industry Insights & Innovation Challenge",
     club: "IEOM HITAM Chapter",
     clubId: "ieom",
@@ -278,6 +279,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   {
     id: "ieom-startup-pitch",
     slug: "ieom-startup-pitch",
+    brochureUrl: "/brochures/ieom-startup-pitch.pdf",
     title: "IEOM Startup Pitch Challenge",
     club: "IEOM HITAM Chapter",
     clubId: "ieom",
