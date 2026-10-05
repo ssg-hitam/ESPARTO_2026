@@ -69,6 +69,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   {
     id: "ieee-ideathon",
     slug: "ieee-ideathon",
+    brochureUrl: "/brochures/innovision.pdf",
     title: "INNOVISION",
     club: "IEEE Student Branch HITAM",
     clubId: "ieee",
