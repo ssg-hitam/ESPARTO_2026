@@ -215,12 +215,16 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
     </div>
     {live&&payment&&<section className="rounded-2xl border border-brand-orange/30 p-5 text-center">
       <h2 className="text-xl font-bold">Complete your UPI payment</h2>
+      <p className="mt-1.5 text-xs text-text-muted">Google Pay · PhonePe · Paytm · BHIM · Bank UPI</p>
       <p className="mt-3">{payment.payee}</p>
       <p className="font-mono mt-3">{payment.upiId}</p>
       <p className="my-3 text-2xl font-bold">Pay ₹{amount}</p>
       <Image src={payment.paymentQrUrl} alt="Official HITAM payment QR" width={256} height={256} unoptimized className="mx-auto w-64 max-w-full"/>
       <p className="mt-3 text-sm">Check the recipient and enter the exact amount in your payment app. Upload the screenshot and UTR below.</p>
-      <a className="inline-block mt-4 text-brand-orange underline" href={`upi://pay?pa=${encodeURIComponent(payment.upiId)}&pn=${encodeURIComponent(payment.payee)}&am=${amount}&cu=INR`}>Open UPI app</a>
+      <p className="mt-2 text-xs text-amber-200/90 bg-amber-400/10 border border-amber-400/25 rounded-lg py-1.5 px-3 inline-block">
+        💡 Note: FamPay payments cannot be verified by the bank. Please pay via Google Pay, PhonePe, Paytm, BHIM, or regular bank UPI.
+      </p>
+      <div><a className="inline-block mt-4 text-brand-orange underline" href={`upi://pay?pa=${encodeURIComponent(payment.upiId)}&pn=${encodeURIComponent(payment.payee)}&am=${amount}&cu=INR`}>Open UPI app</a></div>
     </section>}
     {!live&&<p className="text-text-secondary">Use a synthetic 8–16 digit transaction reference and a test screenshot. No live payment is required.</p>}
     {!live&&<button type="button" disabled={locked} onClick={sampleProof} className="rounded-xl border border-brand-orange/40 px-4 py-3 text-brand-orange">Use sample local test proof</button>}
@@ -255,6 +259,9 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
                 <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                 <span>Please upload a clear receipt — this makes your registration verification fast and ensures prompt confirmation!</span>
               </p>
+              <div className="pt-2 mt-1 border-t border-amber-400/20 text-xs text-white/75">
+                <span className="text-amber-300 font-semibold">Accepted UPI Apps:</span> Google Pay, PhonePe, Paytm, BHIM, or bank UPI. <span className="text-amber-200/90">(FamPay payments cannot be verified by the bank)</span>.
+              </div>
             </div>
           </div>
         </div>
