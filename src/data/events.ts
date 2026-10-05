@@ -68,6 +68,7 @@ export function getEventRegisterUrl(event: FestEventItem): string {
 export const FEST_EVENTS: FestEventItem[] = [
   {
     id: "ieee-ideathon",
+    brochureUrl: "https://drive.google.com/file/d/1Qx2Ae1p_TCtICRMTTY03rpQRVI2hpTLz/view?usp=sharing",
     slug: "ieee-ideathon",
     title: "INNOVISION",
     club: "IEEE Student Branch HITAM",
@@ -99,6 +100,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "reverse-hackathon",
+    brochureUrl: "https://drive.google.com/file/d/1gCHmgTqdVfZv4e2Fb5NXgRv0lRRbJd6p/view?usp=sharing",
     slug: "reverse-hackathon",
     title: "Reverse Hackathon",
     club: "HHC × IUCEE-EWB",
@@ -194,6 +196,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "programmers-got-talent",
+    brochureUrl: "https://drive.google.com/file/d/1gCHmgTqdVfZv4e2Fb5NXgRv0lRRbJd6p/view?usp=sharing",
     slug: "programmers-got-talent",
     title: "Programmers Got Talent",
     club: "HHC × IUCEE-EWB",
@@ -234,6 +237,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "smart-manufacturing-challenge",
+    brochureUrl: "https://drive.google.com/file/d/1IMbW0rUPNdFbfkRcBM6CpOD8bTtjZHhT/view?usp=sharing",
     slug: "smart-manufacturing-challenge",
     title: "Smart Manufacturing: Industry Insights & Innovation Challenge",
     club: "IEOM HITAM Chapter",
@@ -276,6 +280,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "ieom-startup-pitch",
+    brochureUrl: "https://drive.google.com/file/d/14g7Ym1bBD6S0O2cOzrsWVZtZFGkIyf4T/view?usp=sharing",
     slug: "ieom-startup-pitch",
     title: "IEOM Startup Pitch Challenge",
     club: "IEOM HITAM Chapter",
@@ -318,7 +323,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "dataquest-kaggle",
-    brochureUrl: "https://drive.google.com/file/d/1WST0zRDVtWI6yrs0XOnH_IPCBfDf8wvQ/view?usp=sharing",
+    brochureUrl: "https://drive.google.com/file/d/1BG2sQVm3CD7Eh1Xi0_v-Bkg-IinFK61M/view?usp=sharing",
     slug: "dataquest-kaggle",
     title: "DataQuest – Kaggle Data Science Challenge",
     club: "HITAM AI Club",
