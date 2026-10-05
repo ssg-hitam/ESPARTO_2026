@@ -14,21 +14,89 @@ const emptyMember=():Member=>({name:'',email:'',phone:'',rollNo:'',branch:'',yea
 type PendingSubmission={requestId:string;eventId:string;eventSlug:string;institution:string;college:string;teamSize:number;teamName:string;referralSource:string;lead:Member;members:Member[];totalFee:number;utrNumber:string;agreement:boolean;screenshotBase64:string;customDetails:string;eventAnswers:{category:string;consents:boolean[]}|null};
 const branches=['CSE','CSM','CSD','ECE','EEE','MECH','ITP - CSE','ITP - MECH','IIBMP'];
 const field='w-full rounded-lg border border-white/20 bg-[#120b25] p-3 text-white min-h-12 scroll-mt-28';
+const DEFAULT_PAYMENT={upiId:'qr.hitam@sib',payee:'HYDERABAD INSTITUTE OF TECHNOLOGY AND MANAGEMENT',paymentQrUrl:'https://drive.google.com/thumbnail?id=1WWKBVMZlGpDm5s9Rh7hOH5cdaTJ8Msuz&sz=w1000'};
+const STATIC_BACKEND_EVENTS:Record<string,BackendEvent>={
+ 'reverse-hackathon':{id:'E02',slug:'reverse-hackathon',minTeam:2,maxTeam:3,hitamFee:550,otherFee:600,feeModel:'team',registrationForm:{tagline:'Build What Wasn’t Built Before!',intro:'Work backwards from a mystery product revealed at the opening ceremony: discover who needs it, diagnose what is broken, and design an original replacement.',highlights:['October 9, 2026 · HITAM Campus','Zero eliminations: every team completes Diagnosis, Rebuild and Pitch.','Strictly no AI: original, human problem-solving at every stage.','Teams of 2–3 participants, including the team leader.'],rules:['I confirm my team will not use AI tools (ChatGPT, Copilot, image/text generators, or similar) at any stage of the competition.','I have read and agree to the Reverse Hackathon rules and understand that violations lead to disqualification.','I consent to photography/video during the event.']}},
+ 'agentic-ai-workshop-hackathon':{id:'E03',slug:'agentic-ai-workshop-hackathon',minTeam:1,maxTeam:4,hitamFee:150,otherFee:150,feeModel:'person'},
+ 'programmers-got-talent':{id:'E04',slug:'programmers-got-talent',minTeam:1,maxTeam:1,hitamFee:150,otherFee:150,feeModel:'person',registrationForm:{tagline:'Your Code. Your Build. Center Stage.',intro:'A stage-based showcase where students get the opportunity to demonstrate their software, hardware, coding, electronics, or other technical skills live.',highlights:['October 10, 2026 · HITAM Campus','Zero eliminations: every act performs in all three rounds through the Grand Finale.','A live 3-minute spotlight, a surprise Twist Challenge and a finale with audience voting.','Any technical, working live demonstration belongs on stage.'],categories:['Software','Hardware','Robotics','Electronics','Competitive coding','Other technical demonstration'],rules:['I confirm this build/performance is my own original work.','I understand a live, working demo is required and pre-recorded footage may only be used as brief supporting b-roll.','I agree to strict time limits and understand my slot will be cut off at the buzzer.','I consent to photography/video during the event.']}},
+ 'smart-manufacturing-challenge':{id:'E05',slug:'smart-manufacturing-challenge',minTeam:1,maxTeam:4,hitamFee:200,otherFee:300,feeModel:'team',allowedTeamSizes:[1,4],soloHitamFee:100,soloOtherFee:150},
+ 'ieom-startup-pitch':{id:'E06',slug:'ieom-startup-pitch',minTeam:1,maxTeam:4,hitamFee:200,otherFee:300,feeModel:'team',allowedTeamSizes:[1,4],soloHitamFee:100,soloOtherFee:150},
+ 'dataquest-kaggle':{id:'E07',slug:'dataquest-kaggle',minTeam:2,maxTeam:2,hitamFee:300,otherFee:300,feeModel:'team'},
+ 'n8n-automation-challenge':{id:'E08',slug:'n8n-automation-challenge',minTeam:2,maxTeam:2,hitamFee:300,otherFee:300,feeModel:'team'},
+ 'data-heist-datathon':{id:'E09',slug:'data-heist-datathon',minTeam:2,maxTeam:4,hitamFee:200,otherFee:300,feeModel:'team'},
+ 'data-dossier':{id:'E10',slug:'data-dossier',minTeam:2,maxTeam:4,hitamFee:100,otherFee:200,feeModel:'team'},
+ 'torquex-motorsport':{id:'E11',slug:'torquex-motorsport',minTeam:1,maxTeam:4,hitamFee:50,otherFee:70,feeModel:'person',teamHitamFee:100,teamOtherFee:140},
+ 'build-first-robot':{id:'E12',slug:'build-first-robot',minTeam:1,maxTeam:4,hitamFee:250,otherFee:250,feeModel:'team'},
+ 'code-casino':{id:'E13',slug:'code-casino',minTeam:2,maxTeam:3,hitamFee:50,otherFee:60,feeModel:'person'},
+ 'technical-tambola':{id:'E14',slug:'technical-tambola',minTeam:1,maxTeam:1,hitamFee:50,otherFee:60,feeModel:'person'}
+};
 async function api(action:string,payload?:unknown,googleTest=false){const response=await fetch(googleTest?'/api/registration':'/api/registration-preview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,payload})});return response.json();}
 export default function RegistrationPilot({displayEvent,googleTest=false,live=false}:{displayEvent:FestEventItem;googleTest?:boolean;live?:boolean}) {
- const [payment,setPayment]=useState<{upiId:string;payee:string;paymentQrUrl:string}>();
- const title=displayEvent.title, backendSlug=displayEvent.slug;
- const [event,setEvent]=useState<BackendEvent>();const [institution,setInstitution]=useState('HITAM');const [college,setCollege]=useState('');const [team,setTeam]=useState('');const [members,setMembers]=useState<Member[]>([emptyMember(),emptyMember()]);
- const [category,setCategory]=useState('');const [consents,setConsents]=useState<boolean[]>([]);const [referral,setReferral]=useState('');
- const [utr,setUtr]=useState('');const [proof,setProof]=useState('');const [agreement,setAgreement]=useState(false);const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [receipt,setReceipt]=useState<Receipt>();const [step,setStep]=useState(1);const [locked,setLocked]=useState(false);
+ const backendSlug=displayEvent.slug, title=displayEvent.title;
+ const initialBackendEvent=STATIC_BACKEND_EVENTS[backendSlug];
+ const [payment,setPayment]=useState<{upiId:string;payee:string;paymentQrUrl:string}>(DEFAULT_PAYMENT);
+ const [event,setEvent]=useState<BackendEvent | undefined>(initialBackendEvent);
+ const [institution,setInstitution]=useState('HITAM');
+ const [college,setCollege]=useState('');
+ const [team,setTeam]=useState('');
+ const defaultSize=initialBackendEvent ? (initialBackendEvent.id==='E03'?2:initialBackendEvent.minTeam) : 2;
+ const [members,setMembers]=useState<Member[]>(()=>Array.from({length:defaultSize},()=>emptyMember()));
+ const [category,setCategory]=useState('');
+ const [consents,setConsents]=useState<boolean[]>(()=>(initialBackendEvent?.registrationForm?.rules||[]).map(()=>false));
+ const [referral,setReferral]=useState('');
+ const [utr,setUtr]=useState('');
+ const [proof,setProof]=useState('');
+ const [agreement,setAgreement]=useState(false);
+ const [busy,setBusy]=useState(false);
+ const [error,setError]=useState('');
+ const [receipt,setReceipt]=useState<Receipt>();
+ const [step,setStep]=useState(1);
+ const [locked,setLocked]=useState(false);
  const [recoveryNote,setRecoveryNote]=useState('');
  const storageKey=`esparto-pending-v1:${live?'live':googleTest?'google-test':'local'}:${backendSlug}`;
  function clearPending(){try{sessionStorage.removeItem(storageKey);}catch{}}
- const requestId=useRef('');const submitted=useRef<PendingSubmission | undefined>(undefined);const inFlight=useRef(false);
- async function load(){setError('');try{const data=await api('catalogue',undefined,googleTest);const found=data.events?.find((item:BackendEvent)=>item.slug===backendSlug);if(!found)throw Error(data.message||'Event unavailable');if(live && (!data.registrationAvailable||!data.payment?.upiId))throw Error('Registration is temporarily unavailable. Please contact SSG.');setPayment(data.payment);setEvent(found);if(!submitted.current)setMembers(current=>Array.from({length:found.id==='E03'?2:found.minTeam},(_,i)=>current[i]||emptyMember()));if(!submitted.current)setConsents((found.registrationForm?.rules||[]).map(()=>false));}catch(error){setError((googleTest||live) && error instanceof Error?error.message:'Start the isolated local backend to load this form.');}}
- useEffect(()=>{requestId.current=crypto.randomUUID().replaceAll('-','');
-  try{const raw=sessionStorage.getItem(storageKey);if(raw){const saved=JSON.parse(raw);const p=saved.payload as PendingSubmission;if(saved.expires>Date.now()&&p.eventSlug===backendSlug&&/^[a-f0-9]{32}$/.test(p.requestId)&&Array.isArray(p.members)&&p.lead){submitted.current=p;requestId.current=p.requestId;setInstitution(p.institution);setCollege(p.college);setTeam(p.teamName);setMembers([p.lead,...p.members]);setReferral(p.referralSource);setUtr(p.utrNumber);setProof(p.screenshotBase64);setAgreement(p.agreement);setCategory(p.eventAnswers?.category||'');setConsents(p.eventAnswers?.consents||[]);setLocked(true);setStep(2);setRecoveryNote('Your pending submission was restored. Retry it to recover your registration; do not pay again.');}else clearPending();}}catch{clearPending();}
-  void load();},[backendSlug,googleTest]); // eslint-disable-line react-hooks/exhaustive-deps
+ const requestId=useRef('');
+ const submitted=useRef<PendingSubmission | undefined>(undefined);
+ const inFlight=useRef(false);
+ async function load(){
+  try{
+   const data=await api('catalogue',undefined,googleTest);
+   const found=data.events?.find((item:BackendEvent)=>item.slug===backendSlug);
+   if(data.payment?.upiId)setPayment(data.payment);
+   if(found)setEvent(found);
+   if(live && (!data.registrationAvailable||!data.payment?.upiId))throw Error('Registration is temporarily unavailable. Please contact SSG.');
+  }catch(err){
+   if(live && err instanceof Error)setError(err.message);
+  }
+ }
+ useEffect(()=>{
+  requestId.current=crypto.randomUUID().replaceAll('-','');
+  try{
+   const raw=sessionStorage.getItem(storageKey);
+   if(raw){
+    const saved=JSON.parse(raw);
+    const p=saved.payload as PendingSubmission;
+    if(saved.expires>Date.now()&&p.eventSlug===backendSlug&&/^[a-f0-9]{32}$/.test(p.requestId)&&Array.isArray(p.members)&&p.lead){
+     submitted.current=p;
+     requestId.current=p.requestId;
+     setInstitution(p.institution);
+     setCollege(p.college);
+     setTeam(p.teamName);
+     setMembers([p.lead,...p.members]);
+     setReferral(p.referralSource);
+     setUtr(p.utrNumber);
+     setProof(p.screenshotBase64);
+     setAgreement(p.agreement);
+     setCategory(p.eventAnswers?.category||'');
+     setConsents(p.eventAnswers?.consents||[]);
+     setLocked(true);
+     setStep(2);
+     setRecoveryNote('Your pending submission was restored. Retry it to recover your registration; do not pay again.');
+    }else clearPending();
+   }
+  }catch{clearPending();}
+  void load();
+ },[backendSlug,googleTest]); // eslint-disable-line react-hooks/exhaustive-deps
  const sizes=event ? (event.allowedTeamSizes||Array.from({length:event.maxTeam-(event.id==='E03'?2:event.minTeam)+1},(_,i)=>(event.id==='E03'?2:event.minTeam)+i)):[];
  const unitFee=event ? members.length===1 && event.allowedTeamSizes ? (institution==='HITAM'?event.soloHitamFee:event.soloOtherFee)||0 : members.length>1 && event.teamHitamFee ? (institution==='HITAM'?event.teamHitamFee:event.teamOtherFee)||0 : institution==='HITAM'?event.hitamFee:event.otherFee : 0;
  const amount=event ? event.id==='E12' ? (members.length===1?120:250) : unitFee*(event.feeModel==='person'&&!event.teamHitamFee?members.length:1) : 0;
