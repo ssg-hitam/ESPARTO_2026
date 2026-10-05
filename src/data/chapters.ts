@@ -33,6 +33,15 @@ export const TECHNICAL_CHAPTERS: TechnicalChapter[] = [
     description: "Institute of Electrical and Electronics Engineers Student Branch",
   },
   {
+    id: "iete",
+    name: "IETE HITAM Student Forum",
+    shortName: "IETE HITAM",
+    category: "Technical Chapter",
+    domain: "Institution of Electronics and Telecommunication Engineers",
+    logo: "/images/chapters/iete-hitam.png",
+    description: "Institution of Electronics and Telecommunication Engineers - HITAM Student Forum",
+  },
+  {
     id: "ieom",
     name: "IEOM HITAM Student Chapter",
     shortName: "IEOM HITAM",
