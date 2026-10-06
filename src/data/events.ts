@@ -466,6 +466,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   {
     id: "torquex-motorsport",
     slug: "torquex-motorsport",
+    bannerImage: "/images/events/torquex-official-banner.png",
     title: "TorqueX – From Garage to Grid & New Kart Reveal",
     club: "TorqueX Motorsports",
     clubId: "torquex",
