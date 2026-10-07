@@ -217,7 +217,7 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
     </div>
     {live&&payment&&<section className="rounded-2xl border border-brand-orange/30 p-5 text-center">
       <h2 className="text-xl font-bold">Complete your UPI payment</h2>
-      <p className="mt-1.5 text-xs text-text-muted">Google Pay · PhonePe · Paytm · BHIM · Bank UPI</p>
+      <p className="mt-1.5 text-xs text-text-muted">Google Pay · PhonePe · Paytm · BHIM · Navi · slice · super.money · Bank UPI</p>
       <p className="mt-3">{payment.payee}</p>
       <p className="font-mono mt-3">{payment.upiId}</p>
       <p className="my-3 text-2xl font-bold">Pay ₹{amount}</p>
@@ -226,7 +226,7 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
       <p className="mt-2 text-xs text-amber-200/90 bg-amber-400/10 border border-amber-400/25 rounded-lg py-1.5 px-3 inline-block">
         💡 Note: FamPay payments cannot be verified by the bank. Please pay via Google Pay, PhonePe, Paytm, BHIM, or regular bank UPI.
       </p>
-      <div><a className="inline-flex mt-4 rounded-xl bg-brand-orange px-6 py-4 font-bold text-white" href={`upi://pay?pa=${encodeURIComponent(payment.upiId)}&pn=${encodeURIComponent(payment.payee)}&am=${amount}&cu=INR&tn=${encodeURIComponent(title)}`}>Open UPI app →</a></div><p className="mt-3 text-xs text-text-muted">Open on your phone with a UPI app installed. On desktop, scan the QR using your phone.</p><div className="mt-4 flex flex-wrap justify-center gap-2" aria-label="Accepted UPI payment apps">{[{name:'Google Pay',file:'google-pay'},{name:'PhonePe',file:'phonepe'},{name:'Paytm',file:'paytm'},{name:'BHIM UPI',file:'bhim'}].map(app=><span key={app.file} title={app.name} className="flex h-10 w-16 items-center justify-center rounded-lg bg-white px-2 py-2"><Image src={`/images/payments/${app.file}.svg`} alt={app.name} width={48} height={24} className="h-6 w-12 object-contain"/></span>)}</div>
+      <div><a className="inline-flex mt-4 rounded-xl bg-brand-orange px-6 py-4 font-bold text-white" href={`upi://pay?pa=${encodeURIComponent(payment.upiId)}&pn=${encodeURIComponent(payment.payee)}&am=${amount}&cu=INR&tn=${encodeURIComponent(title)}`}>Open UPI app →</a></div><p className="mt-3 text-xs text-text-muted">Open on your phone with a UPI app installed. On desktop, scan the QR using your phone.</p><div className="mt-4 flex flex-wrap justify-center gap-2" aria-label="Accepted UPI payment apps">{[{name:'Google Pay',file:'google-pay'},{name:'PhonePe',file:'phonepe'},{name:'Paytm',file:'paytm'},{name:'BHIM UPI',file:'bhim'},{name:'Navi UPI',file:'navi'},{name:'slice',file:'slice'},{name:'super.money',file:'super-money'}].map(app=><span key={app.file} title={app.name} className="flex h-10 w-16 items-center justify-center rounded-lg bg-white px-2 py-2"><Image src={`/images/payments/${app.file}.svg`} alt={app.name} width={48} height={24} className="h-6 w-12 object-contain"/></span>)}</div>
     </section>}
     {!live&&<p className="text-text-secondary">Use a synthetic 8–16 digit transaction reference and a test screenshot. No live payment is required.</p>}
     {!live&&<button type="button" disabled={locked} onClick={sampleProof} className="rounded-xl border border-brand-orange/40 px-4 py-3 text-brand-orange">Use sample local test proof</button>}
