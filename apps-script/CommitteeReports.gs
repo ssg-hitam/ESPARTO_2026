@@ -1,5 +1,11 @@
+// Visible editor entry point; setup still enforces master ownership.
+function setupCommitteeReports() {
+  requireOwner_();
+  return setupCommitteeReports_();
+}
+
 /** Add as a SEPARATE Apps Script file. Existing registration code is unchanged.
- * Run setupCommitteeReports_ from the editor as the master spreadsheet owner.
+ * Run setupCommitteeReports from the editor as the master spreadsheet owner.
  * Reports start PRIVATE. Share each generated file only with its event leads as Viewers.
  */
 function setupCommitteeReports_() {
@@ -55,4 +61,37 @@ function syncCommitteeReports_() {
       sheet.getRange(1, 14).setValue("Updated: " + Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss"));
     });
   } finally { lock.releaseLock(); }
+}
+
+// Run manually as owner after reviewing this event-to-email list.
+// Adds Viewers only; does not remove existing individual/group permissions.
+function shareCommitteeReports() {
+  requireOwner_();
+  var props = PropertiesService.getScriptProperties();
+  if (Session.getEffectiveUser().getEmail() !== props.getProperty("COMMITTEE_REPORT_OWNER")) throw Error("Report owner only.");
+  var contacts = {
+    E02: ["24e51a6612@gmail.com", "24e51a05b4@gmail.com", "24e51a6628@gmail.com", "24e51a05k5@gmail.com", "associatedean.mdp@hitam.org", "santoshn.mech@hitam.org", "ewb@hitam.org"],
+    E03: ["manikmanohar0@gmail.com", "kdhanudeep@gmail.com", "yshamsmitha@gmail.com", "associatedean.mdp@hitam.org"],
+    E04: ["24e51a6612@gmail.com", "24e51a05b4@gmail.com", "24e51a6628@gmail.com", "24e51a05k5@gmail.com", "associatedean.mdp@hitam.org", "santoshn.mech@hitam.org", "ewb@hitam.org"],
+    E05: ["24e51a66e1@hitam.org", "ieom.hitam@gmail.com", "praveen.mech@hitam.org"],
+    E06: ["24e51a66e1@hitam.org", "ieom.hitam@gmail.com", "praveen.mech@hitam.org"],
+    E07: ["23e51a6671@hitam.org", "aiclub@hitam.org", "rajeshwarm.cse@hitam.org"],
+    E08: ["23e51a6671@hitam.org", "aiclub@hitam.org", "rajeshwarm.cse@hitam.org"],
+    E09: ["23e51a6711@hitam.org", "minds.datascience@hitam.org", "richatiwari.cse@hitam.org"],
+    E10: ["23e51a6711@hitam.org", "minds.datascience@hitam.org", "richatiwari.cse@hitam.org"],
+    E11: ["24e51a0311@hitam.org", "programhead.mech@hitam.org", "torquex.hitam@gmail.com"],
+    E12: ["23e51a0301@hitam.org", "24e55a0325@hitam.org"],
+    E13: ["25e55a0512@gmail.com", "preethicm.cse@hitam.org"],
+    E14: ["24e51a0592@gmail.com", "24e51a05b5@hitam.org", "preethicm.cse@hitam.org"]
+  };
+  var masterId = database_().getId();
+  Object.keys(contacts).forEach(function (eventId) {
+    var id = props.getProperty("COMMITTEE_REPORT_" + eventId);
+    if (!id || id === masterId) throw Error("Missing or invalid report for " + eventId);
+    var file = DriveApp.getFileById(id), owner = file.getOwner();
+    if (!owner || owner.getEmail() !== Session.getEffectiveUser().getEmail()) throw Error("Not report owner: " + eventId);
+    file.setSharing(DriveApp.Access.PRIVATE, DriveApp.Permission.VIEW);
+    contacts[eventId].forEach(function (email) { file.addViewer(email); });
+    console.log(eventId + ": granted Viewer access to " + contacts[eventId].length + " event contacts.");
+  });
 }
