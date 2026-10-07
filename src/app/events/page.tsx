@@ -448,6 +448,8 @@ export default function EventsPage() {
                             </p>
                           </div>
 
+                        {event.slug === "reverse-hackathon" && <div className="mb-4 rounded-xl border border-amber-400/35 bg-gradient-to-r from-orange-500/15 to-pink-500/10 p-4"><p className="text-[10px] uppercase tracking-wider font-bold text-amber-300">HITAM flash sale</p><p className="mt-2 text-xl font-bold text-white"><span className="mr-2 text-sm text-text-muted line-through">₹550</span>₹450 <span className="text-xs font-normal text-text-secondary">/ team</span></p><p className="mt-2 text-xs text-text-secondary">Apply <strong className="font-mono text-amber-300">ESPARTO26</strong> before payment · Save ₹100</p></div>}
+
                         {/* Quick Details Trigger */}
                         <Link
                           href={eventPath(event)}
