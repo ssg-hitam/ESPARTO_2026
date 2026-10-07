@@ -8,10 +8,10 @@ import { BrandHeader } from '@/components/registration/BrandHeader';
 import SubmissionTicket from '@/components/registration/SubmissionTicket';
 import { CalendarDays, MapPin, Users, ShieldCheck, ArrowRight, AlertTriangle, Sparkles } from 'lucide-react';
 type Member={name:string;email:string;phone:string;rollNo:string;branch:string;year:string};
-type BackendEvent={id:string;slug:string;minTeam:number;maxTeam:number;hitamFee:number;otherFee:number;feeModel:string;allowedTeamSizes?:number[];soloHitamFee?:number;soloOtherFee?:number;teamHitamFee?:number;teamOtherFee?:number;registrationForm?:{tagline:string;intro:string;highlights:string[];categories?:string[];rules:string[]}|null};
+type BackendEvent={promoCode?:string;promoFee?:number;id:string;slug:string;minTeam:number;maxTeam:number;hitamFee:number;otherFee:number;feeModel:string;allowedTeamSizes?:number[];soloHitamFee?:number;soloOtherFee?:number;teamHitamFee?:number;teamOtherFee?:number;registrationForm?:{tagline:string;intro:string;highlights:string[];categories?:string[];rules:string[]}|null};
 type Receipt={regId:string;eventTitle:string;leadName:string;amount:number;status:string;replayed?:boolean};
 const emptyMember=():Member=>({name:'',email:'',phone:'',rollNo:'',branch:'',year:''});
-type PendingSubmission={requestId:string;eventId:string;eventSlug:string;institution:string;college:string;teamSize:number;teamName:string;referralSource:string;lead:Member;members:Member[];totalFee:number;utrNumber:string;agreement:boolean;screenshotBase64:string;customDetails:string;eventAnswers:{category:string;consents:boolean[]}|null};
+type PendingSubmission={promoCode?:string;requestId:string;eventId:string;eventSlug:string;institution:string;college:string;teamSize:number;teamName:string;referralSource:string;lead:Member;members:Member[];totalFee:number;utrNumber:string;agreement:boolean;screenshotBase64:string;customDetails:string;eventAnswers:{category:string;consents:boolean[]}|null};
 const branches=['CSE','CSM','CSD','ECE','EEE','MECH','ITP - CSE','ITP - MECH','IIBMP'];
 const field='w-full rounded-lg border border-white/20 bg-[#120b25] p-3 text-white min-h-12 scroll-mt-28';
 const req=<span className="text-brand-orange font-bold ml-1 text-sm select-none" aria-hidden="true" title="Required">*</span>;
@@ -80,7 +80,7 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
     if(saved.expires>Date.now()&&p.eventSlug===backendSlug&&/^[a-f0-9]{32}$/.test(p.requestId)&&Array.isArray(p.members)&&p.lead){
      submitted.current=p;
      requestId.current=p.requestId;
-     setInstitution(p.institution);
+     setInstitution(p.institution);setPromoCode(p.promoCode||'');setPromoInput(p.promoCode||'');
      setCollege(p.college);
      setTeam(p.teamName);
      setMembers([p.lead,...p.members]);
@@ -99,13 +99,15 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
   void load();
  },[backendSlug,googleTest]); // eslint-disable-line react-hooks/exhaustive-deps
  const sizes=event ? (event.allowedTeamSizes||Array.from({length:event.maxTeam-(event.id==='E03'?2:event.minTeam)+1},(_,i)=>(event.id==='E03'?2:event.minTeam)+i)):[];
+ const [promoInput,setPromoInput]=useState('');const [promoCode,setPromoCode]=useState('');
  const unitFee=event ? members.length===1 && event.allowedTeamSizes ? (institution==='HITAM'?event.soloHitamFee:event.soloOtherFee)||0 : members.length>1 && event.teamHitamFee ? (institution==='HITAM'?event.teamHitamFee:event.teamOtherFee)||0 : institution==='HITAM'?event.hitamFee:event.otherFee : 0;
- const amount=event ? event.id==='E12' ? (members.length===1?120:250) : unitFee*(event.feeModel==='person'&&!event.teamHitamFee?members.length:1) : 0;
+ const regularAmount=event ? event.id==='E12' ? (members.length===1?120:250) : unitFee*(event.feeModel==='person'&&!event.teamHitamFee?members.length:1) : 0;
+ const amount=event?.id==='E02'&&institution==='HITAM'&&promoCode===event.promoCode&&event.promoFee?event.promoFee:regularAmount;
  function sampleProof(){const canvas=document.createElement('canvas');canvas.width=640;canvas.height=360;const context=canvas.getContext('2d');if(!context)return;context.fillStyle='#0c0720';context.fillRect(0,0,640,360);context.fillStyle='#fbbf24';context.font='bold 28px Arial';context.fillText('LOCAL TEST PAYMENT PROOF',30,65);context.fillStyle='#ffffff';context.font='24px Arial';context.fillText('NO PAYMENT WAS MADE',30,125);context.fillText(title,30,190);context.fillText('Test amount: INR '+amount,30,240);const reference=utr||String(Date.now());context.fillText('Synthetic UTR: '+reference,30,290);setUtr(reference);setProof(canvas.toDataURL('image/png'));setError('');}
  function change(index:number,key:keyof Member,value:string){setMembers(current=>current.map((member,i)=>i===index?{...member,[key]:value}:member));}
  async function upload(file:File|undefined){setProof('');if(!file)return;if(file.size>2*1024*1024 || !['image/png','image/jpeg','image/webp'].includes(file.type)){setError('Choose a PNG, JPG or WebP screenshot under 2 MB.');return;}const reader=new FileReader();reader.onload=()=>{setProof(String(reader.result));setError('');};reader.readAsDataURL(file);}
  async function submit(){if(inFlight.current||!event)return;inFlight.current=true;setBusy(true);setError('');setLocked(true);
-  submitted.current ||= {requestId:requestId.current,eventId:event.id,eventSlug:event.slug,institution,college,teamSize:members.length,teamName:members.length===1?members[0].name:team,referralSource:referral,lead:members[0],members:members.slice(1),totalFee:amount,utrNumber:utr,agreement,screenshotBase64:proof,customDetails:live?'Registered on espartohitam.com':googleTest?'WEBSITE GOOGLE SHEETS TEST - synthetic demo':'LOCAL TEST - isolated backend',eventAnswers:event.registrationForm?{category,consents}:null};
+  submitted.current ||= {promoCode:institution==='HITAM'?promoCode:'',requestId:requestId.current,eventId:event.id,eventSlug:event.slug,institution,college,teamSize:members.length,teamName:members.length===1?members[0].name:team,referralSource:referral,lead:members[0],members:members.slice(1),totalFee:amount,utrNumber:utr,agreement,screenshotBase64:proof,customDetails:live?'Registered on espartohitam.com':googleTest?'WEBSITE GOOGLE SHEETS TEST - synthetic demo':'LOCAL TEST - isolated backend',eventAnswers:event.registrationForm?{category,consents}:null};
   try{sessionStorage.setItem(storageKey,JSON.stringify({expires:Date.now()+30*60*1000,payload:submitted.current}));}catch{setRecoveryNote('Browser recovery storage is unavailable. Keep this page open until your submission is confirmed.');}
   try{const result=await registrationRequest(()=>api('submit',submitted.current,googleTest),()=>setError('Registrations are arriving together. Please keep this page open while we safely retry your submission.'));setError('');if(result.success){clearPending();setRecoveryNote('');setReceipt(result.receipt);}else{setError(result.message||'Submission failed.');if(!result.retryable && result.code!=='RECONCILIATION_REQUIRED'){submitted.current=undefined;clearPending();setLocked(false);}}}catch{setError('Connection interrupted. Retry the same submission to recover it.');}finally{inFlight.current=false;setBusy(false);}
  }
@@ -204,7 +206,7 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
       <p className="text-xs uppercase tracking-widest text-text-muted">Review your registration</p>
       <h2 className="text-2xl font-bold mt-2">{members.length===1?members[0].name:team}</h2>
       <p className="text-text-secondary mt-2">{members.length} participants · {institution==='HITAM'?'HITAM':college}</p>
-      <p className="text-3xl font-bold mt-4">₹{amount}<span className="text-sm font-normal text-text-muted ml-2">total</span></p>
+      {event.promoCode&&institution==='HITAM'&&<div className="mt-4 rounded-xl border border-amber-400/30 p-4"><label htmlFor="promo-code" className="block font-semibold mb-2">HITAM flash sale · Code ESPARTO26</label><div className="flex gap-2"><input id="promo-code" className={field} value={promoInput} disabled={locked} onChange={e=>setPromoInput(e.target.value)} placeholder="Enter promo code"/><button type="button" disabled={locked} className="rounded-xl bg-brand-orange px-4 font-bold" onClick={()=>{if(promoInput.trim().toUpperCase()===event.promoCode){setPromoCode(event.promoCode||'');setError('');}else setError('Enter ESPARTO26 to apply the HITAM flash sale.');}}>Apply</button></div>{promoCode&&<p className="mt-2 text-green-300">₹100 discount applied · ₹450 per team</p>}</div>}<p className="text-3xl font-bold mt-4">₹{amount}<span className="text-sm font-normal text-text-muted ml-2">total</span></p>
       <div className="mt-5 pt-4 border-t border-white/10 space-y-4">
         {members.map((member,index)=><div key={index}>
           <p className="font-semibold">{index===0?'Team lead':'Member '+(index+1)}: {member.name}</p>
@@ -224,7 +226,7 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
       <p className="mt-2 text-xs text-amber-200/90 bg-amber-400/10 border border-amber-400/25 rounded-lg py-1.5 px-3 inline-block">
         💡 Note: FamPay payments cannot be verified by the bank. Please pay via Google Pay, PhonePe, Paytm, BHIM, or regular bank UPI.
       </p>
-      <div><a className="inline-block mt-4 text-brand-orange underline" href={`upi://pay?pa=${encodeURIComponent(payment.upiId)}&pn=${encodeURIComponent(payment.payee)}&am=${amount}&cu=INR`}>Open UPI app</a></div>
+      <div><a className="inline-flex mt-4 rounded-xl bg-brand-orange px-6 py-4 font-bold text-white" href={`upi://pay?pa=${encodeURIComponent(payment.upiId)}&pn=${encodeURIComponent(payment.payee)}&am=${amount}&cu=INR&tn=${encodeURIComponent(title)}`}>Open UPI app →</a></div><p className="mt-3 text-xs text-text-muted">Open on your phone with a UPI app installed. On desktop, scan the QR using your phone.</p><div className="mt-4 flex flex-wrap justify-center gap-2" aria-label="Accepted UPI payment apps">{['Google Pay','PhonePe','Paytm','BHIM UPI'].map(app=><span key={app} className="rounded-lg border border-white/20 bg-white/5 px-3 py-2 text-sm font-bold">{app}</span>)}</div>
     </section>}
     {!live&&<p className="text-text-secondary">Use a synthetic 8–16 digit transaction reference and a test screenshot. No live payment is required.</p>}
     {!live&&<button type="button" disabled={locked} onClick={sampleProof} className="rounded-xl border border-brand-orange/40 px-4 py-3 text-brand-orange">Use sample local test proof</button>}

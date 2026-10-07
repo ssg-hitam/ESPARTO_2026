@@ -762,6 +762,11 @@ function validatePayload_(payload) {
   if (event.allowedTeamSizes && teamSize === 1) unitFee = institution === "HITAM" ? event.soloHitamFee : event.soloOtherFee;
   if (event.teamHitamFee && teamSize > 1) unitFee = institution === "HITAM" ? event.teamHitamFee : event.teamOtherFee;
   var amount = event.id === "E12" ? (teamSize === 1 ? 120 : 250) : (unitFee * (event.feeModel === "person" && !event.teamHitamFee ? teamSize : 1));
+  var promoCode = String(payload.promoCode || "").trim().toUpperCase();
+  if (promoCode) {
+    if (event.id !== "E02" || institution !== "HITAM" || promoCode !== "ESPARTO26") throw publicError_("INVALID_PROMO", "This promo code is valid only for HITAM Reverse Hackathon teams.");
+    amount = 450;
+  }
   if (typeof payload.totalFee !== "number" || payload.totalFee !== amount) throw publicError_("FEE_CHANGED", "The displayed amount does not match the event fee. Return to participant details and check the payment amount.");
   var utr = String(payload.utrNumber || "").trim();
   if (!/^\d{8,16}$/.test(utr)) throw publicError_("INVALID_UTR", "Enter the 8–16 digit UPI transaction reference from your payment app.");
@@ -777,8 +782,8 @@ function validatePayload_(payload) {
     customDetails = JSON.stringify({ category: category, acceptedRules: formConfig.rules, additionalDetails: customDetails });
   }
   var proof = decodeProof_(payload.screenshotBase64);
-  var normalized = { eventId: event.id, eventSlug: event.slug, institution: institution, college: college, referralSource: referralSource, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, eventAnswers: eventAnswers, agreement: true };
-  return { event: event, requestId: requestId, institution: institution, college: college, referralSource: referralSource, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, proof: proof, normalized: normalized };
+  var normalized = { eventId: event.id, eventSlug: event.slug, institution: institution, college: college, promoCode: promoCode, referralSource: referralSource, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, eventAnswers: eventAnswers, agreement: true };
+  return { event: event, requestId: requestId, institution: institution, college: college, promoCode: promoCode, referralSource: referralSource, teamSize: teamSize, teamName: teamName, lead: lead, members: members, amount: amount, utr: utr, customDetails: customDetails, proof: proof, normalized: normalized };
 }
 
 function validateMember_(member, required, label, institution) {
@@ -1281,7 +1286,7 @@ function websiteRegistrationRequest_(e) {
   try{if(cache.get(nonceKey))throw Error("Replay");cache.put(nonceKey,"1",120);}finally{lock.releaseLock();}
   if(request.action==="catalogue") {
     var portal=getPortalData();
-    return {success:true,payment:{upiId:portal.upiId,payee:portal.payee,paymentQrUrl:portal.paymentQrUrl},registrationAvailable:portal.registrationAvailable,events:portal.events.filter(function(event){return allowed.indexOf(event.id)!==-1;}).map(function(event){return {id:event.id,slug:event.slug,title:event.title,minTeam:event.minTeam,maxTeam:event.maxTeam,hitamFee:event.hitamFee,otherFee:event.otherFee,feeModel:event.feeModel,allowedTeamSizes:event.allowedTeamSizes,soloHitamFee:event.soloHitamFee,soloOtherFee:event.soloOtherFee,teamHitamFee:event.teamHitamFee,teamOtherFee:event.teamOtherFee,registrationForm:event.registrationForm||null};})};
+    return {success:true,payment:{upiId:portal.upiId,payee:portal.payee,paymentQrUrl:portal.paymentQrUrl},registrationAvailable:portal.registrationAvailable,events:portal.events.filter(function(event){return allowed.indexOf(event.id)!==-1;}).map(function(event){return {id:event.id,slug:event.slug,title:event.title,minTeam:event.minTeam,maxTeam:event.maxTeam,hitamFee:event.hitamFee,otherFee:event.otherFee,feeModel:event.feeModel,allowedTeamSizes:event.allowedTeamSizes,soloHitamFee:event.soloHitamFee,soloOtherFee:event.soloOtherFee,teamHitamFee:event.teamHitamFee,teamOtherFee:event.teamOtherFee,promoCode:event.id==="E02"?"ESPARTO26":null,promoFee:event.id==="E02"?450:null,registrationForm:event.registrationForm||null};})};
   }
   var payload=request.payload;
   if(!payload || typeof payload!=="object" || Array.isArray(payload))throw Error("Denied");

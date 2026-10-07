@@ -293,3 +293,4 @@ test('referral header migration appends only to an exact legacy schema', functio
   assert.throws(function () { h.scope.assertHeaders_(sheet, headers); }, /Header mismatch/);
   assert.equal(writes.length, 1);
 });
+test('ESPARTO26 discount is validated by the server for HITAM Reverse Hackathon only',()=>{const h=mocks.createHarness(),p=mocks.payloadFor(h,'E02','HITAM',2);p.promoCode='ESPARTO26';p.totalFee=450;const saved=h.scope.submitRegistration(p);assert.equal(saved.success,true);assert.equal(saved.receipt.amount,450);for(const [id,institution] of [['E08','HITAM'],['E02','Other']]){const x=mocks.createHarness(),q=mocks.payloadFor(x,id,institution,2);q.promoCode='ESPARTO26';q.totalFee=450;assert.equal(x.scope.submitRegistration(q).success,false);assert.equal(x.batches.length,0);}});
