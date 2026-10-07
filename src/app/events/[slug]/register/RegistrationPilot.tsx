@@ -59,16 +59,22 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
  const requestId=useRef('');
  const submitted=useRef<PendingSubmission | undefined>(undefined);
  const inFlight=useRef(false);
+ const [catalogueError,setCatalogueError]=useState('');
+ const catalogueLoading=useRef(false);
  async function load(){
+  if(catalogueLoading.current)return;
+  catalogueLoading.current=true;setCatalogueError('');
   try{
-   const data=await api('catalogue',undefined,googleTest);
+   const data=await registrationRequest(()=>api('catalogue',undefined,googleTest));
+   if(!data.success)throw Error(data.code==='BUSY'?'The registration service is busy. Retry loading in a few seconds.':data.message||'Could not connect to registration. Retry loading; your details are still here.');
    const found=data.events?.find((item:BackendEvent)=>item.slug===backendSlug);
+   if(!found)throw Error('This event could not be loaded. Retry loading or contact SSG.');
+   if(live && (!data.registrationAvailable||!data.payment?.upiId))throw Error('Registration payment configuration is unavailable. Please contact SSG.');
    if(data.payment?.upiId)setPayment(data.payment);
-   if(found)setEvent(found);
-   if(live && (!data.registrationAvailable||!data.payment?.upiId))throw Error('Registration is temporarily unavailable. Please contact SSG.');
+   setEvent(found);setCatalogueError('');
   }catch(err){
-   if(live && err instanceof Error)setError(err.message);
-  }
+   setCatalogueError(err instanceof Error?err.message:'Connection interrupted. Retry loading; your details are still here.');
+  }finally{catalogueLoading.current=false;}
  }
  useEffect(()=>{
   requestId.current=crypto.randomUUID().replaceAll('-','');
@@ -119,6 +125,7 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
  <div className="grid sm:grid-cols-3 gap-4 mt-6 text-sm"><p className="flex gap-2"><CalendarDays className="w-5 h-5 text-brand-orange shrink-0"/><span>{displayEvent.date}<br/>{displayEvent.timings}</span></p><p className="flex gap-2"><MapPin className="w-5 h-5 text-brand-orange shrink-0"/>{displayEvent.venue}</p><p className="flex gap-2"><Users className="w-5 h-5 text-brand-orange shrink-0"/>{displayEvent.teamSize}</p></div>
  <div className="flex flex-wrap gap-4 items-center mt-6 pt-5 border-t border-white/10"><Link href={`/events/${backendSlug}`} className="rounded-xl border border-white/20 px-4 py-3 font-semibold hover:border-brand-orange/60 transition-colors">View event details →</Link><span className="text-text-muted text-sm">Prize pool <strong className="text-white">{displayEvent.prizePool}</strong></span>{displayEvent.brochureUrl&&<a href={displayEvent.brochureUrl} className="text-brand-orange text-sm">Read event brochure →</a>}</div>
  </div></header>{event?.registrationForm&&<section className="rounded-2xl border border-white/15 p-5 mb-6"><h2 className="font-bold text-xl">{event.registrationForm.tagline}</h2><p className="mt-3">{event.registrationForm.intro}</p><ul className="mt-4 list-disc pl-5">{event.registrationForm.highlights.map(value=><li key={value}>{value}</li>)}</ul></section>}{recoveryNote&&<p role="status" className="p-4 my-4 rounded-xl border border-amber-400/30 text-amber-200">{recoveryNote}</p>}{error && <p role="alert" className="p-4 my-4 bg-red-950 rounded-xl">{error}</p>}
+ {catalogueError&&<div role="alert" className="my-4 rounded-xl border border-amber-400/30 bg-amber-400/10 p-4"><p>{catalogueError}</p><button type="button" onClick={()=>void load()} className="mt-3 rounded-lg border border-white/25 px-4 py-2">Retry loading registration</button></div>}
  {!event?<div role="status" className="rounded-3xl border border-white/15 bg-white/5 p-8"><p className="text-text-secondary">Loading registration form…</p>{error&&<button className={field} onClick={load}>Retry loading registration form</button>}</div>:<form onSubmit={e=>{e.preventDefault();if(step===1)setStep(2);else void submit();}} className="space-y-6 rounded-3xl border border-white/15 bg-[#0c0720] p-5 sm:p-8">
   <ol aria-label="Registration progress" className="grid grid-cols-3 gap-2 mb-7">{['Participant details','Payment & review','Submission e-ticket'].map((label,index)=><li key={label} aria-current={step===index+1?'step':undefined} className={`rounded-xl border px-3 py-4 text-xs sm:text-sm ${step===index+1?'border-brand-orange/60 bg-brand-orange/10 text-white':'border-white/10 text-text-muted'}`}><span className="font-mono font-bold mr-2">0{index+1}</span>{label}</li>)}</ol>
   {step===1?<div className="space-y-6">
