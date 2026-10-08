@@ -60,6 +60,7 @@ function syncCommitteeReports_() {
       if (oldRows > rows.length + 1) sheet.getRange(rows.length + 2, 1, oldRows - rows.length - 1, headers.length).clearContent();
       sheet.setFrozenRows(1); sheet.getRange(1, 1, 1, headers.length).setFontWeight("bold");
       sheet.getRange(1, 14).setValue("Updated: " + Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss"));
+      if (typeof syncCommitteeAttendance_ === "function" && report.getSheetByName("Attendance")) syncCommitteeAttendance_(report, rows);
       console.log(event.id + " SYNC OK: " + rows.length + " participant rows");
       } catch (error) { console.error(event.id + " SYNC FAILED: " + String(error.message || error)); }
     });
