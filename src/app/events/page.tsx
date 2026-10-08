@@ -151,6 +151,7 @@ export default function EventsPage() {
       />
 
       <Container size="lg" className="relative z-10">
+        <div role="status" className="mb-8 rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5 text-amber-100"><p className="font-bold text-lg">Registration limit reached — thank you, everyone!</p><p className="mt-2">Registrations are now closed for all events except MINDS Club’s DATA HEIST and DATA DOSSIER.</p></div>
         
         {/* Clean Back Navigation */}
         <div className="mb-6">

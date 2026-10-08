@@ -57,6 +57,7 @@ export const GOOGLE_APPS_SCRIPT_REGISTRATION_URL =
   "https://script.google.com/macros/s/AKfycbyWW19qSK95FeVO35V-aX5Lr2ySIE-ZMLLqem_y6bIFRXLcVEzVtU4qooHetePr09dbHQ/exec";
 
 export function getEventRegisterUrl(event: FestEventItem): string {
+  if (event.registrationClosed) return `/events/${encodeURIComponent(event.slug || event.id)}/register`;
   // Direct redirect for IEEE National Ideathon official form
   if (event.slug === "ieee-ideathon" || event.id === "ieee-ideathon") {
     return "https://script.google.com/a/macros/hitam.org/s/AKfycbwoVAJO1VLPibThDX3h5Sewj3HVaZkgGAenKgqiOb8SlhyhJgT6GRzjp4cx2aWlOXK41A/exec";
@@ -634,6 +635,9 @@ export const FEST_EVENTS: FestEventItem[] = [
     },
   },
 ];
+
+// Capacity closure: only MINDS Club events continue accepting registrations.
+for (const event of FEST_EVENTS) event.registrationClosed = event.club !== "MINDS Club";
 
 export interface EventTrack {
   id: string;
