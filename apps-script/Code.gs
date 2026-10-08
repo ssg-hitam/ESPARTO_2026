@@ -599,6 +599,7 @@ function setupDatabase() {
     dash.setColumnWidth(3, 320);
     dash.getRange(2, 7, 15, 2).setNumberFormat('"₹"#,##0');
     dash.getRange(2, 10, 15, 2).setNumberFormat('"₹"#,##0');
+    stage = "proof-folder";
     var folderId = props.getProperty("ESPARTO_PROOF_FOLDER_ID");
     var folder;
     if (folderId) folder = DriveApp.getFolderById(folderId);
@@ -624,12 +625,15 @@ function submitRegistration(payload) {
   var committing = false;
   var ss;
   var data;
+  var stage = "validation";
   try {
     data = validatePayload_(payload);
     locked = lock.tryLock(1000);
     if (!locked) return failure_("BUSY", "The registration desk is busy. Wait a few seconds, then retry with the same payment reference.", true);
     props = PropertiesService.getScriptProperties();
+    stage = "database";
     ss = database_();
+    stage = "schema";
     var sheets = requiredSheets_(ss, data.event);
     var fingerprint = digest_(JSON.stringify(data.normalized) + ":" + digest_(data.proof.bytes));
     var previous = findSubmission_(sheets.payments, data.requestId, data.utr);
@@ -663,6 +667,7 @@ function submitRegistration(payload) {
     } catch (sharingError) {
       throw publicError_("PROOF_SHARING", "Payment proof could not be saved with restricted sharing permissions. Contact SSG; do not make another payment.");
     }
+    stage = "prepare-rows";
     var receipt = receipt_(journal.regId, data);
     var notes = JSON.stringify({ requestId: data.requestId, fingerprint: fingerprint });
     var timestamp = Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss");
@@ -684,10 +689,12 @@ function submitRegistration(payload) {
     journal.startedAt = Date.now();
     props.setProperty(journalKey, JSON.stringify(journal));
     committing = true;
+    stage = "atomic-write";
     Sheets.Spreadsheets.batchUpdate({ requests: requests }, ss.getId());
     try { props.deleteProperty(journalKey); } catch (cleanupError) { /* Sheet record remains the source of truth. */ }
     return { success: true, receipt: receipt, message: "Registration received. Payment is pending verification." };
   } catch (error) {
+    console.error("REGISTRATION_FAILURE " + JSON.stringify({stage:stage, eventId:data ? data.event.id : "unknown", category:registrationErrorCategory_(error)}));
     if (committing && ss && data) {
       try {
         var recovered = findSubmission_(ss.getSheetByName("ALL_PAYMENTS_COLLECTION"), data.requestId, data.utr);
@@ -1300,4 +1307,40 @@ function websiteRegistrationRequest_(e) {
   var reference=String(payload.regId||""),match=reference.match(/^ESP26-(?:HITM-)?(E\d{2})-\d{3,6}$/);
   if(!match || allowed.indexOf(match[1])===-1)throw Error("Pilot event denied");
   return getRegistrationStatus(payload.regId,payload.requestId);
+}
+
+// Log categories only: never log request payloads, payment references or proof.
+function registrationErrorCategory_(error) {
+  var message = String(error && error.message || "");
+  if (error && error.publicCode) return error.publicCode;
+  if (/quota|too many|limit exceeded/i.test(message)) return "QUOTA";
+  if (/permission|authorized|access denied|not allowed/i.test(message)) return "PERMISSION";
+  if (/header mismatch/i.test(message)) return "SCHEMA_MISMATCH";
+  if (/Missing sheet/i.test(message)) return "MISSING_SHEET";
+  if (/Missing proof folder/i.test(message)) return "MISSING_PROOF_FOLDER";
+  if (/Sheets service not enabled/i.test(message)) return "SHEETS_SERVICE_DISABLED";
+  return "SERVICE_ERROR";
+}
+
+function diagnoseRegistrationHealth() {
+  requireOwner_();
+  var ss = database_();
+  Sheets.Spreadsheets.get(ss.getId(), {fields:"spreadsheetId"});
+  EVENT_CATALOG.filter(function(event){return event.id !== "E01";}).forEach(function(event){
+    try {requiredSheets_(ss,event);console.log(event.id + " SCHEMA OK");}
+    catch(error){
+      console.error(event.id + " SCHEMA FAILED: " + registrationErrorCategory_(error));
+      var schemas = {ALL_REGISTRATIONS:HEADERS.ALL_REGISTRATIONS, ALL_PAYMENTS_COLLECTION:HEADERS.ALL_PAYMENTS_COLLECTION, ALL_MEMBERS_ROSTER:HEADERS.ALL_MEMBERS_ROSTER};
+      schemas[event.sheetName] = EVENT_HEADERS;
+      Object.keys(schemas).forEach(function(name){
+        var sheet = ss.getSheetByName(name); if(!sheet) {console.error("Missing tab: " + name);return;}
+        var headers = schemas[name], actual = sheet.getRange(1,1,1,headers.length).getDisplayValues()[0];
+        headers.forEach(function(expected,index){if(actual[index] !== expected)console.error(name + " header column " + (index+1) + " must be: " + expected);});
+      });
+    }
+  });
+  var id = PropertiesService.getScriptProperties().getProperty("ESPARTO_PROOF_FOLDER_ID");
+  if (!id) throw Error("Missing proof folder");
+  DriveApp.getFolderById(id).getName();
+  console.log("Sheets API reachable; proof folder readable. No test registration or payment was created.");
 }

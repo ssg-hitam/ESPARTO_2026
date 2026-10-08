@@ -42,7 +42,8 @@ function syncCommitteeReports_() {
     var registrations = master.getDataRange().getValues().slice(1), members = roster.getDataRange().getValues().slice(1);
     var headers = ["Ticket", "Event", "Team", "Role", "Name", "Roll number", "Branch / Year", "Email", "Phone", "College", "Payment status", "Check-in status"];
     EVENT_CATALOG.filter(function (event) { return event.id !== "E01"; }).forEach(function (event) {
-      var id = props.getProperty("COMMITTEE_REPORT_" + event.id); if (!id) return;
+      try {
+      var id = props.getProperty("COMMITTEE_REPORT_" + event.id); if (!id) throw Error("Missing report ID");
       if (id === source.getId()) throw Error("Report cannot target the master.");
       var matching = Object.create(null);
       registrations.filter(function (row) { return row[2] === event.id; }).forEach(function (row) { matching[row[1]] = row; });
@@ -59,6 +60,8 @@ function syncCommitteeReports_() {
       if (oldRows > rows.length + 1) sheet.getRange(rows.length + 2, 1, oldRows - rows.length - 1, headers.length).clearContent();
       sheet.setFrozenRows(1); sheet.getRange(1, 1, 1, headers.length).setFontWeight("bold");
       sheet.getRange(1, 14).setValue("Updated: " + Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss"));
+      console.log(event.id + " SYNC OK: " + rows.length + " participant rows");
+      } catch (error) { console.error(event.id + " SYNC FAILED: " + String(error.message || error)); }
     });
   } finally { lock.releaseLock(); }
 }
@@ -70,9 +73,9 @@ function shareCommitteeReports() {
   var props = PropertiesService.getScriptProperties();
   if (Session.getEffectiveUser().getEmail() !== props.getProperty("COMMITTEE_REPORT_OWNER")) throw Error("Report owner only.");
   var contacts = {
-    E02: ["24e51a6612@gmail.com", "24e51a05b4@gmail.com", "24e51a6628@gmail.com", "24e51a05k5@gmail.com", "associatedean.mdp@hitam.org", "santoshn.mech@hitam.org", "ewb@hitam.org"],
-    E03: ["manikmanohar0@gmail.com", "kdhanudeep@gmail.com", "yshamsmitha@gmail.com", "associatedean.mdp@hitam.org"],
-    E04: ["24e51a6612@gmail.com", "24e51a05b4@gmail.com", "24e51a6628@gmail.com", "24e51a05k5@gmail.com", "associatedean.mdp@hitam.org", "santoshn.mech@hitam.org", "ewb@hitam.org"],
+    E02: ["24e51a6612@hitam.org", "24e51a05b4@hitam.org", "24e51a6628@hitam.org", "24e51a05k5@hitam.org", "associatedean.mdp@hitam.org", "santoshn.mech@hitam.org", "ewb@hitam.org"],
+    E03: ["manikmanohar0@gmail.com", "kdhanudeep@gmail.com", "yshamsmitha@gmail.com", "associatedean.mdp@hitam.org", "gdgoncampus@hitam.org"],
+    E04: ["24e51a6612@hitam.org", "24e51a05b4@hitam.org", "24e51a6628@hitam.org", "24e51a05k5@hitam.org", "associatedean.mdp@hitam.org", "santoshn.mech@hitam.org", "ewb@hitam.org"],
     E05: ["24e51a66e1@hitam.org", "ieom.hitam@gmail.com", "praveen.mech@hitam.org"],
     E06: ["24e51a66e1@hitam.org", "ieom.hitam@gmail.com", "praveen.mech@hitam.org"],
     E07: ["23e51a6671@hitam.org", "aiclub@hitam.org", "rajeshwarm.cse@hitam.org"],
@@ -81,17 +84,37 @@ function shareCommitteeReports() {
     E10: ["23e51a6711@hitam.org", "minds.datascience@hitam.org", "richatiwari.cse@hitam.org"],
     E11: ["24e51a0311@hitam.org", "programhead.mech@hitam.org", "torquex.hitam@gmail.com"],
     E12: ["23e51a0301@hitam.org", "24e55a0325@hitam.org"],
-    E13: ["25e55a0512@gmail.com", "preethicm.cse@hitam.org"],
-    E14: ["24e51a0592@gmail.com", "24e51a05b5@hitam.org", "preethicm.cse@hitam.org"]
+    E13: ["25e55a0512@hitam.org", "preethicm.cse@hitam.org"],
+    E14: ["24e51a0592@hitam.org", "24e51a05b5@hitam.org", "preethicm.cse@hitam.org"]
   };
   var masterId = database_().getId();
+  var granted = 0, failed = 0;
   Object.keys(contacts).forEach(function (eventId) {
     var id = props.getProperty("COMMITTEE_REPORT_" + eventId);
     if (!id || id === masterId) throw Error("Missing or invalid report for " + eventId);
     var file = DriveApp.getFileById(id), owner = file.getOwner();
     if (!owner || owner.getEmail() !== Session.getEffectiveUser().getEmail()) throw Error("Not report owner: " + eventId);
     file.setSharing(DriveApp.Access.PRIVATE, DriveApp.Permission.VIEW);
-    contacts[eventId].forEach(function (email) { file.addViewer(email); });
-    console.log(eventId + ": granted Viewer access to " + contacts[eventId].length + " event contacts.");
+    contacts[eventId].forEach(function (email) {
+      try {
+        file.addViewer(email);
+        granted++;
+        console.log(eventId + " VIEWER OK: " + email);
+      } catch (error) {
+        failed++;
+        console.error(eventId + " VIEWER FAILED: " + email + " — " + String(error.message || error));
+      }
+    });
   });
+  console.log("Sharing complete: " + granted + " successful, " + failed + " failed. Review VIEWER FAILED entries; failed contacts have not been granted access by this run.");
+}
+
+// Repairs only this owner's report trigger, then performs an immediate sync.
+function repairCommitteeReportSync() {
+  requireOwner_();
+  var props = PropertiesService.getScriptProperties();
+  if (Session.getEffectiveUser().getEmail() !== props.getProperty("COMMITTEE_REPORT_OWNER")) throw Error("Report owner only.");
+  ScriptApp.getProjectTriggers().filter(function(trigger){return trigger.getHandlerFunction() === "syncCommitteeReports_";}).forEach(function(trigger){ScriptApp.deleteTrigger(trigger);});
+  ScriptApp.newTrigger("syncCommitteeReports_").timeBased().everyMinutes(5).create();
+  syncCommitteeReports_();
 }
