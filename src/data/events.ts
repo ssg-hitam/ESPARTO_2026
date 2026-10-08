@@ -636,8 +636,8 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
 ];
 
-// Capacity closure: only MINDS Club events continue accepting registrations.
-for (const event of FEST_EVENTS) event.registrationClosed = event.club !== "MINDS Club";
+// All ESPARTO event registrations are now closed.
+for (const event of FEST_EVENTS) event.registrationClosed = true;
 
 export interface EventTrack {
   id: string;
