@@ -6,6 +6,7 @@ import RegistrationPilot from './RegistrationPilot';
 export const metadata = {title:'Event registration',robots:{index:false,follow:false}};
 export default async function RegistrationPage({params}:{params:Promise<{slug:string}>}) {
   const event=findPublicEvent((await params).slug);
+  if(event?.registrationClosed)return <main className="max-w-3xl mx-auto px-5 py-16"><h1 className="text-3xl font-bold">Registrations closed</h1><p className="mt-4 text-text-secondary">{event.title} has reached capacity. We are no longer accepting registrations.</p><a className="inline-block mt-6 text-brand-orange underline" href={`/events/${event.slug}`}>View event details</a></main>;
   const live=productionRegistrationEnabled();
   if(event && process.env.NODE_ENV!=='development'&&!live)redirect(`${GOOGLE_APPS_SCRIPT_REGISTRATION_URL}?event=${encodeURIComponent(event.slug)}`);
   if(!event || !registrationIntegration(event).localPilot || (live&&!registrationTestEventIds().includes(backendEventId(event))))notFound();

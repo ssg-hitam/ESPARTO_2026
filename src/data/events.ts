@@ -43,6 +43,7 @@ export interface FestEventItem {
   bannerImage?: string;
   brochureUrl?: string;
   featured?: boolean;
+  registrationClosed?: boolean;
   unstopUrl?: string;
   coordinators?: {
     students: { name: string; phone?: string; email?: string }[];
@@ -143,6 +144,7 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
   {
     id: "agentic-ai-workshop-hackathon",
+    registrationClosed: true,
     brochureUrl: "https://drive.google.com/file/d/1CzC7DRDxOXIIP0AEQRzd34CA8tno-pd5/view?usp=sharing",
     slug: "agentic-ai-workshop-hackathon",
     title: "Agentic AI Workshop & Hackathon",
