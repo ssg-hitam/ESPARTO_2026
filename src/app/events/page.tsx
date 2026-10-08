@@ -1,5 +1,6 @@
 "use client";
 
+import { RegistrationNotice } from '@/components/events/RegistrationNotice';
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
 import { eventPath } from "@/lib/events/catalogue";
@@ -151,7 +152,7 @@ export default function EventsPage() {
       />
 
       <Container size="lg" className="relative z-10">
-        <div role="status" className="mb-8 rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5 text-amber-100"><p className="font-bold text-lg">Limited registrations reopened — totals below ₹150 only</p><p className="mt-2">Only eligible options with a final payable amount below ₹150 are open. ₹150 and higher options remain closed; check your institution and team size before paying.</p></div>
+        <RegistrationNotice />
         
         {/* Clean Back Navigation */}
         <div className="mb-6">
@@ -466,7 +467,7 @@ export default function EventsPage() {
                         href={getEventRegisterUrl(event)}
                         className="w-full py-3 px-4 font-mono font-bold text-xs uppercase tracking-wider text-center text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-[0_-2px_10px_rgba(0,0,0,0.4)]"
                       >
-                        <span>{event.registrationClosed ? "Registrations closed · Capacity reached" : "Register for Event"}</span>
+                        <span>{event.registrationClosed ? event.slug==='agentic-ai-workshop-hackathon'?"GDG registrations closed":"Spot registration at HITAM" : "Register for Event"}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </a>
 
@@ -832,7 +833,7 @@ export default function EventsPage() {
                 href={getEventRegisterUrl(activeModalEvent)}
                 className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple hover:brightness-110 text-xs font-display font-bold text-white transition-all inline-flex items-center gap-2 shadow-[0_0_24px_rgba(255,94,0,0.4)]"
               >
-                <span>{activeModalEvent.registrationClosed ? "Registrations closed · Capacity reached" : "Register for Event"}</span>
+                <span>{activeModalEvent.registrationClosed ? activeModalEvent.slug==='agentic-ai-workshop-hackathon'?"GDG registrations closed":"Spot registration at HITAM" : "Register for Event"}</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>

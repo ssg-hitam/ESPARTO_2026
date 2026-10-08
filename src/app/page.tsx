@@ -1,5 +1,6 @@
 "use client";
 
+import { RegistrationNotice } from '@/components/events/RegistrationNotice';
 import React from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { HeroSection } from "@/components/home/HeroSection";
@@ -31,6 +32,8 @@ export default function Home() {
       >
         <HeroSection />
       </motion.div>
+
+      <div className="mx-auto max-w-7xl px-5 pt-6"><RegistrationNotice /></div>
 
       {/* Below-fold — scroll-triggered only, never on mount */}
       <ScrollReveal threshold={0.12} direction="up">
