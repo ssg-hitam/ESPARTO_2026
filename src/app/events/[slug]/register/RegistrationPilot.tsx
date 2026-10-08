@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { registrationRequest } from '@/lib/registration/request';
+import { readRecovery, submissionIssue } from '@/lib/registration/recovery';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { FestEventItem } from '@/data/events';
@@ -51,10 +52,14 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
  const [busy,setBusy]=useState(false);
  const [error,setError]=useState('');
  const [receipt,setReceipt]=useState<Receipt>();
+ const [issueCode,setIssueCode]=useState('');
+ const [draftReady,setDraftReady]=useState(false);
  const [step,setStep]=useState(1);
  const [locked,setLocked]=useState(false);
  const [recoveryNote,setRecoveryNote]=useState('');
  const storageKey=`esparto-pending-v1:${live?'live':googleTest?'google-test':'local'}:${backendSlug}`;
+ const draftKey=storageKey.replace('pending-v1','draft-v1');
+ function clearDraft(){try{sessionStorage.removeItem(draftKey);}catch{}}
  function clearPending(){try{sessionStorage.removeItem(storageKey);}catch{}}
  const requestId=useRef('');
  const submitted=useRef<PendingSubmission | undefined>(undefined);
@@ -102,20 +107,40 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
     }else clearPending();
    }
   }catch{clearPending();}
+  if(!submitted.current){
+   try{
+    const d=readRecovery<{institution:string;college:string;team:string;members:Member[];category:string;consents:boolean[];referral:string;utr:string;proof:string;agreement:boolean;step:number;promoInput:string;promoCode:string}>(sessionStorage,draftKey);
+    if(d&&['HITAM','Other'].includes(d.institution)&&Array.isArray(d.members)&&d.members.length>=1&&d.members.length<=4&&d.members.every(m=>m&&['name','email','phone','rollNo','branch','year'].every(k=>typeof m[k as keyof Member]==='string'))){
+     setInstitution(d.institution);setCollege(d.college||'');setTeam(d.team||'');setMembers(d.members);setCategory(d.category||'');setConsents(d.consents||[]);setReferral(d.referral||'');setUtr(d.utr||'');setProof(d.proof||'');setAgreement(!!d.agreement);setStep(d.step===2?2:1);setPromoInput(d.promoInput||'');setPromoCode(d.promoCode||'');setRecoveryNote('Your draft was restored from this browser tab. Review your details before submitting.');
+    }
+   }catch{clearDraft();}
+  }
+  setDraftReady(true);
   void load();
  },[backendSlug,googleTest]); // eslint-disable-line react-hooks/exhaustive-deps
  const sizes=event ? (event.allowedTeamSizes||Array.from({length:event.maxTeam-(event.id==='E03'?2:event.minTeam)+1},(_,i)=>(event.id==='E03'?2:event.minTeam)+i)):[];
  const [promoInput,setPromoInput]=useState('');const [promoCode,setPromoCode]=useState('');
+ useEffect(()=>{
+  if(!draftReady||locked)return;
+  if(receipt){clearDraft();return;}
+  const payload={institution,college,team,members,category,consents,referral,utr,proof,agreement,step,promoInput,promoCode};
+  try{sessionStorage.setItem(draftKey,JSON.stringify({expires:Date.now()+6*60*60*1000,payload}));}
+  catch{
+   try{sessionStorage.setItem(draftKey,JSON.stringify({expires:Date.now()+6*60*60*1000,payload:{...payload,proof:''}}));setRecoveryNote('Your details are saved in this tab, but the payment image could not be saved. Select it again after refreshing.');}
+   catch{setRecoveryNote('Browser storage is unavailable. Keep this tab open and retain your payment proof.');}
+  }
+ },[draftReady,locked,receipt,institution,college,team,members,category,consents,referral,utr,proof,agreement,step,promoInput,promoCode,draftKey]); // eslint-disable-line react-hooks/exhaustive-deps
  const unitFee=event ? members.length===1 && event.allowedTeamSizes ? (institution==='HITAM'?event.soloHitamFee:event.soloOtherFee)||0 : members.length>1 && event.teamHitamFee ? (institution==='HITAM'?event.teamHitamFee:event.teamOtherFee)||0 : institution==='HITAM'?event.hitamFee:event.otherFee : 0;
  const regularAmount=event ? event.id==='E12' ? (members.length===1?120:250) : unitFee*(event.feeModel==='person'&&!event.teamHitamFee?members.length:1) : 0;
  const amount=event?.id==='E02'&&institution==='HITAM'&&promoCode===event.promoCode&&event.promoFee?event.promoFee:regularAmount;
  function sampleProof(){const canvas=document.createElement('canvas');canvas.width=640;canvas.height=360;const context=canvas.getContext('2d');if(!context)return;context.fillStyle='#0c0720';context.fillRect(0,0,640,360);context.fillStyle='#fbbf24';context.font='bold 28px Arial';context.fillText('LOCAL TEST PAYMENT PROOF',30,65);context.fillStyle='#ffffff';context.font='24px Arial';context.fillText('NO PAYMENT WAS MADE',30,125);context.fillText(title,30,190);context.fillText('Test amount: INR '+amount,30,240);const reference=utr||String(Date.now());context.fillText('Synthetic UTR: '+reference,30,290);setUtr(reference);setProof(canvas.toDataURL('image/png'));setError('');}
  function change(index:number,key:keyof Member,value:string){setMembers(current=>current.map((member,i)=>i===index?{...member,[key]:value}:member));}
  async function upload(file:File|undefined){setProof('');if(!file)return;if(file.size>2*1024*1024 || !['image/png','image/jpeg','image/webp'].includes(file.type)){setError('Choose a PNG, JPG or WebP screenshot under 2 MB.');return;}const reader=new FileReader();reader.onload=()=>{setProof(String(reader.result));setError('');};reader.readAsDataURL(file);}
- async function submit(){if(inFlight.current||!event)return;inFlight.current=true;setBusy(true);setError('');setLocked(true);
+ async function submit(){if(inFlight.current||!event)return;inFlight.current=true;setBusy(true);setError('');setIssueCode('');setLocked(true);
   submitted.current ||= {promoCode:institution==='HITAM'?promoCode:'',requestId:requestId.current,eventId:event.id,eventSlug:event.slug,institution,college,teamSize:members.length,teamName:members.length===1?members[0].name:team,referralSource:referral,lead:members[0],members:members.slice(1),totalFee:amount,utrNumber:utr,agreement,screenshotBase64:proof,customDetails:live?'Registered on espartohitam.com':googleTest?'WEBSITE GOOGLE SHEETS TEST - synthetic demo':'LOCAL TEST - isolated backend',eventAnswers:event.registrationForm?{category,consents}:null};
+  clearDraft();
   try{sessionStorage.setItem(storageKey,JSON.stringify({expires:Date.now()+30*60*1000,payload:submitted.current}));}catch{setRecoveryNote('Browser recovery storage is unavailable. Keep this page open until your submission is confirmed.');}
-  try{const result=await registrationRequest(()=>api('submit',submitted.current,googleTest),()=>setError('Registrations are arriving together. Please keep this page open while we safely retry your submission.'));setError('');if(result.success){clearPending();setRecoveryNote('');setReceipt(result.receipt);}else{setError(result.message||'Submission failed.');if(!result.retryable && result.code!=='RECONCILIATION_REQUIRED'){submitted.current=undefined;clearPending();setLocked(false);}}}catch{setError('Connection interrupted. Retry the same submission to recover it.');}finally{inFlight.current=false;setBusy(false);}
+  try{const result=await registrationRequest(()=>api('submit',submitted.current,googleTest),()=>setError('Registrations are arriving together. Please keep this page open while we safely retry your submission.'));setError('');if(result.success){clearPending();clearDraft();setIssueCode('');setRecoveryNote('');setReceipt(result.receipt);}else{setIssueCode(result.code||'SUBMISSION_FAILED');setError(submissionIssue(result));if(!result.retryable && result.code!=='RECONCILIATION_REQUIRED'){submitted.current=undefined;clearPending();setLocked(false);}}}catch{setIssueCode('CONNECTION_UNCERTAIN');setError(submissionIssue({code:'CONNECTION_UNCERTAIN'}));}finally{inFlight.current=false;setBusy(false);}
  }
  if(receipt)return <SubmissionTicket receipt={receipt} event={displayEvent} teamName={members.length===1?members[0].name:team} institution={institution==='HITAM'?'HITAM':college} members={members} utr={utr} onRecover={()=>void submit()} busy={busy} googleTest={googleTest} live={live}/>;
  return <main id="main-content" className="max-w-4xl mx-auto px-5 py-8 sm:py-12"><Link className="text-brand-orange" href={`/events/${backendSlug}`}>← Event details</Link>{!live&&<div className="my-5 px-4 py-3 border border-amber-400/25 bg-amber-400/5 rounded-xl text-amber-200 text-sm">{googleTest?'GOOGLE SHEETS TEST. Synthetic demo data will be saved by the configured Apps Script deployment. Do not make a payment or verify these test records.':'LOCAL TEST ONLY. Do not make a payment. All data stays in an isolated test backend; no real ticket or email is issued.'}</div>}<header className="rounded-3xl overflow-hidden border border-white/15 bg-gradient-to-br from-[#19102e] to-[#0c0720] mb-6">
@@ -304,6 +329,7 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
     <p className="flex gap-2 text-sm text-text-muted"><ShieldCheck className="w-5 h-5 shrink-0 text-emerald-400"/>Payment can be verified only by organizers. This submission does not mark your payment as confirmed.</p>
     {!locked&&<button type="button" className={field} onClick={()=>setStep(1)}>Back to details</button>}
   </>}
+  {step===2&&error&&<div role="alert" className="rounded-xl border border-red-400/40 bg-red-950/70 p-4"><p className="font-semibold">{error}</p>{issueCode&&<p className="mt-2 text-sm">Issue: {issueCode} · Submission reference: <span className="break-all font-mono">{requestId.current}</span></p>}<p className="mt-2 text-sm">Need help? <a className="underline" href="tel:+918328232607">Hemanth: +91 83282 32607</a> · <a className="underline" href="mailto:ssg@hitam.org">ssg@hitam.org</a></p></div>}
   <button disabled={busy||(step===2&&!proof)} className="rounded-xl bg-brand-orange text-white font-bold p-4 w-full" type="submit">{busy?'Submitting…':step===1?'Continue to review':locked?'Retry same submission':live?'Submit registration':'Submit local test registration'}<ArrowRight className="inline w-4 h-4 ml-2"/></button>
 </form>}</main>;
 }
