@@ -151,7 +151,7 @@ export default function EventsPage() {
       />
 
       <Container size="lg" className="relative z-10">
-        <div role="status" className="mb-8 rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5 text-amber-100"><p className="font-bold text-lg">Registrations closed — thank you to everyone who registered!</p><p className="mt-2">All ESPARTO 2026 event registrations are now closed, including MINDS Club events. We look forward to welcoming our registered participants at ESPARTO!</p></div>
+        <div role="status" className="mb-8 rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5 text-amber-100"><p className="font-bold text-lg">Limited registrations reopened — totals below ₹150 only</p><p className="mt-2">Only eligible options with a final payable amount below ₹150 are open. ₹150 and higher options remain closed; check your institution and team size before paying.</p></div>
         
         {/* Clean Back Navigation */}
         <div className="mb-6">

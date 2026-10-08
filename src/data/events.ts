@@ -636,8 +636,10 @@ export const FEST_EVENTS: FestEventItem[] = [
   },
 ];
 
-// All ESPARTO event registrations are now closed.
-for (const event of FEST_EVENTS) event.registrationClosed = true;
+// Only events with an eligible total below INR 150 reopen; API/form enforce
+// the institution and team-size price limit for each registration option.
+const reopenedSlugs = new Set(['smart-manufacturing-challenge','ieom-startup-pitch','data-dossier','torquex-motorsport','build-first-robot','code-casino','technical-tambola']);
+for (const event of FEST_EVENTS) event.registrationClosed = !reopenedSlugs.has(event.slug);
 
 export interface EventTrack {
   id: string;
