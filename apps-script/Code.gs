@@ -615,8 +615,18 @@ function setupDatabase() {
   }
 }
 
+// Counts all saved participants, including pending payments. Called under the writer lock on admission.
+var REOPENED_EVENT_CAPACITIES = {E06:100,E10:100,E11:100,E13:40};
+function registrationAvailability_(ss,eventId) {
+  var capacity=REOPENED_EVENT_CAPACITIES[eventId];
+  if(!capacity)return {capacity:0,registered:0,remaining:0,registrationOpen:false};
+  var master=ss.getSheetByName("ALL_REGISTRATIONS");assertHeaders_(master,HEADERS.ALL_REGISTRATIONS);
+  var rows=master.getLastRow()>1?master.getRange(2,1,master.getLastRow()-1,7).getDisplayValues():[];
+  var registered=rows.filter(function(row){return row[2]===eventId;}).reduce(function(sum,row){var size=Number(row[6]);if(!Number.isInteger(size)||size<1||size>4)throw Error("Invalid participant count; admission paused");return sum+size;},0);
+  return {capacity:capacity,registered:registered,remaining:Math.max(0,capacity-registered),registrationOpen:registered<capacity};
+}
+
 function submitRegistration(payload) {
-  return failure_("REGISTRATION_CLOSED", "All registrations are closed. Do not make a new payment. If already paid, contact SSG with your proof.", false);
   var lock = LockService.getScriptLock();
   var locked = false;
   var props;
@@ -643,6 +653,9 @@ function submitRegistration(payload) {
       if (previousResult.success) { try { props.deleteProperty("SUBMISSION_" + data.requestId); } catch (ignoreJournalCleanup) {} }
       return previousResult;
     }
+    var availability = registrationAvailability_(ss, data.event.id);
+    if (!availability.registrationOpen || data.amount >= 150) return failure_("REGISTRATION_CLOSED", "This registration option is closed. Only selected Day 2 options below INR 150 are open. Do not make another payment.", false);
+    if (data.teamSize > availability.remaining) return failure_("CAPACITY_REACHED", "Not enough participant places remain for this team. Keep your proof and contact SSG if already paid; do not pay again.", false);
     journalKey = "SUBMISSION_" + data.requestId;
     var raw = props.getProperty(journalKey);
     journal = raw ? JSON.parse(raw) : null;
@@ -1293,8 +1306,8 @@ function websiteRegistrationRequest_(e) {
   var lock=LockService.getScriptLock();if(!lock.tryLock(1000))return failure_("BUSY","The registration service is busy. Retry the same submission.",true);
   try{if(cache.get(nonceKey))throw Error("Replay");cache.put(nonceKey,"1",120);}finally{lock.releaseLock();}
   if(request.action==="catalogue") {
-    var portal=getPortalData();
-    return {success:true,payment:{upiId:portal.upiId,payee:portal.payee,paymentQrUrl:portal.paymentQrUrl},registrationAvailable:portal.registrationAvailable,events:portal.events.filter(function(event){return allowed.indexOf(event.id)!==-1;}).map(function(event){return {id:event.id,slug:event.slug,title:event.title,minTeam:event.minTeam,maxTeam:event.maxTeam,hitamFee:event.hitamFee,otherFee:event.otherFee,feeModel:event.feeModel,allowedTeamSizes:event.allowedTeamSizes,soloHitamFee:event.soloHitamFee,soloOtherFee:event.soloOtherFee,teamHitamFee:event.teamHitamFee,teamOtherFee:event.teamOtherFee,promoCode:event.id==="E02"?"ESPARTO26":null,promoFee:event.id==="E02"?450:null,registrationForm:event.registrationForm||null};})};
+    var portal=getPortalData(), capacityDatabase=database_();
+    return {success:true,payment:{upiId:portal.upiId,payee:portal.payee,paymentQrUrl:portal.paymentQrUrl},registrationAvailable:portal.registrationAvailable,events:portal.events.filter(function(event){return allowed.indexOf(event.id)!==-1;}).map(function(event){return Object.assign(registrationAvailability_(capacityDatabase,event.id),{id:event.id,slug:event.slug,title:event.title,minTeam:event.minTeam,maxTeam:event.maxTeam,hitamFee:event.hitamFee,otherFee:event.otherFee,feeModel:event.feeModel,allowedTeamSizes:event.allowedTeamSizes,soloHitamFee:event.soloHitamFee,soloOtherFee:event.soloOtherFee,teamHitamFee:event.teamHitamFee,teamOtherFee:event.teamOtherFee,promoCode:event.id==="E02"?"ESPARTO26":null,promoFee:event.id==="E02"?450:null,registrationForm:event.registrationForm||null});})};
   }
   var payload=request.payload;
   if(!payload || typeof payload!=="object" || Array.isArray(payload))throw Error("Denied");

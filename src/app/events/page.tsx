@@ -6,6 +6,8 @@ import Link from "next/link";
 import { eventPath } from "@/lib/events/catalogue";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
+import CapacityAvailability from '@/components/events/CapacityAvailability';
+import { REOPENED_SLUGS } from '@/lib/registration/reopening';
 import { FEST_EVENTS, FestEventItem, EventCategoryType, getEventRegisterUrl } from "@/data/events";
 import { 
   ArrowLeft, 
@@ -133,7 +135,7 @@ export default function EventsPage() {
       }
 
       return true;
-    });
+    }).sort((a,b)=>Number(REOPENED_SLUGS.includes(b.slug))-Number(REOPENED_SLUGS.includes(a.slug)));
   }, [selectedCategory, selectedDay, searchQuery]);
 
   const hasActiveFilters = selectedCategory !== "All" || selectedDay !== "all" || searchQuery.trim() !== "";
@@ -462,14 +464,15 @@ export default function EventsPage() {
 
                       </div>
 
+                      {REOPENED_SLUGS.includes(event.slug) && <CapacityAvailability slug={event.slug} link />}
                       {/* ── CARD BOTTOM ACTION BUTTON ── */}
-                      <a
+                      {!REOPENED_SLUGS.includes(event.slug) && <a
                         href={getEventRegisterUrl(event)}
                         className="w-full py-3 px-4 font-mono font-bold text-xs uppercase tracking-wider text-center text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-[0_-2px_10px_rgba(0,0,0,0.4)]"
                       >
                         <span>{event.registrationClosed ? event.slug==='agentic-ai-workshop-hackathon'?"GDG registrations closed":"Registrations closed" : "Register for Event"}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
-                      </a>
+                      </a>}
 
                     </div>
                   );

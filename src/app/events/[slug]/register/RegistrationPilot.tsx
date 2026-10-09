@@ -10,7 +10,7 @@ import { BrandHeader } from '@/components/registration/BrandHeader';
 import SubmissionTicket from '@/components/registration/SubmissionTicket';
 import { CalendarDays, MapPin, Users, ShieldCheck, ArrowRight, AlertTriangle, Sparkles } from 'lucide-react';
 type Member={name:string;email:string;phone:string;rollNo:string;branch:string;year:string};
-type BackendEvent={promoCode?:string;promoFee?:number;id:string;slug:string;minTeam:number;maxTeam:number;hitamFee:number;otherFee:number;feeModel:string;allowedTeamSizes?:number[];soloHitamFee?:number;soloOtherFee?:number;teamHitamFee?:number;teamOtherFee?:number;registrationForm?:{tagline:string;intro:string;highlights:string[];categories?:string[];rules:string[]}|null};
+type BackendEvent={capacity?:number;remaining?:number;registered?:number;registrationOpen?:boolean;promoCode?:string;promoFee?:number;id:string;slug:string;minTeam:number;maxTeam:number;hitamFee:number;otherFee:number;feeModel:string;allowedTeamSizes?:number[];soloHitamFee?:number;soloOtherFee?:number;teamHitamFee?:number;teamOtherFee?:number;registrationForm?:{tagline:string;intro:string;highlights:string[];categories?:string[];rules:string[]}|null};
 type Receipt={regId:string;eventTitle:string;leadName:string;amount:number;status:string;replayed?:boolean};
 const emptyMember=():Member=>({name:'',email:'',phone:'',rollNo:'',branch:'',year:''});
 type PendingSubmission={promoCode?:string;requestId:string;eventId:string;eventSlug:string;institution:string;college:string;teamSize:number;teamName:string;referralSource:string;lead:Member;members:Member[];totalFee:number;utrNumber:string;agreement:boolean;screenshotBase64:string;customDetails:string;eventAnswers:{category:string;consents:boolean[]}|null};
@@ -65,6 +65,7 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
  const requestId=useRef('');
  const submitted=useRef<PendingSubmission | undefined>(undefined);
  const inFlight=useRef(false);
+ const [capacityReady,setCapacityReady]=useState(false);
  const [catalogueError,setCatalogueError]=useState('');
  const catalogueLoading=useRef(false);
  async function load(){
@@ -77,8 +78,9 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
    if(!found)throw Error('This event could not be loaded. Retry loading or contact SSG.');
    if(live && (!data.registrationAvailable||!data.payment?.upiId))throw Error('Registration payment configuration is unavailable. Please contact SSG.');
    if(data.payment?.upiId)setPayment(data.payment);
-   setEvent(found);setCatalogueError('');
+   setEvent(found);setCapacityReady(typeof found.remaining==='number'&&typeof found.registrationOpen==='boolean');setCatalogueError('');
   }catch(err){
+   setCapacityReady(false);
    setCatalogueError(err instanceof Error?err.message:'Connection interrupted. Retry loading; your details are still here.');
   }finally{catalogueLoading.current=false;}
  }
@@ -119,8 +121,9 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
   setDraftReady(true);
   void load();
  },[backendSlug,googleTest]); // eslint-disable-line react-hooks/exhaustive-deps
- const sizes=event ? (event.allowedTeamSizes||Array.from({length:event.maxTeam-(event.id==='E03'?2:event.minTeam)+1},(_,i)=>(event.id==='E03'?2:event.minTeam)+i)):[];
+ const sizes=event ? (event.allowedTeamSizes||Array.from({length:event.maxTeam-(event.id==='E03'?2:event.minTeam)+1},(_,i)=>(event.id==='E03'?2:event.minTeam)+i)).filter(size=>{const fee=reopenedRegistrationAmount(event.id,institution,size);return fee!==null&&fee<150;}):[];
  const [promoInput,setPromoInput]=useState('');const [promoCode,setPromoCode]=useState('');
+ useEffect(()=>{const timer=setInterval(()=>void load(),30000);return()=>clearInterval(timer);},[backendSlug,googleTest]); // eslint-disable-line react-hooks/exhaustive-deps
  useEffect(()=>{
   if(!draftReady||locked)return;
   if(receipt){clearDraft();return;}
@@ -138,12 +141,12 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
  function change(index:number,key:keyof Member,value:string){setMembers(current=>current.map((member,i)=>i===index?{...member,[key]:value}:member));}
  async function upload(file:File|undefined){setProof('');if(!file)return;if(file.size>2*1024*1024 || !['image/png','image/jpeg','image/webp'].includes(file.type)){setError('Choose a PNG, JPG or WebP screenshot under 2 MB.');return;}const reader=new FileReader();reader.onload=()=>{setProof(String(reader.result));setError('');};reader.readAsDataURL(file);}
  const eligibleAmount=event?reopenedRegistrationAmount(event.id,institution,members.length):null;
- const optionOpen=eligibleAmount!==null&&eligibleAmount<150&&amount<150;
- async function submit(){if(inFlight.current||!event)return;if(!optionOpen){setError('This option is closed. Only totals below ₹150 are open. Do not pay for this option.');return;}inFlight.current=true;setBusy(true);setError('');setIssueCode('');setLocked(true);
+ const optionOpen=eligibleAmount!==null&&eligibleAmount<150&&amount<150&&capacityReady&&event?.registrationOpen===true&&(event.remaining??0)>=members.length;
+ async function submit(){if(inFlight.current||!event)return;if(!optionOpen&&!submitted.current){setError('This option is closed. Only totals below ₹150 are open. Do not pay for this option.');return;}inFlight.current=true;setBusy(true);setError('');setIssueCode('');setLocked(true);
   submitted.current ||= {promoCode:institution==='HITAM'?promoCode:'',requestId:requestId.current,eventId:event.id,eventSlug:event.slug,institution,college,teamSize:members.length,teamName:members.length===1?members[0].name:team,referralSource:referral,lead:members[0],members:members.slice(1),totalFee:amount,utrNumber:utr,agreement,screenshotBase64:proof,customDetails:live?'Registered on espartohitam.com':googleTest?'WEBSITE GOOGLE SHEETS TEST - synthetic demo':'LOCAL TEST - isolated backend',eventAnswers:event.registrationForm?{category,consents}:null};
   clearDraft();
   try{sessionStorage.setItem(storageKey,JSON.stringify({expires:Date.now()+30*60*1000,payload:submitted.current}));}catch{setRecoveryNote('Browser recovery storage is unavailable. Keep this page open until your submission is confirmed.');}
-  try{const result=await registrationRequest(()=>api('submit',submitted.current,googleTest),()=>setError('Registrations are arriving together. Please keep this page open while we safely retry your submission.'));setError('');if(result.success){clearPending();clearDraft();setIssueCode('');setRecoveryNote('');setReceipt(result.receipt);}else{setIssueCode(result.code||'SUBMISSION_FAILED');setError(submissionIssue(result));if(!result.retryable && result.code!=='RECONCILIATION_REQUIRED' && result.code!=='REGISTRATION_CLOSED'){submitted.current=undefined;clearPending();setLocked(false);}}}catch{setIssueCode('CONNECTION_UNCERTAIN');setError(submissionIssue({code:'CONNECTION_UNCERTAIN'}));}finally{inFlight.current=false;setBusy(false);}
+  try{const result=await registrationRequest(()=>api('submit',submitted.current,googleTest),()=>setError('Registrations are arriving together. Please keep this page open while we safely retry your submission.'));setError('');if(result.success){clearPending();clearDraft();setIssueCode('');setRecoveryNote('');setReceipt(result.receipt);}else{setIssueCode(result.code||'SUBMISSION_FAILED');setError(submissionIssue(result));if(!result.retryable && result.code!=='RECONCILIATION_REQUIRED' && result.code!=='REGISTRATION_CLOSED' && result.code!=='CAPACITY_REACHED'){submitted.current=undefined;clearPending();setLocked(false);}}}catch{setIssueCode('CONNECTION_UNCERTAIN');setError(submissionIssue({code:'CONNECTION_UNCERTAIN'}));}finally{inFlight.current=false;setBusy(false);}
  }
  if(receipt)return <SubmissionTicket receipt={receipt} event={displayEvent} teamName={members.length===1?members[0].name:team} institution={institution==='HITAM'?'HITAM':college} members={members} utr={utr} onRecover={()=>void submit()} busy={busy} googleTest={googleTest} live={live}/>;
  return <main id="main-content" className="max-w-4xl mx-auto px-5 py-8 sm:py-12"><Link className="text-brand-orange" href={`/events/${backendSlug}`}>← Event details</Link>{!live&&<div className="my-5 px-4 py-3 border border-amber-400/25 bg-amber-400/5 rounded-xl text-amber-200 text-sm">{googleTest?'GOOGLE SHEETS TEST. Synthetic demo data will be saved by the configured Apps Script deployment. Do not make a payment or verify these test records.':'LOCAL TEST ONLY. Do not make a payment. All data stays in an isolated test backend; no real ticket or email is issued.'}</div>}<header className="rounded-3xl overflow-hidden border border-white/15 bg-gradient-to-br from-[#19102e] to-[#0c0720] mb-6">
@@ -154,7 +157,8 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
  <div className="flex flex-wrap gap-4 items-center mt-6 pt-5 border-t border-white/10"><Link href={`/events/${backendSlug}`} className="rounded-xl border border-white/20 px-4 py-3 font-semibold hover:border-brand-orange/60 transition-colors">View event details →</Link><span className="text-text-muted text-sm">Prize pool <strong className="text-white">{displayEvent.prizePool}</strong></span>{displayEvent.brochureUrl&&<a href={displayEvent.brochureUrl} className="text-brand-orange text-sm">Read event brochure →</a>}</div>
  </div></header>{event?.registrationForm&&<section className="rounded-2xl border border-white/15 p-5 mb-6"><h2 className="font-bold text-xl">{event.registrationForm.tagline}</h2><p className="mt-3">{event.registrationForm.intro}</p><ul className="mt-4 list-disc pl-5">{event.registrationForm.highlights.map(value=><li key={value}>{value}</li>)}</ul></section>}{recoveryNote&&<p role="status" className="p-4 my-4 rounded-xl border border-amber-400/30 text-amber-200">{recoveryNote}</p>}{error && <p role="alert" className="p-4 my-4 bg-red-950 rounded-xl">{error}</p>}
  {catalogueError&&<div role="alert" className="my-4 rounded-xl border border-amber-400/30 bg-amber-400/10 p-4"><p>{catalogueError}</p><button type="button" onClick={()=>void load()} className="mt-3 rounded-lg border border-white/25 px-4 py-2">Retry loading registration</button></div>}
- {!event?<div role="status" className="rounded-3xl border border-white/15 bg-white/5 p-8"><p className="text-text-secondary">Loading registration form…</p>{error&&<button className={field} onClick={load}>Retry loading registration form</button>}</div>:<form onSubmit={e=>{e.preventDefault();if(!optionOpen){setError('This option is closed. Only totals below ₹150 are open. Do not pay for this option.');return;}if(step===1)setStep(2);else void submit();}} className="space-y-6 rounded-3xl border border-white/15 bg-[#0c0720] p-5 sm:p-8">
+ {!event?<div role="status" className="rounded-3xl border border-white/15 bg-white/5 p-8"><p className="text-text-secondary">Loading registration form…</p>{error&&<button className={field} onClick={load}>Retry loading registration form</button>}</div>:<form onSubmit={e=>{e.preventDefault();if(!optionOpen&&!submitted.current){setError('This option is closed. Only totals below ₹150 are open. Do not pay for this option.');return;}if(step===1)setStep(2);else void submit();}} className="space-y-6 rounded-3xl border border-white/15 bg-[#0c0720] p-5 sm:p-8">
+  <p role="status" className="text-lg font-bold">{capacityReady?`${event.remaining} participant spots remaining of ${event.capacity}${event.registrationOpen?"":" · Registration closed"}`:"Checking available spots… Do not pay until availability is confirmed."}</p>
   <p role="status" className="rounded-xl border border-amber-400/30 bg-amber-400/10 p-4 text-amber-100">Only options with a total payable below ₹150 are open. {optionOpen?"Your selected option is eligible.":"Your selected option is closed. Choose an eligible institution/team-size option before paying."}</p>
   <ol aria-label="Registration progress" className="grid grid-cols-3 gap-2 mb-7">{['Participant details','Payment & review','Submission e-ticket'].map((label,index)=><li key={label} aria-current={step===index+1?'step':undefined} className={`rounded-xl border px-3 py-4 text-xs sm:text-sm ${step===index+1?'border-brand-orange/60 bg-brand-orange/10 text-white':'border-white/10 text-text-muted'}`}><span className="font-mono font-bold mr-2">0{index+1}</span>{label}</li>)}</ol>
   {step===1?<div className="space-y-6">
@@ -167,7 +171,7 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
         Institution {req}
         <select className={`mt-1.5 ${field}`} value={institution} onChange={e=>setInstitution(e.target.value)} required>
           <option value="HITAM">HITAM</option>
-          <option value="Other">Other college</option>
+          {!['E06','E10'].includes(event.id)&&<option value="Other">Other college</option>}
         </select>
       </label>
       {institution==='Other'&&<label className="block text-sm font-semibold text-white/90">
@@ -251,7 +255,7 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
         </div>)}
       </div>
     </div>
-    {live&&payment&&<section className="rounded-2xl border border-brand-orange/30 p-5 text-center">
+    {live&&payment&&optionOpen&&!submitted.current&&<section className="rounded-2xl border border-brand-orange/30 p-5 text-center">
       <h2 className="text-xl font-bold">Complete your UPI payment</h2>
       <p className="mt-1.5 text-xs text-text-muted">Google Pay · PhonePe · Paytm · BHIM · Navi · slice · super.money · Bank UPI</p>
       <p className="mt-3">{payment.payee}</p>
