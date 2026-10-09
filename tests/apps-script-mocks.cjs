@@ -63,6 +63,13 @@ function createHarness(options) {
   };
   var output = { setTitle: function () { return output; }, addMetaTag: function () { return output; } };
   vm.createContext(scope); vm.runInContext(BACKEND, scope);
+  // Fee/transaction tests opt into unrestricted admission; production admission
+  // remains the default and is exercised by registration-capacity.test.cjs.
+  if (options.admission === 'unrestricted-test') {
+    scope.EVENT_CATALOG.forEach(function(event) { scope.REOPENED_EVENT_CAPACITIES[event.id] = 100000; });
+    scope.registrationOptionOpen_ = function() { return true; };
+  }
+
   // Keep tests isolated from the configured production spreadsheet.
   scope.SPREADSHEET_ID = '';
   if (!options.emptyDatabase) { var schemas = scope.schemaMap_(); Object.keys(schemas).forEach(function (name) { spreadsheet.insertSheet(name).rows.push(Array.from(schemas[name])); }); }

@@ -1,5 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),crypto=require('node:crypto');
-const {createHarness,payloadFor}=require('./apps-script-mocks.cjs');
+const {createHarness:productionHarness,payloadFor}=require('./apps-script-mocks.cjs');
+// Bridge authentication/transport tests use controlled admission; capacity tests use the production policy.
+const createHarness=()=>productionHarness({admission:'unrestricted-test'});
 function setup(){const h=createHarness();h.store.ESPARTO_REGISTRATION_BRIDGE_SECRET='registration-test-key-'.repeat(3);h.store.ESPARTO_REGISTRATION_BRIDGE_ENABLED='true';h.store.ESPARTO_REGISTRATION_BRIDGE_SUBMIT_ENABLED='true';const cache=new Map();h.scope.CacheService={getScriptCache:()=>({get:k=>cache.get(k),put:(k,v)=>cache.set(k,v)})};h.scope.Utilities.computeHmacSha256Signature=(message,key)=>[...crypto.createHmac('sha256',key).update(message).digest()];h.scope.Utilities.base64EncodeWebSafe=bytes=>Buffer.from(bytes).toString('base64url');return h;}
 function request(h,action='catalogue',data,extra={}){const payload=JSON.stringify({action,payload:data,timestamp:Date.now(),nonce:crypto.randomUUID(),...extra});return {postData:{contents:JSON.stringify({kind:'registration',payload,signature:crypto.createHmac('sha256',h.store.ESPARTO_REGISTRATION_BRIDGE_SECRET).update('ESPARTO-REGISTRATION-V1\n'+payload).digest('base64url')})}};}
 test('signed adapter calls unchanged n8n registration functions and persists the same four Sheets batches',()=>{

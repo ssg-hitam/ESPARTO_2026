@@ -1,7 +1,9 @@
 'use strict';
 var test = require('node:test');
 var assert = require('node:assert/strict');
-var mocks = require('./apps-script-mocks.cjs');
+var baseMocks = require('./apps-script-mocks.cjs');
+// Exercise fee validation, atomic writes and privacy independently of event closure.
+var mocks = Object.assign({},baseMocks,{createHarness:function(options){return baseMocks.createHarness(Object.assign({},options,{admission:'unrestricted-test'}));}});
 function plain(value) { return JSON.parse(JSON.stringify(value)); }
 function rowCount(harness, name) { return harness.sheets[name].rows.length - 1; }
 test('group links stay private until both payment records are verified, with possession of the submission token', function () {

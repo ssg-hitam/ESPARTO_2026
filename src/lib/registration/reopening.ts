@@ -7,7 +7,8 @@ export function reopenedRegistrationAmount(eventId:string,institution:string,siz
  if(!['HITAM','Other'].includes(institution)||!Number.isInteger(size)||size<1||size>4)return null;
  const hitam=institution==='HITAM';
  switch(eventId){
-  case 'E05':case 'E06':return size===1?(hitam?100:150):size===4?(hitam?200:300):null;
+  case 'E06':return hitam?(size===1?100:size===4?200:null):null;
+  case 'E05':return size===1?(hitam?100:150):size===4?(hitam?200:300):null;
   case 'E10':return size>=2?(hitam?100:200):null;
   case 'E11':return size===1?(hitam?50:70):(hitam?100:140);
   case 'E12':return size===1?120:250;

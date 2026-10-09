@@ -617,6 +617,11 @@ function setupDatabase() {
 
 // Counts all saved participants, including pending payments. Called under the writer lock on admission.
 var REOPENED_EVENT_CAPACITIES = {E06:100,E10:100,E11:100,E13:40};
+function registrationOptionOpen_(data) {
+  if (!REOPENED_EVENT_CAPACITIES[data.event.id]) return false;
+  if (data.event.id === "E06") return data.institution === "HITAM" && ((data.teamSize === 1 && data.amount === 100) || (data.teamSize === 4 && data.amount === 200));
+  return data.amount < 150;
+}
 function registrationAvailability_(ss,eventId) {
   var capacity=REOPENED_EVENT_CAPACITIES[eventId];
   if(!capacity)return {capacity:0,registered:0,remaining:0,registrationOpen:false};
@@ -654,7 +659,7 @@ function submitRegistration(payload) {
       return previousResult;
     }
     var availability = registrationAvailability_(ss, data.event.id);
-    if (!availability.registrationOpen || (data.amount >= 150 && !(data.event.id === "E06" && data.institution === "HITAM" && data.teamSize === 4 && data.amount === 200))) return failure_("REGISTRATION_CLOSED", "This registration option is closed. Startup Pitch accepts HITAM solo INR 100 or four-member teams INR 200; other events retain their limits. Do not make another payment.", false);
+    if (!availability.registrationOpen || !registrationOptionOpen_(data)) return failure_("REGISTRATION_CLOSED", "This registration option is closed. Startup Pitch accepts HITAM solo INR 100 or four-member teams INR 200; other events retain their limits. Do not make another payment.", false);
     if (data.teamSize > availability.remaining) return failure_("CAPACITY_REACHED", "Not enough participant places remain for this team. Keep your proof and contact SSG if already paid; do not pay again.", false);
     journalKey = "SUBMISSION_" + data.requestId;
     var raw = props.getProperty(journalKey);
