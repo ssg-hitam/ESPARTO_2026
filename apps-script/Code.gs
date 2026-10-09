@@ -616,6 +616,7 @@ function setupDatabase() {
 }
 
 function submitRegistration(payload) {
+  return failure_("REGISTRATION_CLOSED", "All registrations are closed. Do not make a new payment. If already paid, contact SSG with your proof.", false);
   var lock = LockService.getScriptLock();
   var locked = false;
   var props;

@@ -467,7 +467,7 @@ export default function EventsPage() {
                         href={getEventRegisterUrl(event)}
                         className="w-full py-3 px-4 font-mono font-bold text-xs uppercase tracking-wider text-center text-white bg-gradient-to-r from-brand-orange to-brand-magenta hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-[0_-2px_10px_rgba(0,0,0,0.4)]"
                       >
-                        <span>{event.registrationClosed ? event.slug==='agentic-ai-workshop-hackathon'?"GDG registrations closed":"Spot registration at HITAM" : "Register for Event"}</span>
+                        <span>{event.registrationClosed ? event.slug==='agentic-ai-workshop-hackathon'?"GDG registrations closed":"Registrations closed" : "Register for Event"}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </a>
 
@@ -833,7 +833,7 @@ export default function EventsPage() {
                 href={getEventRegisterUrl(activeModalEvent)}
                 className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-purple hover:brightness-110 text-xs font-display font-bold text-white transition-all inline-flex items-center gap-2 shadow-[0_0_24px_rgba(255,94,0,0.4)]"
               >
-                <span>{activeModalEvent.registrationClosed ? activeModalEvent.slug==='agentic-ai-workshop-hackathon'?"GDG registrations closed":"Spot registration at HITAM" : "Register for Event"}</span>
+                <span>{activeModalEvent.registrationClosed ? activeModalEvent.slug==='agentic-ai-workshop-hackathon'?"GDG registrations closed":"Registrations closed" : "Register for Event"}</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
