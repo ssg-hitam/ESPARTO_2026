@@ -16,3 +16,8 @@ export function reopenedRegistrationAmount(eventId:string,institution:string,siz
   default:return null;
  }
 }
+
+export function registrationOptionOpen(eventId:string,institution:string,size:number):boolean {
+ const amount=reopenedRegistrationAmount(eventId,institution,size);
+ return amount!==null&&(amount<150||(eventId==='E06'&&institution==='HITAM'&&size===4&&amount===200));
+}

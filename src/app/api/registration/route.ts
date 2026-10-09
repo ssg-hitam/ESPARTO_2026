@@ -1,4 +1,4 @@
-import { reopenedRegistrationAmount } from '@/lib/registration/reopening';
+import { reopenedRegistrationAmount, registrationOptionOpen } from '@/lib/registration/reopening';
 import { NextRequest, NextResponse } from 'next/server';
 import { registrationAdmission, registrationBridge, registrationBridgeConfig, registrationTestEventIds, registrationHeaders, type RegistrationAction } from '@/lib/registration/bridge';
 export const runtime='nodejs';
@@ -16,7 +16,7 @@ export async function POST(request:NextRequest) {
     try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>3000000){await reader.cancel();return json({success:false,message:'Upload exceeds the request limit.'},413);}chunks.push(value);}}finally{reader.releaseLock();}
     data=JSON.parse(Buffer.concat(chunks).toString('utf8'));
     if(!data || !['catalogue','submit','status'].includes(data.action))return json({success:false,message:'Unsupported action.'},400);
-    if(data.action==='submit'){const amount=reopenedRegistrationAmount(data.payload?.eventId,data.payload?.institution,data.payload?.teamSize);if(amount===null||amount>=150||data.payload?.totalFee!==amount)return json({success:false,code:'REGISTRATION_CLOSED',retryable:false,message:'This registration option is closed. Only the selected Day 2 options with total payment below ₹150 are open. Do not pay again.'},409);}
+    if(data.action==='submit'){const amount=reopenedRegistrationAmount(data.payload?.eventId,data.payload?.institution,data.payload?.teamSize);if(!registrationOptionOpen(data.payload?.eventId,data.payload?.institution,data.payload?.teamSize)||data.payload?.totalFee!==amount)return json({success:false,code:'REGISTRATION_CLOSED',retryable:false,message:'This registration option is closed. Startup Pitch accepts HITAM individuals at ₹100 or teams of four at ₹200; other events retain their existing limits. Do not pay again.'},409);}
     if(data.action==='submit' && (!registrationTestEventIds().includes(data.payload?.eventId)||typeof data.payload?.eventSlug!=='string'))return json({success:false,message:'This event is not enabled for registration.'},400);
     if(data.action==='status' && (typeof data.payload?.requestId!=='string' || typeof data.payload?.regId!=='string'))return json({success:false,message:'Ticket reference and submission token are required.'},400);
   }catch{return json({success:false,message:'Invalid request.'},400);}
