@@ -338,6 +338,6 @@ export default function RegistrationPilot({displayEvent,googleTest=false,live=fa
     {!locked&&<button type="button" className={field} onClick={()=>setStep(1)}>Back to details</button>}
   </>}
   {step===2&&error&&<div role="alert" className="rounded-xl border border-red-400/40 bg-red-950/70 p-4"><p className="font-semibold">{error}</p>{issueCode&&<p className="mt-2 text-sm">Issue: {issueCode} · Submission reference: <span className="break-all font-mono">{requestId.current}</span></p>}<p className="mt-2 text-sm">Need help? <a className="underline" href="tel:+918328232607">Hemanth: +91 83282 32607</a> · <a className="underline" href="mailto:ssg@hitam.org">ssg@hitam.org</a></p></div>}
-  <button disabled={busy||!optionOpen||(step===2&&!proof)} className="rounded-xl bg-brand-orange text-white font-bold p-4 w-full" type="submit">{busy?'Submitting…':step===1?'Continue to review':locked?'Retry same submission':live?'Submit registration':'Submit local test registration'}<ArrowRight className="inline w-4 h-4 ml-2"/></button>
+  <button disabled={busy||(!optionOpen&&!submitted.current)||(step===2&&!proof)} className="rounded-xl bg-brand-orange text-white font-bold p-4 w-full" type="submit">{busy?'Submitting…':step===1?'Continue to review':locked?'Retry same submission':live?'Submit registration':'Submit local test registration'}<ArrowRight className="inline w-4 h-4 ml-2"/></button>
 </form>}</main>;
 }
