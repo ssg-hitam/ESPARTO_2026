@@ -1,5 +1,5 @@
-export const REOPENED_CAPACITIES:Record<string,number>={E06:100,E10:100,E11:100,E13:40};
-export const REOPENED_SLUGS=['ieom-startup-pitch','data-dossier','torquex-motorsport','code-casino'];
+export const REOPENED_CAPACITIES:Record<string,number>={};
+export const REOPENED_SLUGS:string[]=[];
 // Admission policy for the limited reopening. Backend still validates payment
 // and registration; never trust the client-supplied total to decide eligibility.
 export function reopenedRegistrationAmount(eventId:string,institution:string,size:number):number|null {

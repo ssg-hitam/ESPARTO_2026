@@ -637,7 +637,7 @@ export const FEST_EVENTS: FestEventItem[] = [
 ];
 
 // Organizer closure applies to every registration option.
-for (const event of FEST_EVENTS) event.registrationClosed = !['ieom-startup-pitch','data-dossier','torquex-motorsport','code-casino'].includes(event.slug);
+for (const event of FEST_EVENTS) event.registrationClosed = true;
 
 export interface EventTrack {
   id: string;

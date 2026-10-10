@@ -616,7 +616,7 @@ function setupDatabase() {
 }
 
 // Counts all saved participants, including pending payments. Called under the writer lock on admission.
-var REOPENED_EVENT_CAPACITIES = {E06:100,E10:100,E11:100,E13:40};
+var REOPENED_EVENT_CAPACITIES = {};
 function registrationOptionOpen_(data) {
   if (!REOPENED_EVENT_CAPACITIES[data.event.id]) return false;
   if (data.event.id === "E06") return data.institution === "HITAM" && ((data.teamSize === 1 && data.amount === 100) || (data.teamSize === 4 && data.amount === 200));
