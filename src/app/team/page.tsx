@@ -118,7 +118,7 @@ export default function TeamPage() {
             </h1>
 
             <p className="text-text-secondary text-base sm:text-lg font-body leading-relaxed max-w-2xl font-light">
-              Meet the faculty coordinators, executive student directors, student deans, and technical chapter core teams driving Hyderabad Institute of Technology and Management&apos;s flagship national technical festival.
+              Meet the Faculty Conveners, SSG HITAM leadership, and student chapter and club teams who made ESPARTO’26 possible. SSG HITAM led the overall organisation, bringing together the people, planning and coordination behind an unforgettable fest.
             </p>
           </div>
         </FadeUp>

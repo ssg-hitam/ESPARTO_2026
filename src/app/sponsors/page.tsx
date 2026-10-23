@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { OrganiserPortraits } from "@/components/home/OrganiserPortraits";
 import { OrganiserTribute } from "@/components/home/OrganiserTribute";
 import { ChaptersMarqueeSection } from "@/components/home/ChaptersMarqueeSection";
 
@@ -112,6 +113,7 @@ export default function SponsorsPage() {
         <Link href="/#memories" className="mt-7 inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-bold text-white hover:bg-white/10">Revisit the moments <ArrowUpRight size={16} aria-hidden="true" /></Link>
       </Container>
       <OrganiserTribute />
+      <OrganiserPortraits />
       <ChaptersMarqueeSection />
       <Container size="lg" className="pt-16">
         <div className="mb-14 max-w-3xl">
