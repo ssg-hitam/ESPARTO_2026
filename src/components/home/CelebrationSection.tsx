@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import { ArrowDown, ArrowUpRight, Camera, Instagram, Mail } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Camera, Instagram } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { FEST_INFO } from "@/lib/constants";
 
@@ -48,11 +48,6 @@ export function CelebrationSection() {
             <a href="#memories" className={`${action} bg-brand-orange text-white hover:bg-brand-magenta`}><Camera size={18} aria-hidden="true" /> Relive the moments <ArrowDown size={16} aria-hidden="true" /></a>
             <a href={FEST_INFO.officialLinks.instagram} target="_blank" rel="noopener noreferrer" className={`${action} border border-white/20 text-white hover:bg-white/10`}><Instagram size={18} aria-hidden="true" /> Follow ESPARTO <ArrowUpRight size={16} aria-hidden="true" /></a>
           </div>
-          <aside aria-labelledby="certificate-help-title" className="mx-auto mt-8 max-w-2xl rounded-2xl border border-brand-violet/30 bg-white/[0.04] px-6 py-5">
-            <h2 id="certificate-help-title" className="font-display text-lg font-bold text-white">Questions about your e-certificate?</h2>
-            <p className="mt-2 text-sm leading-relaxed text-text-secondary">Please reach out to Tejal at the SSG IIIC team. Include your full name, event name and registered email so we can help.</p>
-            <a href="mailto:ssg.iiic@hitam.org?subject=ESPARTO%202026%20Certificate%20Query" className="mt-4 inline-flex items-center gap-2 rounded-full px-3 py-2 font-semibold text-brand-amber underline decoration-brand-amber/40 underline-offset-4 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-orange"><Mail size={18} aria-hidden="true" /> ssg.iiic@hitam.org</a>
-          </aside>
           <div className="mx-auto mt-14 max-w-2xl rounded-2xl border border-brand-violet/30 bg-white/[0.04] px-6 py-7">
             <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-brand-amber">This is only the beginning</p>
             <p className="font-display text-2xl font-bold text-white sm:text-3xl">Next year. Bigger. Bolder. Together.</p>
