@@ -354,3 +354,29 @@
   .chapter-logo-track { animation: none; }
   .chapter-logo-duplicate { display: none; }
 }
+
+/* A short, decorative celebration on arrival; never covers or blocks controls. */
+.hero-confetti-cannon { position: absolute; top: 46%; width: 1px; height: 1px; }
+.hero-confetti-cannon-left { left: 0; }
+.hero-confetti-cannon-right { right: 0; transform: scaleX(-1); }
+.hero-confetti-piece {
+  position: absolute;
+  opacity: 0;
+  animation: hero-confetti-burst 4s cubic-bezier(.18,.65,.35,1) var(--confetti-delay) 1 both;
+  will-change: transform, opacity;
+}
+@keyframes hero-confetti-burst {
+  0% { opacity: 0; transform: translate3d(-15px, 0, 0) rotate(0deg); }
+  8% { opacity: .9; }
+  45% { opacity: .85; transform: translate3d(var(--confetti-x), var(--confetti-y), 0) rotate(var(--confetti-turn)); }
+  100% { opacity: 0; transform: translate3d(calc(var(--confetti-x) + 50px), var(--confetti-fall), 0) rotate(calc(var(--confetti-turn) + 180deg)); }
+}
+@media (max-width: 640px) {
+  .hero-confetti-cannon { top: 35%; }
+  .hero-confetti-cannon-left { transform: scale(.55); transform-origin: left center; }
+  .hero-confetti-cannon-right { transform: scale(-.55, .55); transform-origin: right center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-celebration-confetti { display: none; }
+  .hero-confetti-piece { animation: none; }
+}

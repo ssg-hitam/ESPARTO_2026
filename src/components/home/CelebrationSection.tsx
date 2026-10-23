@@ -1,3 +1,5 @@
+import Image from "next/image";
+import type { CSSProperties } from "react";
 import { ArrowDown, ArrowUpRight, Camera, Instagram, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { FEST_INFO } from "@/lib/constants";
@@ -14,8 +16,30 @@ export function CelebrationSection() {
     <>
       <section id="hero" className="relative overflow-hidden bg-[#030318] px-5 py-20 text-center sm:py-28 lg:py-32" aria-labelledby="celebration-title">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_25%_30%,rgba(145,55,230,0.22),transparent_55%),radial-gradient(ellipse_at_80%_65%,rgba(255,100,0,0.16),transparent_50%)]" />
+        <div aria-hidden="true" className="hero-celebration-confetti pointer-events-none absolute inset-0 overflow-hidden">
+          {(["left", "right"] as const).map((side) => (
+            <div key={side} className={`hero-confetti-cannon hero-confetti-cannon-${side}`}>
+              {Array.from({ length: 24 }, (_, index) => (
+                <span key={index} className="hero-confetti-piece" style={{
+                  "--confetti-x": `${80 + (index * 43) % 460}px`,
+                  "--confetti-y": `${-190 - (index * 61) % 430}px`,
+                  "--confetti-fall": `${100 + (index * 31) % 220}px`,
+                  "--confetti-turn": `${240 + index * 47}deg`,
+                  "--confetti-delay": `${(index % 6) * 0.1}s`,
+                  backgroundColor: ["#ff6b21", "#ff328c", "#a878ff", "#ffd36a", "#ffffff"][index % 5],
+                  borderRadius: index % 3 === 0 ? "50%" : "2px",
+                  width: index % 2 === 0 ? "8px" : "5px",
+                  height: index % 3 === 0 ? "8px" : "13px",
+                } as CSSProperties} />
+              ))}
+            </div>
+          ))}
+        </div>
         <div className="relative mx-auto max-w-5xl">
-          <p className="esparto-hero-title mb-6 text-6xl leading-none sm:text-8xl lg:text-9xl">ESPARTO’26</p>
+          <div className="mb-8 flex flex-col items-center gap-4">
+            <Image src="/images/brand/esparto-logo.png" alt="ESPARTO — HITAM Technical Fest" width={1545} height={1018} priority sizes="(max-width: 639px) 75vw, 440px" className="h-auto w-[min(75vw,440px)] object-contain drop-shadow-[0_0_40px_rgba(255,40,140,0.25)]" />
+            <p className="rounded-full border border-brand-amber/30 bg-brand-amber/10 px-5 py-2 font-mono text-xs uppercase tracking-[0.2em] text-brand-amber">ESPARTO’26 · What a celebration!</p>
+          </div>
           <h1 id="celebration-title" className="font-display text-4xl font-black leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl">Two days.<br /><span className="bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet bg-clip-text text-transparent">One unforgettable ESPARTO.</span></h1>
           <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-text-secondary">Ideas became prototypes. Challenges became shared victories. And a campus became a community of builders, thinkers and doers. ESPARTO’26 may have ended, but the moments we created together are here to stay.</p>
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-text-secondary">Brought together by <strong className="text-white">SSG HITAM</strong>, powered by our student chapters and clubs, and made memorable by every participant, volunteer, mentor and supporter. <span className="text-brand-amber">Thank you for being part of it.</span></p>
