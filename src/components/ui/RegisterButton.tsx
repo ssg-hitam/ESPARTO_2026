@@ -20,7 +20,7 @@ export interface RegisterButtonProps {
  * Opens the registration page, or an explicitly supplied destination, in the same tab.
  */
 export function RegisterButton({
-  registrationUrl = "/register",
+  registrationUrl = "/#memories",
   label,
   showIcon = true,
   size = "md",
@@ -34,13 +34,13 @@ export function RegisterButton({
       <a
         href={registrationUrl}
         onClick={onClick}
-        aria-label={label || "Register for ESPARTO 2026 events"}
+        aria-label={label || "Relive ESPARTO 2026 moments"}
         className={cn(
           "group inline-flex items-center justify-center select-none font-display font-bold tracking-wider uppercase transition-all duration-200",
           getButtonClasses({ variant: "primary", size, className })
         )}
       >
-        <span>{label || "REGISTER NOW"}</span>
+        <span>{label || "RELIVE THE MOMENTS"}</span>
         {showIcon ? (
           <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
         ) : null}
@@ -52,13 +52,13 @@ export function RegisterButton({
     <Link
       href={registrationUrl}
       onClick={onClick}
-      aria-label={label || "Register for ESPARTO 2026 events"}
+      aria-label={label || "Relive ESPARTO 2026 moments"}
       className={cn(
         "group inline-flex items-center justify-center select-none font-display font-bold tracking-wider uppercase transition-all duration-200",
         getButtonClasses({ variant: "primary", size, className })
       )}
     >
-      <span>{label || "REGISTER NOW"}</span>
+      <span>{label || "RELIVE THE MOMENTS"}</span>
       {showIcon ? (
         <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
       ) : null}

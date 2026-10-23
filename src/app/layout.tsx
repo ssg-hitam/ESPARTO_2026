@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | ESPARTO 2026",
   },
   description:
-    "Official website of ESPARTO 2026, the annual technical fest of Hyderabad Institute of Technology and Management (HITAM). Ideas → Innovation → Impact.",
+    "Thank you for making ESPARTO 2026 at HITAM a huge success. Relive both days through photos and Instagram highlights. See you for a bigger ESPARTO 2027.",
   icons: {
     icon: "/icons/esparto_official_logo.png",
     shortcut: "/icons/esparto_official_logo.png",
