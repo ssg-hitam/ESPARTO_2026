@@ -5,16 +5,18 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { TECHNICAL_CHAPTERS } from "@/data/chapters";
 
-/**
- * ChaptersMarqueeSection Component
- * 
- * Clean, high-impact institutional marquee section:
- * - Organised by SSG (Student Self Governance)
- * - In collaboration with HITAM Technical Council
- * - Prominent SSG official emblem card balancing the header
- * - 3D Circular Carousel showcasing all technical chapters & student clubs
- */
-export function ChaptersMarqueeSection() {
+/** Readable logo cards: homepage marquee or static credits grid. */
+export function ChaptersMarqueeSection({ marquee = false }: { marquee?: boolean }) {
+  const [paused, setPaused] = React.useState(false);
+  const logoCard = (chapter: (typeof TECHNICAL_CHAPTERS)[number]) => (
+    <li key={chapter.id} className={`flex min-w-0 flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-3 sm:p-4 ${marquee ? "w-[180px] shrink-0 sm:w-[210px]" : ""}`}>
+      <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-white">
+        <Image src={chapter.logo} alt={chapter.name} fill sizes={marquee ? "180px" : "(max-width: 639px) 40vw, (max-width: 1023px) 26vw, 200px"} className="object-contain p-4 sm:p-5" />
+      </div>
+      <h3 className="mt-4 text-center font-display text-sm font-bold leading-snug text-white sm:text-base">{chapter.shortName}</h3>
+      <p className="mt-1 text-center text-xs leading-relaxed text-text-secondary">{chapter.domain}</p>
+    </li>
+  );
   return (
     <section
       id="chapters"
@@ -72,17 +74,21 @@ export function ChaptersMarqueeSection() {
 
           </div>
 
-          <ul className="relative z-10 mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" aria-label="Student chapters and clubs">
-            {TECHNICAL_CHAPTERS.map((chapter) => (
-              <li key={chapter.id} className="flex min-w-0 flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-3 sm:p-4">
-                <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-white">
-                  <Image src={chapter.logo} alt={chapter.name} fill sizes="(max-width: 639px) 40vw, (max-width: 1023px) 26vw, 200px" className="object-contain p-4 sm:p-5" />
+          {marquee ? (
+            <div className="relative z-10 mt-8">
+              <div className="mb-4 flex justify-end">
+                <button type="button" onClick={() => setPaused(!paused)} aria-pressed={paused} aria-controls="chapter-marquee" className="rounded-full border border-white/20 px-4 py-2 text-xs font-semibold text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-orange">{paused ? "Play logo scrolling" : "Pause logo scrolling"}</button>
+              </div>
+              <div id="chapter-marquee" className="chapter-logo-marquee overflow-x-auto rounded-2xl" tabIndex={0} aria-label="Scrolling student chapter and club logos">
+                <div className="chapter-logo-track flex w-max" style={{ animationPlayState: paused ? "paused" : "running" }}>
+                  <ul className="flex gap-4 pr-4" aria-label="Student chapters and clubs">{TECHNICAL_CHAPTERS.map(logoCard)}</ul>
+                  <ul className="chapter-logo-duplicate flex gap-4 pr-4" aria-hidden="true">{TECHNICAL_CHAPTERS.map(logoCard)}</ul>
                 </div>
-                <h3 className="mt-4 text-center font-display text-sm font-bold leading-snug text-white sm:text-base">{chapter.shortName}</h3>
-                <p className="mt-1 text-center text-xs leading-relaxed text-text-secondary">{chapter.domain}</p>
-              </li>
-            ))}
-          </ul>
+              </div>
+            </div>
+          ) : (
+            <ul className="relative z-10 mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" aria-label="Student chapters and clubs">{TECHNICAL_CHAPTERS.map(logoCard)}</ul>
+          )}
 
         </div>
       </Container>

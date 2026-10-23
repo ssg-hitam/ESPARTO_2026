@@ -341,3 +341,16 @@
     transform: none !important;
   }
 }
+
+/* Flat, uncropped chapter logos; only the homepage opts into scrolling. */
+@keyframes chapter-logo-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.chapter-logo-track { animation: chapter-logo-scroll 65s linear infinite; }
+.chapter-logo-marquee:hover .chapter-logo-track,
+.chapter-logo-marquee:focus-within .chapter-logo-track { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  .chapter-logo-track { animation: none; }
+  .chapter-logo-duplicate { display: none; }
+}

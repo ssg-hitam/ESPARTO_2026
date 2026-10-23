@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <CelebrationSection />
       <OrganiserTribute />
-      <ChaptersMarqueeSection />
+      <ChaptersMarqueeSection marquee />
       <OrganiserPortraits />
     </>
   );
