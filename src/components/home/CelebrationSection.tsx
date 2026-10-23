@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, Camera, Instagram, Mail, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Camera, Instagram, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { FEST_INFO } from "@/lib/constants";
 
@@ -15,7 +15,6 @@ export function CelebrationSection() {
       <section id="hero" className="relative overflow-hidden bg-[#030318] px-5 py-20 text-center sm:py-28 lg:py-32" aria-labelledby="celebration-title">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_25%_30%,rgba(145,55,230,0.22),transparent_55%),radial-gradient(ellipse_at_80%_65%,rgba(255,100,0,0.16),transparent_50%)]" />
         <div className="relative mx-auto max-w-5xl">
-          <p className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 font-mono text-xs uppercase tracking-[0.15em] text-brand-amber"><Sparkles size={16} aria-hidden="true" /> HITAM brought the spark. You brought it to life.</p>
           <p className="esparto-hero-title mb-6 text-6xl leading-none sm:text-8xl lg:text-9xl">ESPARTO’26</p>
           <h1 id="celebration-title" className="font-display text-4xl font-black leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl">Two days.<br /><span className="bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet bg-clip-text text-transparent">One unforgettable ESPARTO.</span></h1>
           <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-text-secondary">Ideas became prototypes. Challenges became shared victories. And a campus became a community of builders, thinkers and doers. ESPARTO’26 may have ended, but the moments we created together are here to stay.</p>
