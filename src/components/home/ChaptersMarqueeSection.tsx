@@ -54,14 +54,14 @@ export function ChaptersMarqueeSection() {
             {/* Left Content Column */}
             <div className="max-w-2xl">
               <h2 className="font-display font-black text-2xl xs:text-3xl sm:text-4xl text-text-primary tracking-tight leading-[1.15] uppercase mb-2">
-                ORGANISED BY <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">SSG</span> <br />
+                OVERALL ORGANISED BY <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-magenta to-brand-violet">SSG</span> <br />
                 <span className="text-lg xs:text-xl sm:text-2xl text-text-secondary font-extrabold">
-                  IN COLLABORATION WITH HITAM TECHNICAL COUNCIL
+                  WITH OUR STUDENT CHAPTERS &amp; CLUBS
                 </span>
               </h2>
 
               <p className="text-text-secondary text-xs sm:text-sm font-body leading-relaxed border-l-2 border-brand-magenta/40 pl-3">
-                ESPARTO 2026 is spearheaded by <strong className="text-text-primary font-semibold">SSG (Student Self Governance)</strong> in collaboration with the <strong className="text-text-primary font-semibold">HITAM Technical Council</strong>, uniting all premier student chapters and technical clubs across campus.
+                ESPARTO 2026 was led and organised by <strong className="text-text-primary font-semibold">SSG (Student Self Governance)</strong> with the support of the <strong className="text-text-primary font-semibold">HITAM Technical Council</strong>. To every student chapter and club: thank you for bringing your expertise, enthusiasm and teamwork to the events. Together, you made the SSG-led celebration a success.
               </p>
             </div>
 

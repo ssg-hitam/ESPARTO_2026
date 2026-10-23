@@ -13,7 +13,7 @@ export function Footer() {
     { label: "About HITAM", href: "/hitam" },
     { label: "Events", href: "/events" },
     { label: "Payment status", href: "/payment-status" },
-    { label: "Sponsors", href: "/sponsors" },
+    { label: "Credits", href: "/sponsors" },
     { label: "Guests", href: "/guests" },
     { label: "Team", href: "/team" },
     { label: "Venue", href: "/venue" },
