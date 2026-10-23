@@ -19,13 +19,13 @@ export function CelebrationSection() {
         <div aria-hidden="true" className="hero-celebration-confetti pointer-events-none absolute inset-0 overflow-hidden">
           {(["left", "right"] as const).map((side) => (
             <div key={side} className={`hero-confetti-cannon hero-confetti-cannon-${side}`}>
-              {Array.from({ length: 24 }, (_, index) => (
+              {Array.from({ length: 48 }, (_, index) => (
                 <span key={index} className="hero-confetti-piece" style={{
                   "--confetti-x": `${80 + (index * 43) % 460}px`,
                   "--confetti-y": `${-190 - (index * 61) % 430}px`,
                   "--confetti-fall": `${100 + (index * 31) % 220}px`,
                   "--confetti-turn": `${240 + index * 47}deg`,
-                  "--confetti-delay": `${(index % 6) * 0.1}s`,
+                  "--confetti-delay": `${(index % 24) * 0.15}s`,
                   backgroundColor: ["#ff6b21", "#ff328c", "#a878ff", "#ffd36a", "#ffffff"][index % 5],
                   borderRadius: index % 3 === 0 ? "50%" : "2px",
                   width: index % 2 === 0 ? "8px" : "5px",

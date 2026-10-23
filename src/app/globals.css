@@ -362,7 +362,7 @@
 .hero-confetti-piece {
   position: absolute;
   opacity: 0;
-  animation: hero-confetti-burst 4s cubic-bezier(.18,.65,.35,1) var(--confetti-delay) 1 both;
+  animation: hero-confetti-burst 1.55s cubic-bezier(.18,.65,.35,1) var(--confetti-delay) 1 both;
   will-change: transform, opacity;
 }
 @keyframes hero-confetti-burst {
