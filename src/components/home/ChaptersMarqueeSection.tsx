@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { TECHNICAL_CHAPTERS } from "@/data/chapters";
-import CircularCarousel from "@/components/ui/CircularCarousel";
 
 /**
  * ChaptersMarqueeSection Component
@@ -16,14 +15,6 @@ import CircularCarousel from "@/components/ui/CircularCarousel";
  * - 3D Circular Carousel showcasing all technical chapters & student clubs
  */
 export function ChaptersMarqueeSection() {
-  const carouselItems = React.useMemo(() => 
-    TECHNICAL_CHAPTERS.map((ch) => ({
-      src: ch.logo,
-      alt: ch.name,
-      title: ch.shortName,
-      subtitle: ch.domain,
-    })), []);
-
   return (
     <section
       id="chapters"
@@ -81,43 +72,17 @@ export function ChaptersMarqueeSection() {
 
           </div>
 
-          {/* 3D CIRCULAR CAROUSEL: Built-in small text caption above marquee ring, zero separate box */}
-          <div className="relative -mx-4 sm:-mx-8 lg:-mx-10 overflow-hidden pt-3 sm:pt-4 pb-4">
-            
-            {/* Top & Bottom Hairline Accents */}
-            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-            {/* Ambient lighting under the 3D ring */}
-            <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[220px] bg-brand-purple/15 blur-[100px] pointer-events-none rounded-full" 
-              aria-hidden="true" 
-            />
-
-            <div className="w-full h-[320px] sm:h-[340px] relative">
-              <CircularCarousel
-                items={carouselItems}
-                preset="cylinder"
-                intro="rise"
-                cardWidth={140}
-                aspectRatio={1}
-                speed={5}
-                captions={true}
-                gap={50}
-                tilt={-8}
-                curve={0.65}
-                perspective={2100}
-                momentum={0.2}
-                parallax={0.22}
-                stretch={0.16}
-                depthFade={0.25}
-                fadeColor="#08041d"
-                innerShade={0.3}
-                cornerRadius={14}
-              />
-            </div>
-
-          </div>
+          <ul className="relative z-10 mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" aria-label="Student chapters and clubs">
+            {TECHNICAL_CHAPTERS.map((chapter) => (
+              <li key={chapter.id} className="flex min-w-0 flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-3 sm:p-4">
+                <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-white">
+                  <Image src={chapter.logo} alt={chapter.name} fill sizes="(max-width: 639px) 40vw, (max-width: 1023px) 26vw, 200px" className="object-contain p-4 sm:p-5" />
+                </div>
+                <h3 className="mt-4 text-center font-display text-sm font-bold leading-snug text-white sm:text-base">{chapter.shortName}</h3>
+                <p className="mt-1 text-center text-xs leading-relaxed text-text-secondary">{chapter.domain}</p>
+              </li>
+            ))}
+          </ul>
 
         </div>
       </Container>
